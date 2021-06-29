@@ -1,0 +1,341 @@
+---
+title: 'Attachment Analysis: Report Project'
+author: 'CZC, TM & GA'
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  bookdown::html_document2: 
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    collapsed: false
+    css: ["css/custom.css"]
+linestretch: 1.5
+number_sections: true
+bibliography: "../Biblio-attachment.bib"
+csl: apa.csl
+link-citations: true 
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, collapse = TRUE)
+
+library(tidyverse)
+library(kableExtra)
+library(mclust)
+
+devtools::load_all("../../")
+
+path_drake <- "../../.drake"
+
+#----    load drake    ----
+
+# Data
+drake::loadd(data_munged)
+
+# Cluster
+drake::loadd(cluster_mother_tat)
+drake::loadd(cluster_father_tat)
+drake::loadd(data_cluster_tat)
+drake::loadd(mclust_mother)
+drake::loadd(mclust_father)
+
+# brms models
+drake::loadd(fit_int)
+```
+
+In this Reeport we describe the statistical approach. First we define the statistical model used to describe the data generative process. Subsequently, the approach for testing hypotheses with inequality and equality constraints is discussed. Finally, the Gibbs sampler to estimate the model with inequality constraints is presented.
+
+# Model Definition
+
+## Psychologial Background
+
+In this analysis, we want to evaluate children psychological problems according to children gender and  children-mother and children-father attachment relationship. Note that attachment relationship is considered as a categorical variable.
+
+## Zero Inflated Poisson (ZIP) {#model}
+
+
+The dependent variable is a positive discrete variable. Considering Figure \@ref(fig:plot-int), it is possible to observe the the distribution of the dependent variable is characterized by a zero inflation.
+
+```{r plot-int, fig.cap = "Dependent variable distribution"}
+ggplot(data_munged) +
+  geom_bar(aes(x = internalizing_sum, fill = 1), alpha = 0.7) +
+  labs(x = "Internalizing Problems") +
+  theme_bw() + 
+  theme(legend.position = "none")
+```
+
+Thus, we decided to model the data considering a Zero Inflated Poisson (ZIP):
+
+$$
+y_i \sim ZIPoisson(p_i, \lambda_i)
+$$
+
+Where, $1 - p_i$ indicates the probability of given observation $y_i$ being generated from a Poisson distribution with mean $\lambda_i$. In particular,
+
+$$
+p_i = \text{logit}^{-1}(X_i^T\beta_{p}),\\
+\lambda_i = \text{exp}(X_i^T\beta_{\lambda}).
+$$
+
+That is, we want to model both $p_i$ and $\lambda_i$ according to the variables previously defined estimating respectively parameters vector $\beta_p$ and $\beta_{\lambda}$. Note that these are the only parameters in the model.
+
+This model can be easily estimate using `brms`. However, currently it is not possible to include inequality and equality constraints in the parameters prior definition.
+
+Note that, the actual distribution of the dependent variable is truncated (limit given by the maximum questionnaire score). However, we do not consider this aspect to avoid a further level of complexity in the model.
+
+# Test of Hypotheses with Inequality and Equality Constraints
+
+**Bayes Factor** to evaluate different hypotheses with inequality and equality constraints can be obtained following the **Encompassing Prior Approach**. That is, an unconstrained model is considered as reference with encompassing priors that are uninformative with respect to the parameters. All other models are nested in this model and the priors ore obtained by restricting the parameter space in accordance with the constraints imposed by each model.
+
+## Inequality Constraints: A First Approach 
+
+@katoBayesianApproachInequality2006 presented an approach to evaluate **inequality constraints** based on the principle of encompassing priors. Given an unconstrained model $M_u$ and a nested model $M_i$,  the prior and posterior densities of $M_i$ can be rewritten in terms of the prior and posterior densities of $M_u$:
+
+$$
+\pi(\theta|M_i) = B_i \times \pi(\theta|M_u),\\
+Pr(\theta|D,\ M_i) = A_i \times Pr(\theta|D,\ M_u).
+$$
+
+Where, $1/B_i$ indicates the proportion of the prior distribution of $M_u$ in agreement with $M_i$ and $1/A_i$ is the proportion of the posterior distribution of $M_u$ in agreement with $M_i$. 
+
+Assuming equal prior probability of the two models ($\pi(M_u) = \pi(M_i)$), the Bayes Factor is obtained as follow:
+
+\begin{aligned}
+BF_{iu} =& \frac{Pr(D|M_i)}{Pr(D|M_u)} =\\ \\
+&\frac{L(D|\theta)\pi(\theta|M_i)/Pr(\theta|D,\ M_i)}{L(D|\theta)\pi(\theta|M_u)/Pr(\theta|D,\ M_u)} = \\ \\
+&\frac{\pi(\theta|M_i)Pr(\theta|D,\ M_u)}{\pi(\theta|M_u)Pr(\theta|D,\ M_i)} = \\ \\
+&\frac{[B_i \times \pi(\theta|M_u)] Pr(\theta|D,\ M_u)}{\pi(\theta|M_u)[A_i \times Pr(\theta|D,\ M_u)]} = \frac{B_i}{A_i}
+\end{aligned}
+
+That is, the Bayes Factor is the ratio between $1/A_i$ (i.e. the proportion of the posterior distribution of $M_u$ in agreement with $M_i$ that provides information about the *fit* of $M_i$ relative to $M_u$), and $1/B_i$ (i.e., the proportion of the prior distribution of $M_u$ in agreement with $M_i$ that provides information about the *complexity* of $M_i$ relative to $M_u$). 
+
+Note that Bayes Factor is obtained without computing the marginal likelihoods of the two models, but only considering the proportions of the prior and the posterior in agreement with constraints of each of the models.
+
+#### Pro {-}
+
+- Given the prior and posterior samples of the model, it is straightforward to compute $1/A_i$ and $1/B_i$. The analytical distributions are not required.
+- If Prior distributions of $\beta_p$ and $\beta_{\lambda}$ are vague enough and sample is large, influence of the choice of the encompassing prior on the posterior distributions is negligible, and subsequently also its influence on $1/A_i$ is negligible.
+- For constraints of the form $\beta_i > \beta_j > \beta_k$ with $\beta_{i,j,k} \stackrel{i.i.d.}{\sim} \pi(\beta)$, the prior probability of the constraints is independent of the actual choice of the encompassing prior, and subsequently also $1/B_i$ is not influenced.
+
+#### Cons {-}
+
+- It is not possible to evaluate **equality constraints**. In the case of $H_i:\ \beta_i = \beta_j$,  $1/A_i$ and $1/B_i$ are equal to zero.
+- Equality constraints can be expressed as $$|\beta_i - \beta_j|\leq \xi$$ for small value of $\xi$. In this case, however, for vague encompassing prior $1/A_i$ is still virtually independent but $1/B_i$ is not. The more diffuse the encompassing prior is the smaller the Bayes factor in favor of the unconstrained model (similar to *Lindley’s paradox* where results are influenced by the vagueness of the prior distribution of the parameters involved). Sensitivity analysis is required considering both the choice of prior distributions and the value of $\xi$.
+
+#### Consideration {-}
+
+This is a possible approach. However, in our hypotheses there are several equality constraints. Thus, it would be important to properly evaluate them.
+
+## Inequality and Equality Constraints: A Second Approach {#in-eq-const}
+
+@guApproximatedAdjustedFractional2018 and @mulderBayesFactorTesting2019 presented an approach to evaluate **inequality and equality constraints** still based on the principle of encompassing priors.
+
+Informative hypotheses using equality and/or inequality constraints can be expressed as
+
+$$
+H_i:\ R_E\theta = r_E,\  R_I\theta > r_I
+$$
+where $R_E$ and $R_I$ are the restriction matrices for equality and inequality constraints, respectively, and $r_E$ and $r_I$ contain constants.
+
+Following encompassing prior approach, given an unconstrained model $M_u$ and a nested model $M_i$, the Bayes Factor is computed as
+
+\begin{aligned}
+BF_{iu} = \frac{Pr(\text{Inequality Const} | \text{Equality Const}, \text{Data})}{\pi_u(\text{Inequality Const} | \text{Equality Const})} &\frac{Pr(\text{Equality Const}| \text{Data})}{\pi_u( \text{Equality Const})} = \\ \\  \frac{Pr(R_I\theta > r_I | R_E\theta = r_E, Y)}{\pi_u(R_I\theta > r_I | R_E\theta = r_E)} &\frac{Pr(R_E\theta = r_E| Y)}{\pi_u( R_E\theta = r_E)}.
+\end{aligned}
+
+Where, the first part is a ratio between conditional posterior and conditional prior **probabilities** that the inequality constraints hold under $M_u$. The second part is a ratio between  marginal posterior and marginal prior **densities** of the equality constraints under $M_u$, the well-known *Savage–Dickey density ratio*.
+
+Note that the numerators provide information about the *fit* of $M_i$ relative to $M_u$ and the denominators provide information about the *complexity* of $M_i$ relative to $M_u$.
+
+#### Pro {-}
+
+- It allows to evaluate inequality and equality constraints.
+
+#### Cons {-}
+
+- The encompassing prior and posterior distributions are required in analytic form to compute conditional probabilities and marginal densities.
+
+#### Consideration {-}
+
+Obtaining the analytic posterior distribution is often difficult. To overcome this issue, @guApproximatedAdjustedFractional2018 and @mulderBayesFactorTesting2019 proposed two different solutions both based on **Normal approximations**. Let's consider the two approaches separately.
+
+### @mulderBayesFactorTesting2019 {#mulder}
+
+Authors used to different solutions for computing the posterior and the prior:
+
+- **Computing Posterior** - a Metropolis-Hastings algorithm is used to obtain draws from the posterior of the unconstrained model. Subsequently the posterior was assumed to be approximately normally distributed
+$$
+Pr(\theta|Y) \sim \mathcal{N}(\mu_\theta, \Sigma_\theta)
+$$
+where $\mu_\theta$ and $\Sigma_\theta$ are the posterior mean and covariance matrix estimated from the posterior draws. Thus, conditional posterior probability and marginal posterior density are computed based on the normal approximation.
+
+- **Computing Prior** - in their case priors are not normally distributed. To estimate the marginal prior density they considered the fact that for a sufficiently small $\delta$,
+$$
+Pr(|\theta_{E_1} - r_{E_1}| < \frac{\delta}{2}, \ldots, |\theta_{E_i} - r_{E_i}| < \frac{\delta}{2}|M_u) \approx \delta^i \times \pi_u(\theta_E = r_E)
+$$
+Thus, the probability can be estimated considering the proportion of draws satisfying the constraints. To compute conditional prior probability, they used a normal approximation because this probability is not sensitive to the exact distributional form as long as they are symmetrical distributed around the value of the constraints, usually zero. The mean and covariance matrix were estimated based on the prior draws that satisfied the equality constraints. To do that they used the same approximation as before (i.e., $|\theta_{E_i} - r_{E_i}| < \frac{\delta}{2}$).
+
+<!-- Note that their procedure implied a linear transformation of the parameters  to express constraints in a simpler form. -->
+
+
+### @guApproximatedAdjustedFractional2018
+
+In this paper, the Approximated Adjusted Fractional Bayes Factors (AAFBF) method is presented. To avoid ad hoc or subjective specification of the unconstrained prior, the fractional Bayes factor approach is used. That is, proper default prior were defined updating non informative priors according to a a fraction *b* of the data
+$$
+\text{Proper Prior: }\pi_u(\theta|Y_b) \approx Pr(Y_b|\theta) \times \pi_u(\theta).
+$$
+The choice of the fraction $b$ also plays a crucial in the AAFBF and is extensively discussed in the article.
+
+Prior and posterior distributions are assumed to be approximately normally distributed due to the large-sample theory:
+\begin{aligned}
+\text{Prior: }& \pi_u(\theta|Y_b) \sim \mathcal{N}(\hat{\theta}, \hat{\Sigma}_\theta/b),\\ \\
+\text{Posterior: }& \pi_u(\theta|Y) \sim \mathcal{N}(\hat{\theta}, \hat{\Sigma}_\theta).
+\end{aligned}
+Where $\hat{\theta}$ and $\hat{\Sigma}_\theta$ denote the maximum likelihood estimate and covariance matrix of $\theta$, respectively.
+
+Moreover, authors proposed an adjustment of the prior mean for centering the prior distribution of $\theta$ on the boundary of the constrained space. This ensure that $Pr(\theta>0)$ and $Pr(\theta<0)$ are equal for symmetric distributions and follow common assumption that small effects are more likely a prior than large effects. To facilitate the computation of the adjusted prior mean, the parameters are transformed,
+$$
+\beta = \left[\begin{array}{cc}\beta_E\\ \beta_I\end{array}\right] = \left[\begin{array}{cc}R_E \theta - r_E\\ R_I \theta - r_I\end{array}\right].
+$$
+In this way, informative hypothesis becomes $H_i:\ \beta_E=0, \beta_I>0$ and the prior mean vector is simply zero for the new parameter vector $\beta$. This parameter transformation from $\theta$ to $\beta$ simplifies the computation of the AAFBF.
+
+Note authors did not adjusted posterior mean since, according to large-sample theory, the prior has a negligible effect on the posterior for large samples. Thus, resulting prior and posterior distributions are:
+\begin{aligned}
+\text{Adjusted Prior: }& \pi_u^*(\beta|Y_b) \sim \mathcal{N}(0, \hat{\Sigma}_\beta/b),\\ \\
+\text{Posterior: }& \pi_u(\beta|Y) \sim \mathcal{N}(\hat{\beta}, \hat{\Sigma}_\beta).
+\end{aligned}
+Where $\hat{\beta} = R\hat{\theta}-r$ and $\hat{\Sigma}_\beta = R\hat{\Sigma}_\theta R^T$.
+
+## Present Study
+
+In our case, the unconstrained model is a Zero Inflated Poisson model with parameter vectors $\beta_p$ and $\beta_{\lambda}$ (see Section \@ref(model)): 
+
+\begin{aligned}
+y_i \sim& ZIPoisson(p_i, \lambda_i),\\ \\
+p_i =& \text{logit}^{-1}(X_i^T\beta_{p}),\\ \\
+\lambda_i =& \text{exp}(X_i^T\beta_{\lambda}).
+\end{aligned}
+
+We can assume independent priors for each parameter $\beta_i \sim \mathcal{N}(0, \sigma)$, with $\sigma$ a large enough so the priors are vague.
+
+To evaluate informative hypothesis with equality and inequality constraints, we can follow the approach presented in Section \@ref(in-eq-const) considering the method proposed by @mulderBayesFactorTesting2019, see Section \@ref(mulder).
+
+In our case, both the prior and the posterior distributions are normally distributed (TODO: is it true?):
+\begin{aligned}
+\text{Prior: }& \Pr(\beta) \sim \mathcal{N}(0, \Sigma_{\sigma}),\\ \\
+\text{Posterior: }& \Pr(\beta|Y) \sim \mathcal{N}(\hat{\beta}, \hat{\Sigma}_{\beta}).
+\end{aligned}
+Where $\Sigma_{\sigma}$ is a diagonal matrix with all the diagonal elements equal to $\sigma$. Whereas, $\mu_\theta$ and $\Sigma_\theta$ are the posterior mean and covariance matrix estimated from the posterior draws. Posterior sample can be easily obtained in STAN.
+
+## Issues
+
+1. Ha senso questo approccio?
+1. Come posso marginalizzare i valori delle densità? Vedi le loro formule (p.27 in basso).
+1. Come ottenere le distribuzioni condizionate? Vedi le loro formule negli articoli (p.28).
+1. Dovrei preferire invece  l'Approximated Adjusted Fractional Bayes Factors method?
+1. Nel modello ci saranno anche interazioni tra fattori, tutti i possibili gruppi. Devo pensare bene su come parametrizzare i contrasti.
+1. Non sappiamo ancora quali saranno tutti i constraints e confronti ma sono tutti confronti tra gruppi. Devo essere sicuro che vengano rispettate le assunzioni delle ipotesi se uso l'Approximated Adjusted Fractional Bayes Factors method. Vedi "comparable hypotheses" formula 24 in @guApproximatedAdjustedFractional2018.
+1. Potrei fare dell'hard coding codificando ogni gruppo con dummy variables. Non avrei "effetti principali" ma mi permette di evitare casini nel definire i confronti. (Nella codifica tradizionale i valori medi dei gruppi sarebbero dati da somme di più parametri, gli stessi parametri sarebbero usati per più gruppi e questo potrebbee compicare la definizione dei constraints sui parametri).
+1. Devo stare attento che le prior non favoriscano alcun constraints e questo è problematico con gli equality constraints. (Al massimo faccio un po' di sensitivity sulle prior)
+
+# Estimating the Constrained Model
+
+Hypothesis testing will idicate us the most likely model according to the data. To evaluate the model parameters, howevere, we need to estimate the parameter posteriors.
+
+Parameter posteriors of the unconstrained model can be simply obtained using MCMC sampling implemented in STAN. However, obtaining parameter posteriors of models including inequality constraints is not straightforward. Here we describe two possible direction: the first one based on STAN and the second one based Gibbs sampling.
+
+## STAN Approach
+
+Considering the thread in the STAN forum *"How to give prior to ordered parameters, and also to simplex?"* ([link](https://discourse.mc-stan.org/t/how-to-give-prior-to-ordered-parameters-and-also-to-simplex/12041)), there is one answer ([link](https://discourse.mc-stan.org/t/how-to-give-prior-to-ordered-parameters-and-also-to-simplex/12041/7?u=claudio.zandonella)) suggesting a possible solution based on uniform priors.
+
+Given the restriction $a<\theta_1<\theta_2<\theta_3<b$, is it possible to redefine parameters as follow
+$$
+d\theta_2:= \theta_2 - \theta_1,\\
+d\theta_3:= \theta_3 - \theta_2.
+$$
+Subsequentely, priors can be defined as
+$$
+\theta_1\sim \text{Unif}(a, b),\\
+d\theta_2\sim \text{Unif}(0, b-\theta_1),\\
+d\theta_3\sim \text{Unif}(0, b-\theta_2).
+$$
+Using Uniform prior is plausible as, selecting a range large enough, they can be considered uninformative and similar to a Normal distribution with very large $\sigma$. Note that in the present study, the sample size is large ($n\approx$900) so the posterior is not affected by the choice of vague priors.
+
+### Issues
+
+Questa soluzione l'ho trovata all'ultimo, devo ancora fare delle prove per capire quanto possa essere realmente valida. Ma comunque la segnalo perchè mi sembra interessante.
+
+Precedentemente cercavo se fosse possibile specificare prior normali con troncature. Il problema era che la troncatura dipenderebbe dagli altri parametri e quindi la stima diventerebba altamente instabile e le catene non convergono. 
+
+In effetti ridefinire i parametri e utilizzare delle uniformi sembra una buona soluzione. Solo non riesco a capire se ci saranno comunque problemi di convergenza delle catene e soprattutto la finale intertpretazione dei parametri.
+
+## Gibbs Sampler Approach
+
+@rodrigues-mottaZeroInflatedPoissonModel2007 implemented a Gibbs sampler for a ZIP model, whereas @ katoBayesianApproachInequality2006 presented a Gibbs sampler to estimate a model with inequality constraints using truncated normal distributions. We would like to put together the two methods in order to estimate a ZIP model with inequality constraints on the parameters.
+
+We first consider the Gibbs sampler without constraints. Subsequently we discuss how to introduce the inequality constraints.
+
+### Conditional Posterior Distributions
+
+In order to define the Gibbs sampler we need the joint posterior distribution from which to obtain the conditional distribution of each parameter. Let's define the elements of the posterior distribution.
+
+#### Likelihood {-}
+
+The likelihood of the ZIP model is 
+
+$$l(p,\lambda| \beta_p, \beta_{\lambda}, Y) = \prod_{y_i=0}\left[p_i + (1-p_i)e^{-\lambda_i}\right] \prod_{y_i\neq0}\left[ (1-p_i)\frac{\lambda_i^{y_i}e^{-\lambda_i}}{y_i!}\right]$$
+where $p_i$ and $\lambda_i$ are defined according to parameters vector $\beta_p$ and $\beta_{\lambda}$, respectively. In particular,
+$$
+p_i = \text{logit}^{-1}(X_i^T\beta_{p}),\\
+\lambda_i = \text{exp}(X_i^T\beta_{\lambda}).
+$$
+
+#### Prior{-}
+
+We can assume the same independent prior distribution for all parameters of $\beta_p$ and $\beta_{\lambda}$.
+
+$$\pi(\beta_p, \beta_{\lambda}) = \pi(\beta_p) \times \pi(\beta_{\lambda})$$
+For example we can assume
+$$
+\pi(\beta) \sim \mathcal{N}(0, \Sigma).
+$$
+
+#### Posterior{-}
+
+$$Pr(\beta_p, \beta_\lambda| Y) \propto l(p,\lambda| \beta_p, \beta_{\lambda}, Y) \times \pi(\beta_p, \beta_{\lambda_i})$$
+
+#### Conditional Posteriors {-}
+
+Ok onde evitare di scrivere cavolate non mi metto a ottenere le distribuzioni condizionate. Ho trovato varie cose in internet, sembra abbastanza diretto ma sinceramente andrei alla cieca perchè gli esempi riguardano casi in cui non si fa la regressione di $\lambda_i$ e $p_i$. Quindi dato che si parla di conjugate priors e tante altre cose di cui sono assai ignorante, non riesco a capire se quelle soluzioni sono utilizzabili anche nel nostro caso direttamente.
+
+Nel lavoro di @rodrigues-mottaZeroInflatedPoissonModel2007, inoltre, fanno una cosa strana nel senso che definiscono $\lambda = X\beta+\epsilon$ e oltre a mettere le prior sui parametri $\beta$ la mettono anche su $\lambda$. Non capisco:
+
+- perchè ci mettono il termine di errore $\epsilon$?
+- il fatto di mettere la prior anche su $\lambda$ è un loro modo strano per mettere la prior sul termine $\epsilon$? Dato che la distibuzione di $\lambda$ dovrebbe essere data dai $\beta$ e $\epsilon$.
+
+**Insomma la domanda è come ottengo le Conditional Posteriors Distributions da utilizzare nel Gibbs sampler?**
+
+### Including Inequality Constraints
+
+To include inequality constraints in the model, @katoBayesianApproachInequality2006 sampled each $\beta_j$ from a truncated normal distribution with some lower bound $b$
+and upper bound $c$, set equal to the other parameters according to the constrains. In particular, they sampled first a value $i$ from a uniform distribution on the interval (0,1) and then taking $\beta_j = \Phi_{\beta_j}^{-1}[\Phi_{\beta_j}(b) + i(\Phi_{\beta_j}(c)- \Phi_{\beta_j}(b))]$, where $\Phi_{\beta_j}$ denotes the standard normal cumulative probability function of $\beta_j$ evaluated at the argument.
+
+
+Ook che so geroglifici? Immagino sia l'inversa di una distribuzione troncata... Comunque mi sembra una soluzione plausibile. Poi guardando le formule del loro gibbs sampling è tutto un casino. Ma sembra fattibile no?
+
+
+## Issue 
+
+Vorrei poter stimare effettivamente i parametri del modello con i constraints per valutare quali sono gli effetti e non fermarmi al hypothesis testing con il BF. Penso che la soluzione del Gibbs sampling sia quella "più giusta" (o meno sbagliata ;) ) perchè quella con STAN non capisco bene se è realmente fattibile o meno.
+
+Il problema resta che comunque non saprei come ricavarmi le distribuzioni condizionate delle posteriro da usare per il Gibbs Sampling.
+
+Vorrei capire se 
+
+1. Ha senso questo approccio?
+2. Come poter procedere per creare il Gibbs sampling con inequlaity constraints
+
+# References

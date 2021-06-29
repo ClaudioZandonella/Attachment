@@ -1,0 +1,21 @@
+# R auxiliary files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Other files types
+
+# htlm output
+Todo.html
+Documents/*.html
+*.docx
+
+# Project folders
+
+# data_raw
+*.rda
+*.rds
+
+# Mac auxiliary files
+.DS_Store
