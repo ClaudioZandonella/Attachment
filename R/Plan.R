@@ -22,21 +22,30 @@ get_analysis_plan <- function(){
 
 
     #----    Cluster Analysis    ----
-    cluster_mother_tat = cluster_tatiana(data = data_munged, parent = "mother"),
-    cluster_father_tat = cluster_tatiana(data = data_munged, parent = "father"),
+    # Get cluster fit
+    cluster_mother_fit = get_cluster_fit(data = data_munged, parent = "mother"),
+    cluster_father_fit = get_cluster_fit(data = data_munged, parent = "father"),
 
-    data_cluster_tat = cbind(data_munged,
-                             cluster_mother_tat = get_cluster_var(cluster_mother_tat),
-                             cluster_father_tat = get_cluster_var(cluster_father_tat)),
+    # Get cluster data
+    data_cluster = get_data_cluster(data = data_munged,
+                                    cluster_mother_fit = cluster_mother_fit,
+                                    cluster_father_fit = cluster_father_fit),
 
     # mclust check
-    mclust_mother = mclust_BIC(data = data_cluster_tat, parent = "mother"),
-    mclust_father = mclust_BIC(data = data_cluster_tat, parent = "father"),
+    mclust_mother = mclust_BIC(data = data_munged,
+                               class = data_cluster$cluster_mother,
+                               parent = "mother"),
+    mclust_father = mclust_BIC(data = data_munged,
+                               class = data_cluster$cluster_father,
+                               parent = "father"),
 
+    #----    ZIP analysis    ----
 
     #----    brms Models    ----
-    fit_int = zip_brms(data_cluster_tat),
-    stan_data = make_stan_data(data = data_cluster_tat)
+    fit_int_additive = zip_brms(data = data_cluster,
+                                y = "internalizing_sum",
+                                formula = "gender + cluster_mother + cluster_father"),
+    stan_data = make_stan_data(data = data_cluster)
   )
 }
 

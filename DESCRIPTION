@@ -24,10 +24,16 @@ Description: Analysis of atttachemnet theory
 License: 
 Encoding: UTF-8
 Depends:
-    tidyverse,
-    devtools
+    devtools,
+    tidyverse
 Imports:
-    rmarkdown
+    bookdown,
+    brms,
+    kableExtra,
+    mclust,
+    rmarkdown,
+    sciplot,
+    visNetwork
 Suggests: 
     knitr,
     testthat (>= 3.0.0)

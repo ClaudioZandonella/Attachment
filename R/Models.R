@@ -4,11 +4,13 @@
 
 #-----    zip_brms    ----
 
-zip_brms <- function(data){
+zip_brms <- function(data, y, formula){
 
-  fit <- brms::brm(brms::bf(
-      internalizing_sum ~ genere + cluster_mother_tat + cluster_father_tat,
-      zi ~ genere + cluster_mother_tat + cluster_father_tat),
+  formula_lambda <- paste0("internalizing_sum ~ ", formula)
+  formula_zi <- paste0("zi ~ ", formula)
+
+  fit <- brms::brm(brms::bf(as.formula(formula_lambda),
+                            as.formula(formula_zi)),
     data = data, family = brms::zero_inflated_poisson())
 
   return(fit)
@@ -16,10 +18,10 @@ zip_brms <- function(data){
 
 #----    make_stan_data    ----
 
-make_stan_data <- function(data = data_cluster_tat){
+make_stan_data <- function(data){
   formula <-  brms::bf(
-    internalizing_sum ~ genere + cluster_mother_tat + cluster_father_tat,
-    zi ~ genere + cluster_mother_tat + cluster_father_tat)
+    internalizing_sum ~ gender + cluster_mother + cluster_father,
+    zi ~ gender + cluster_mother + cluster_father)
 
   formula <- brms:::validate_formula(formula, data = data, family = brms::zero_inflated_poisson(),
                                      autocor = NULL, sparse = NULL, cov_ranef = NULL)

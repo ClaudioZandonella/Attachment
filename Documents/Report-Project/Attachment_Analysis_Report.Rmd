@@ -36,9 +36,9 @@ path_drake <- "../../.drake"
 drake::loadd(data_munged)
 
 # Cluster
-drake::loadd(cluster_mother_tat)
-drake::loadd(cluster_father_tat)
-drake::loadd(data_cluster_tat)
+drake::loadd(cluster_mother_fit)
+drake::loadd(cluster_father_fit)
+drake::loadd(data_cluster)
 drake::loadd(mclust_mother)
 drake::loadd(mclust_father)
 
@@ -55,15 +55,15 @@ drake::loadd(fit_int)
 ### Externalizing
 ```{r}
 ggplot(data_munged) +
-  geom_bar(aes(x = externalizing_sum, fill = genere), alpha = 0.7) +
-  facet_grid(genere ~ .)
+  geom_bar(aes(x = externalizing_sum, fill = gender), alpha = 0.7) +
+  facet_grid(gender ~ .)
 ```
 
 ### Internalizing
 ```{r}
 ggplot(data_munged) +
-  geom_bar(aes(x = internalizing_sum, fill = genere), alpha = 0.7) +
-  facet_grid(genere ~ .)
+  geom_bar(aes(x = internalizing_sum, fill = gender), alpha = 0.7) +
+  facet_grid(gender ~ .)
 ```
 
 
@@ -72,28 +72,28 @@ ggplot(data_munged) +
 ## Mother
 
 ```{r}
-plot(cluster_mother_tat, main = "Dendrogramma")
-rect.hclust(cluster_mother_tat, k=4, border="red")
+plot(cluster_mother_fit, main = "Dendrogramma")
+rect.hclust(cluster_mother_fit, k=4, border="red")
 ```
 
 Frequencies
 
 ```{r, echo = TRUE}
-table(data_cluster_tat$cluster_mother_tat)
+table(data_cluster$cluster_mother)
 
-prop.table(table(data_cluster_tat$cluster_mother_tat))
+prop.table(table(data_cluster$cluster_mother))
 
-prop.table(table(data_cluster_tat$cluster_mother_tat,
-                 data_cluster_tat$genere),2) 
+prop.table(table(data_cluster$cluster_mother,
+                 data_cluster$gender),2) 
 
-summary(table(data_cluster_tat$cluster_mother_tat,
-              data_cluster_tat$genere))
+summary(table(data_cluster$cluster_mother,
+              data_cluster$gender))
 ```
 
 Plot Scores
 
 ```{r}
-plot_scores_mother(data = data_cluster_tat)
+plot_scores_mother(data = data_cluster)
 ```
 
 #### Mclust check
@@ -107,28 +107,28 @@ summary(mclust_mother)
 ## Father
 
 ```{r}
-plot(cluster_father_tat, main = "Dendrogramma")
-rect.hclust(cluster_father_tat, k=4, border="red")
+plot(cluster_father_fit, main = "Dendrogramma")
+rect.hclust(cluster_father_fit, k=4, border="red")
 ```
 
 Frequencies
 
 ```{r, echo = TRUE}
-table(data_cluster_tat$cluster_father_tat)
+table(data_cluster$cluster_father)
 
-prop.table(table(data_cluster_tat$cluster_father_tat))
+prop.table(table(data_cluster$cluster_father))
 
-prop.table(table(data_cluster_tat$cluster_father_tat,
-                 data_cluster_tat$genere),2) 
+prop.table(table(data_cluster$cluster_father,
+                 data_cluster$gender),2) 
 
-summary(table(data_cluster_tat$cluster_father_tat,
-              data_cluster_tat$genere))
+summary(table(data_cluster$cluster_father,
+              data_cluster$gender))
 ```
 
 Plot Scores
 
 ```{r}
-plot_scores_father(data = data_cluster_tat)
+plot_scores_father(data = data_cluster)
 ```
 
 #### Mclust check
@@ -448,9 +448,9 @@ brms::conditional_effects(fit_int, ask= FALSE)
 
 ```{r, echo = TRUE}
 brms::get_prior(brms::bf(
-      internalizing_sum ~ genere + cluster_mother_tat + cluster_father_tat,
-      zi ~ genere + cluster_mother_tat + cluster_father_tat),
-      data = data_cluster_tat,
+      internalizing_sum ~ gender + cluster_mother + cluster_father,
+      zi ~ gender + cluster_mother + cluster_father),
+      data = data_cluster,
       family = brms::zero_inflated_poisson())
 ```
 

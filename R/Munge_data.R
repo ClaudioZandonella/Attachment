@@ -5,11 +5,16 @@
 #-----    munge_data    ----
 
 munge_data <- function(data){
-  data <- data[data$age_year<12.30,]
-  data <- subset(data, data$fas !="NA")
+
+  # TODO ask Tatiana
+  # data <- data[data$age_year<12.30,]
+  # data <- subset(data, data$fas !="NA")
 
   data <- data %>%
-    mutate_at(c("externalizing_sum", "internalizing_sum"), round, 0)
+    rename("gender" = "genere") %>%
+    mutate_at(c("externalizing_sum", "internalizing_sum"), round, 0) %>%
+    select(c("ID","externalizing_sum", "internalizing_sum", "gender",
+             starts_with(c("o_ecr", "Av", "Anx"))))
 
   return(data)
 }

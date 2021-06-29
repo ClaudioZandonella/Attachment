@@ -39,20 +39,20 @@ drake::loadd(data_munged)
 #---- cluster ----
 
 # cluster tat
-drake::loadd(cluster_mother_tat)
-drake::loadd(cluster_father_tat)
+drake::loadd(cluster_mother_fit)
+drake::loadd(cluster_father_fit)
 
-plot(cluster_mother_tat, main = "Dendrogramma")
-rect.hclust(cluster_mother_tat, k=4, border="red")
-plot(cluster_father_tat, main = "Dendrogramma")
-rect.hclust(cluster_father_tat, k=4, border="red")
+plot(cluster_mother_fit, main = "Dendrogramma")
+rect.hclust(cluster_mother_fit, k=4, border="red")
+plot(cluster_father_fit, main = "Dendrogramma")
+rect.hclust(cluster_father_fit, k=4, border="red")
 
-drake::loadd(data_cluster_tat)
-table(data_cluster_tat$cluster_mother_tat)
-table(data_cluster_tat$cluster_father_tat)
+drake::loadd(data_cluster)
+table(data_cluster$cluster_mother)
+table(data_cluster$cluster_father)
 
-plot_scores_mother(data = data_cluster_tat)
-plot_scores_father(data = data_cluster_tat)
+plot_scores_mother(data = data_cluster)
+plot_scores_father(data = data_cluster)
 
 # mclust
 drake::loadd(mclust_mother)
@@ -66,16 +66,16 @@ summary(mclust_father)
 
 #---- brms models ----
 
-drake::loadd(fit_int)
+drake::loadd(fit_int_additive)
 
-summary(fit_int)
-plot(brms::conditional_effects(fit_int), ask = FALSE)
+summary(fit_int_additive)
+plot(brms::conditional_effects(fit_int_additive), ask = FALSE)
 
-plot(fit_int)
+plot(fit_int_additive)
 
 drake::loadd(stan_data)
 
-str(fit_int$fit)
+str(fit_int_additive$fit)
 #-----
 
 
