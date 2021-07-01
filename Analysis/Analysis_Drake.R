@@ -64,21 +64,69 @@ summary(mclust_mother)
 plot(mclust_father)
 summary(mclust_father)
 
+#---- ZIP analysisi ----
+drake::loadd(fit_int_poisson)
+car::Anova(fit_int_poisson)
+summary(fit_int_poisson)
+
+drake::loadd(test_zero_inflated)
+test_zero_inflated
+
+#---- anova approach ----
+drake::loadd(fit_int_zip)
+car::Anova(fit_int_zip) # https://rcompanion.org/handbook/J_01.html see "Zero-inflated regression example"
+
+summary(fit_int_zip)
+
+rcompanion::nagelkerke(fit_int_zip)
 #---- brms models ----
 
-drake::loadd(fit_int_additive)
+drake::loadd(waic_weights)
+drake::loadd(loo_weights)
 
-summary(fit_int_additive)
-plot(brms::conditional_effects(fit_int_additive), ask = FALSE)
+drake::loadd(brm_int_mother)
 
-plot(fit_int_additive)
+summary(brm_int_mother)
+plot(brm_int_mother)
+plot(brms::conditional_effects(brm_int_mother), ask = FALSE)
+
+brms::pp_check(brm_int_mother, nsamples = 100)
+
+#---- BF encompassing priors ----
+
+drake::loadd(prior_model)
+
+#----
 
 drake::loadd(stan_data)
 
-str(fit_int_additive$fit)
+str(brm_int_additive$fit)
+
 #-----
+drake::loadd(brm_int_zero)
+drake::loadd(brm_int_mother)
+drake::loadd(brm_int_additive)
 
 
+#----
 
+ggplot(data_cluster) +
+  geom_histogram(aes(x = internalizing_sum, fill = cluster_mother),alpha = .7, bins = 20) +
+  facet_grid(cluster_mother ~ .)
+
+#----
+data_plot <- brms::posterior_samples(prior_model, pars = c("b_cluster_motheranxious", "b_cluster_motheravoidant"))
+ggplot(data_plot, aes(x=b_cluster_motheranxious, y=b_cluster_motheravoidant) ) +
+  geom_density_2d()
+
+#----
+
+condMVNorm
+
+condMVNorm::dcmvnorm(c(0,0), mean = c(0,0,0), sigma = diag(3),
+                     dependent.ind=c(1,2), given.ind=c(3), X.given = c(0))
+
+condMVNorm::pcmvnorm(lower = rep(-Inf,1), upper = rep(0,1), mean = c(0,0), sigma = diag(2),
+                     dependent.ind=c(1), given.ind=c(2), X.given = c(0))
 
 #----

@@ -11,9 +11,42 @@ zip_brms <- function(data, y, formula){
 
   fit <- brms::brm(brms::bf(as.formula(formula_lambda),
                             as.formula(formula_zi)),
-    data = data, family = brms::zero_inflated_poisson())
+    data = data, family = brms::zero_inflated_poisson(), cores = 4)
 
+  fit <- brms::add_criterion(fit, criterion = c("loo", "waic"))
   return(fit)
+}
+
+#----    get_waic_weights    ----
+
+get_rel_weights <- function(..., ic = c("waic", "loo")){
+  ic <- match.arg(ic)
+
+  names_fit <- as.list(match.call(), )[-1] %>%
+    as.character(.)
+
+  if(ic %in% names_fit) names_fit <- names_fit[which(names_fit != ic)]
+
+  list_fit <- list(...)
+
+  if(ic == "waic"){
+    fit_ics <- lapply(list_fit, FUN = function(x){
+      brms::waic(x)$estimates["waic", 1]
+      })
+  } else {
+    fit_ics <- lapply(list_fit, FUN = function(x){
+      brms::loo(x)$estimates["looic", 1]
+    })
+  }
+
+
+  res <- data.frame(names = names_fit,
+                    ic = unlist(fit_ics)) %>%
+    mutate(diff_ic=max(ic)-ic,         # Compute difference
+           rel_lik=exp(diff_ic/2),       # Compute relative likelihood
+           weights=rel_lik/sum(rel_lik))
+
+  return(res)
 }
 
 #----    make_stan_data    ----

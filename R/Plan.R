@@ -40,12 +40,47 @@ get_analysis_plan <- function(){
                                parent = "father"),
 
     #----    ZIP analysis    ----
+    fit_int_poisson = glm(internalizing_sum ~ cluster_mother * cluster_father,
+                          data = data_cluster, family = "poisson"),
+    test_zero_inflated = performance::check_zeroinflation(fit_int_poisson),
+
+    #----    anova approach ----
+    fit_int_zip = pscl::zeroinfl(internalizing_sum ~ cluster_mother * cluster_father,
+                                 dist = "poisson", data = data_cluster),
 
     #----    brms Models    ----
-    fit_int_additive = zip_brms(data = data_cluster,
+    brm_int_zero = zip_brms(data = data_cluster,
+                            y = "internalizing_sum",
+                            formula = "1"),
+    brm_int_mother = zip_brms(data = data_cluster,
+                              y = "internalizing_sum",
+                              formula = "cluster_mother"),
+    brm_int_additive = zip_brms(data = data_cluster,
                                 y = "internalizing_sum",
-                                formula = "gender + cluster_mother + cluster_father"),
-    stan_data = make_stan_data(data = data_cluster)
+                                formula = "cluster_mother + cluster_father"),
+
+    # brm_int_interaction = zip_brms(data = data_cluster,
+    #                                y = "internalizing_sum",
+    #                                formula = "cluster_mother * cluster_father"),
+
+    # stan_data = make_stan_data(data = data_cluster)
+
+    waic_weights = get_rel_weights(brm_int_zero,
+                                   brm_int_mother,
+                                   brm_int_additive, ic = "waic"),
+    loo_weights = get_rel_weights(brm_int_zero,
+                                  brm_int_mother,
+                                  brm_int_additive, ic = "loo"),
+
+    #----    BF encompassing priors    ----
+
+    prior_spec = brms::set_prior("normal(0,5)", class = c("b"), dpar = c("", "zi")),
+    prior_model = brms::brm(brms::bf(internalizing_sum ~ cluster_mother + cluster_father,
+                                     zi ~ cluster_mother + cluster_father),
+                            data = data_cluster, family = brms::zero_inflated_poisson(),
+                            prior = prior_spec, cores = 4, sample_prior = "only",
+                            iter = 5000, warmup = 0)
+
   )
 }
 
