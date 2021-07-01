@@ -7,8 +7,7 @@
 # Other files types
 
 # htlm output
-Todo.html
-Documents/*.html
+*.html
 *.docx
 
 # Project folders
