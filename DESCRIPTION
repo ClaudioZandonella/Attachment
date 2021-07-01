@@ -29,8 +29,11 @@ Depends:
 Imports:
     bookdown,
     brms,
+    car,
     kableExtra,
     mclust,
+    performance,
+    pscl,
     rmarkdown,
     sciplot,
     visNetwork
