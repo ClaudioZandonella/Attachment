@@ -26,5 +26,5 @@ editor_options:
 \end{align}
 Doing this we get informative hypotheses as $H_i: \beta_{eq} = 0,\ \beta_{ineeq}>0$, so prior specification is semplified and with simmetric prior we do  not favoir any constraint. Exception for range constraints of type $a<\theta<b$.
 
-- [X] Marginal densities of a multivariate normal distribution are obtained simply dropping irreleevantt variables ([link math-stackexchange](https://math.stackexchange.com/questions/2528201/find-the-marginal-distributions-pdfs-of-a-multivariate-normal-distribution)
+- [X] Marginal densities of a multivariate normal distribution are obtained simply dropping irreleevantt variables ([link math-stackexchange](https://math.stackexchange.com/questions/2528201/find-the-marginal-distributions-pdfs-of-a-multivariate-normal-distribution))
 

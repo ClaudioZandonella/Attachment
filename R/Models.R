@@ -53,8 +53,8 @@ get_rel_weights <- function(..., ic = c("waic", "loo")){
 
 make_stan_data <- function(data){
   formula <-  brms::bf(
-    internalizing_sum ~ gender + cluster_mother + cluster_father,
-    zi ~ gender + cluster_mother + cluster_father)
+    internalizing_sum ~ cluster_mother + cluster_father,
+    zi ~ cluster_mother + cluster_father)
 
   formula <- brms:::validate_formula(formula, data = data, family = brms::zero_inflated_poisson(),
                                      autocor = NULL, sparse = NULL, cov_ranef = NULL)

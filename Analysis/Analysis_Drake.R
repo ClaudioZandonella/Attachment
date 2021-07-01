@@ -107,7 +107,7 @@ drake::loadd(brm_int_zero)
 drake::loadd(brm_int_mother)
 drake::loadd(brm_int_additive)
 
-
+brms::conditional_effects(brm_int_additive)
 #----
 
 ggplot(data_cluster) +
@@ -115,16 +115,36 @@ ggplot(data_cluster) +
   facet_grid(cluster_mother ~ .)
 
 #----
-data_plot <- brms::posterior_samples(prior_model, pars = c("b_cluster_motheranxious", "b_cluster_motheravoidant"))
-ggplot(data_plot, aes(x=b_cluster_motheranxious, y=b_cluster_motheravoidant) ) +
-  geom_density_2d()
+
+data_plot <- brms::posterior_samples(brm_int_additive, pars = c("b_cluster_motheranxious", "b_cluster_motheravoidant"))
+
+mu <- apply(data_plot,2, mean)[c(1,3)]
+cov <- cov(data_plot[, c(1,3)])
+
+data_grid <- expand.grid(s_1 = seq(0, .3, length.out=100), s_2 = seq(-.1, .25, length.out=100))
+q_samp <- cbind(data_grid, prob = mvtnorm::dmvnorm(data_grid, mean = mu, sigma = cov))
+
+ggplot(data_plot) +
+  geom_density_2d(aes(x=b_cluster_motheranxious, y=b_cluster_motheravoidant)) +
+  geom_contour(data = q_samp, aes(x=s_1, y=s_2, z=prob), col = "black")
 
 #----
 
 condMVNorm
 
-condMVNorm::dcmvnorm(c(0,0), mean = c(0,0,0), sigma = diag(3),
-                     dependent.ind=c(1,2), given.ind=c(3), X.given = c(0))
+mvtnorm::dmvnorm(x = c(0,0), mean = c(0,0), sigma = diag(2)*10)
+
+condMVNorm::dcmvnorm(c(0), mean = c(0,0), sigma = diag(2)*10,
+                     dependent.ind=c(1), given.ind=c(2), X.given = c(0))
+
+obs <- condMVNorm::rcmvnorm(n = 1e4, mean = c(0,0,0), sigma = diag(3),
+                            dependent.ind=c(1,2), given.ind=c(3), X.given = c(0))
+
+res <- apply(obs, 1, function(x){
+  condMVNorm::dcmvnorm(x, mean = c(0,0,0), sigma = diag(3),
+                       dependent.ind=c(1,2), given.ind=c(3), X.given = c(0), log = TRUE)
+})
+mean(res)
 
 condMVNorm::pcmvnorm(lower = rep(-Inf,1), upper = rep(0,1), mean = c(0,0), sigma = diag(2),
                      dependent.ind=c(1), given.ind=c(2), X.given = c(0))
