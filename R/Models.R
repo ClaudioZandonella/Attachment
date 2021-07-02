@@ -6,8 +6,13 @@
 
 zip_brms <- function(data, y, formula){
 
-  formula_lambda <- paste0("internalizing_sum ~ ", formula)
-  formula_zi <- paste0("zi ~ ", formula)
+  if(!is.list(formula)){
+    formula <- list(formula,
+                    formula)
+  }
+
+  formula_lambda <- paste0(y ," ~ ", formula[[1]])
+  formula_zi <- paste0("zi ~ ", formula[[2]])
 
   fit <- brms::brm(brms::bf(as.formula(formula_lambda),
                             as.formula(formula_zi)),
@@ -51,10 +56,16 @@ get_rel_weights <- function(..., ic = c("waic", "loo")){
 
 #----    make_stan_data    ----
 
-make_stan_data <- function(data){
+make_stan_data <- function(data, formula = "mother + father"){
+
+  if(!is.list(formula)){
+    formula <- list(formula,
+                    formula)
+  }
+
   formula <-  brms::bf(
-    internalizing_sum ~ cluster_mother + cluster_father,
-    zi ~ cluster_mother + cluster_father)
+    as.formula(paste0("internalizing_sum ~ ", formula[[1]])),
+    as.formula(paste0("zi ~ ", formula[[2]])))
 
   formula <- brms:::validate_formula(formula, data = data, family = brms::zero_inflated_poisson(),
                                      autocor = NULL, sparse = NULL, cov_ranef = NULL)

@@ -21,7 +21,7 @@ drake::vis_drake_graph(config, font_size = 16, targets_only = FALSE)
 #----    Make    ----
 
 # Delate the analysis results
-# drake::clean(destroy = TRUE)
+# drake::clean('brm_ext_mother', destroy = TRUE)
 
 # Run the analysis
 drake::make(prework = "devtools::load_all()",
@@ -81,8 +81,9 @@ summary(fit_int_zip)
 rcompanion::nagelkerke(fit_int_zip)
 #---- brms models ----
 
-drake::loadd(waic_weights)
-drake::loadd(loo_weights)
+# internalizing
+drake::loadd(waic_weights_int)
+drake::loadd(loo_weights_int)
 
 drake::loadd(brm_int_mother)
 
@@ -91,6 +92,18 @@ plot(brm_int_mother)
 plot(brms::conditional_effects(brm_int_mother), ask = FALSE)
 
 brms::pp_check(brm_int_mother, nsamples = 100)
+
+# Externalizing
+drake::loadd(waic_weights_ext)
+drake::loadd(loo_weights_ext)
+
+drake::loadd(brm_ext_mother)
+
+summary(brm_ext_mother)
+plot(brm_ext_mother)
+plot(brms::conditional_effects(brm_ext_mother), ask = FALSE)
+
+brms::pp_check(brm_ext_mother, nsamples = 100)
 
 #---- BF encompassing priors ----
 

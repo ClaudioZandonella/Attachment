@@ -35,15 +35,6 @@ path_drake <- "../../.drake"
 # Data
 drake::loadd(data_munged)
 
-# Cluster
-drake::loadd(cluster_mother_tat)
-drake::loadd(cluster_father_tat)
-drake::loadd(data_cluster_tat)
-drake::loadd(mclust_mother)
-drake::loadd(mclust_father)
-
-# brms models
-drake::loadd(fit_int)
 ```
 
 In this Reeport we describe the statistical approach. First we define the statistical model used to describe the data generative process. Subsequently, the approach for testing hypotheses with inequality and equality constraints is discussed. Finally, the Gibbs sampler to estimate the model with inequality constraints is presented.
@@ -338,4 +329,16 @@ Vorrei capire se
 1. Ha senso questo approccio?
 2. Come poter procedere per creare il Gibbs sampling con inequlaity constraints
 
+# TODO
+
+## Bayes Factor Encompassing Priors
+
+- [ ] Reparametrize model according to: 
+\begin{align}
+&\beta_{eq} = R_{eq}\theta - r_{eq},\\
+&\beta_{ineq} = R_{ineq}\theta - r_{ineq}.
+\end{align}
+Doing this we get informative hypotheses as $H_i: \beta_{eq} = 0,\ \beta_{ineeq}>0$, so prior specification is semplified and with simmetric prior we do  not favoir any constraint. Exception for range constraints of type $a<\theta<b$.
+
+- [X] Marginal densities of a multivariate normal distribution are obtained simply dropping irreleevantt variables ([link math-stackexchange](https://math.stackexchange.com/questions/2528201/find-the-marginal-distributions-pdfs-of-a-multivariate-normal-distribution))
 # References

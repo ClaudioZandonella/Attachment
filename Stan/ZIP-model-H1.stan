@@ -111,8 +111,9 @@ transformed data {
 }
 parameters {
   // lambda regression parameters
+  real b_gender;
   vector[3] db_mother; // order constraints mother
-  vector[3] b_father; // parameters farther
+  // vector[3] b_father; // parameters farther
   real Intercept;  // temporary intercept for centered predictors
 
   // zi regression parameters
@@ -122,10 +123,11 @@ parameters {
 transformed parameters {
   vector[Kc] b;  // population-level effects
 
-  b[1] = db_mother[1];
-  b[2] = db_mother[2];
-  b[3] = b[1] + db_mother[3];
-  b[4:6] = b_father;
+  b[1] = b_gender;
+  b[2] = db_mother[1];
+  b[3] = db_mother[2];
+  b[4] = b[2] + db_mother[3];
+  // b[4:6] = b_father;
 }
 model {
   // likelihood including constants
@@ -140,7 +142,7 @@ model {
   }
   // priors including constants
   target += normal_lpdf(db_mother | 0, 5);
-  target += normal_lpdf(b_father | 0, 5);
+  // target += normal_lpdf(b_father | 0, 5);
   target += normal_lpdf(b_zi | 0, 5);
   target += student_t_lpdf(Intercept | 3, 0.7, 2.5);
   target += logistic_lpdf(Intercept_zi | 0, 1);

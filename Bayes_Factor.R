@@ -2,12 +2,12 @@ library(rstan)
 options(mc.cores = 4)
 rstan_options(auto_write = TRUE)
 
-stan_data <- make_stan_data(data_cluster)
+stan_data <- make_stan_data(data_cluster, formula = list("gender + mother", "gender"))
 fit_H1 <- stan(file = "Stan/ZIP-model-H1.stan", data = stan_data)
 
 round(summary(fit_H1)$summary[, "mean"],2)
 
-round(brms::posterior_summary(brm_int_additive)[, "Estimate"],2)
+round(brms::posterior_summary(brm_int_mother)[, "Estimate"],2)
 
 post_H1 <- as.matrix(fit_H1, pars = c("db_mother[1]", "db_mother[2]", "db_mother[3]"))
 
@@ -50,3 +50,17 @@ post_cond_prob <- condMVNorm::pcmvnorm(
 BF_H1 <- (post_den_eq * post_cond_prob) / (prior_den_eq * prior_cond_prob)
 
 #----
+stan_data <- make_stan_data(data_cluster, formula = list("cluster_mother * cluster_father", "gender"))
+fit_int <- stan(file = "Stan/ZIP-model.stan", data = stan_data)
+
+plot(fit_int)
+traceplot(fit_int, pars = "b_zi")
+#----
+
+fit_int_zip = pscl::zeroinfl(externalizing_sum ~ gender + cluster_mother * cluster_father,
+                             dist = "poisson", data = data_cluster)
+car::Anova(fit_int_zip)
+summary(fit_int_zip)
+rcompanion::nagelkerke(fit_int_zip)
+
+

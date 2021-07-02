@@ -13,7 +13,7 @@ munge_data <- function(data){
   data <- data %>%
     rename("gender" = "genere") %>%
     mutate_at(c("externalizing_sum", "internalizing_sum"), round, 0) %>%
-    select(c("ID","externalizing_sum", "internalizing_sum", "gender",
+    select(c("ID","externalizing_sum", "internalizing_sum", "gender", "age_year",
              starts_with(c("o_ecr", "Av", "Anx"))))
 
   return(data)

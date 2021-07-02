@@ -26,21 +26,42 @@ get_data_cluster <- function(data, cluster_mother_fit, cluster_father_fit){
   cluster_mother_lev <- as.factor(cutree(cluster_mother_fit, k=4))
   cluster_father_lev <- as.factor(cutree(cluster_father_fit, k=4))
 
+  levels_interaction <- c(
+    'M_Secure_F_Secure',
+    'M_Secure_F_Anxious',
+    'M_Secure_F_Avoidant',
+    'M_Secure_F_Anxious_avoidant',
+    'M_Anxious_F_Secure',
+    'M_Anxious_F_Anxious',
+    'M_Anxious_F_Avoidant',
+    'M_Anxious_F_Anxious_avoidant',
+    'M_Avoidant_F_Secure',
+    'M_Avoidant_F_Anxious',
+    'M_Avoidant_F_Avoidant',
+    'M_Avoidant_F_Anxious_avoidant',
+    'M_Anxious_avoidant_F_Secure',
+    'M_Anxious_avoidant_F_Anxious',
+    'M_Anxious_avoidant_F_Avoidant',
+    'M_Anxious_avoidant_F_Anxious_avoidant'
+    )
+
   data_cluster <- cbind(data,
-                        cluster_mother = cluster_mother_lev,
-                        cluster_father = cluster_father_lev) %>%
-    mutate(cluster_mother = fct_recode(cluster_mother,
-                                       secure = "1",
-                                       anxious = "2",
-                                       anxious_avoidant = "3",
-                                       avoidant = "4"),
-           cluster_mother = fct_relevel(cluster_mother,
-                                        c("secure", "anxious", "avoidant", "anxious_avoidant")),
-           cluster_father = fct_recode(cluster_father,
-                                       secure = "1",
-                                       anxious = "2",
-                                       avoidant = "3",
-                                       anxious_avoidant = "4")) %>%
+                        mother = cluster_mother_lev,
+                        father = cluster_father_lev) %>%
+    mutate(mother = fct_recode(mother,
+                               Secure = "1",
+                               Anxious = "2",
+                               Anxious_avoidant = "3",
+                               Avoidant = "4"),
+           mother = fct_relevel(mother,
+                                c("Secure", "Anxious", "Avoidant", "Anxious_avoidant")),
+           father = fct_recode(father,
+                               Secure = "1",
+                               Anxious = "2",
+                               Avoidant = "3",
+                               Anxious_avoidant = "4"),
+           interaction = factor(paste0("M_", mother, "_F_",father),
+                                levels = levels_interaction)) %>%
     select(-starts_with("o_ecr"))
 
   return(data_cluster)
@@ -52,7 +73,7 @@ plot_scores_mother <- function(data){
   fattore=rep(c("Ansia","Evitamento"),rep(dim(data)[1],2))
   y=c(scale(data$Anxm),scale(data$Avm))
   y1=c(data$Anxm,data$Avm)
-  gruppo=rep(data$cluster_mother,2)
+  gruppo=rep(data$mother,2)
   dprof=data.frame(y,y1,fattore,gruppo)
 
 
@@ -64,7 +85,7 @@ plot_scores_father <- function(data){
   fattore=rep(c("Ansia","Evitamento"),rep(dim(data)[1],2))
   y=c(scale(data$Anxp),scale(data$Avp))
   y1=c(data$Anxp,data$Avp)
-  gruppo=rep(data$cluster_father,2)
+  gruppo=rep(data$father,2)
   dprof=data.frame(y,y1,fattore,gruppo)
 
   dprof$nomi.gruppi=factor(dprof$gruppo,labels=c("Gruppo1: Sicuri (n = 207)","Gruppo 2: Ansiosi (n = 253)","Gruppo 3: Evitanti (n = 294)","Gruppo 4: Ansiosi-Evitanti (n = 100)"))

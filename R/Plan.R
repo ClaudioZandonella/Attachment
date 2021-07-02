@@ -33,53 +33,87 @@ get_analysis_plan <- function(){
 
     # mclust check
     mclust_mother = mclust_BIC(data = data_munged,
-                               class = data_cluster$cluster_mother,
+                               class = data_cluster$mother,
                                parent = "mother"),
     mclust_father = mclust_BIC(data = data_munged,
-                               class = data_cluster$cluster_father,
+                               class = data_cluster$father,
                                parent = "father"),
 
     #----    ZIP analysis    ----
-    fit_int_poisson = glm(internalizing_sum ~ cluster_mother * cluster_father,
+    fit_int_poisson = glm(internalizing_sum ~ gender + mother * father,
                           data = data_cluster, family = "poisson"),
     test_zero_inflated = performance::check_zeroinflation(fit_int_poisson),
 
     #----    anova approach ----
-    fit_int_zip = pscl::zeroinfl(internalizing_sum ~ cluster_mother * cluster_father,
+    fit_int_zip = pscl::zeroinfl(internalizing_sum ~ gender + mother * father| gender,
                                  dist = "poisson", data = data_cluster),
 
-    #----    brms Models    ----
+    #----    brms Models int    ----
     brm_int_zero = zip_brms(data = data_cluster,
                             y = "internalizing_sum",
-                            formula = "1"),
+                            formula = list("gender",
+                                           "gender")),
     brm_int_mother = zip_brms(data = data_cluster,
                               y = "internalizing_sum",
-                              formula = "cluster_mother"),
+                              formula = list("gender + mother",
+                                             "gender")),
     brm_int_additive = zip_brms(data = data_cluster,
                                 y = "internalizing_sum",
-                                formula = "cluster_mother + cluster_father"),
-
-    # brm_int_interaction = zip_brms(data = data_cluster,
-    #                                y = "internalizing_sum",
-    #                                formula = "cluster_mother * cluster_father"),
+                                formula = list("gender + mother + father",
+                                               "gender")),
+    brm_int_inter = zip_brms(data = data_cluster,
+                                y = "internalizing_sum",
+                                formula = list("gender + mother * father",
+                                               "gender")),
 
     # stan_data = make_stan_data(data = data_cluster)
 
-    waic_weights = get_rel_weights(brm_int_zero,
-                                   brm_int_mother,
-                                   brm_int_additive, ic = "waic"),
-    loo_weights = get_rel_weights(brm_int_zero,
-                                  brm_int_mother,
-                                  brm_int_additive, ic = "loo"),
+    waic_weights_int = get_rel_weights(brm_int_zero,
+                                       brm_int_mother,
+                                       brm_int_additive,
+                                       brm_int_inter, ic = "waic"),
+    loo_weights_int = get_rel_weights(brm_int_zero,
+                                      brm_int_mother,
+                                      brm_int_additive,
+                                      brm_int_inter, ic = "loo"),
+
+    # #----    brms Models ext    ----
+    # brm_ext_zero = zip_brms(data = data_cluster,
+    #                         y = "externalizing_sum",
+    #                         formula = list("gender",
+    #                                        "gender")),
+    # brm_ext_mother = zip_brms(data = data_cluster,
+    #                           y = "externalizing_sum",
+    #                           formula = list("gender + mother",
+    #                                          "gender")),
+    # brm_ext_additive = zip_brms(data = data_cluster,
+    #                             y = "externalizing_sum",
+    #                             formula = list("gender + mother + father",
+    #                                            "gender")),
+    # brm_ext_inter = zip_brms(data = data_cluster,
+    #                          y = "externalizing_sum",
+    #                          formula = list("gender + mother * father",
+    #                                         "gender")),
+    #
+    # waic_weights_ext = get_rel_weights(brm_ext_zero,
+    #                                    brm_ext_mother,
+    #                                    brm_ext_additive,
+    #                                    brm_ext_inter, ic = "waic"),
+    # loo_weights_ext = get_rel_weights(brm_ext_zero,
+    #                                   brm_ext_mother,
+    #                                   brm_ext_additive,
+    #                                   brm_ext_inter, ic = "loo"),
 
     #----    BF encompassing priors    ----
 
-    prior_spec = brms::set_prior("normal(0,5)", class = c("b"), dpar = c("", "zi")),
-    prior_model = brms::brm(brms::bf(internalizing_sum ~ cluster_mother + cluster_father,
-                                     zi ~ cluster_mother + cluster_father),
-                            data = data_cluster, family = brms::zero_inflated_poisson(),
-                            prior = prior_spec, cores = 4, sample_prior = "only",
-                            iter = 5000, warmup = 0)
+    stan_data = make_stan_data(data_cluster, formula = list("gender + mother", "gender")),
+    fit_H1 = stan(file = "Stan/ZIP-model-H1.stan", data = stan_data),
+    # prior_spec = brms::set_prior("normal(0,5)", class = c("b"), dpar = c("", "zi")),
+    # prior_model = brms::brm(brms::bf(internalizing_sum ~ cluster_mother + cluster_father,
+    #                                  zi ~ cluster_mother + cluster_father),
+    #                         data = data_cluster, family = brms::zero_inflated_poisson(),
+    #                         prior = prior_spec, cores = 4, sample_prior = "only",
+    #                         iter = 5000, warmup = 0)
 
   )
 }
