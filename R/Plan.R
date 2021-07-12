@@ -107,6 +107,7 @@ get_analysis_plan <- function(){
     #----    BF encompassing priors    ----
 
     stan_data = make_stan_data(data_cluster, formula = list("gender + mother", "gender")),
+
     fit_H1 = stan(file = "Stan/ZIP-model-H1.stan", data = stan_data),
     # prior_spec = brms::set_prior("normal(0,5)", class = c("b"), dpar = c("", "zi")),
     # prior_model = brms::brm(brms::bf(internalizing_sum ~ cluster_mother + cluster_father,
