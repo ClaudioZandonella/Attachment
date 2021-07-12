@@ -6,6 +6,24 @@
 
 # Other files types
 
+#---- LaTeX auxiliary files ----
+*.bbl
+*.bcf
+*concordance.tex
+*.lof
+*.log
+*.lot
+*.run.xml
+*.synctex.gz
+*.toc
+*.fff
+*.ttt
+
+# paper output
+
+paper.tex
+paper.pdf
+
 # htlm output
 *.html
 *.docx
