@@ -27,80 +27,169 @@
 %%
 %% ----------------------------------------------------------------------
 %%
-\documentclass[man]{apa7}
+\documentclass[man, floatsintext]{apa7}
 
 \usepackage{lipsum}
 
 \usepackage[american]{babel}
 
+% KabelExtra packages
+\usepackage{booktabs} %
+\usepackage{longtable} %
+\usepackage{array} %
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float} %
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
 \usepackage{csquotes}
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
 \DeclareLanguageMapping{american}{american-apa}
-\addbibresource{bibliography.bib}
+\addbibresource{../Biblio-attachment.bib}
 
-\title{Sample APA-Style Document Using the \textsf{apa7} Package}
-\shorttitle{Sample Document}
+\title{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
+\shorttitle{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
 
-\author{Daniel A. Weiss}
-\affiliation{A University Somewhere}
+\author{Claudio Zandonella Callegher, Tatiana Marci, Gianmarco Altoè}
+\affiliation{UNIPD}
 
-\leftheader{Weiss}
+\leftheader{loook}
 
 \abstract{\lipsum[1]}
 
-\keywords{APA style, demonstration}
+\keywords{keyword-1, keyword-2}
 
 \authornote{
-   \addORCIDlink{Daniel A. Weiss}{0000-0000-0000-0000}
+   \addORCIDlink{Claudio Zandonella Callegher}{0000-0000-0000-0000}
 
-  Correspondence concerning this article should be addressed to Daniel A. Weiss, Department of Educational Psychology, Counseling and
-  Special Education, A University Somewhere, 123 Main St., Oneonta, NY
-  13820.  E-mail: daniel.weiss.led@gmail.com}
+  Correspondence concerning this article should be addressed to Claudio Zandonella Callegher, Department of Developmental Psychology and Socialisation, University of Padua, Via Venezia, 8 - 35131 Padova, Italy.  E-mail: claudiozandonella@gmail.com}
+
+<<settings>>=
+library(kableExtra)
+@
 
 \begin{document}
 \maketitle
-\lipsum[2]
 
-\Textcite{vonDavier2011} said this,
-too \parencite{vonDavier2011,Lassen2006}.  Further evidence comes from
-other sources \parencite{Shotton1989,Lassen2006}.  \lipsum[3]
+When conducting a study, researchers usually have expectetions about the phenomeno under investigation. They want to verify some knind of hypothesis.
+
+translation of theoretical hypothesis into statistical models
+these hypothesis can be mor eor less conscious, verify if an effect exist but if interrogated in mor e depth evaluate
+Informative hypothesis with equality or order constraints.
+
+"Informative hypotheses are increasingly being used in psychological sciences because they adequately capture researchers’ theories and expectations; One of the objectives of psychological studies is to test hypotheses that represent scientific expectations. The main tool available for this purpose is null hypothesis significance testing where the goal is to falsify a null hypothesis of ‘no effect’. On the other hand, psychologists may expect; These expectations cannot be formulated by the traditional null hypothesis. Instead, such expectations can be translated to so-called informative hypotheses which assume a specific structure of the model parameters (Hoijtink, 2012)" \textcite{guApproximatedAdjustedFractional2018}
+
+Traditional null hypothesis, statistical approaches has evolved to evaluate specific hypothesis,
+
+"Many empirical researchers seek to evaluate and test hypothe- ses by comparing theoretical predictions to observed data. The dominant statistical vehicle for this activity is null hypothesis sig- nificance testing using p values. Despite their popularity, the liter- ature contains an intense and ongoing debate about the usefulness of p values for testing scientific expectations (e.g., Berger \& Sellke, 1987; Cohen, 1994; Edwards, Lindman, \& Savage, 1963; Hubbard \& Armstrong, 2006; Wagenmakers, 2007; Wainer, 1999, among many others).
+One important critique of p values is that they cannot be used to quantify evidence in favor of the null hypothesis; a p value can only be used to falsify that null hypothesis; he p value does not allow one to discriminate absence of evidence (i.e., uninformative data) from evidence of absence (i.e., data supporting the null hypothesis; p values tend to overestimate the evidence against the null hypothesis; A final critique we mention here is that p values are limited regarding the types of hypotheses that can be tested. ; p values are of limited use for testing hypotheses with order constraints on the parameters of interest (Braeken, Mulder, \& Wood, 2015);
+Bayes factors are computed by assessing the relative predictive adequacy of the hypotheses under consideration, as provided by the so-called marginal likelihood ; The goal of a null hypothesis significance test (NHST) on the other hand is to determine whether there is enough evidence in the data to reject the null hypothesis, while controlling the probability of incorrectly rejecting the null; In a Bayes factor test the outcome is the relative evidence in the data for H0 against H1, which lies on a continuous; the outcome of a NHST, as advocated by Neyman and Pearson, is a dichotomous decision; BF relative measure which balances between the plausibility of the null hypothesis and the alternative hypothesis where the prior under the alternative formalizes the anticipated effect if the null is not true.
+" \parencite{mulderEditorsIntroductionSpecial2016}
+
+"A core element of science is that data are used to argue for or against hypotheses or theories. ;these statistics are designed to make decisions, such as rejecting a hypothesis, rather than providing for a measure of ev- idence. ; In this paper, we explore a statistical notion that does allow for the desired interpretation as a measure of evidence: the Bayes factor (Good, 1979, 1985; Jeffreys, 1961; Kass \& Raftery, 1995).; appealing method for assessing the impact of data on the evaluation of hypotheses. Bayes factors present a useful and meaningful measure of evidence." \parencite{moreyPhilosophyBayesFactors2016}
+
+
+different approaches model comparison: formalize models according to hypotheses or theoretical perspectives
+
+- what are informative hypothesis
+  - equal; grater; smaller; Inequality equality constraints
+  - comes from theoretical prespective, previous studies, review
+  - "An informative hypothesis consists of equality and/or inequality constraints among the parameters of interest in a statistical model." \textcite{guApproximatedAdjustedFractional2018}
+  - "Informative hypotheses covers a much broader range of scientific expectations than the class of standard null hypotheses; In addition, by testing competing informative hypotheses directly against each other a researcher obtains a direct answer as to which scientific theory is most supported by the data." \textcite{guApproximatedAdjustedFractional2018}
+  - evaluation of informative hypothesis frequentist vs bayesian  \textcite{guApproximatedAdjustedFractional2018}
+
+- methods available
+  - NHST - multiple testing (post hoc analyses)
+  - Bayesian model comparison - information criteria
+    - "in contrast to Bayesian model selection (BF) both the AIC and BIC are as yet unable to deal with hypotheses specified using inequality constraints." \parencite{vandeschootIntroductionBayesianModel2011}
+  - BF encompassing prior
+    - Gu, Mulder, Dekovic, and Hoijtink (2014) have shown how to evaluate inequality constrained hypothesis in general statistical models
+    - the usefulness of the Bayes factor for testing hypotheses in psychological research has been highlighted in various studies in a special issue on the topic (Mulder \& Wagenmakers, 2016)
+    - \textcite{guApproximatedAdjustedFractional2018} "This paper proposes an approximation of a fractional Bayes factor to extend its applicability to testing informative hypotheses for more general models. These models can be generalized linear (mixed) models (McCullogh \& Searle, 2001); Due to large-sample theory (Gelman, Carlin, Stern, \& Rubin, 2004, pp. 101–107), the posterior distribution of the parameters in each model can be approximated by a (multivariate) normal distribution. This paper also approximates the implicit fractional prior with a (multivariate) normal distribution as a general methodology to ensure a fast computation of the (adjusted) fractional Bayesian factor. "
+
+"Of course, these hypotheses can be evaluated using classical null hypothesis testing, or one-sided hypothesis testing. However, when there are more groups, more variables, or more constraints, null hypothesis testing is not the appropriate tool see Van de Schoot, Hoijtink et al. (2011) for a detailed discussion. Moreover, p-values are fundamentally incompa- tible with measures of evidence."\parencite{vandeschootIntroductionBayesianModel2011}
+
+"inequality constraints can provide a direct evaluation of the hypothesis of interest, in contrast to other, heuristic methods such as testing the equality of all three dosage condition parameters and then carrying out additional, post hoc analyses to determine directional differences." \parencite{heckMultinomialModelsLinear2019}
+
+- formalization hypotheses:
+  - declare expectation strong theories
+  - "(a) translating a verbal theory into predicted patterns, (b) deriving algebraic implications of axioms or formal theories, and (c) brute force enumeration of all of the predictions made by the deterministic theory, typically under a set of theory-specific assumptions" \parencite{heckMultinomialModelsLinear2019}
+
+- definition of informative hypothesis
+  - \textcite{guApproximatedAdjustedFractional2018}
+
+- Components Bayesian model selection\parencite{vandeschootIntroductionBayesianModel2011}:
+  - Prior - Admissible parameter space
+  - Likelihood
+  - Marginal likelihood
+  - Model fit / model complexity (size) "In sum, the marginal likelihood rewards a hypothesis with the correct (in)equality constraints. This is because the average likelihood value is higher when many small likelihood values are not taken into account. The smaller the parameter space, the less complex a model becomes. Therefore, the methodology combines model fit and model size of a hypothesis."
+  - BF "Recall that Bayes factors provide a direct quantification of the support in the data for the constraints imposed on the means. With support we mean: the trade-off between model size and model fit."
+
+A key difficulty in analyzing inequality-constrained models and theories is that it can quickly become difficult to characterize the resulting restricted parameter space (e.g., Davis- Stober, 2012; Fishburn, 1992) \parencite{heckMultinomialModelsLinear2019}
+
+- previoous work
+  - \textcite{vandeschootIntroductionBayesianModel2011} - simple general introduction Bayesian model selection for evaluating informative hypotheses. Easily overcomes problem of equality with region of equality. No code or clear step by step.
+  - \textcite{heckMultinomialModelsLinear2019} - Multinomial Models with Linear Inequality Constraints. Complex mathematical psychology
+  - \textcite{guApproximatedAdjustedFractional2018} - adjusted fractional BF to avoid prior specification; general approach for different model and eequality and inequalitty constraints.
+  - \textcite{hoijtinkInformativeHypothesesTheory2012} - general book on testing informative hypothesis
+  - \textcite{hoijtinkTutorialTestingHypotheses2019} - introduction-tutorial to Bayes factor, very descriptive no formulas, the part of informative hypothesis is restricted to ANOVA using bain package.
+  -\textcite{mulderEditorsIntroductionSpecial2016} - introduction to issue about BF.
+  \textcite{moreyPhilosophyBayesFactors2016} - phylosophycal fundation of the BF.
+  - not god for wide audience, complex notation athough valuable makes complex to understand.
+
+
+- extra
+  - combination with threshoolds $\beta_1 - \beta_2 < k$
+  - different approach with range constraints $|\beta_1 - \beta_2| < k$
+  - "the parameters of interest may need to be standardized in some situations. The need for standardization depends on the statistical model and informative hypothesis under evaluation.;  it is undesirable to standardize the parameters h if they represent means." \textcite{guApproximatedAdjustedFractional2018}
+
+- multiverse analysis
+
+\Textcite{andrewBayesianDataAnalysis} said this,
+too \parencite{andrewBayesianDataAnalysis}.  Further evidence comes from
+other sources \parencite{andrewBayesianDataAnalysis}.  \lipsum[3]
 
 \section{Method}
 \subsection{Participants}
-\lipsum[4]
 
 \subsection{Materials}
-\lipsum[5]
 
 \subsection{Design}
-\lipsum[6]
 
 \subsection{Procedure}
-\lipsum[7]
 
 \subsubsection{Instrument \#1}
-\lipsum[8]
 
 \paragraph{Reliability}
-\lipsum[9]
 
 \subparagraph{Inter-rater reliability}
-\lipsum[10]
 
 \subparagraph{Test-retest reliability}
-\lipsum[11]
 
 \paragraph{Validity}
-\lipsum[12]
 
 \subparagraph{Face validity}
-\lipsum[13]
 
 \subparagraph{Construct validity}
-\lipsum[14]
 
 \section{Results}
 Table~\ref{tab:BasicTable} summarizes the data. \lipsum[15]
+
+<<>>=
+plot(rnorm(19))
+@
+
+<<>>=
+kable(data.frame(x=1:3, y = letters[1:3]), booktabs = T) %>%
+  kable_styling(latex_options = "striped")
+@
 
 \begin{table}
   \caption{Sample Basic Table}
@@ -125,11 +214,6 @@ Table~\ref{tab:BasicTable} summarizes the data. \lipsum[15]
 Figure~\ref{fig:Figure1} shows this trend. \lipsum[16]
 
 \section{Discussion}
-\lipsum[17]
-
-\lipsum[18]
-
-\lipsum[19]
 
 \printbibliography
 

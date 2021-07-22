@@ -20,7 +20,6 @@
 *.ttt
 
 # paper output
-
 paper.tex
 paper.pdf
 
