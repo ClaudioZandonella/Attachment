@@ -2,27 +2,27 @@
 #====    Model Definition    ====#
 #================================#
 
-#-----    zip_brms    ----
+#----    zinb_brms    ----
 
-zip_brms <- function(data, y, formula){
+zinb_brms <- function(data, y, formula){
 
   if(!is.list(formula)){
     formula <- list(formula,
                     formula)
   }
 
-  formula_lambda <- paste0(y ," ~ ", formula[[1]])
-  formula_zi <- paste0("zi ~ ", formula[[2]])
+  formula_mu<- paste0(y ," ~ ", formula[[1]], " + (1|ID_class)")
+  formula_zi <- paste0("zi ~ ", formula[[2]], " + (1|ID_class)")
 
-  fit <- brms::brm(brms::bf(as.formula(formula_lambda),
+  fit <- brms::brm(brms::bf(as.formula(formula_mu),
                             as.formula(formula_zi)),
-    data = data, family = brms::zero_inflated_poisson(), cores = 4)
+    data = data, family = brms::zero_inflated_negbinomial(), cores = 4)
 
   fit <- brms::add_criterion(fit, criterion = c("loo", "waic"))
   return(fit)
 }
 
-#----    get_waic_weights    ----
+#----    get_rel_weights    ----
 
 get_rel_weights <- function(..., ic = c("waic", "loo")){
   ic <- match.arg(ic)

@@ -48,8 +48,8 @@ plot(cluster_father_fit, main = "Dendrogramma")
 rect.hclust(cluster_father_fit, k=4, border="red")
 
 drake::loadd(data_cluster)
-table(data_cluster$cluster_mother)
-table(data_cluster$cluster_father)
+table(data_cluster$mother)
+table(data_cluster$father)
 
 plot_scores_mother(data = data_cluster)
 plot_scores_father(data = data_cluster)
@@ -65,20 +65,24 @@ plot(mclust_father)
 summary(mclust_father)
 
 #---- ZIP analysisi ----
-drake::loadd(fit_int_poisson)
-car::Anova(fit_int_poisson)
-summary(fit_int_poisson)
+drake::loadd(fit_int_nb)
+car::Anova(fit_int_nb)
+summary(fit_int_nb)
 
 drake::loadd(test_zero_inflated)
 test_zero_inflated
 
 #---- anova approach ----
-drake::loadd(fit_int_zip)
-car::Anova(fit_int_zip) # https://rcompanion.org/handbook/J_01.html see "Zero-inflated regression example"
+drake::loadd(fit_int_zinb)
+pscl::vuong(fit_int_nb, fit_int_zinb) # Model zero-inflated is slightly better
 
-summary(fit_int_zip)
+car::Anova(fit_int_zinb) # https://rcompanion.org/handbook/J_01.html see "Zero-inflated regression example"
+rcompanion::nagelkerke(fit_int_zinb)
 
-rcompanion::nagelkerke(fit_int_zip)
+summary(fit_int_zinb)
+drake::loadd(plot_zinb)
+plot(plot_zinb)
+
 #---- brms models ----
 
 # internalizing
@@ -92,6 +96,7 @@ plot(brm_int_mother)
 plot(brms::conditional_effects(brm_int_mother), ask = FALSE)
 
 brms::pp_check(brm_int_mother, nsamples = 100)
+brms::bayes_R2(brm_int_mother)
 
 # Externalizing
 drake::loadd(waic_weights_ext)
@@ -104,7 +109,7 @@ plot(brm_ext_mother)
 plot(brms::conditional_effects(brm_ext_mother), ask = FALSE)
 
 brms::pp_check(brm_ext_mother, nsamples = 100)
-
+brms::bayes_R2(brm_ext_mother)
 #---- BF encompassing priors ----
 
 drake::loadd(prior_model)
