@@ -1,0 +1,550 @@
+---
+title: 'Formalizing Hypothsis'
+author: 'CZC, TM, PDC & GA'
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  bookdown::html_document2: 
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    collapsed: false
+    css: ["css/custom.css"]
+linestretch: 1.5
+number_sections: true
+bibliography: "../Biblio-attachment.bib"
+csl: apa.csl
+link-citations: true 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+library(tidyverse)
+library(kableExtra)
+```
+
+In this report we present an example of the formalization of informative hypotheses according to the main Attachment theories. First, we present the hypothesis considering the attachment according to cluster. Subsequently, we consider attachment using continuous measures of anxiety and avoidance.
+
+# Cluster Approach
+
+Considering **Mother Attachment** we have the following groups:
+
+1. $M_S$ - Secure
+2. $M_{Ax}$ - Anxious
+3. $M_{Av}$ - Avoidant
+4. $M_F$ - Fearful
+
+Considering **Father Attachment** we have the following groups:
+
+1. $P_S$ - Secure
+2. $P_{Ax}$ - Anxious
+3. $P_{Av}$ - Avoidant
+4. $P_F$ - Fearful
+
+In the analysis, we evaluate **Externalizing Problems** according to gender and the interaction between **Mother** and **Father Attachment**:
+
+$$
+Ext \sim Gender + Mother\_Att \times Father\_Att
+$$
+Considering Mother and Father Attachment, there are 16 different combinations: 
+
+1. $M_SP_S$ - Mother Secure e Father Secure
+1. $M_SP_{Ax}$ - Mother Secure e Father Anxious
+1. $M_SP_{Av}$ - Mother Secure e Father Avoidant
+1. $M_SP_F$ - Mother Anxious e Father Fearful
+1. $M_{Ax}P_S$ - Mother Anxious e Father Secure
+1. $M_{Ax}P_{Ax}$ - Mother Anxious e Father Anxious
+1. $M_{Ax}P_{Av}$ - Mother Anxious e Father Avoidant
+1. $M_{Ax}P_F$ - Mother Avoidant e Father Fearful
+1. $M_{Av}P_S$ - Mother Avoidant e Father Secure
+1. $M_{Av}P_{Ax}$ - Mother Avoidant e Father Anxious
+1. $M_{Av}P_{Av}$ - Mother Avoidant e Father Avoidant
+1. $M_{Av}P_F$ - Mother Secure e Father Fearful
+1. $M_FP_S$ - Mother Fearful e Father Secure
+1. $M_FP_{Ax}$ - Mother Fearful e Father Anxious
+1. $M_FP_{Av}$ - Mother Fearful e Father Avoidant
+1. $M_FP_F$ - Mother Fearful e Father Fearful
+
+## Null Theory
+
+This is a reference hypothesis whrer Mother and Father Attachment are expecteed to have no effect.
+
+$$
+M_* = 0\\
+P_* = 0
+$$
+
+```{r}
+data_null <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = 0.05)
+
+ggplot(data_null) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+#### Combined effect {-}
+
+```{r}
+data_null_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_null_grid$Problems <- c(0.05)
+
+ggplot(data_null_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1),
+                      breaks=c(0,1), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+## Monotorpy Theory
+
+According to the Monotorpy theory, father attachment is expected to have no effect. Considering mother attachment, instead, we expect secure children to have the lowest level of problems. Anxious and avoidant children are expected to have similar levels of problems. Fearful children are xpected to have the highest levels of problems.
+
+$$
+M_S < M_{Ax} = M_{Av} < M_F\\
+P_* = 0
+$$
+
+```{r}
+data_monotropy <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = c(0.05, 0.5, 0.5, 1, rep(0.05, 4)))
+
+ggplot(data_monotropy) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+#### Combined effect {-}
+
+```{r}
+data_monotropy_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_monotropy_grid$Problems <- rep(c(0.05, 0.5, 0.5, 1), 4)
+
+ggplot(data_monotropy_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1),
+                      breaks=c(0,1), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+## Hierarchical Theory
+
+Considering hierarchical theory, father attachment is expected to influence the outcome in the same way as mother attachment but with a minor role. 
+
+<!-- $$ -->
+<!-- M_SP_S < M_SP_{Ax} = M_SP_{Av} < M_{Ax}P_S = M_{Av}P_S < M_{Ax}P_{Ax} = M_{Ax}P_{Av} =  M_{Av}P_{Ax} = M_{Av}P_{Av} < M_FP_S <  M_FP_{Ax} =  M_FP_{Av} <  M_FP_F -->
+<!-- $$ -->
+
+$$
+M_S < M_{Ax} = M_{Av} < M_F\\
+P_S < P_{Ax} = P_{Av} < P_F\\
+P_* < M_*
+$$
+
+```{r}
+data_hierarchy <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = c(0.05, 0.5, 0.5, 1, 0.05, 0.25, 0.25, .5))
+
+ggplot(data_hierarchy) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+#### Combined effect {-}
+
+```{r}
+data_hierarchy_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_hierarchy_grid$Problems <- rep(c(0.05, 0.5, 0.5, 1), 4) + rep(c(0.05, 0.25, 0.25, .5), each = 4)
+
+ggplot(data_hierarchy_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1.5),
+                      breaks=c(0,1.5), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+## Independent Theory
+
+Considering independent theory, Mother and father attachment are expected to affect children outcomes differently. In this case, we considered Avoidant attachemnt towards the father as a condition of hiegher risk.
+
+<!-- $$ -->
+<!-- M_SP_S < M_SP_{Ax} = M_SP_{Av} < M_{Ax}P_S = M_{Av}P_S < M_{Ax}P_{Ax} = M_{Ax}P_{Av} =  M_{Av}P_{Ax} = M_{Av}P_{Av} < M_FP_S <  M_FP_{Ax} =  M_FP_{Av} <  M_FP_F -->
+<!-- $$ -->
+
+$$
+M_S < M_{Ax} = M_{Av} < M_F\\
+P_S < P_{Ax} < P_{Av} = P_F\\
+$$
+
+```{r}
+data_independent <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = c(0.05, 0.5, 0.5, 1, 0.05, 0.5, 1, 1))
+
+ggplot(data_independent) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+#### Combined effect {-}
+
+```{r}
+data_independent_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_independent_grid$Problems <- rep(c(.05, .5, .5, 1), 4) + rep(c(.05, .5, 1, 1), each = 4)
+
+ggplot(data_independent_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,2),
+                      breaks=c(0,2), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+## Interaction Theory
+
+Considering interaction theory, mother and father attachment are expected to interact. In this case, we consider Secure attachemnt as a protectivee factor and  fearful attachment as a risk condition.
+
+$$
+M_SP_S< \{M_SP_{Ax;Av};\ M_{Ax;Av}P_S\} < \{ M_SP_F;\  M_FP_S\} < M_{Ax;Av}P_{Ax;Av} <  \{M_FP_{Ax;Av};\ M_{Ax;Av}P_F\} <  M_FP_F
+$$
+
+```{r}
+data_interaction <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_interaction$Score <- c(.05, .15, .15, .40,
+                            .10, .50, .50, .90,
+                            .10, .50, .50, .90,
+                            .40, .90, .90, 1.0)
+
+ggplot(data_interaction) +
+  geom_tile(aes(x = Mother, y = Father, fill = Score), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1),
+                      breaks=c(0,1), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+# Continuos Approach
+
+Attachment is measured considering continuous values on the **Anxiety** and **Avoidance** scale. Thus, considering **Mother attachment** we have:
+
+- `Anxm` - Anxiety
+- `Avm` - Avoidance
+
+Whereas, considering **Father Attachment** we have:
+
+- `Anxp` - Anxiety
+- `Avp` - Avoidance
+
+Cosidering the model with the **four-way interaction** between all attachment measures:
+
+$$
+Externalizing \sim gender + Anxm \times Avm \times Anxp \times Avp
+$$
+
+we have the following parameters regarding attachment measures
+
+```{r}
+model_formula <- formula(externalizing_sum ~ gender + Anxm * Avm * Anxp * Avp , data = data_cluster)
+attr(terms.formula(model_formula), "term.labels")[-1]
+```
+
+In particular we have:
+
+```{r}
+table_terms <- tibble(Term = attr(terms.formula(model_formula), "term.labels")[-1])
+kable(table_terms, col.names =  NULL) %>%
+  pack_rows("Main Effect", 1,4) %>%
+  pack_rows("Two-way interaction", 5,10) %>%
+  pack_rows("Three-way interaction", 11,14) %>%
+  pack_rows("Four-way interaction", 15,15) %>%
+  kable_paper("hover", full_width = F)
+
+```
+
+
+## Null Theory
+
+This is a reference hypothesis where Mother and Father Attachment are expected to have no effect. So we set all parameters to *zero*.
+
+$$
+Anx* = 0\\
+Av* = 0
+$$
+
+
+```{r}
+my_seq <- seq(0, 1, length.out = 20)
+
+
+data_continuous <- expand.grid(Anxm = my_seq,
+                               Avm = my_seq,
+                               Anxp = my_seq,
+                               Avp = my_seq)
+```
+
+```{r, out.width="100%", fig.width = 10, fig.height = 4}
+
+data_null <- data_continuous %>%
+  select(Anxm, Avm) %>%
+  distinct() %>%
+  mutate(Problems = 0 * Anxm + 0 *  Avm)
+
+p1 <- ggplot(data_null) +
+  geom_tile(aes(x = Anxm, y = Avm, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(-.2,2),
+                      breaks=c(-.2,2), labels = c("Low", "High")) +
+  ggtitle("Mother") +
+  theme_bw()
+  
+  
+data_null <- data_continuous %>%
+  select(Anxp, Avp) %>%
+  distinct() %>%
+  mutate(Problems = 0 * Anxp + 0 *  Avp)
+
+p2 <- ggplot(data_null) +
+  geom_tile(aes(x = Anxp, y = Avp, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(-.2,2),
+                      breaks=c(-0.2,2), labels = c("Low", "High")) +
+  ggtitle("Father") +
+  theme_bw()
+
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+## Monotorpy Theory
+
+According to the Monotropy theory, father attachment is expected to have no effect so we set all parameters regarding father to zero. Considering mother attachment, instead, we expect `Anxm` and `Avm` to be positive ad with the same value (children with higher levels of anxiety or avoidance are expected to have more problems). Moreover, we also expect the interaction terms `Anxm:Avm` to be positive (children with higher levels of on both anxiety and avoidance are expected to have even more problems).
+
+$$
+Anxm = Avm > 0\\
+Anxm:Avm > 0\\~
+\\
+Anxp = 0\\
+Avp = 0
+$$
+```{r, out.width="100%", fig.width = 10, fig.height = 4}
+data_monotropy <- data_continuous %>%
+  select(Anxm, Avm) %>%
+  distinct() %>%
+  model.matrix(~ Anxm*Avm, .) %>%
+  as.data.frame() %>%
+  mutate(Problems =  1 * Anxm + 1 *  Avm + 1 * `Anxm:Avm`)
+
+p1 <- ggplot(data_monotropy) +
+  geom_tile(aes(x = Anxm, y = Avm, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", 
+                      limits = c(0,3), 
+                      breaks=c(0,3), labels = c("Low", "High"))+
+  geom_contour(aes(x=Anxm, y=Avm, z=Problems), col = "black")+
+  ggtitle("Mother") +
+  theme_bw()
+
+data_monotropy <- data_continuous %>%
+  select(Anxp, Avp) %>%
+  distinct() %>%
+  mutate(Problems = 0 * Anxp + 0 *  Avp)
+
+p2 <- ggplot(data_monotropy) +
+  geom_tile(aes(x = Anxp, y = Avp, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(-.2,2),
+                      breaks=c(-0.2,2), labels = c("Low", "High")) +
+  ggtitle("Father")+
+  theme_bw()
+
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+
+
+## Hierarchical Theory
+
+Considering hierarchical theory, father attachment is expected to influence the outcome in the same way as mother attachment but with a minor role. 
+Thus we expect  `Anxm`, `Avm`, `Anxp`, and `Avm` to be positive (children with higher levels of anxiety or avoidance are expected to have more problems). Moreover, we also expect the interaction terms `Anxm:Avm` and `Anxp:Avp` to be positive (children with higher levels of on both anxiety and avoidance are expected to have even more problems). Hoewer, parameters related to father are somller than th respective one referring to mother.
+
+$$
+Anxm = Avm > Anxp = Avp > 0\\
+Anxm:Avm > Anxp:Avp > 0\\~
+$$
+
+```{r, out.width="100%", fig.width = 10, fig.height = 4}
+data_hierarchical <- data_continuous %>%
+  select(Anxm, Avm) %>%
+  distinct() %>%
+  model.matrix(~ Anxm*Avm, .) %>%
+  as.data.frame() %>%
+  mutate(Problems =  1 * Anxm + 1 *  Avm + 1 * `Anxm:Avm`)
+
+p1 <- ggplot(data_hierarchical) +
+  geom_tile(aes(x = Anxm, y = Avm, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", 
+                      limits = c(0,3), 
+                      breaks=c(0,3), labels = c("Low", "High"))+
+  geom_contour(aes(x=Anxm, y=Avm, z=Problems), col = "black")+
+  ggtitle("Mother") +
+  theme_bw()
+
+data_hierarchical <- data_continuous %>%
+  select(Anxp, Avp) %>%
+  distinct() %>%
+  model.matrix(~ Anxp*Avp, .) %>%
+  as.data.frame() %>%
+  mutate(Problems =  .5 * Anxp + .5 *  Avp + .5 * `Anxp:Avp`)
+
+p2 <- ggplot(data_hierarchical) +
+  geom_tile(aes(x = Anxp, y = Avp, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", 
+                      limits = c(0,3), 
+                      breaks=c(0,3), labels = c("Low", "High"))+
+  geom_contour(aes(x=Anxp, y=Avp, z=Problems), col = "black")+
+  ggtitle("Father") +
+  theme_bw()
+
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+## Independent Theory
+
+Considering independent theory, Mother and father attachment are expected to affect children outcomes differently. In this case, we considered Avoidant attachemnt towards the father as a condition of higher risk. Thus we set:
+
+$$
+Anxm = Avm > 0\\
+Anxm:Avm > 0 \\~
+\\
+Anxp > Avp > 0\\
+Anxp:Avp > 0\\
+$$
+
+```{r, out.width="100%", fig.width = 10, fig.height = 4}
+data_independent <- data_continuous %>%
+  select(Anxm, Avm) %>%
+  distinct() %>%
+  model.matrix(~ Anxm*Avm, .) %>%
+  as.data.frame() %>%
+  mutate(Problems =  1 * Anxm + 1 *  Avm + 1 * `Anxm:Avm`)
+
+p1 <- ggplot(data_independent) +
+  geom_tile(aes(x = Anxm, y = Avm, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", 
+                      limits = c(0,3), 
+                      breaks=c(0,3), labels = c("Low", "High"))+
+  geom_contour(aes(x=Anxm, y=Avm, z=Problems), col = "black")+
+  ggtitle("Mother") +
+  theme_bw()
+
+data_independent <- data_continuous %>%
+  select(Anxp, Avp) %>%
+  distinct() %>%
+  model.matrix(~ Anxp*Avp, .) %>%
+  as.data.frame() %>%
+  mutate(Problems =  .7 * Anxp + 1.8 *  Avp + .5 * `Anxp:Avp`)
+
+p2 <- ggplot(data_independent) +
+  geom_tile(aes(x = Anxp, y = Avp, fill = Problems)) +
+  scale_fill_gradient(low = "white", high = "firebrick", 
+                      limits = c(0,3), 
+                      breaks=c(0,3), labels = c("Low", "High"))+
+  geom_contour(aes(x=Anxp, y=Avp, z=Problems), col = "black")+
+  ggtitle("Father") +
+  theme_bw()
+
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+## Interaction Theory
+
+Considering interaction theory, mother and father attachment are expected to interact. In this case, we consider low levels on both Anxiety and Avoidance with at least one parent (secure attachemnt) as a protective factor and  high levels on both Anxiety and Avoidance with at least one parent (fearful attachemnt) as a risk condition.
+
+<!-- Thus, we set -->
+<!-- $$ -->
+<!-- Anxm = Avm > 0\\ -->
+<!-- Anxm:Avm > 0 \\~ -->
+<!-- \\ -->
+<!-- Anxp > Avp > 0\\ -->
+<!-- Anxp:Avp > 0 -->
+<!-- $$ -->
+
+<!-- Then we set, -->
+<!-- $$ -->
+<!-- Anxm:Anxp = 0\\ -->
+<!-- Avm:Anxp = 0\\ -->
+<!-- Anxm:Avp = 0\\ -->
+<!-- Avm:Avp = 0 -->
+<!-- $$ -->
+<!-- to say that the combination of high level of anxiety in one parent and high level of avoidance in the other parent do not increase the risk of problems. -->
+
+
+#### Note{-} 
+Sinceramente qui non saprei come gestire i parametri meglio la definizione dei parametri e rapprsntarli graficamnte. Già negli altri modelli i termini di intrazione non sono poi così diretti da interpretare, nel caso delle interazioni fino a quattro viee diventa un bel casino.
+
+## Summary
+
+```{r}
+summary <- table_terms %>%
+  mutate(Null = "= 0",
+         Monotropy = c("= Avm > 0", "= Anxm > 0", rep( "= 0", 2), "> 0", rep( "= 0", 10)),
+         Hierarchical = c("= Avm > Avp", "= Anxm > Anxp", "= Avp > 0", "= Anxp > 0", 
+                          "> Anxp:Avp",rep( "= 0", 4), "> 0", rep( "= 0", 5)),
+         Independent = c("= Avm > 0", "= Anxm > 0", "> 0", "> Anxp", 
+                          "> 0",rep( "= 0", 4), "> 0", rep( "= 0", 5)),
+         Interaction = c("= Avm > 0", "= Anxm > 0", "> 0", "> Anxp", 
+                          "> 0",rep( "?", 4), "> 0", rep( "?", 5)))
+kable(summary, col.names =  c(" ", "Null", "Monotropy", "Hierarchical", "Independent", "Interaction")) %>%
+  pack_rows("Main Effect", 1,4) %>%
+  pack_rows("Two-way interaction", 5,10) %>%
+  pack_rows("Three-way interaction", 11,14) %>%
+  pack_rows("Four-way interaction", 15,15) %>%
+  kable_paper("hover", full_width = F)
+```
+
