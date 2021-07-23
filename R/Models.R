@@ -4,6 +4,29 @@
 
 #----    zinb_brms    ----
 
+#' Fit ZINB Model
+#'
+#' Given the dataframe with the cluster groups, fit the Zero Inflated Negative
+#' Binomial model to predict the dependent variable (y) according to the
+#' specified formula. Random effect (1|ID_class) is included for both mu and zi
+#' regressions.
+#'
+#' @param data dataframe with the cluster groups and other subjects' information
+#'   ("data_cluster")
+#' @param y character indicanting the dependent variable ("internalizin_sum" or
+#'   "externalizing_sum")
+#' @param formula list with two character values indicating the predictors
+#'   formula used for mu and zi respectively. If single character is passed th
+#'   same formula is used for mu and zi regressions.
+#'
+#' @return An object of class "brmsfit" with added WAIC and LOO values
+#'
+#' @examples
+#' drake::loadd(data_cluster)
+#' zinb_brms(data = data_cluster, y = "internalizing_sum",
+#'           formula = list("gender + mother", "gender"))
+#'
+
 zinb_brms <- function(data, y, formula){
 
   if(!is.list(formula)){
@@ -23,6 +46,28 @@ zinb_brms <- function(data, y, formula){
 }
 
 #----    get_rel_weights    ----
+
+#' Get Relative Fit Criterion Weights
+#'
+#' @param ... brms models to compare
+#' @param ic character indicating the fit criterion to consider ("waic" or
+#'   "loo")
+#'
+#' @return a dataframe with the following columns:
+#'   - `names` - name of the model
+#'   - `ic` - fit criteria value
+#'   - `diff_ic` - difference with the worst model
+#'   - `rel_lik` - relative likelihood
+#'   - `weights` - fit criteria weights
+#'
+#' @examples
+#' drake::loadd(c(brm_int_zero, brm_int_mother,
+#'        brm_int_additive, brm_int_inter))
+#' get_rel_weights(brm_int_zero,
+#'                 brm_int_mother,
+#'                 brm_int_additive,
+#'                 brm_int_inter, ic = "loo")
+#'
 
 get_rel_weights <- function(..., ic = c("waic", "loo")){
   ic <- match.arg(ic)

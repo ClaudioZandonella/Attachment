@@ -77,19 +77,19 @@ get_analysis_plan <- function(){
                                       brm_int_inter, ic = "loo"),
 
     # #----    brms Models ext    ----
-    # brm_ext_zero = zip_brms(data = data_cluster,
+    # brm_ext_zero = zinb_brms(data = data_cluster,
     #                         y = "externalizing_sum",
     #                         formula = list("gender",
     #                                        "gender")),
-    # brm_ext_mother = zip_brms(data = data_cluster,
+    # brm_ext_mother = zinb_brms(data = data_cluster,
     #                           y = "externalizing_sum",
     #                           formula = list("gender + mother",
     #                                          "gender")),
-    # brm_ext_additive = zip_brms(data = data_cluster,
+    # brm_ext_additive = zinb_brms(data = data_cluster,
     #                             y = "externalizing_sum",
     #                             formula = list("gender + mother + father",
     #                                            "gender")),
-    # brm_ext_inter = zip_brms(data = data_cluster,
+    # brm_ext_inter = zinb_brms(data = data_cluster,
     #                          y = "externalizing_sum",
     #                          formula = list("gender + mother * father",
     #                                         "gender")),
@@ -103,8 +103,21 @@ get_analysis_plan <- function(){
     #                                   brm_ext_additive,
     #                                   brm_ext_inter, ic = "loo"),
 
-    # #----    BF encompassing priors    ----
-    #
+    #----    BF encompassing priors    ----
+
+    # Encompassing model
+    encompassing_model = get_encompassing_model(data = data_cluster,
+                                                 y = "internalizing_sum",
+                                                 prior_par = "normal(0, 3)"),
+    # BF hypothesis
+    BF_null = get_BF(hypothesis = "null", encompassing_model),
+    BF_monotropy = get_BF(hypothesis = "monotropy", encompassing_model),
+    BF_hierarchical = get_BF(hypothesis = "hierarchical", encompassing_model),
+    BF_independent = get_BF(hypothesis = "independent", encompassing_model),
+
+
+    # Compute BF
+
     # stan_data = make_stan_data(data_cluster, formula = list("gender + mother", "gender")),
     #
     # fit_H1 = stan(file = "Stan/ZIP-model-H1.stan", data = stan_data),

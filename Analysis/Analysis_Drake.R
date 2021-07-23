@@ -93,7 +93,8 @@ drake::loadd(brm_int_mother)
 
 summary(brm_int_mother)
 plot(brm_int_mother)
-plot(brms::conditional_effects(brm_int_mother), ask = FALSE)
+brms::conditional_effects(brm_int_mother)
+brms::conditional_effects(brm_int_mother, dpar = "zi")
 
 brms::pp_check(brm_int_mother, nsamples = 100)
 brms::bayes_R2(brm_int_mother)
@@ -110,6 +111,7 @@ plot(brms::conditional_effects(brm_ext_mother), ask = FALSE)
 
 brms::pp_check(brm_ext_mother, nsamples = 100)
 brms::bayes_R2(brm_ext_mother)
+
 #---- BF encompassing priors ----
 
 drake::loadd(prior_model)
