@@ -95,6 +95,32 @@ get_prior_sd <- function(encompassing_model){
 
   return(sd_prior)
 }
+#----    get_model_matrix    ----
+
+#' Get Model Matrix
+#'
+#' Get the model matrix considering mother and father attachmnt in interaction
+#'
+#' @return a matrix
+#'
+#' @examples
+#' get_model_matrix()
+#'
+
+get_model_matrix <- function(){
+
+  levels <- c("Sec", "Anx", "Av", "Fear")
+
+  new_data <- expand_grid(mother = factor(levels, levels = levels),
+                          father = factor(levels, levels = levels))
+
+  mm <- model.matrix(~mother*father, new_data)[,-1] # remove intercept column
+  row.names(mm) <- paste0("M_",new_data$mother,
+                          "_F_",new_data$father)
+
+  return(mm)
+}
+
 #----    get_hypothesis_matrix    ----
 
 #' Get Hypothesis Matrix
@@ -118,13 +144,15 @@ get_prior_sd <- function(encompassing_model){
 #'
 
 get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchical",
-                                                 "independent", "iteraction"),
+                                                 "independent", "interaction"),
                                   encompassing_model){
   hypothesis <- match.arg(hypothesis)
 
   # Keep only fixed effect "b_*" excluding gender, Intercepts and "zi" related parameters
   par_names <- get_par_names(encompassing_model)
   n_pars <- length(par_names)
+
+  mm <- get_model_matrix()
 
   if(hypothesis == "null"){
     #----    Null Hypothesis    ----
@@ -139,43 +167,43 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchi
     #----    Monotropy Hypothesis    ----
 
     # equality constraints
-    eq_matrix <- rbind(c(1, -1, rep(0, n_pars - 2)), # M_Anxious - M_Avoidant = 0
-                       diag(n_pars)[4:n_pars, ])     # All father and interaction terms = 0
+    eq_matrix <- rbind(mm["M_Anx_F_Sec", ] - mm["M_Av_F_Sec", ], # M_Anxious - M_Avoidant = 0
+                       diag(n_pars)[4:n_pars, ])                 # All father and interaction terms = 0
 
     # inequality constraints
-    ineq_matrix <- rbind(c(1, rep(0, n_pars - 1)),        # M_Anxious > 0
+    ineq_matrix <- rbind(mm["M_Anx_F_Sec", ],             # M_Anxious > 0
                          c(0, -1, 1, rep(0, n_pars - 3))) # M_Fearful - M_Avoidant > 0
 
   } else if(hypothesis == "hierarchical"){
     #----    Hierarchical Hypothesis    ----
 
     # equality constraints
-    eq_matrix <- rbind(c(1, -1, rep(0, n_pars - 2)),          # M_Anxious - M_Avoidant = 0
-                       c(0, 0, 0, 1, -1, rep(0, n_pars - 5)), # F_Anxious - F_Avoidant = 0
-                       diag(n_pars)[7:n_pars, ])              # All interaction terms = 0
+    eq_matrix <- rbind(mm["M_Anx_F_Sec", ] - mm["M_Av_F_Sec", ], # M_Anxious - M_Avoidant = 0
+                       mm["M_Sec_F_Anx", ] - mm["M_Sec_F_Av", ], # F_Anxious - F_Avoidant = 0
+                       diag(n_pars)[7:n_pars, ])                 # All interaction terms = 0
 
     # inequality constraints
-    ineq_matrix <- rbind(c(1, rep(0, n_pars - 1)),                 # M_Anxious > 0
-                         c(0, -1, 1, rep(0, n_pars - 3)),          # M_Fearful - M_Avoidant > 0
-                         c(0, 0, 0, 1,rep(0, n_pars - 4)),         # F_Anxious > 0
-                         c(0, 0, 0, 0, -1, 1, rep(0, n_pars - 6)), # F_Fearful - F_Avoidant > 0
-                         c(1, 0, 0, -1, 0, 0, rep(0, n_pars - 6)), # M_Anxious > F_Anxious
-                         c(0, 1, 0, 0, -1, 0, rep(0, n_pars - 6)), # M_Avoidant > F_Avoidant
-                         c(0, 0, 1, 0, 0, -1, rep(0, n_pars - 6))) # M_Fearful > F_Fearful
+    ineq_matrix <- rbind(mm["M_Anx_F_Sec", ],                         # M_Anxious > 0
+                         mm["M_Fear_F_Sec", ] - mm["M_Av_F_Sec", ],   # M_Fearful - M_Avoidant > 0
+                         mm["M_Sec_F_Anx", ],                         # F_Anxious > 0
+                         mm["M_Sec_F_Fear", ] - mm["M_Sec_F_Av", ],   # F_Fearful - F_Avoidant > 0
+                         mm["M_Anx_F_Sec", ] - mm["M_Sec_F_Anx", ],   # M_Anxious > F_Anxious
+                         mm["M_Av_F_Sec", ] - mm["M_Sec_F_Av", ],     # M_Avoidant > F_Avoidant
+                         mm["M_Fear_F_Sec", ] - mm["M_Sec_F_Fear", ]) # M_Fearful > F_Fearful
 
   } else if(hypothesis == "independent"){
     #----    Independent Hypothesis    ----
 
     # equality constraints
-    eq_matrix <- rbind(c(1, -1, rep(0, n_pars - 2)),             # M_Anxious - M_Avoidant = 0
-                       c(0, 0, 0, 0, 1, -1, rep(0, n_pars - 6)), # F_Avoidant - F_Fearful= 0
-                       diag(n_pars)[7:n_pars, ])                 # All interaction terms = 0
+    eq_matrix <- rbind(mm["M_Anx_F_Sec", ] - mm["M_Av_F_Sec", ],  # M_Anxious - M_Avoidant = 0
+                       mm["M_Sec_F_Av", ] - mm["M_Sec_F_Fear", ], # F_Avoidant - F_Fearful= 0
+                       diag(n_pars)[7:n_pars, ])                  # All interaction terms = 0
 
     # inequality constraints
-    ineq_matrix <- rbind(c(1, rep(0, n_pars - 1)),                 # M_Anxious > 0
-                         c(0, -1, 1, rep(0, n_pars - 3)),          # M_Fearful - M_Avoidant > 0
-                         c(0, 0, 0, 1,rep(0, n_pars - 4)),         # F_Anxious > 0
-                         c(0, 0, 0, -1, 1,  rep(0, n_pars - 5)))   # F_Avoidant - F_Anxious> 0
+    ineq_matrix <- rbind(mm["M_Anx_F_Sec", ],                       # M_Anxious > 0
+                         mm["M_Fear_F_Sec", ] - mm["M_Av_F_Sec", ], # M_Fearful - M_Avoidant > 0
+                         mm["M_Sec_F_Anx", ],                       # F_Anxious > 0
+                         mm["M_Sec_F_Av", ] - mm["M_Sec_F_Anx", ])  # F_Avoidant - F_Anxious> 0
 
   } else {
     #----    Interaction Hypothesis    ----
@@ -184,55 +212,54 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchi
     eq_matrix <- NULL
 
     # inequality constraints
-    ineq_matrix <- rbind(c(1, rep(0, n_pars - 1)),                 # M_Anxious > 0
-                         c(0, 1, rep(0, n_pars - 2)),              # M_Avoidance > 0
-                         c(0, 0, 0, 1, rep(0, n_pars - 4)),        # F_Anxious > 0
-                         c(0, 0, 0, 0, 1, rep(0, n_pars - 5)),     # F_Avoidance > 0
+    ineq_matrix <- rbind(mm["M_Anx_F_Sec", ],    # M_Anxious > 0
+                         mm["M_Av_F_Sec", ],     # M_Avoidance > 0
+                         mm["M_Sec_F_Anx", ],    # F_Anxious > 0
+                         mm["M_Sec_F_Av", ],     # F_Avoidance > 0
 
-                         c(-1, 0, 1, rep(0, n_pars - 3)),          # M_Fearful - M_Anxious > 0
-                         c(0, -1, 1, rep(0, n_pars - 3)),          # M_Fearful - M_Avoidance > 0
-                         c(0, 0, 1, -1, rep(0, n_pars - 4)),       # M_Fearful - F_Anxious > 0
-                         c(0, 0, 1, 0, -1, rep(0, n_pars - 5)),    # M_Fearful - F_Avoidance > 0
+                         mm["M_Fear_F_Sec", ] - mm["M_Anx_F_Sec", ],  # M_Fearful - M_Anxious > 0
+                         mm["M_Fear_F_Sec", ] - mm["M_Av_F_Sec", ],   # M_Fearful - M_Avoidance > 0
+                         mm["M_Fear_F_Sec", ] - mm["M_Sec_F_Anx", ],  # M_Fearful - F_Anxious > 0
+                         mm["M_Fear_F_Sec", ] - mm["M_Sec_F_Av", ],   # M_Fearful - F_Avoidance > 0
 
-                         c(-1, 0, 0, 0, 0, 1, rep(0, n_pars - 6)), # F_Fearful - M_Anxious > 0
-                         c(0, -1, 0, 0, 0, 1, rep(0, n_pars - 6)), # F_Fearful - M_Avoidance > 0
-                         c(0, 0, 0, -1, 0, 1, rep(0, n_pars - 6)), # F_Fearful - F_Anxious > 0
-                         c(0, 0, 0, 0, -1, 1, rep(0, n_pars - 6)), # F_Fearful - F_Avoidance > 0
+                         mm["M_Sec_F_Fear", ] - mm["M_Anx_F_Sec", ],  # F_Fearful - M_Anxious > 0
+                         mm["M_Sec_F_Fear", ] - mm["M_Av_F_Sec", ],   # F_Fearful - M_Avoidance > 0
+                         mm["M_Sec_F_Fear", ] - mm["M_Sec_F_Anx", ],  # F_Fearful - F_Anxious > 0
+                         mm["M_Sec_F_Fear", ] - mm["M_Sec_F_Av", ],   # F_Fearful - F_Avoidance > 0
 
-                         c(1, 0, -1, 1, 0, 0, 1, rep(0, n_pars - 7)),      # M_anx + F_anx + M_anx_F_anx - M_f > 0
-                         c(1, 0, 0, 1, 0, -1, 1, rep(0, n_pars - 7)),      # M_anx + F_anx + M_anx_F_anx - F_f > 0
-                         c(0, 1, -1, 1, 0, 0, 0, 1, rep(0, n_pars - 8)),     # M_av + F_anx + M_av_F_anx - M_f > 0
-                         c(0, 1, 0, 1, 0, -1, 0, 1, rep(0, n_pars - 8)),     # M_av + F_anx + M_av_F_anx - F_f > 0
-                         c(1, 0, -1, 0, 1, 0, 0, 0, 0, 1, rep(0, n_pars - 10)),  # M_anx + F_av + M_anx_F_av - M_f > 0
-                         c(1, 0, 0, 0, 1, -1, 0, 0, 0, 1, rep(0, n_pars - 10)),  # M_anx + F_av + M_anx_F_av - F_f > 0
-                         c(0, 1, -1, 0, 1, 0, 0, 0, 0, 0, 1, rep(0, n_pars - 11)),  # M_av + F_av + M_av_F_av - M_f > 0
-                         c(0, 1, 0, 0, 1, -1, 0, 0, 0, 0, 1, rep(0, n_pars - 11)),  # M_av + F_av + M_av_F_av - F_f > 0
+                         mm["M_Anx_F_Anx", ] - mm["M_Fear_F_Sec", ],  # M_anx + F_anx + M_anx_F_anx - M_f > 0
+                         mm["M_Anx_F_Anx", ] - mm["M_Sec_F_Fear", ],  # M_anx + F_anx + M_anx_F_anx - F_f > 0
+                         mm["M_Av_F_Anx", ] - mm["M_Fear_F_Sec", ],   # M_av + F_anx + M_av_F_anx - M_f > 0
+                         mm["M_Av_F_Anx", ] - mm["M_Sec_F_Fear", ],   # M_av + F_anx + M_av_F_anx - F_f > 0
+                         mm["M_Anx_F_Av", ] - mm["M_Fear_F_Sec", ],   # M_anx + F_av + M_anx_F_av - M_f > 0
+                         mm["M_Anx_F_Av", ] - mm["M_Sec_F_Fear", ],   # M_anx + F_av + M_anx_F_av - F_f > 0
+                         mm["M_Av_F_Av", ] - mm["M_Fear_F_Sec", ],    # M_av + F_av + M_av_F_av - M_f > 0
+                         mm["M_Av_F_Av", ] - mm["M_Sec_F_Fear", ],    # M_av + F_av + M_av_F_av - F_f > 0
 
-                         c(-1, 0, 1, 0, 0, 0, -1, 0, 1, rep(0, n_pars - 9)),      # M_f + M_f_F_anx - M_anx - M_anx_F_anx> 0
-                         c(0, -1, 1, 0, 0, 0, 0, -1, 1, rep(0, n_pars - 9)),      # M_f + M_f_F_anx - M_av - M_av_F_anx> 0
-                         c(-1, 0, 1, 1, -1, 0, 0, 0, 1, -1, rep(0, n_pars - 10)),    # M_f + F_anx + M_f_F_anx - M_anx - F_av - M_anx_F_av> 0
-                         c(0, -1, 1, 1, -1, 0, 0, 0, 1,  0, -1, rep(0, n_pars - 11)),    # M_f + F_anx + M_f_F_anx - M_av - F_av - M_av_F_av> 0
+                         mm["M_Fear_F_Anx", ] - mm["M_Anx_F_Anx", ],  # M_f + M_f_F_anx - M_anx - M_anx_F_anx> 0
+                         mm["M_Fear_F_Anx", ] - mm["M_Av_F_Anx", ],   # M_f + M_f_F_anx - M_av - M_av_F_anx> 0
+                         mm["M_Fear_F_Anx", ] - mm["M_Anx_F_Av", ],   # M_f + F_anx + M_f_F_anx - M_anx - F_av - M_anx_F_av> 0
+                         mm["M_Fear_F_Anx", ] - mm["M_Av_F_Av", ],    # M_f + F_anx + M_f_F_anx - M_av - F_av - M_av_F_av> 0
 
-                         c(-1, 0, 1, -1, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0),  # M_f + F_av + M_f_F_av - M_anx - F_anx - M_anx_F_anx> 0
-                         c(0, -1, 1, -1, 1, 0, 0, -1, 0, 0, 0, 1, 0, 0, 0),  # M_f + F_av + M_f_F_av - M_av - F_anx - M_av_F_anx> 0
-                         c(-1, 0, 1, 0, 0, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0),   # M_f + M_f_F_av - M_anx - M_anx_F_av> 0
-                         c(0, -1, 1, 0, 0, 0, 0, 0, 0, 0, -1, 1, 0, 0, 0),   # M_f + M_f_F_av - M_av - M_av_F_av> 0
+                         mm["M_Fear_F_Av", ] - mm["M_Anx_F_Anx", ],   # M_f + F_av + M_f_F_av - M_anx - F_anx - M_anx_F_anx> 0
+                         mm["M_Fear_F_Av", ] - mm["M_Av_F_Anx", ],    # M_f + F_av + M_f_F_av - M_av - F_anx - M_av_F_anx> 0
+                         mm["M_Fear_F_Av", ] - mm["M_Anx_F_Av", ],    # M_f + M_f_F_av - M_anx - M_anx_F_av> 0
+                         mm["M_Fear_F_Av", ] - mm["M_Av_F_Av", ],     # M_f + M_f_F_av - M_av - M_av_F_av> 0
 
-                         c(0, 0, 0, -1, 0, 1, -1, 0, 0, 0, 0, 0, 1, 0, 0),  # F_f + M_anx_F_f - F_anx - M_anx_F_anx> 0
-                         c(1, -1, 0, -1, 0, 1, 0, -1, 0, 0, 0, 0, 1, 0 ,0),  # M_anx + F_f + M_anx_F_f - M_av - F_anx - M_av_F_anx> 0
-                         c(0, 0, 0, 0, -1, 1, 0, 0, 0, -1, 0, 0, 1, 0, 0),   # F_f + M_anx_F_f - F_av - M_anx_F_av> 0
-                         c(1, -1, 0, 0, -1, 1, 0, 0, 0, 0, -1, 0, 1, 0, 0),   # M_anx + F_f + M_anx_F_f - M_av -  F_av - M_av_F_av> 0
+                         mm["M_Anx_F_Fear", ] - mm["M_Anx_F_Anx", ],  # F_f + M_anx_F_f - F_anx - M_anx_F_anx> 0
+                         mm["M_Anx_F_Fear", ] - mm["M_Av_F_Anx", ],   # M_anx + F_f + M_anx_F_f - M_av - F_anx - M_av_F_anx> 0
+                         mm["M_Anx_F_Fear", ] - mm["M_Anx_F_Av", ],   # F_f + M_anx_F_f - F_av - M_anx_F_av> 0
+                         mm["M_Anx_F_Fear", ] - mm["M_Av_F_Av", ],    # M_anx + F_f + M_anx_F_f - M_av -  F_av - M_av_F_av> 0
 
-                         c(-1, 1, 0, -1, 0, 1, -1, 0, 0, 0, 0, 0, 0, 1, 0),  # M_av + F_f + M_av_F_f - M_anx - F_anx - M_anx_F_anx> 0
-                         c(0, 0, 0, -1, 0, 1, 0, -1, 0, 0, 0, 0, 0, 1, 0),  # F_f + M_av_F_f - F_anx - M_av_F_anx> 0
-                         c(-1, 1, 0, 0, -1, 1, 0, 0, 0, -1, 0, 0, 0, 1, 0),  # M_av + F_f + M_av_F_f - M_anx - F_av - M_anx_F_av> 0
-                         c(0, 0, 0, 0, -1, 1, 0, 0, 0, 0, -1, 0, 0, 1, 0),  # F_f + M_av_F_f -  F_av - M_av_F_av> 0
+                         mm["M_Av_F_Fear", ] - mm["M_Anx_F_Anx", ],   # M_av + F_f + M_av_F_f - M_anx - F_anx - M_anx_F_anx> 0
+                         mm["M_Av_F_Fear", ] - mm["M_Av_F_Anx", ],    # F_f + M_av_F_f - F_anx - M_av_F_anx> 0
+                         mm["M_Av_F_Fear", ] - mm["M_Anx_F_Av", ],    # M_av + F_f + M_av_F_f - M_anx - F_av - M_anx_F_av> 0
+                         mm["M_Av_F_Fear", ] - mm["M_Av_F_Av", ],     # F_f + M_av_F_f -  F_av - M_av_F_av> 0
 
-
-                         c(0, 0, 0, -1, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1),  # F_f + M_f_F_f  - F_anx - M_f_F_anx > 0
-                         c(0, 0, 0, 0, -1, 1, 0, 0, 0, 0, 0, -1, 0, 0, 1),  # F_f + M_f_F_f - F_av - M_f_F_av > 0
-                         c(-1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 1),  # M_f  + M_f_F_f - M_anx  - M_anx_F_f > 0
-                         c(0, -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1))  # M_f  + M_f_F_f -  M_av - M_av_F_f > 0
+                         mm["M_Fear_F_Fear", ] - mm["M_Fear_F_Anx", ],  # F_f + M_f_F_f - F_anx - M_f_F_anx > 0
+                         mm["M_Fear_F_Fear", ] - mm["M_Fear_F_Av", ],  # F_f + M_f_F_f - F_av - M_f_F_av > 0
+                         mm["M_Fear_F_Fear", ] - mm["M_Anx_F_Fear", ],  # M_f + M_f_F_f - M_anx - M_anx_F_f > 0
+                         mm["M_Fear_F_Fear", ] - mm["M_Av_F_Fear", ])  # M_f + M_f_F_f - M_av - M_av_F_f > 0
 
 
     # independent rows
@@ -257,10 +284,79 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchi
               hyp = hyp))
 }
 
+#----    compute_density    ----
+
+#' Compute Density
+#'
+#' Compute the density of the multivariate normal distribution considering
+#' equality constraints.
+#'
+#' @param mean vector with the parameters mean
+#' @param sigma covariance matrix of the parameters
+#' @param n_eqinteger indicating thee number of equality constraints
+#'
+#' @return a numeric single value
+#'
+#' @examples
+#' compute_density(mean = c(0,0, 0), sigma = diag(3), n_eq = 2)
+#'
+
+compute_density <- function(mean, sigma, n_eq){
+
+  seq <-  if(n_eq == 1) 1 else 1:n_eq
+
+  res <- mvtnorm::dmvnorm(x = rep(0, n_eq),
+                   mean = mean[seq],
+                   sigma = as.matrix(sigma[seq, seq]))
+
+  return(res)
+}
+
+#----    compute_cond_prob    ----
+
+#' Compute Conditional Probability
+#'
+#' Compute the conditional probability of order constraints oft the multivariate
+#' normal distribution given the equality constraints.
+#'
+#' @param mean vector with the parameters mean
+#' @param sigma covariance matrix of the parameters
+#' @param n_eqinteger indicating thee number of equality constraints
+#'
+#' @return a numeric single value
+#'
+#' @examples
+#' compute_cond_prob(mean = c(0,0, 0), sigma = diag(3), n_eq = 2, n_ineq = 1)
+#'
+
+compute_cond_prob <- function(mean, sigma, n_eq, n_ineq){
+
+  res <- condMVNorm::pcmvnorm(
+    lower = rep(0,n_ineq), upper = rep(Inf,n_ineq),
+    mean = mean, sigma = sigma,
+    dependent.ind = (n_eq+1):(n_eq + n_ineq),
+    given.ind = 1:n_eq, X.given = rep(0,n_eq))
+
+  return(res)
+}
+
 #----    get_BF    ----
 
+#' Title
+#'
+#' @param hypothesis
+#' @param encompassing_model
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' drake::loadd(encompassing_model)
+#' hypothesis <-  "interaction"
+#'
+
 get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
-                                  "independent", "iteraction"),
+                                  "independent", "interaction"),
                    encompassing_model){
   hypothesis <- match.arg(hypothesis)
 
@@ -286,13 +382,10 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
     #----    Null Hypotesis    ----
 
     # prior density equality
-    prior_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                     mean = prior_mean,
-                                     sigma = prior_cov)
+    prior_den_eq <- compute_density(prior_mean, prior_cov, n_eq)
+
     # posterior density equality
-    post_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                    mean = posterior_mean,
-                                    sigma = posterior_cov)
+    post_den_eq <- compute_density(posterior_mean, posterior_cov, n_eq)
 
     # prior conditional probability
     prior_cond_prob <- 1
@@ -312,27 +405,18 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       prior_cov <- hyp_matrix$hyp %*% prior_cov %*% t(hyp_matrix$hyp)
 
       # prior density equality
-      prior_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                       mean = prior_mean[1:n_eq],
-                                       sigma = prior_cov[1:n_eq, 1:n_eq])
+      prior_den_eq <- compute_density(prior_mean, prior_cov, n_eq)
+
       # posterior density equality
-      post_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                      mean = posterior_mean[1:n_eq],
-                                      sigma = posterior_cov[1:n_eq, 1:n_eq])
+      post_den_eq <- compute_density(posterior_mean, posterior_cov, n_eq)
 
       # prior conditional probability
-      prior_cond_prob <- condMVNorm::pcmvnorm(
-        lower = rep(0,n_ineq), upper = rep(Inf,n_ineq),
-        mean = prior_mean, sigma = prior_cov,
-        dependent.ind = (n_eq+1):(n_eq + n_ineq),
-        given.ind = 1:n_eq, X.given = rep(0,n_eq))
+      prior_cond_prob <- compute_cond_prob(prior_mean, prior_cov,
+                                           n_eq = n_eq, n_ineq = n_ineq)
 
       # posterior conditional probability
-      post_cond_prob <- condMVNorm::pcmvnorm(
-        lower = rep(0,n_ineq), upper = rep(Inf,n_ineq),
-        mean = posterior_mean, sigma = posterior_cov,
-        dependent.ind = (n_eq+1):(n_eq + n_ineq),
-        given.ind = 1:n_eq, X.given = rep(0,n_eq))
+      post_cond_prob <- compute_cond_prob(posterior_mean, posterior_cov,
+                                          n_eq = n_eq, n_ineq = n_ineq)
 
     } else if(hypothesis == "hierarchical"){
       #----    Hierarchical Hypothesis    ----
@@ -351,13 +435,10 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       prior_cov <- hyp_matrix$hyp[1:15, ] %*% prior_cov %*% t(hyp_matrix$hyp[1:15, ])
 
       # prior density equality
-      prior_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                       mean = prior_mean[1:n_eq],
-                                       sigma = prior_cov[1:n_eq, 1:n_eq])
+      prior_den_eq <- compute_density(prior_mean, prior_cov, n_eq)
+
       # posterior density equality
-      post_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                      mean = posterior_mean[1:n_eq],
-                                      sigma = posterior_cov[1:n_eq, 1:n_eq])
+      post_den_eq <- compute_density(posterior_mean, posterior_cov, n_eq)
 
       # prior conditional probability
       obs <- condMVNorm::rcmvnorm(
@@ -374,7 +455,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
                     beta_16 = obs[,1] - obs[,3],  # beta_16
                     beta_18 = obs[,1] + obs[,2] - obs[,3] - obs[,4]) # beta_18
 
-      prior_cond_prob <- mean(apply( test >= 0, 1, all))
+      prior_cond_prob <- mean(rowSums(test >= 0) == ncol(test))
 
       # posterior conditional probability
       obs <- condMVNorm::rcmvnorm(
@@ -386,7 +467,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
                     beta_16 = obs[,1] - obs[,3],  # beta_16
                     beta_18 = obs[,1] + obs[,2] - obs[,3] - obs[,4]) # beta_18
 
-      post_cond_prob <- mean(apply( obs >= 0, 1, all))
+      post_cond_prob <- mean(rowSums(test >= 0) == ncol(test))
 
     } else if(hypothesis == "independent"){
       #----    Independent Hypothesis    ----
@@ -398,64 +479,58 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       prior_mean <- hyp_matrix$hyp %*% prior_mean
       prior_cov <- hyp_matrix$hyp %*% prior_cov %*% t(hyp_matrix$hyp)
 
-
-
       # prior density equality
-      prior_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                       mean = prior_mean[1:n_eq],
-                                       sigma = prior_cov[1:n_eq, 1:n_eq])
+      prior_den_eq <- compute_density(prior_mean, prior_cov, n_eq)
+
       # posterior density equality
-      post_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                      mean = posterior_mean[1:n_eq],
-                                      sigma = posterior_cov[1:n_eq, 1:n_eq])
+      post_den_eq <- compute_density(posterior_mean, posterior_cov, n_eq)
 
       # prior conditional probability
-      prior_cond_prob <- condMVNorm::pcmvnorm(
-        lower = rep(0,n_ineq), upper = rep(Inf,n_ineq),
-        mean = prior_mean, sigma = prior_cov,
-        dependent.ind = (n_eq+1):(n_eq + n_ineq),
-        given.ind = 1:n_eq, X.given = rep(0,n_eq))
+      prior_cond_prob <- compute_cond_prob(prior_mean, prior_cov,
+                                           n_eq = n_eq, n_ineq = n_ineq)
 
       # posterior conditional probability
-      post_cond_prob <- condMVNorm::pcmvnorm(
-        lower = rep(0,n_ineq), upper = rep(Inf,n_ineq),
-        mean = posterior_mean, sigma = posterior_cov,
-        dependent.ind = (n_eq+1):(n_eq + n_ineq),
-        given.ind = 1:n_eq, X.given = rep(0,n_eq))
+      post_cond_prob <- compute_cond_prob(posterior_mean, posterior_cov,
+                                          n_eq = n_eq, n_ineq = n_ineq)
 
     } else if(hypothesis == "interaction"){
       #----    Interaction Hypothesis    ----
-      posterior_mean <- hyp_matrix$hyp %*% posterior_mean
-      posterior_cov <- hyp_matrix$hyp %*% posterior_cov %*% t(hyp_matrix$hyp)
 
-      prior_mean <- hyp_matrix$hyp %*% prior_mean
-      prior_cov <- hyp_matrix$hyp %*% prior_cov %*% t(hyp_matrix$hyp)
+      # In the Hierarchical hypothesis only the constraints at line: 1, 2, 3, 4,
+      # 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37 are linearly independent. The
+      # other constaints can be obtained as composition of the other lineearly
+      # independent betas.
 
+      independent_rows <- c(1, 2, 3, 4, 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37)
+      composition_betas <- find_composition_betas(hyp_matrix$hyp,
+                                                  independent_rows = independent_rows)
 
+      # Linear transformation of the parameters
+      posterior_mean <- hyp_matrix$hyp[independent_rows, ] %*% posterior_mean
+      posterior_cov <- hyp_matrix$hyp[independent_rows, ] %*% posterior_cov %*% t(hyp_matrix$hyp[independent_rows, ])
+
+      prior_mean <- hyp_matrix$hyp[independent_rows, ] %*% prior_mean
+      prior_cov <- hyp_matrix$hyp[independent_rows, ] %*% prior_cov %*% t(hyp_matrix$hyp[independent_rows, ])
 
       # prior density equality
-      prior_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                       mean = prior_mean[1:n_eq],
-                                       sigma = prior_cov[1:n_eq, 1:n_eq])
+      prior_den_eq <- 1
+
       # posterior density equality
-      post_den_eq <- mvtnorm::dmvnorm(x = rep(0, n_eq),
-                                      mean = posterior_mean[1:n_eq],
-                                      sigma = posterior_cov[1:n_eq, 1:n_eq])
+      post_den_eq <- 1
 
       # prior conditional probability
-      prior_cond_prob <- condMVNorm::pcmvnorm(
-        lower = rep(0,n_ineq), upper = rep(Inf,n_ineq),
-        mean = prior_mean, sigma = prior_cov,
-        dependent.ind = (n_eq+1):(n_eq + n_ineq),
-        given.ind = 1:n_eq, X.given = rep(0,n_eq))
+      obs <- MASS::mvrnorm(1e7, mu = prior_mean, Sigma = prior_cov)
+
+      test <- composition_betas %*% t(obs)
+
+      prior_cond_prob <- mean(colSums(test >= 0) == nrow(test))
 
       # posterior conditional probability
-      post_cond_prob <- condMVNorm::pcmvnorm(
-        lower = rep(0,n_ineq), upper = rep(Inf,n_ineq),
-        mean = posterior_mean, sigma = posterior_cov,
-        dependent.ind = (n_eq+1):(n_eq + n_ineq),
-        given.ind = 1:n_eq, X.given = rep(0,n_eq))
+      obs <- MASS::mvrnorm(1e7, mu = posterior_mean, Sigma = posterior_cov)
 
+      test <- composition_betas %*% t(obs)
+
+      post_cond_prob <- mean(colSums(test >= 0) == nrow(test))
     }
 
   # Resulting BF
@@ -465,6 +540,153 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
   return(BF)
 }
 
+#----    find_transform_parameters    ----
+
+#' Get Matrix Parameters transformed
+#'
+#' Obtain the matrix that define how the original parameters (mother*father) are
+#' expressed as composition of the new linear independent parameters betas
+#'
+#' @param hyp the hypothesis matrix with th enew parameters betas
+#' @param independent_rows numeric vector indicating the linearly independent betas
+#'
+#' @return a matrix
+#'
+#' @examples
+#' drake::loadd(encompassing_model)
+#' independent_rows <- c(1, 2, 3, 4, 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37)
+#' hyp <- get_hypothesis_matrix(hypothesis = "interaction", encompassing_model)$hyp
+#' find_transform_parameters(hyp = hyp, independent_rows)
+#'
+
+find_transform_parameters <- function(hyp, independent_rows){
+
+  bases <- lapply(as.list(colnames(hyp)), function(x){
+    betas <- vector("numeric", length = ncol(hyp))
+    names(betas) <- paste0("beta_", independent_rows)
+    return(betas)
+  })
+  names(bases) <- colnames(hyp)
+
+
+  # find simple basis
+  simple <- which(rowSums(abs(hyp))==1)
+  for(i in simple){
+    col_index <- which(hyp[i,] != 0)
+
+    if(length(col_index) != 1L) stop("fail retrive simple basis")
+
+    bases[[col_index]][paste0("beta_", i)] <- 1
+  }
+
+  # find complex bases
+
+  for (i in seq_along(bases)){
+
+    if(sum(bases[[i]]) != 0) next # skip simple basis
+
+    row_index <- which(hyp[ ,i]==1L)[1] # which row is used as the base
+
+    if(hyp[row_index, i] !=1L) stop("issue identifing row to use as base")
+
+    #bases[[i]][paste0("beta_", row_index)] <- 1
+
+    # consider -1
+    minus <- sapply(which(hyp[row_index,] == -1), function(x){ bases[[x]]}) %>%
+      rowSums()
+    # consider +1
+    plus <- sapply(which(hyp[row_index,] == 1), function(x){bases[[x]]}) %>%
+      rowSums()
+
+    betas <- - plus + minus
+    betas[paste0("beta_", row_index)] <- betas[paste0("beta_", row_index)] + 1
+
+    bases[[i]] <- betas
+  }
+
+  res <- do.call("rbind", bases)
+
+  return(res)
+}
+
+#----    find_composition_betas    ----
+
+#' Get Matrix Composition Betas
+#'
+#' Obtain the matrix that define how all the betas are expressed as composition
+#' of the linear independent parameters betas.
+#'
+#' @param hyp the hypothesis matrix with th enew parameters betas
+#' @param independent_rows numeric vector indicating the linearly independent betas
+#'
+#' @return a matrix
+#'
+#' @examples
+#' drake::loadd(encompassing_model)
+#' independent_rows <- c(1, 2, 3, 4, 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37)
+#' hyp <- get_hypothesis_matrix(hypothesis = "interaction", encompassing_model)$hyp
+#' find_composition_betas(hyp = hyp, independent_rows)
+#'
+
+find_composition_betas <- function(hyp, independent_rows){
+
+  betas <- lapply(as.list(seq_len(nrow(hyp))), function(x){
+    beta <- vector("numeric", length = ncol(hyp))
+    names(beta) <- paste0("beta_", independent_rows)
+    return(beta)
+  })
+  names(betas) <- paste0("beta_", seq_len(nrow(hyp)))
+
+  matrix_comp <- find_transform_parameters(hyp = hyp, independent_rows = independent_rows)
+
+  for(i in seq_len(nrow(hyp))){
+    beta <- rbind(matrix_comp[which(hyp[i,] == 1), ], - matrix_comp[which(hyp[i,] == - 1), ]) %>%
+      colSums()
+
+    betas[[i]] <- beta
+  }
+
+  res <- do.call("rbind", betas)
+
+  return(res)
+}
+
+#----    get_table_BF    ----
+
+#' Get Table BF Comparison
+#'
+#' @param ... BF to compare
+#'
+#' @return a matrix
+#'
+#' @examples
+#' drake::loadd(c(BF_null, BF_monotropy,
+#'        BF_hierarchical, BF_independent))
+#' get_table_BF(BF_null,
+#'              BF_monotropy,
+#'              BF_hierarchical,
+#'              BF_independent)
+#'
+
+get_table_BF <- function(...){
+
+  names_bf <- as.list(match.call(), )[-1] %>%
+    as.character(.)
+  n <- length(names_bf)
+
+
+  list_bf <- list(...)
+
+  bf <- lapply(list_bf, FUN = function(x){x[1]}) %>%
+    unlist()
+
+  res <- matrix(rep(bf, n), ncol = n)/matrix(rep(bf,n), ncol = n, byrow = TRUE)
+
+  colnames(res) <- rownames(res) <- names_bf
+
+
+  return(res)
+}
 
 #----
 

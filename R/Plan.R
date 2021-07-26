@@ -114,6 +114,10 @@ get_analysis_plan <- function(){
     BF_monotropy = get_BF(hypothesis = "monotropy", encompassing_model),
     BF_hierarchical = get_BF(hypothesis = "hierarchical", encompassing_model),
     BF_independent = get_BF(hypothesis = "independent", encompassing_model),
+    BF_interaction = get_BF(hypothesis = "interaction", encompassing_model),
+
+    table_BF = get_table_BF(BF_null, BF_monotropy, BF_hierarchical,
+                            BF_independent, BF_interaction),
 
 
     # Compute BF

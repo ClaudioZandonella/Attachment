@@ -64,7 +64,7 @@ summary(mclust_mother)
 plot(mclust_father)
 summary(mclust_father)
 
-#---- ZIP analysisi ----
+#---- ZINB analysisi ----
 drake::loadd(fit_int_nb)
 car::Anova(fit_int_nb)
 summary(fit_int_nb)
@@ -114,7 +114,17 @@ brms::bayes_R2(brm_ext_mother)
 
 #---- BF encompassing priors ----
 
-drake::loadd(prior_model)
+drake::loadd(encompassing_model)
+
+drake::loadd(BF_null)
+drake::loadd(BF_monotropy)
+drake::loadd(BF_hierarchical)
+drake::loadd(BF_independent)
+drake::loadd(BF_interaction)
+
+drake::loadd(table_BF)
+
+
 
 #----
 
