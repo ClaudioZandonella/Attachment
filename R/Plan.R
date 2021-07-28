@@ -37,16 +37,20 @@ get_analysis_plan <- function(){
     mclust_father = mclust_BIC(data = data_munged,
                                parent = "father"),
 
+    #=============================#
+    #====    Internalizing    ====#
+    #=============================#
+
     #----    ZINB analysis    ----
     fit_int_nb = MASS::glm.nb(internalizing_sum ~ gender + mother * father,
                               data = data_cluster),
-    test_zero_inflated = performance::check_zeroinflation(fit_int_nb),
+    test_zero_inflated_int = performance::check_zeroinflation(fit_int_nb),
 
     #----    anova approach ----
     fit_int_zinb = pscl::zeroinfl(internalizing_sum ~ gender + mother * father | gender,
                                   data = data_cluster, dist = "negbin"),
 
-    plot_zinb= get_plot_zinb(model = fit_int_zinb),
+    plot_zinb_int = get_plot_zinb(model = fit_int_zinb),
 
     #----    brms Models int    ----
     brm_int_zero = zinb_brms(data = data_cluster,
@@ -76,61 +80,89 @@ get_analysis_plan <- function(){
                                       brm_int_additive,
                                       brm_int_inter, ic = "loo"),
 
-    # #----    brms Models ext    ----
-    # brm_ext_zero = zinb_brms(data = data_cluster,
-    #                         y = "externalizing_sum",
-    #                         formula = list("gender",
-    #                                        "gender")),
-    # brm_ext_mother = zinb_brms(data = data_cluster,
-    #                           y = "externalizing_sum",
-    #                           formula = list("gender + mother",
-    #                                          "gender")),
-    # brm_ext_additive = zinb_brms(data = data_cluster,
-    #                             y = "externalizing_sum",
-    #                             formula = list("gender + mother + father",
-    #                                            "gender")),
-    # brm_ext_inter = zinb_brms(data = data_cluster,
-    #                          y = "externalizing_sum",
-    #                          formula = list("gender + mother * father",
-    #                                         "gender")),
-    #
-    # waic_weights_ext = get_rel_weights(brm_ext_zero,
-    #                                    brm_ext_mother,
-    #                                    brm_ext_additive,
-    #                                    brm_ext_inter, ic = "waic"),
-    # loo_weights_ext = get_rel_weights(brm_ext_zero,
-    #                                   brm_ext_mother,
-    #                                   brm_ext_additive,
-    #                                   brm_ext_inter, ic = "loo"),
 
     #----    BF encompassing priors    ----
 
     # Encompassing model
-    encompassing_model = get_encompassing_model(data = data_cluster,
-                                                 y = "internalizing_sum",
-                                                 prior_par = "normal(0, 3)"),
+    encompassing_model_int = get_encompassing_model(data = data_cluster,
+                                                    y = "internalizing_sum",
+                                                    prior_par = "normal(0, 3)"),
     # BF hypothesis
-    BF_null = get_BF(hypothesis = "null", encompassing_model),
-    BF_monotropy = get_BF(hypothesis = "monotropy", encompassing_model),
-    BF_hierarchical = get_BF(hypothesis = "hierarchical", encompassing_model),
-    BF_independent = get_BF(hypothesis = "independent", encompassing_model),
-    BF_interaction = get_BF(hypothesis = "interaction", encompassing_model),
+    BF_null_int = get_BF(hypothesis = "null", encompassing_model_int),
+    BF_monotropy_int = get_BF(hypothesis = "monotropy", encompassing_model_int),
+    BF_hierarchical_int = get_BF(hypothesis = "hierarchical", encompassing_model_int),
+    BF_independent_int = get_BF(hypothesis = "independent", encompassing_model_int),
+    BF_interaction_int = get_BF(hypothesis = "interaction", encompassing_model_int),
 
-    table_BF = get_table_BF(BF_null, BF_monotropy, BF_hierarchical,
-                            BF_independent, BF_interaction),
+    table_BF_int = get_table_BF(BF_null_int, BF_monotropy_int, BF_hierarchical_int,
+                                BF_independent_int, BF_interaction_int),
+
+    BF_weights_int = get_BF_weights(BF_null_int, BF_monotropy_int, BF_hierarchical_int,
+                                    BF_independent_int, BF_interaction_int,
+                                    encompassing_model = encompassing_model_int),
+
+    #=============================#
+    #====    Externalizing    ====#
+    #=============================#
+
+    #----    ZINB analysis    ----
+    fit_ext_nb = MASS::glm.nb(externalizing_sum ~ gender + mother * father,
+                              data = data_cluster),
+    test_zero_inflated_ext = performance::check_zeroinflation(fit_ext_nb),
+
+    #----    anova approach ----
+    fit_ext_zinb = pscl::zeroinfl(externalizing_sum ~ gender + mother * father | gender,
+                                  data = data_cluster, dist = "negbin"),
+
+    plot_zinb_ext = get_plot_zinb(model = fit_ext_zinb),
+
+    #----    brms Models ext    ----
+    brm_ext_zero = zinb_brms(data = data_cluster,
+                             y = "externalizing_sum",
+                             formula = list("gender",
+                                            "gender")),
+    brm_ext_mother = zinb_brms(data = data_cluster,
+                               y = "externalizing_sum",
+                               formula = list("gender + mother",
+                                              "gender")),
+    brm_ext_additive = zinb_brms(data = data_cluster,
+                                 y = "externalizing_sum",
+                                 formula = list("gender + mother + father",
+                                                "gender")),
+    brm_ext_inter = zinb_brms(data = data_cluster,
+                              y = "externalizing_sum",
+                              formula = list("gender + mother * father",
+                                             "gender")),
+
+    # Weights
+    waic_weights_ext = get_rel_weights(brm_ext_zero,
+                                       brm_ext_mother,
+                                       brm_ext_additive,
+                                       brm_ext_inter, ic = "waic"),
+    loo_weights_ext = get_rel_weights(brm_ext_zero,
+                                      brm_ext_mother,
+                                      brm_ext_additive,
+                                      brm_ext_inter, ic = "loo"),
 
 
-    # Compute BF
+    #----    BF encompassing priors    ----
 
-    # stan_data = make_stan_data(data_cluster, formula = list("gender + mother", "gender")),
-    #
-    # fit_H1 = stan(file = "Stan/ZIP-model-H1.stan", data = stan_data),
-    # prior_spec = brms::set_prior("normal(0,5)", class = c("b"), dpar = c("", "zi")),
-    # prior_model = brms::brm(brms::bf(internalizing_sum ~ cluster_mother + cluster_father,
-    #                                  zi ~ cluster_mother + cluster_father),
-    #                         data = data_cluster, family = brms::zero_inflated_poisson(),
-    #                         prior = prior_spec, cores = 4, sample_prior = "only",
-    #                         iter = 5000, warmup = 0)
+    # Encompassing model
+    encompassing_model_ext = get_encompassing_model(data = data_cluster,
+                                                y = "externalizing_sum",
+                                                prior_par = "normal(0, 3)"),
+    # BF hypothesis
+    BF_null_ext = get_BF(hypothesis = "null", encompassing_model_ext),
+    BF_monotropy_ext = get_BF(hypothesis = "monotropy", encompassing_model_ext),
+    BF_hierarchical_ext = get_BF(hypothesis = "hierarchical", encompassing_model_ext),
+    BF_independent_ext = get_BF(hypothesis = "independent", encompassing_model_ext),
+    BF_interaction_ext = get_BF(hypothesis = "interaction", encompassing_model_ext),
+
+    table_BF_ext = get_table_BF(BF_null_ext, BF_monotropy_ext, BF_hierarchical_ext,
+                            BF_independent_ext, BF_interaction_ext),
+    BF_weights_ext = get_BF_weights(BF_null_ext, BF_monotropy_ext, BF_hierarchical_ext,
+                                    BF_independent_ext, BF_interaction_ext,
+                                    encompassing_model = encompassing_model_ext)
 
   )
 }

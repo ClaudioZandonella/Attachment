@@ -64,13 +64,16 @@ summary(mclust_mother)
 plot(mclust_father)
 summary(mclust_father)
 
+#=============================#
+#====    Internalizing    ====#
+#=============================#
 #---- ZINB analysisi ----
 drake::loadd(fit_int_nb)
 car::Anova(fit_int_nb)
 summary(fit_int_nb)
 
-drake::loadd(test_zero_inflated)
-test_zero_inflated
+drake::loadd(test_zero_inflated_int)
+test_zero_inflated_int
 
 #---- anova approach ----
 drake::loadd(fit_int_zinb)
@@ -80,8 +83,8 @@ car::Anova(fit_int_zinb) # https://rcompanion.org/handbook/J_01.html see "Zero-i
 rcompanion::nagelkerke(fit_int_zinb)
 
 summary(fit_int_zinb)
-drake::loadd(plot_zinb)
-plot(plot_zinb)
+drake::loadd(plot_zinb_int)
+plot(plot_zinb_int)
 
 #---- brms models ----
 
@@ -99,7 +102,44 @@ brms::conditional_effects(brm_int_mother, dpar = "zi")
 brms::pp_check(brm_int_mother, nsamples = 100)
 brms::bayes_R2(brm_int_mother)
 
-# Externalizing
+#---- BF encompassing priors ----
+
+drake::loadd(encompassing_model_int)
+
+drake::loadd(BF_null_int)
+drake::loadd(BF_monotropy_int)
+drake::loadd(BF_hierarchical_int)
+drake::loadd(BF_independent_int)
+drake::loadd(BF_interaction_int)
+
+drake::loadd(table_BF_int)
+drake::loadd(BF_weights_int)
+
+#=============================#
+#====    Externalizing    ====#
+#=============================#
+#---- ZINB analysisi ----
+drake::loadd(fit_ext_nb)
+car::Anova(fit_ext_nb)
+summary(fit_ext_nb)
+
+drake::loadd(test_zero_inflated_ext)
+test_zero_inflated_ext
+
+#---- anova approach ----
+drake::loadd(fit_ext_zinb)
+pscl::vuong(fit_ext_nb, fit_ext_zinb) # Model zero-inflated is slightly better
+
+car::Anova(fit_ext_zinb) # https://rcompanion.org/handbook/J_01.html see "Zero-inflated regression example"
+rcompanion::nagelkerke(fit_ext_zinb)
+
+summary(fit_ext_zinb)
+drake::loadd(plot_zinb_ext)
+plot(plot_zinb_ext)
+
+#---- brms models ----
+
+# externalizing
 drake::loadd(waic_weights_ext)
 drake::loadd(loo_weights_ext)
 
@@ -107,23 +147,26 @@ drake::loadd(brm_ext_mother)
 
 summary(brm_ext_mother)
 plot(brm_ext_mother)
-plot(brms::conditional_effects(brm_ext_mother), ask = FALSE)
+brms::conditional_effects(brm_ext_mother)
+brms::conditional_effects(brm_ext_mother, dpar = "zi")
 
 brms::pp_check(brm_ext_mother, nsamples = 100)
 brms::bayes_R2(brm_ext_mother)
 
 #---- BF encompassing priors ----
 
-drake::loadd(encompassing_model)
+drake::loadd(encompassing_model_ext)
 
-drake::loadd(BF_null)
-drake::loadd(BF_monotropy)
-drake::loadd(BF_hierarchical)
-drake::loadd(BF_independent)
-drake::loadd(BF_interaction)
+drake::loadd(BF_null_ext)
+drake::loadd(BF_monotropy_ext)
+drake::loadd(BF_hierarchical_ext)
+drake::loadd(BF_independent_ext)
+drake::loadd(BF_interaction_ext)
 
-drake::loadd(table_BF)
+drake::loadd(table_BF_ext)
+drake::loadd(BF_weights_ext)
 
+#===========================#
 
 
 #----
