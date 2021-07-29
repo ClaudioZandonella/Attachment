@@ -210,14 +210,14 @@ Considering independent theory, Mother and father attachment are expected to aff
 
 $$
 M_S < M_{Ax} = M_{Av} < M_F\\
-P_S < P_{Ax} < P_{Av} = P_F\\
+P_S < P_{Ax} < P_{Av} < P_F\\
 $$
 
 ```{r}
 data_independent <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
                         Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
                                             levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
-                        Score = c(0.05, 0.5, 0.5, 1, 0.05, 0.5, 1, 1))
+                        Score = c(.05, .5, .5, 1, .05, .25, .75, 1))
 
 ggplot(data_independent) +
   geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
@@ -237,7 +237,7 @@ data_independent_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avo
                                 Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
                                             levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
 
-data_independent_grid$Problems <- rep(c(.05, .5, .5, 1), 4) + rep(c(.05, .5, 1, 1), each = 4)
+data_independent_grid$Problems <- rep(c(.05, .5, .5, 1), 4) + rep(c(.05, .30, .75, 1), each = 4)
 
 ggplot(data_independent_grid) +
   geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
@@ -252,7 +252,12 @@ ggplot(data_independent_grid) +
 Considering interaction theory, mother and father attachment are expected to interact. In this case, we consider Secure attachemnt as a protectivee factor and  fearful attachment as a risk condition.
 
 $$
-M_SP_S< \{M_SP_{Ax;Av};\ M_{Ax;Av}P_S\} < \{ M_SP_F;\  M_FP_S\} < M_{Ax;Av}P_{Ax;Av} <  \{M_FP_{Ax;Av};\ M_{Ax;Av}P_F\} <  M_FP_F
+M_SP_S< \{M_SP_{Ax;Av} = M_{Ax;Av}P_S\} < M_{Ax;Av}P_{Ax;Av} <  \{M_FP_{Ax;Av} = M_{Ax;Av}P_F\} <  M_FP_F
+$$
+
+With,
+$$
+M_{Ax}P_{Ax} = M_{Ax}P_{Av} = M_{Av}P_{Ax} = M_{Av}P_{Av}
 $$
 
 ```{r}
@@ -261,10 +266,10 @@ data_interaction <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant
                                 Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
                                             levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
 
-data_interaction$Score <- c(.05, .15, .15, .40,
+data_interaction$Score <- c(.05, .15, .15, NA,
                             .10, .50, .50, .90,
                             .10, .50, .50, .90,
-                            .40, .90, .90, 1.0)
+                            NA, .90, .90, 1.0)
 
 ggplot(data_interaction) +
   geom_tile(aes(x = Mother, y = Father, fill = Score), col = "gray10") +

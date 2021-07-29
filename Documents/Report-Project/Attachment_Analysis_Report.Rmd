@@ -1,6 +1,6 @@
 ---
 title: 'Attachment Analysis: Report Project'
-author: 'CZC, TM & GA'
+author: 'CZC, TM, PDC & GA'
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   bookdown::html_document2: 
@@ -32,69 +32,485 @@ path_drake <- "../../.drake"
 
 #----    load drake    ----
 
-# Data
-drake::loadd(raw_data)
-drake::loadd(data_munged)
-drake::loadd(data_cluster)
+drake_load_all()
 
-# Cluster
-drake::loadd(cluster_mother_fit)
-drake::loadd(cluster_father_fit)
-
-drake::loadd(mclust_mother)
-drake::loadd(mclust_father)
-
-# ZIP anlaysis
-drake::loadd(fit_int_poisson)
-
-# ANOVA
-drake::loadd(fit_int_zip)
-
-# brms models
-drake::loadd(brm_int_mother)
-drake::loadd(waic_weights_int)
-drake::loadd(loo_weights_int)
-
-# BF encompassing
-drake::loadd(fit_H1)
 ```
 
-In this report, preliminary results of the analysis are presented considering as dependent variable internalizing problems. Note the actual paper will consider externalizing problems, instead. (**Spoiler**: with externalizing problems models present more interesting results. However, here we used internalizing problems as an example to introduce the analysis method avoiding to influence the subsequent expert elicitation regarding externalizing problems).
+In this report, results of the analysis evaluating attachment theories are presented. In Section TODO, the aim of the analysis is discussed and descriptive statistics are presented together with the cluster analysis used to classify attachment. Subsequently, results of the analysis are presented separately for internalizing problems (See Section TODO) and externalizing problems (See Section TODO).
 
 # Introduction
 
-## Backgorund
+## Aim of the Analysis
 
-The aim of the analysis is to compare the 4 main theories regarding the role of child-mother  and child-father attachment on children development. In brief:
+The aim of the analysis is to compare the 4 main theories regarding the role of child-mother and child-father attachment on children development. In brief:
 
 1. **Monotropy Theory** - only the mother is important
 1. **Hierarchical Theory** -  the mother is more important than the father
-1. **Independent Theory** - mother and father affect different area of children development
+1. **Independent Theory** - mother and father affect children development differently
 1. **Interaction Theory** - mother and father interact  
 
-Here we evaluate as dependent variable:
+We evaluate as dependent variable:
 
-- **Internalizing Problems** - given by the sum of the SDQ (*Strengths & Difficulties Questionnaires*)
+- **Internalizing Problems** (`internalizing_sum`) - given by the sum of the SDQ (*Strengths & Difficulties Questionnaires*)
+- ****Externalizing Problems** (`externalizing_sum`) - given by the sum of the SDQ (*Strengths & Difficulties Questionnaires*)
 
 As independent variable we consider:
 
-- **Gender** - children gender
-- **Mother Attachment** - considering clusters obtained from the ECR questionnaire
-- **Father Attachment** - considering clusters obtained from the ECR questionnaire
+- **Gender** (`gender`) - children gender
+- **Mother Attachment** (`mother`) - considering clusters obtained from the ECR questionnaire (See Section TODO)
+- **Father Attachment** (`father`) - considering clusters obtained from the ECR questionnaire (See Section TODO)
 
-## Analysis Plan
+### Statistical Approach
 
 First, we present descriptive statistics and cluster analysis of mother and father attachment. Subsequently we present three different analyses discussing pro and con of each approach. In particular we adopted:
 
-1. Tradition ANOVA analysis. (Note that actually is Analysisi of Deviance)
+1. Tradition ANOVA analysis (Note that actually is Analysis of Deviance)
 1. Bayesian Model Comparison
 1. Bayes Factor with Encompassing Priors
 
-In all cases, Zero Inflated Poisson (*ZIP*) models were used to take into account the distribution characteristics of the dependent variable. This issue is discussed below.
+In all cases, Zero Inflated Negative Binomial (*ZINB*) models were used to take into account the distribution characteristics of the dependent variable. *ZINB* models are defined as:
 
-# Descriptive Statistics
+$$
+y_i \sim ZINegative Binomial(p_i, \mu_i)
+$$
 
-The sample size is:
+Where, $p_i$ is the probability of an observation $y_i$ being an extra zero (i.e., a zero not comming from the poisson distribution) and $1 - p_i$ indicates the probability of given observation $y_i$ being generated from a Negative Binomial distribution with mean $\mu_i$. In particular,
+
+$$
+p_i = \text{logit}^{-1}(X_i^T\beta_{p}),\\
+\mu_i = \text{exp}(X_i^T\beta_{\mu}).
+$$
+
+That is, we want to model both $p_i$ and $\mu_i$ according to a set of independent variables. Thus we have to estimate parameters vector $\beta_p$ and $\beta_{\mu}$ respectively.
+
+In particular we considered as predictors:
+
+```{r, echo = TRUE, eval = FALSE}
+# formula for p
+p ~ gender
+
+# formula for mu
+mu ~ gender + ...
+```
+
+That is, we model the probability ($p_i$) of an observation being zero or coming from a Negative Binomial distribution according to `gender`. Whereas, we model the Negative Binomial mean ($\mu_i$) according to `gender` and other variables combination between `mother` and `father`.
+
+
+
+## Bayes Factor  Encompassing Prior Approach
+
+Here we describe the Bayes Factor  Encompassing Prior Approach.
+
+With this approach we can explicit equality and order constraints between parameters.We need first to define the hypothesis, estimate the encompassing model and than compute the Bayes Factor.
+
+### Informative Hypotesis
+
+A given Hypothesis can be expressed as:
+$$
+H_i:\ R_E\theta = r_E,\  R_I\theta > r_I
+$$
+Where, $R_E$ is a matrix indicating equality constraints and $r_E$ is a vector with the equality values. Whereas $R_I$ is a matrix indicating inequality constraints and $r_I$ is a vector with the inequality values. For example, consider a model with 3 parameters ($\theta_1,\ \theta_2,\ \theta_3$) and the following constraints $0<\theta_1 < \theta_2 < \theta_3;\ \theta_4 = 2$. In this case we would have:
+$$
+R_E = \begin{pmatrix} 0 &  0 & 0 & 1\end{pmatrix}; r_E = \begin{pmatrix} 2\end{pmatrix}\\
+R_I = \begin{pmatrix} 1 &  0 & 0 & 0 \\
+                     -1 &  1 & 0 & 0 \\
+                      0 & -1 & 1 & 0\end{pmatrix}; r_I = \begin{pmatrix}0\\ 0\\ 0\end{pmatrix}\\
+$$
+### Encompassing Model
+
+In order to compare informative hypothesis, we define an unconstrained model considered as reference with encompassing priors that are uninformative with respect to the parameters. All other models are nested in this model and the priors ore obtained by restricting the parameter space in accordance with the constraints imposed by each hypothesis.
+
+As an example, consider an encompassing model with prior for all the parameters of interest are defined as normal distribution with mean zero and standard deviation 3: $\theta\sim\mathcal{N}(0, 3)$.
+
+#### Paramter Transformation
+
+To guarantee that the prior specification does not favor any constraints, it is necessary to transform the parameters of the model as follow:
+
+$$
+\begin{aligned}
+&\beta_{E} = R_{E}\theta - r_{E},\\
+&\beta_{I} = R_{I}\theta - r_{I}.
+\end{aligned}
+$$
+
+These allows us to express the constraints as
+
+$$
+H_i: \beta_{E} = 0,\ \beta_{I}>0
+$$ 
+
+so prior specification is simplified (they are all centered to zero, focal point of interest) and with symmetric priors we do  not favor any constraint. 
+
+Considering the constrains of the previous example:
+$$
+0<\theta_1 < \theta_2 < \theta_3;\ \theta_4 = 5
+$$
+we would transform parameters as follow
+
+$$
+\beta_E = R_E\theta-r_E =\begin{pmatrix} 0 &  0 & 0 & 1\end{pmatrix}\theta - (2) = \theta_4 - 5\\
+\beta_I = R_I\theta-r_I =\begin{pmatrix} 1 &  0 & 0 & 0 \\
+                     -1 &  1 & 0 & 0 \\
+                      0 & -1 & 1 & 0\end{pmatrix}\theta - \begin{pmatrix}0\\ 0\\ 0\end{pmatrix} =
+                      \begin{pmatrix}\theta_1\\
+                      \theta_2 - \theta_1\\
+                      \theta_3 - \theta_2\end{pmatrix}
+$$
+So wee can express the constraints as
+
+$$
+\begin{aligned}
+&\beta_1 = \theta_4 - 2 = 0\\
+&\beta_2 = \theta_1 > 0\\
+&\beta_3 = \theta_2 - \theta_1 > 0\\
+&\beta_4 = \theta_3 - \theta_2 > 0
+\end{aligned}
+$$
+
+Note that we are applying a linear transformation to the model parameters, thus the new parameter vector $\beta$ is obtained as $\beta = R\theta-r$ with covariance matrix $\Sigma_{\beta} = R\Sigma_{\theta}R^T$. This requires the matrix $R = \left[R_E \\ R_I\right]$ to be full-rank. If this is not the case a possible solution is to consider in the transformation the maximum number of linearly independent rows and obtain the remaining constraints as linear compositions.
+
+Moreover, to compare different hypothesis is necessary that they are comparable. That is, the intersection of their constrained regions is not empty, allowing a common solution that can be used as prior mean. (TODO: describe in more details)
+
+### Computing Bayes Factor
+
+Now we can compute the Bayes Factor between an informative hypothesis ($M_i$) and the unconstrained model ($M_u$) as
+
+$$
+\begin{aligned}
+BF_{iu} = \frac{Pr(\text{Inequality Const} | \text{Equality Const}, \text{Data})}{\pi_u(\text{Inequality Const} | \text{Equality Const})} &\frac{Pr(\text{Equality Const}| \text{Data})}{\pi_u( \text{Equality Const})} = \\ \\  \frac{Pr(R_I\theta > r_I | R_E\theta = r_E, Y)}{\pi_u(R_I\theta > r_I | R_E\theta = r_E)} &\frac{Pr(R_E\theta = r_E| Y)}{\pi_u( R_E\theta = r_E)}.
+\end{aligned}
+$$
+
+Where, the first part is a ratio between conditional posterior and conditional prior **probabilities** that the inequality constraints hold under $M_u$. The second part is a ratio between  marginal posterior and marginal prior **densities** of the equality constraints under $M_u$, the well-known *Savage–Dickey density ratio*.
+
+#### Prior
+
+Considering the encompassing model of the previous example with priors $\theta\sim\mathcal{N}(0, 3)$. Thus, the resulting prior is a multivariate normal distribution with vector mean all equal to zero and covariance matrix a diagonal matrix with values 9.
+
+```{r, echo = TRUE}
+prior_mean <- c(0, 0, 0, 0)
+prior_cov <- diag(4) * 3^2
+```
+
+First we need to transform the parameter in order to center the prior on the focal points of interest:
+
+```{r, echo = TRUE}
+R <- matrix(c( 0, 0, 0, 1,
+               1, 0, 0, 0,
+              -1, 1, 0, 0,
+               0,-1, 1, 0), ncol = 4, byrow = TRUE) # Hypothesis matrix
+r <- c(2, 0, 0, 0) # constrain values
+
+prior_mean_transf <-  R %*% prior_mean - r
+prior_cov_transf <- R %*% prior_cov %*% t(R)
+```
+
+- **Prior Density Equality Constraints** - is computed considering the parameters with equality constrains (in the example $\beta_1$) using the function `mvtnorm::dmvnorm()`:
+```{r, echo = TRUE}
+prior_den_eq <- mvtnorm::dmvnorm(x = 0,
+                                 mean = prior_mean_transf[1],
+                                 sigma = as.matrix(prior_cov_transf[1,1]))
+```
+
+- **Prior Conditional Probability of Inequality Constraints**  - is computed fixing the parameters with equality constrains (in the example $\beta_1$) and considering the parameters with inequality constraints (in the example $\beta_2, \beta_3, \beta_4$) using the function `condMVNorm::pcmvnorm()`:
+```{r, echo = TRUE}
+prior_cond_prob <- condMVNorm::pcmvnorm(
+  lower = rep(0,3), upper = rep(Inf,3),
+  mean = prior_mean_transf, sigma = prior_cov_transf,
+  dependent.ind= 2:4, given.ind=1, X.given = 0)
+```
+
+
+#### Posterior
+
+Posterior for the large sample theory, can be approximated to a multivariate normal distribution. Thus we estimate vector mean and covariance from the posterior sample.
+
+```{r, echo = TRUE, eval = FALSE}
+post_H1 <- as.matrix(fit_H1, pars = c("theta[1]", "theta[2]", "theta[3]", "theta[4]"))
+post_mean <- apply(post_H1, 2, mean)
+post_cov <- cov(post_H1)
+```
+
+Again, we transform parameters in order to center constraints on the focal points of interest:
+ 
+```{r, echo = TRUE, eval = FALSE}
+post_mean_transf <-  R %*% post_mean - r
+post_cov_transf <- R %*% post_cov %*% t(R)
+```
+
+
+- **Posterior Density Equality Constraints**  is computed considering the parameters with equality constrains (in the example $\beta_1$) using the function `mvtnorm::dmvnorm()`:
+```{r, echo = TRUE,  eval = FALSE}
+post_den_eq <- mvtnorm::dmvnorm(x = 0,
+                                mean = post_mean[2],
+                                sigma = as.matrix(post_cov[2,2]))
+```
+
+- **Posterior Conditional Probability of Inequality Constraints**  is computed fixing the parameters with equality constrains (in the example $\beta_1$) and considering the parameters with inequality constraints (in the example $\beta_2, \beta_3, \beta_4$) using the function `condMVNorm::pcmvnorm()`:
+```{r, echo = TRUE,  eval = FALSE}
+post_cond_prob <- condMVNorm::pcmvnorm(
+  lower = rep(0,2), upper = rep(Inf,2),
+  mean = post_mean, sigma = post_cov,
+  dependent.ind=c(1, 3), given.ind=c(2), X.given = c(0))
+```
+
+Now we have all the coponents to compute the Bayes Factor
+```{r, echo = TRUE,  eval = FALSE}
+(post_den_eq * post_cond_prob) / (prior_den_eq * prior_cond_prob)
+```
+
+
+
+## Informative Hypotesis Attachment Theories
+
+Now we consider how to formalize the theoretical perspectives on the role of mother and father attachment.
+
+Considering **Mother Attachment** we have the following groups (See Section TODO):
+
+1. $M_S$ - Secure
+2. $M_{Ax}$ - Anxious
+3. $M_{Av}$ - Avoidant
+4. $M_F$ - Fearful
+
+Considering **Father Attachment** we have the following groups (See Section TODO):
+
+1. $F_S$ - Secure
+2. $F_{Ax}$ - Anxious
+3. $F_{Av}$ - Avoidant
+4. $F_F$ - Fearful
+
+Considering the interaction between Mother and Father Attachment, there are 16 different combinations: 
+
+1. $M_SF_S$ - Mother Secure e Father Secure
+1. $M_SF_{Ax}$ - Mother Secure e Father Anxious
+1. $M_SF_{Av}$ - Mother Secure e Father Avoidant
+1. $M_SF_F$ - Mother Anxious e Father Fearful
+1. $M_{Ax}F_S$ - Mother Anxious e Father Secure
+1. $M_{Ax}F_{Ax}$ - Mother Anxious e Father Anxious
+1. $M_{Ax}F_{Av}$ - Mother Anxious e Father Avoidant
+1. $M_{Ax}F_F$ - Mother Avoidant e Father Fearful
+1. $M_{Av}F_S$ - Mother Avoidant e Father Secure
+1. $M_{Av}F_{Ax}$ - Mother Avoidant e Father Anxious
+1. $M_{Av}F_{Av}$ - Mother Avoidant e Father Avoidant
+1. $M_{Av}F_F$ - Mother Secure e Father Fearful
+1. $M_FF_S$ - Mother Fearful e Father Secure
+1. $M_FF_{Ax}$ - Mother Fearful e Father Anxious
+1. $M_FF_{Av}$ - Mother Fearful e Father Avoidant
+1. $M_FF_F$ - Mother Fearful e Father Fearful
+
+We formalize the main theoretical perspectives as follows:
+
+#### Null Theory
+
+This is a reference hypothesis where Mother and Father Attachment are expected to have no effect.
+
+$$
+M_* = 0\\
+F_* = 0
+$$
+
+```{r}
+data_null <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = 0.05)
+
+ggplot(data_null) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+Combined effect
+
+```{r}
+data_null_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_null_grid$Problems <- c(0.05)
+
+ggplot(data_null_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1),
+                      breaks=c(0,1), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+#### Monotorpy Theory
+
+According to the Monotorpy theory, father attachment is expected to have no effect. Considering mother attachment, instead, we expect secure children to have the lowest level of problems. Anxious and avoidant children are expected to have similar levels of problems. Fearful children are expected to have the highest levels of problems.
+
+$$
+M_S < M_{Ax} = M_{Av} < M_F\\
+F_* = 0
+$$
+
+```{r}
+data_monotropy <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = c(0.05, 0.5, 0.5, 1, rep(0.05, 4)))
+
+ggplot(data_monotropy) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+Combined effect
+
+```{r}
+data_monotropy_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_monotropy_grid$Problems <- rep(c(0.05, 0.5, 0.5, 1), 4)
+
+ggplot(data_monotropy_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1),
+                      breaks=c(0,1), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+#### Hierarchical Theory
+
+Considering hierarchical theory, father attachment is expected to influence the outcome in the same way as mother attachment but with a minor role. 
+
+$$
+M_S < M_{Ax} = M_{Av} < M_F\\
+F_S < F_{Ax} = F_{Av} < F_F\\
+F_* < M_*
+$$
+
+```{r}
+data_hierarchy <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = c(0.05, 0.5, 0.5, 1, 0.05, 0.25, 0.25, .5))
+
+ggplot(data_hierarchy) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+Combined effect
+
+```{r}
+data_hierarchy_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_hierarchy_grid$Problems <- rep(c(0.05, 0.5, 0.5, 1), 4) + rep(c(0.05, 0.25, 0.25, .5), each = 4)
+
+ggplot(data_hierarchy_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1.5),
+                      breaks=c(0,1.5), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+#### Independent Theory
+
+Considering independent theory, Mother and father attachment are expected to affect children outcomes differently. In this case, we considered Avoidant attachemnt towards the father as a condition of hiegher risk.
+
+$$
+M_S < M_{Ax} = M_{Av} < M_F\\
+F_S < F_{Ax} < F_{Av} < F_F\\
+$$
+
+```{r}
+data_independent <- data.frame(Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+                        Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                        Score = c(.05, .5, .5, 1, .05, .25, .75, 1))
+
+ggplot(data_independent) +
+  geom_bar(aes(x = Attachment, y = Score, fill = Parent), stat = "identity", show.legend = FALSE) +
+  ylim(0, 1) +
+  facet_grid(Parent ~ .) +
+  theme_bw() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+Combined effect
+
+```{r}
+data_independent_grid <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_independent_grid$Problems <- rep(c(.05, .5, .5, 1), 4) + rep(c(.05, .30, .75, 1), each = 4)
+
+ggplot(data_independent_grid) +
+  geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,2),
+                      breaks=c(0,2), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+#### Interaction Theory
+
+Considering interaction theory, mother and father attachment are expected to interact. In this case, we consider Secure attachment as a protective factor and  fearful attachment as a risk condition. 
+$$
+M_SF_S< \{M_SF_{Ax;Av} = M_{Ax;Av}F_S\} < M_{Ax;Av}F_{Ax;Av} <  \{M_FF_{Ax;Av} = M_{Ax;Av}F_F\} <  M_FF_F
+$$
+
+With,
+$$
+M_{Ax}F_{Ax} = M_{Ax}F_{Av} = M_{Av}F_{Ax} = M_{Av}F_{Av}
+$$
+
+```{r}
+data_interaction <- expand.grid(Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+                                Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                                            levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+data_interaction$Score <- c(.05, .15, .15, NA,
+                            .10, .50, .50, .90,
+                            .10, .50, .50, .90,
+                            NA, .90, .90, 1.0)
+
+ggplot(data_interaction) +
+  geom_tile(aes(x = Mother, y = Father, fill = Score), col = "gray10") +
+  scale_fill_gradient(low = "white", high = "firebrick", limits = c(0,1),
+                      breaks=c(0,1), labels = c("Low", "High")) +
+  theme_bw()
+  
+```
+
+Note that we do not specify the conditions $M_SF_F$ and $M_FF_S$ as their frequency is very low (around 1% of the sample).
+
+
+
+## Descriptive Statistics
+
+In the analysis children in the middle childhood were considered. Seven children were excluded from the analysis as they were older (failed in school). The sample size is:
 
 ```{r sample-size, echo = TRUE}
 nrow(data_cluster)
@@ -106,20 +522,20 @@ nrow(data_cluster)
 Summary statistics of children age (in years).
 
 ```{r, echo = TRUE}
-summary(raw_data$age_year)
-sd(raw_data$age_year, na.rm = TRUE)
+summary(data_cluster$age_year)
+sd(data_cluster$age_year, na.rm = TRUE)
 ```
 
 ```{r, plot-age}
-ggplot(raw_data) +
+ggplot(data_cluster) +
   geom_histogram(aes(x = age_year), col = "grey40", fill = "#00BFC4") +
   theme_bw()
 ```
 
-Children school grade frequancy
+Children school grade frequency
 
 ```{r}
-table(raw_data$classe)
+table_grade(data_raw)
 ```
 
 #### Gender {-}
@@ -215,9 +631,9 @@ table(data_cluster$mother, data_cluster$father, data_cluster$gender)
 ```
 
 
-## Dependent Variable
 
-### Internalizing
+
+# Internalizing Problems
 
 Distribution of internalizing problems
 ```{r, plot-internalizing}
@@ -238,107 +654,83 @@ ggplot(data_cluster) +
 
 #### Zero Inflation {-}
 
-Considering the distribution of internalizing scores it seems that there is an inflation of zero. To evaluate that we fit a poisson model and we compare the number of observed zero and expected zero.
+Considering the distribution of internalizing scores it seems that there is an inflation of zeros. To evaluate this, we fit a **negative binomial** model and we compare the number of observed zero and expected zero.
 
 ```{r, echo = TRUE, eval = FALSE}
 # model formula
-internalizing_sum ~ gender + cluster_mother * cluster_father
+internalizing_sum ~ gender + mother * father
 ```
 
 ```{r, echo = TRUE}
-fit_int_poisson
+fit_int_nb
 ```
 
 ```{r, echo = TRUE}
-performance::check_zeroinflation(fit_int_poisson)
+performance::check_zeroinflation(fit_int_nb)
 ```
 
-Results indicate that the model is underfitting zeros. Thus in the analysis we will use a Zero inflated Poisson (*ZIP*) model.
+Results indicate that the model is slightly  under-fitting the number of zeros. We can now try to fit a Zero Inflated Negative Binomial (*ZINB*) model and compare the performance of the two.
 
-# Statistical Analysis 
-
-In all subsequent analysis we considered Zero Inflated Poisson (ZIP) models:
-
-$$
-y_i \sim ZIPoisson(p_i, \lambda_i)
-$$
-
-Where, $p_i$ is the probability of an observation $y_i$ being an extra zero (i.e., a zero not comming from the poisson distribution) and $1 - p_i$ indicates the probability of given observation $y_i$ being generated from a Poisson distribution with mean $\lambda_i$. In particular,
-
-$$
-p_i = \text{logit}^{-1}(X_i^T\beta_{p}),\\
-\lambda_i = \text{exp}(X_i^T\beta_{\lambda}).
-$$
-
-That is, we want to model both $p_i$ and $\lambda_i$ according to a set of independent variables. Thus we have to estimate parameters vector $\beta_p$ and $\beta_{\lambda}$ respectively. Note that these are the only parameters in the model.
-
-In particular we considered as predictors:
-
-```{r, echo = TRUE, eval = FALSE}
-# formula for p
-p ~ gender
-
-# formula for lambda
-lambda ~ gender + ...
+```{r, echo = TRUE}
+pscl::vuong(fit_int_nb, fit_int_zinb)
 ```
 
-That is, we model the probability ($p_i$) of an observation being zero or coming from a poisson distribution according to `gender`. Whereas, we model the poisson mean ($\lambda_i$) according to `gender` and other variables among `cluster_mother` and `cluster_father`.
-
+From the result we can see that *ZINB* model performs slightly better but there is not clear indication about which model is better. Nevertheless, in the following section we decide to continue to use *ZINB* models.
 
 ## ANOVA Approach
 
 Classical approach is to fit the most complex model. Subsequently, ANOVA or likelihood ratio test are computed to evaluate the significance of the predictors. Finally, according to the results, researcher evaluate if hypothesis are supported or not.
 
-In our case we fit a model considering the interaction between `cluster_mother` and `cluster_father`. That is:
+In our case we fit a model considering the interaction between `mother` and `father`. That is:
 ```{r, echo = TRUE, eval = FALSE}
 # formula for p
 p ~ gender
 
-# formula for lambda
-lambda ~ gender + mother * father
+# formula for mu
+mu ~ gender + mother * father
 ```
 
 Than we conduct an ANOVA using the `car`. Note that as we are using a GLM we are actually conducting an Analysis of Deviance.
 
 ```{r, echo = TRUE}
-car::Anova(fit_int_zip)
+car::Anova(fit_int_zinb)
 ```
 
-In this case we get that the interaction is significant. Thus results support the **Interaction Theory**.
+In this case we get that there are no significant effects.
 
 Summary of the model:
 ```{r, echo = TRUE}
-summary(fit_int_zip)
+summary(fit_int_zinb)
 ```
 
 R squared:
 
 ```{r, echo = TRUE}
-rcompanion::nagelkerke(fit_int_zip)
+rcompanion::nagelkerke(fit_int_zinb)
 ```
 
-**TODO** - plot of the effects (below are effects from the normal poisson model)
+Plot of the effects
 
-```{r, plot-ANOVA-effects}
-plot(effects::effect(mod = fit_int_poisson, term = "mother * father"))
+```{r, plot-ANOVA-effects-ints}
+plot(plot_zinb_int)
 ```
 
 ### Consideration
 
-The problem here is to evaluate which are the actual differences of interests. Are we modeling relevant effects or random noise? We are not penalizing for complexity of the model.
-
-Moreover we are not comparing dirrectly the hypothesis of interest but just doing testing.
+The problem here is that we are no comparing and evaluating directly the hypothesis of interest. Moreover, p-value do not quantify evidence in favor of one hypothesis. To overcome this issue we consider the *Model Comparison Approach*.
 
 ## Bayesian Model Comparison Approach
 
-We compare 4 models. In all models $p_i$ is predicted by gender, whereas predictors of $\lambda_i$ are selected according to the different hypothesis:
+Model comparison approach allows to formalize different models according the research hypothesis and to evaluate which is the most likely model according to the data among those considered. We compare 4 models. In all models $p_i$ is predicted by gender, whereas predictors of $\mu_i$ are selected according to the different hypothesis:
 
-1. `brm_int_zero`: $\lambda_i \sim$ `gender`
-1. `brm_int_mother`: $\lambda_i \sim$ `gender + mother`
-1. `brm_int_additive`: $\lambda_i \sim$ `gender + mother + father`
-1. `brm_int_inter`: $\lambda_i \sim$ `gender + mother * father`
+1. `brm_int_zero`: $\mu_i \sim$ `gender`
+1. `brm_int_mother`: $\mu_i \sim$ `gender + mother`
+1. `brm_int_additive`: $\mu_i \sim$ `gender + mother + father`
+1. `brm_int_inter`: $\mu_i \sim$ `gender + mother * father`
 
-Models were estimated using in `brms` using default prior settings.
+Note that in these models we included as random intercept the children classroom `(1|ID_class)`, to take into account the individual variability of teachers in evaluating children problems. The random intercept was included both as predictor of $p$ and $\mu$.
+
+Models were estimated following the Bayesian approach using `brms` with the default prior settings.
 
 ```{r, echo = TRUE}
 brms::prior_summary(brm_int_mother)
@@ -367,10 +759,16 @@ Model summary. Note that `brms` indicates $p_i$ with `zi`.
 summary(brm_int_mother)
 ```
 
-Plot effects
+Plot effects on $mu$:
 
-```{r, plot-effects-brm_int_mother}
+```{r, plot-effects-brm_int_mother-mu}
 plot(brms::conditional_effects(brm_int_mother), ask = FALSE)
+```
+
+Plots effects on `zi`:
+
+```{r, plot-effects-brm_int_mother-pi}
+plot(brms::conditional_effects(brm_int_mother, dpar = "zi"), ask = FALSE)
 ```
 
 Posterior Predictive Check
@@ -378,213 +776,295 @@ Posterior Predictive Check
 brms::pp_check(brm_int_mother, nsamples = 25)
 ```
 
-**TODO** - not really a good fit, clear sign of over-dispersion. Probably Negative binomial would be better than poisson.
+Now the fit of the model is good, the predicted values follow the distribution of the observed values.
 
-R squarded
+R squared:
 
 ```{r, echo = TRUE}
 brms::bayes_R2(brm_int_mother)
 ```
 
+Note that the value is much high due to the inclusion of the random effects.
+
 ### Considerations
 
-Overall fit is pretty bad. However, this approach allow us to define models according to research hypothesis and compare them taking into account model complexity.
+Overall the fit is pretty good. This approach allow us to define models according to research hypothesis and compare them taking into account model complexity.
 
-Using this approach, however, there is not a lot of formalization. For example we are not explicitying the expected direction of the effects or the expected order.
+Using this approach, however, there is not a lot of formalization. For example we are not expliciting the expected direction of the effects or the expected order. To overcome this limit we consider the Bayes Factor Encompassing Prior Approach.
 
-## Bayes Factor  Encompassin Prior Approach
+## Bayes Factor  Encompassing Prior Approach
 
-With this approach we can explicit equality and order constraints between parameters. Thus a given Hypothesis can be expressed as:
-$$
-H_i:\ R_E\theta = r_E,\  R_I\theta > r_I
-$$
+Now we evaluate the results of the Bayes Factor considering the informative hypothesis regarding attachment specified in Section TODO.
 
-In order to compare informative hypothesis, we define an unconstrained model considered as reference with encompassing priors that are uninformative with respect to the parameters. All other models are nested in this model and the priors ore obtained by restricting the parameter space in accordance with the constraints imposed by each model.
+### Encompassing Model
 
-Note that we first need to reparametrize the model as follow:
-\begin{align}
-&\beta_{eq} = R_{eq}\theta - r_{eq},\\
-&\beta_{ineq} = R_{ineq}\theta - r_{ineq}.
-\end{align}
-These allows as to express constraints as
-$$H_i: \beta_{eq} = 0,\ \beta_{ineeq}>0,$$ 
-so prior specification is simplified (they are all centered to zero) and with symmetric priors we do  not favor any constraint.
-
-For example for a constraint of type:
-$$
-0<\theta_1<\theta_2<\theta_3
-$$
-we would define
-$$
-d\theta_2:= \theta_2 - \theta_1\\
-d\theta_3:= \theta_3 - \theta_2
-$$
-So wee can express constraints as
-$$
-\theta_1>0\\
-d\theta_2>0\\
-d\theta_3>0
-$$
-
-Subsequently we can compute the Bayes Factor between an informative hypothesis ($M_i$) and the unconstrain model ($M_u$) as
-
-\begin{aligned}
-BF_{iu} = \frac{Pr(\text{Inequality Const} | \text{Equality Const}, \text{Data})}{\pi_u(\text{Inequality Const} | \text{Equality Const})} &\frac{Pr(\text{Equality Const}| \text{Data})}{\pi_u( \text{Equality Const})} = \\ \\  \frac{Pr(R_I\theta > r_I | R_E\theta = r_E, Y)}{\pi_u(R_I\theta > r_I | R_E\theta = r_E)} &\frac{Pr(R_E\theta = r_E| Y)}{\pi_u( R_E\theta = r_E)}.
-\end{aligned}
-
-Where, the first part is a ratio between conditional posterior and conditional prior **probabilities** that the inequality constraints hold under $M_u$. The second part is a ratio between  marginal posterior and marginal prior **densities** of the equality constraints under $M_u$, the well-known *Savage–Dickey density ratio*.
-
-### Toy Example
-
-
-As an example consider these hypothesis considering mother attachment:
-
-$$\text{Mother-Secure} = \text{Mother-Avoidonat} < \text{Mother-Anxious} < \text{Mother-Anxious-Avoidant}$$
-Note that we do not define any constrain regarding the father (but we will do it in the actual application).
-
-For simplicity consider as encompassing model the model with only the mother and gender as predictor of $\lambda_i$ (actual application will consider the interaction model). Note that according to the used *treatment-contrast coding* we have:
-
-\begin{align}
-&intercept = \text{Mother-Secure Female}\\
-&\beta_1 = \text{Gender-Male}\\
-&\beta_2 = \text{Mother-Anxious}\\
-&\beta_3 = \text{Mother-Avoidonat}\\
-&\beta_4 = \text{Mother-Anxious-Avoidant}\\
-\end{align}
-
-So we re-parametrize the model as follow
-$$
-d\beta_4 := \beta_4 -\beta_2
-$$
-and the constraints we obtain are
-$$
-\beta_2 > 0\\
-\beta_3 = 0\\
-d\beta_4 > 0 
-$$
-Note that $\beta_1$ do not appear in the constraints so is considered as a nuisance parameter together with the intercepts and parameters referiing to $p_i$.
-
-Here the actual stan code for parameters and transformed parameter block (note a little bit of messing with indexing):
-```{stan output.var='priors', eval = FALSE, echo = TRUE}
-parameters {
-  // lambda regression parameters
-  real b_gender;
-  vector[3] db_mother; // order constraints mother
-  real Intercept;  // temporary intercept for centered predictors
-
-  // zi regression parameters
-  vector[Kc_zi] b_zi;  // population-level effects
-  real Intercept_zi;  // temporary intercept for centered predictors
-}
-transformed parameters {
-  vector[Kc] b;  // population-level effects
-
-  b[1] = b_gender;
-  b[2] = db_mother[1];
-  b[3] = db_mother[2];
-  b[4] = b[2] + db_mother[3];
-}
-```
-
-
-Now we can proceed to compute all the elements of the bayes Factor.
-
-#### Prior
-
-We defined used as prior for all the parameters of interest a normal distribution with mean zero and standard deviation 5: $\mathcal{N}(0, 5)$.
-
-Thus, the resulting prior is a multivariate normal distribution with vector mean all equal to zero and covariance matrix a diagonal matrix with values 25.
+As encompassing model we considered the model with the interaction between `mother` and `father` attachment, the additive effect of `gender`  and the random effect of `ID_class`. We  used as prior for all the parameters of interest a normal distribution with mean zero and standard deviation 3: $\theta\sim\mathcal{N}(0, 3)$.
 
 ```{r, echo = TRUE}
-prior_mean <- c(0, 0, 0)
-prior_cov <- diag(3) * 25
+brms::prior_summary(encompassing_model_int)
 ```
 
-- **Prior Density Equality Constraints**  is computed as
+
+Thus, the resulting prior of the parameter of interest is a multivariate normal distribution with vector mean all equal to zero and covariance matrix a diagonal matrix with values 9.
+
+### Bayes Factor Results
+
+Table with the Bayes Factor (row/column):
 ```{r, echo = TRUE}
-prior_den_eq <- mvtnorm::dmvnorm(x = 0,
-                                 mean = prior_mean[2],
-                                 sigma = as.matrix(prior_cov[2,2]))
-prior_den_eq
+round(table_BF_int, 2)
 ```
 
-- **Prior Conditional Probability of Inequality Constraints**  is computed as
-```{r, echo = TRUE}
-prior_cond_prob <- condMVNorm::pcmvnorm(
-  lower = rep(0,2), upper = rep(Inf,2),
-  mean = prior_mean, sigma = prior_cov,
-  dependent.ind=c(1, 3), given.ind=c(2), X.given = c(0))
-prior_cond_prob
-```
+Bayes Factor weights
 
-
-#### Posterior
-
-Posterior for the large sample theory, can be approximated to a multivariate normal distribution. Thus we estimate vector mean and covariance from the posteriro sample.
-
-```{r, echo = TRUE}
-post_H1 <- as.matrix(fit_H1, pars = c("db_mother[1]", "db_mother[2]", "db_mother[3]"))
-post_mean <- apply(post_H1, 2, mean)
-post_cov <- cov(post_H1)
-```
-
-To evaluate normal approximation consider the following plot:
-
-```{r, plot-normal-approx}
-
-data_plot <- data.frame(db_mother_1 = post_H1[,1],
-                        db_mother_2 = post_H1[,2])
-mu <- apply(post_H1,2, mean)[c(1,2)]
-cov <- cov(post_H1[, c(1,2)])
-
-data_grid <- expand.grid(s_1 = seq(0, .35, length.out=100), s_2 = seq(-.1, .25, length.out=100))
-q_samp <- cbind(data_grid, prob = mvtnorm::dmvnorm(data_grid, mean = mu, sigma = cov))
-
-ggplot(data_plot) +
-  geom_density_2d(aes(x=db_mother_1, y=db_mother_2)) +
-  geom_contour(data = q_samp, aes(x=s_1, y=s_2, z=prob), col = "black")+
-  theme_bw()
-
-```
-
-- **Posterior Density Equality Constraints**  is computed as
-```{r, echo = TRUE}
-post_den_eq <- mvtnorm::dmvnorm(x = 0,
-                                mean = post_mean[2],
-                                sigma = as.matrix(post_cov[2,2]))
-post_den_eq
-```
-
-- **Posterior Conditional Probability of Inequality Constraints**  is computed as
-```{r, echo = TRUE}
-post_cond_prob <- condMVNorm::pcmvnorm(
-  lower = rep(0,2), upper = rep(Inf,2),
-  mean = post_mean, sigma = post_cov,
-  dependent.ind=c(1, 3), given.ind=c(2), X.given = c(0))
-post_cond_prob
-```
-
-#### Resulting Bayes Factor
-
-Thus to obtain the Bayes Factor
-
-```{r, echo = TRUE}
-BF_H1 <- (post_den_eq * post_cond_prob) / (prior_den_eq * prior_cond_prob)
-BF_H1
-```
-
-The Bayes Factor is in favour of our Hypothesis. Note that this was expected as I selected hypothesis 
-$$\text{Mother-Secure} = \text{Mother-Avoidonat} < \text{Mother-Anxious} < \text{Mother-Anxious-Avoidant}$$
-looking to the model estimates
 ```{r}
-brms::conditional_effects(brm_int_mother, effects = "mother")
+BF_weights_int %>%
+  mutate_if(is.numeric, round, 2)
 ```
+
+The hipotesis that is most supported by the data is the Monotropy Theory.
+
+### Prior Sensitivity
+
+The same analysis were conducted considering different prior settings:
+
+- $\mathcal{N}(0, .5)$ - unreasonably tight
+- $\mathcal{N}(0, 1)$ - tight 
+- $\mathcal{N}(0, 3)$ - default
+- $\mathcal{N}(0, 5)$ - wide 
+- $\mathcal{N}(0, 10)$ - unreasonably wide
+
+Results are reported below:
+
+```{r}
+summary_sensitivity_int %>%
+  mutate_if(is.numeric, round, 2) %>%
+  select(names, bf, weights) %>%
+  kable(.) %>%
+  kable_paper("hover", full_width = F) %>%
+  pack_rows("N(0, .5)", 1, 5) %>%
+  pack_rows("N(0, 1)", 6, 10) %>%
+  pack_rows("N(0, 3)", 11, 15) %>%
+  pack_rows("N(0, 5)", 16, 20) %>%
+  pack_rows("N(0, 10)", 21, 25) 
+```
+
+**TODO** - ragionare un po' su come interpretare il variare dei risultati con le differenti prior
 
 ### Considerations
 
 So the method seems to work properly. I will try other hypothesis.
 
 The limit of this approach is that we compare hypotheses but we do not estimate the actual effect. No posterior of the constrained models are obtained!
+
+
+
+
+# Externalizing Problems
+
+Distribution of externalizing problems
+```{r, plot-externalizing}
+ggplot(data_cluster) +
+  geom_bar(aes(x = externalizing_sum), col = "gray40", fill = "#F8766D", alpha = 0.7) +
+  theme_bw()
+```
+
+Externalizing according to gender 
+
+```{r, plot-externalizing-gender}
+ggplot(data_cluster) +
+  geom_bar(aes(x = externalizing_sum, fill = gender), col = "gray40", 
+           alpha = 0.7, show.legend = FALSE) +
+  facet_grid(gender ~ .) +
+  theme_bw() 
+```
+
+#### Zero Inflation {-}
+
+Considering the distribution of externalizing scores it seems that there is an inflation of zeros. To evaluate this, we fit a **negative binomial** model and we compare the number of observed zero and expected zero.
+
+```{r, echo = TRUE, eval = FALSE}
+# model formula
+externalizing_sum ~ gender + mother * father
+```
+
+```{r, echo = TRUE}
+fit_ext_nb
+```
+
+```{r, echo = TRUE}
+performance::check_zeroinflation(fit_ext_nb)
+```
+
+Results indicate that the model is slightly under-fitting the number of zeros. We can now try to fit a Zero Inflated Negative Binomial (*ZINB*) model and compare the performance of the two.
+
+```{r, echo = TRUE}
+pscl::vuong(fit_ext_nb, fit_ext_zinb)
+```
+
+From the result we can see that *ZINB* model performs slightly better but there is not clear indication about which model is better. Nevertheless, in the following section we decide to continue to use *ZINB* models.
+
+## ANOVA Approach
+
+Classical approach is to fit the most complex model. Subsequently, ANOVA or likelihood ratio test are computed to evaluate the significance of the predictors. Finally, according to the results, researcher evaluate if hypothesis are supported or not.
+
+In our case we fit a model considering the interaction between `mother` and `father`. That is:
+```{r, echo = TRUE, eval = FALSE}
+# formula for p
+p ~ gender
+
+# formula for mu
+mu ~ gender + mother * father
+```
+
+Than we conduct an ANOVA using the `car`. Note that as we are using a GLM we are actually conducting an Analysis of Deviance.
+
+```{r, echo = TRUE}
+car::Anova(fit_ext_zinb)
+```
+
+In this case we get a significant effects of the gender and the mother.
+
+Summary of the model:
+```{r, echo = TRUE}
+summary(fit_ext_zinb)
+```
+
+R squared:
+
+```{r, echo = TRUE}
+rcompanion::nagelkerke(fit_ext_zinb)
+```
+
+Plot of the effects (TODO consider marginal effect only mother)
+
+```{r, plot-ANOVA-effects-ext}
+plot(plot_zinb_ext)
+```
+
+## Bayesian Model Comparison Approach
+
+We compare the same 4 models as for internalizing problems. In all models $p_i$ is predicted by gender, whereas predictors of $\mu_i$ are selected according to the different hypothesis:
+
+1. `brm_int_zero`: $\mu_i \sim$ `gender`
+1. `brm_int_mother`: $\mu_i \sim$ `gender + mother`
+1. `brm_int_additive`: $\mu_i \sim$ `gender + mother + father`
+1. `brm_int_inter`: $\mu_i \sim$ `gender + mother * father`
+
+Note that in these models we included as random intercept the children classroom `(1|ID_class)`, to take into account the individual variability of teachers in evaluating children problems. The random intercept was included both as predictor of $p$ and $\mu$.
+
+Models were estimated following the Bayesian approach using `brms` with the default prior settings.
+
+```{r, echo = TRUE}
+brms::prior_summary(brm_ext_mother)
+```
+
+Model comparison approach using waic index:
+
+```{r, echo = TRUE}
+waic_weights_ext
+```
+
+and loo index
+
+```{r, echo = TRUE}
+loo_weights_ext
+```
+
+The *preferred* model is the one considering only the role of mother attachment. Results support the **Monotropy Theory**.
+
+### `brm_int_mother`
+
+Model summary. Note that `brms` indicates $p_i$ with `zi`.
+
+```{r, echo = TRUE}
+summary(brm_ext_mother)
+```
+
+Plot effects on $mu$:
+
+```{r, plot-effects-brm_ext_mother-mu}
+plot(brms::conditional_effects(brm_ext_mother), ask = FALSE)
+```
+
+Plots effects on `zi`:
+
+```{r, plot-effects-brm_ext_mother-pi}
+plot(brms::conditional_effects(brm_ext_mother, dpar = "zi"), ask = FALSE)
+```
+
+Posterior Predictive Check
+```{r}
+brms::pp_check(brm_ext_mother, nsamples = 25)
+```
+
+Now the fit of the model is good, the predicted values follow the distribution of the observed values.
+
+R squared:
+
+```{r, echo = TRUE}
+brms::bayes_R2(brm_ext_mother)
+```
+
+Note that the value is much high due to the inclusion of the random effects.
+
+
+## Bayes Factor  Encompassing Prior Approach
+
+Now we evaluate the results of the Bayes Factor considering the informative hypothesis regarding attachment specified in Section TODO.
+
+### Encompassing Model
+
+As encompassing model we considered the model with the interaction between `mother` and `father` attachment, the additive effect of `gender`  and the random effect of `ID_class`. We  used as prior for all the parameters of interest a normal distribution with mean zero and standard deviation 3: $\theta\sim\mathcal{N}(0, 3)$.
+
+```{r, echo = TRUE}
+brms::prior_summary(encompassing_model_ext)
+```
+
+Thus, the resulting prior of the parameter of interest is a multivariate normal distribution with vector mean all equal to zero and covariance matrix a diagonal matrix with values 9.
+
+### Bayes Factor Results
+
+Table with the Bayes Factor (row/column):
+```{r, echo = TRUE}
+round(table_BF_ext, 2)
+```
+
+Bayes Factor weights
+
+```{r}
+BF_weights_ext %>%
+  mutate_if(is.numeric, round, 2)
+```
+
+The hipotesis that is most supported by the data is the Monotropy Theory.
+
+### Prior Sensitivity
+
+The same analysis were conducted considering different prior settings:
+
+- $\mathcal{N}(0, .5)$ - unreasonably tight
+- $\mathcal{N}(0, 1)$ - tight 
+- $\mathcal{N}(0, 3)$ - default
+- $\mathcal{N}(0, 5)$ - wide 
+- $\mathcal{N}(0, 10)$ - unreasonably wide
+
+Results are reported below:
+
+```{r}
+summary_sensitivity_ext %>%
+  mutate_if(is.numeric, round, 2) %>%
+  select(names, bf, weights) %>%
+  kable(.) %>%
+  kable_paper("hover", full_width = F) %>%
+  pack_rows("N(0, .5)", 1, 5) %>%
+  pack_rows("N(0, 1)", 6, 10) %>%
+  pack_rows("N(0, 3)", 11, 15) %>%
+  pack_rows("N(0, 5)", 16, 20) %>%
+  pack_rows("N(0, 10)", 21, 25) 
+```
+
+**TODO** - ragionare un po' su come interpretare il variare dei risultati con le differenti prior
+
 
 # References {-}
 
