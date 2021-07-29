@@ -115,6 +115,9 @@ drake::loadd(BF_interaction_int)
 drake::loadd(table_BF_int)
 drake::loadd(BF_weights_int)
 
+# sensitivity
+drake::loadd(summary_sensitivity_int)
+
 #=============================#
 #====    Externalizing    ====#
 #=============================#

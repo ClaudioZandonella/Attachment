@@ -101,6 +101,27 @@ get_analysis_plan <- function(){
                                     BF_independent_int, BF_interaction_int,
                                     encompassing_model = encompassing_model_int),
 
+    # Prior Sensitivity
+    encompassing_model_ps_int = drake::target(
+      get_encompassing_model(data = data_cluster,
+                             y = "internalizing_sum",
+                             prior_par = prior_par_values),
+        transform = cross(prior_par_values = c("normal(0,.5)",
+                                               "normal(0,1)",
+                                               "normal(0,5)",
+                                               "normal(0,10)"))),
+
+    prior_sensitivity_int_.5 = get_prior_sensitivity(encompassing_model_ps_int_normal.0..5_),
+    prior_sensitivity_int_01 = get_prior_sensitivity(encompassing_model_ps_int_normal.0.1_),
+    prior_sensitivity_int_05 = get_prior_sensitivity(encompassing_model_ps_int_normal.0.5_),
+    prior_sensitivity_int_10 = get_prior_sensitivity(encompassing_model_ps_int_normal.0.10_),
+
+    summary_sensitivity_int = get_summary_sensitivity(reference = BF_weights_int,
+                                                      prior_sensitivity_int_.5,
+                                                      prior_sensitivity_int_01,
+                                                      prior_sensitivity_int_05,
+                                                      prior_sensitivity_int_10),
+
     #=============================#
     #====    Externalizing    ====#
     #=============================#
@@ -159,10 +180,31 @@ get_analysis_plan <- function(){
     BF_interaction_ext = get_BF(hypothesis = "interaction", encompassing_model_ext),
 
     table_BF_ext = get_table_BF(BF_null_ext, BF_monotropy_ext, BF_hierarchical_ext,
-                            BF_independent_ext, BF_interaction_ext),
+                                BF_independent_ext, BF_interaction_ext),
     BF_weights_ext = get_BF_weights(BF_null_ext, BF_monotropy_ext, BF_hierarchical_ext,
                                     BF_independent_ext, BF_interaction_ext,
-                                    encompassing_model = encompassing_model_ext)
+                                    encompassing_model = encompassing_model_ext),
+
+    # Prior Sensitivity
+    encompassing_model_ps_ext = drake::target(
+      get_encompassing_model(data = data_cluster,
+                             y = "externalizing_sum",
+                             prior_par = prior_par_values),
+      transform = cross(prior_par_values = c("normal(0,.5)",
+                                             "normal(0,1)",
+                                             "normal(0,5)",
+                                             "normal(0,10)"))),
+
+    prior_sensitivity_ext_.5 = get_prior_sensitivity(encompassing_model_ps_ext_normal.0..5_),
+    prior_sensitivity_ext_01 = get_prior_sensitivity(encompassing_model_ps_ext_normal.0.1_),
+    prior_sensitivity_ext_05 = get_prior_sensitivity(encompassing_model_ps_ext_normal.0.5_),
+    prior_sensitivity_ext_10 = get_prior_sensitivity(encompassing_model_ps_ext_normal.0.10_),
+
+    summary_sensitivity_ext = get_summary_sensitivity(reference = BF_weights_ext,
+                                                      prior_sensitivity_ext_.5,
+                                                      prior_sensitivity_ext_01,
+                                                      prior_sensitivity_ext_05,
+                                                      prior_sensitivity_ext_10),
 
   )
 }

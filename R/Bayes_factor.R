@@ -91,7 +91,7 @@ get_prior_sd <- function(encompassing_model){
   # get prior sd from prior summary
   sd_prior <- brms::prior_summary(encompassing_model) %>%
     .[1, "prior"] %>%
-    gsub("^normal\\(0,\\s*([0-9]+)\\s*\\)", "\\1", .) %>%
+    gsub("^normal\\(0,\\s*([0-9.]+)\\s*\\)", "\\1", .) %>%
     as.numeric()
 
   return(sd_prior)
@@ -702,12 +702,13 @@ get_table_BF <- function(...){
 #'                encompassing_model = encompassing_model_int)
 #'
 
-get_BF_weights <- function(..., BF_null, encompassing_model){
+get_BF_weights <- function(..., encompassing_model){
 
   names_bf <- as.list(match.call(), )[-1] %>%
     as.character(.)
 
-  names_bf <- names_bf[!grepl("(^encompassing_model)", names_bf)]
+  names_bf <- names_bf[!grepl("(^encompassing_model)", names_bf)] %>%
+    gsub("BF_(.+)_.*", "\\1", ., perl = TRUE)
   bridge_logml <- bridgesampling::bridge_sampler(encompassing_model)
 
   list_bf <- list(...)
@@ -715,7 +716,8 @@ get_BF_weights <- function(..., BF_null, encompassing_model){
   bf <- lapply(list_bf[], FUN = function(x){x[1]}) %>%
     unlist()
 
-  res <- data.frame(bf = bf) %>%
+  res <- data.frame(names = names_bf,
+                    bf = bf) %>%
     mutate(logml = log(bf) + bridge_logml$logml,
            diff_logml = logml - min(logml) ,
            rel_lik = exp(diff_logml),
@@ -723,6 +725,77 @@ get_BF_weights <- function(..., BF_null, encompassing_model){
 
   return(res)
 }
+
+#----    get_prior_sensitivity    ----
+
+#' Title
+#'
+#' @param data
+#'
+#' @return
+#'
+#' @examples
+#' drake::loadd(data_cluster)
+#' get_prior_sensitivity(data = data_cluster,
+#'                       y = "internalizing_sum",
+#'                       list_prior = list("normal(0,.5)"))
+#'
+
+get_prior_sensitivity <- function(encompassing_model){
+
+  print("Computing BF...")
+
+  BF_null <- get_BF(hypothesis = "null",  encompassing_model = encompassing_model)
+  BF_monotropy <- get_BF(hypothesis = "monotropy",  encompassing_model = encompassing_model)
+  BF_hierarchical <- get_BF(hypothesis = "hierarchical",  encompassing_model = encompassing_model)
+  BF_independent <- get_BF(hypothesis = "independent",  encompassing_model = encompassing_model)
+  BF_interaction <- get_BF(hypothesis = "interaction",  encompassing_model = encompassing_model)
+
+  print("Computing summary BF...")
+
+  res <- get_BF_weights(BF_null, BF_monotropy, BF_hierarchical,
+                        BF_independent, BF_interaction,
+                        encompassing_model = encompassing_model)
+  return(res)
+
+}
+
+#----    get_summary_sensitivity    ----
+
+#' Title
+#'
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' drake::loadd(prior_sensitivity_int_.5, prior_sensitivity_int_01,
+#'              prior_sensitivity_int_05, prior_sensitivity_int_10,
+#'              BF_weights_int)
+#' get_summary_sensitivity(reference = BF_weights_int,
+#'              prior_sensitivity_int_.5, prior_sensitivity_int_01,
+#'              prior_sensitivity_int_05, prior_sensitivity_int_10)
+#'
+
+get_summary_sensitivity <- function(reference, ...){
+  names_condition <- as.list(match.call(), )[-1] %>%
+    as.character(.) %>%
+    gsub("(^prior_sensitivity_|^BF_weights_)", "", .)
+
+  names_condition[1] <- paste0(names_condition[1], "_03")
+
+  list_sensitivity <- list(reference, ...)
+
+  res <- map2(list_sensitivity, names_condition, function(x, y){
+    cbind(case = y, x)
+  }) %>%
+  do.call("rbind", .) %>%
+    arrange(case)
+
+  return(res)
+}
+
 #----
 
 
