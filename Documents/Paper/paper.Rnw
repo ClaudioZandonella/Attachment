@@ -57,7 +57,7 @@
 \title{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
 \shorttitle{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
 
-\author{Claudio Zandonella Callegher, Tatiana Marci, Gianmarco Altoè}
+\author{Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, Gianmarco Altoè}
 \affiliation{UNIPD}
 
 \leftheader{loook}
@@ -71,17 +71,46 @@
 
   Correspondence concerning this article should be addressed to Claudio Zandonella Callegher, Department of Developmental Psychology and Socialisation, University of Padua, Via Venezia, 8 - 35131 Padova, Italy.  E-mail: claudiozandonella@gmail.com}
 
-<<settings>>=
+<<settings, echo=FALSE>>=
 library(kableExtra)
 @
 
 \begin{document}
 \maketitle
 
-When conducting a study, researchers usually have expectetions about the phenomeno under investigation. They want to verify some knind of hypothesis.
+One of the principal aspects of empirical research is the evaluation of research or theoretical hypothesis. When conducting a study, researcher usually have expectations based on hypotheses or theoretical perspectives they want to evaluate according to observed data.
+
+For example researcher could be interested in evaluating whether the treatment group scores higher than the control group.
+
+they want to evaluate them according to / if they are supported by the data; collecting evidence.
+
+In psychology the most often use tool (the dominant statistical approach) to evaluate research hypotheses (if an hypothesis is supported by the data), is the Null hypothesis Significance Test (NHST). Debate in the literature about the utility of NHST (p-value) in hypothesis testing. this approach, however, present several limitation. First, data are evaluated against the catch all null-hypothesis that "nothing is going on" (Cohen, 1994; Royall, 1997, pp. 79–81). This is rarely the actual hypothesis of interest of the researcher who usually have some specific expectation about the phenomenon under investigation. Second, the NHST do not formalize the alternative hypothesis thus in the NHST is not possible to "accept" an hypothesis but only reject the Null-Hypothesi (the p-value do not quantify the evidence in favor of an hypothesis). This is inconvenient to the researcher as in case of not significant result is left in a state of indecision. Third limited type of hypothesis that can be evaluated, no include expectation in the form of parameter order constraints. [Expectation can not be formulated - you can use one-side test however, when there are more groups, more variables, or more constraints, null hypothesis testing is not the appropriate tool see Van de Schoot, Hoijtink et al. (2011) for a detailed discussion.\parencite{vandeschootIntroductionBayesianModel2011}]
+
+[classical significance tests are only suitable for testing a null hypothesis against a single alternative, and unsuitable for testing multiple hypotheses with equality as well as order constraints (Silvapulle \& Sen, 2004). Second, traditional model comparison tools (e.g., the AIC, BIC, or CFI) are generally not suitable for evaluating models (or hypotheses) with order constraints on certain parameters (Mulder et al. 2009; Braeken, Mulder, \& Wood, 2015). \textcite{mulderSimpleBayesianTesting2019}]
+
+In general, researchers are interested in comparing different hypothesis and understand which is the most supported by the data. Model comparison is a different approach that allows to compare different models. Models formalized according to researchers expectation or theoretical perspectives are compared against each other according to the data. In this way, it is possible to evaluate the relative plausibility of each model given the data and the set of model considered. Models can be compared using Information criteria (the most popular are the AIC and BIC) and the relative plausibility of each model can be computed. [Information criteria allow to evaluate the ability of the model to predict new data penalizing for model complexity.] Model comparison has several advantages and in particular it allows to directly compute the relative plausibility of each hypothesis. Model comparison, however, is still limited in the possibility to formalize hypothesis that include complex parameter order constraints.
+
+An alternative approach to evaluate research hypotheses is based on the Bayes Factor. In the last 25 years, there has been an increasing interest / growth in popularity in the use of Bayes Factor and its adoption has been proposed (advocated) as the solution to the critical issues of the NHST. Although the Bayes Factor has its own limitations and  does not solve the fundamental issues of the misuse of statistical techniques \url{https://statmodeling.stat.columbia.edu/2019/09/10/i-hate-bayes-factors-when-theyre-used-for-null-hypothesis-significance-testing/}, it offers some clear advantages. In particular, the Bayes Factor allows to compare hypotheses obtaining a relative index of evidence, like in the model comparison approach, but it also allows to easily compare researchers' expectations. In fact, informative hypotheses can be formalized according to researchers expectation using equality and inequality constraints and than compared.
+
+The evaluation of informative hypothesis based on the Bayes Factor has received increasing attention and several contribution can be found in the literature. \textcite{vandeschootIntroductionBayesianModel2011} presented a general introduction to informative hypotheses testing using the Bays Factor, whereas \textcite{hoijtinkInformativeHypothesesTheory2012} offered more detailed description on the development of this approach. Other studies, instead, considered the application of this method in specific models; for example: mixed effect models \parencite{katoBayesianApproachInequality2006}, evaluation of correlation coefficients \parencite{mulderBayesFactorsTesting2016} and multinomial models \parencite{heckMultinomialModelsLinear2019}. In addition, \textcite{guBayesianEvaluationInequality2014} proposed an approximate procedure to evaluate as long as  the structural parameters are unbounded.
+
+Note, however, that all previously mentioned studies considered informative hypothesis only with inequality constraints. Equality constraints could not be defined together with inequality constraints in the same hypothesis but they had to be approximated as "about equality constraints" (i.e., a equality constraints of type $\beta_i = \beta_j$ is approximated as $|\beta_i - \beta_j| < \xi$ for a value of $\xi$ small enough {TODO more below?}).
+
+It's only more recently that \textcite{guApproximatedAdjustedFractional2018} introduced an approximate procedure to evaluate both equality and inequality constraints using the Bayes Factor in the case of general statistical models (i.e., generalized linear mixed models and structural equation models). Subsequentley, this approach was exteended  by \textcite{mulderBayesFactorTesting2019} to the generalized multivariate probit models. Finally, \textcite{mulderSimpleBayesianTesting2019} proposed an accurate procedure (i.e., not based on an approximation) that allows to test informative hypothesis with equality and inequality constraints in linear regression models.
+
+The development and implementation of this approach are of particular interest because, although with its limits, it allows researchers to properly evaluate their expectations and hypotheses. Available literature, however, it is mainly based on articles published in specialize journals of mathematical psychology. The complexity of these articles makes it difficult for non-experts in this approach to clearly understand all the steps involved. On the other hand, articles offering a general introduction to the Bayes Factor do not provide enough details to allow readers to apply autonomously the method to their problems, but they usually relay on ad-hoc solutions implemented in some statistical software.
+
+The aim of this paper is to offer a clear e detailed description of the entire procedure. In particular we refer to the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018} as it is applicable to a wider range of conditions than the more accurate approach proposed by \textcite{mulderSimpleBayesianTesting2019}. The paper is organized as follow. First a detailed description of the method is provided considering a toy example. This allow to clearly understand all the steps and elements involved in this approach. Subsequently an application of the method to real data is presented to offer the opportunity to discuss the typical issues encountered in real complex scenario.
+
+[Problem of nested models?]
+p-value do
+
+statistical approach have been developed to evaluate hypothesis and by far one of the most applied tool is the Null Significance hypothesis
+
+When conducting a study, researchers usually have expectetions about the phenomeno under investigation. They want to verify some kind of hypothesis.
 
 translation of theoretical hypothesis into statistical models
-these hypothesis can be mor eor less conscious, verify if an effect exist but if interrogated in mor e depth evaluate
+these hypothesis can be moreover less conscious, verify if an effect exist but if interrogated in mor e depth evaluate
 Informative hypothesis with equality or order constraints.
 
 "Informative hypotheses are increasingly being used in psychological sciences because they adequately capture researchers’ theories and expectations; One of the objectives of psychological studies is to test hypotheses that represent scientific expectations. The main tool available for this purpose is null hypothesis significance testing where the goal is to falsify a null hypothesis of ‘no effect’. On the other hand, psychologists may expect; These expectations cannot be formulated by the traditional null hypothesis. Instead, such expectations can be translated to so-called informative hypotheses which assume a specific structure of the model parameters (Hoijtink, 2012)" \textcite{guApproximatedAdjustedFractional2018}
@@ -142,7 +171,9 @@ A key difficulty in analyzing inequality-constrained models and theories is that
   - \textcite{hoijtinkTutorialTestingHypotheses2019} - introduction-tutorial to Bayes factor, very descriptive no formulas, the part of informative hypothesis is restricted to ANOVA using bain package.
   -\textcite{mulderEditorsIntroductionSpecial2016} - introduction to issue about BF.
   \textcite{moreyPhilosophyBayesFactors2016} - phylosophycal fundation of the BF.
+  -\textcite{katoBayesianApproachInequality2006} - inequality constraints in mixed effect model
   - not god for wide audience, complex notation athough valuable makes complex to understand.
+
 
 
 - extra
