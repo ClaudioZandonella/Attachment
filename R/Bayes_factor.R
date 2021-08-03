@@ -252,7 +252,7 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchi
 #'
 #' @param mean vector with the parameters mean
 #' @param sigma covariance matrix of the parameters
-#' @param n_eqinteger indicating thee number of equality constraints
+#' @param n_eq integer indicating the number of equality constraints
 #'
 #' @return a numeric single value
 #'
@@ -280,7 +280,8 @@ compute_density <- function(mean, sigma, n_eq){
 #'
 #' @param mean vector with the parameters mean
 #' @param sigma covariance matrix of the parameters
-#' @param n_eqinteger indicating thee number of equality constraints
+#' @param n_eq integer indicating the number of equality constraints
+#' @param n_ineq integer indicating the number of inequality constraints
 #'
 #' @return a numeric single value
 #'
@@ -303,8 +304,11 @@ compute_cond_prob <- function(mean, sigma, n_eq, n_ineq){
 
 #' Get Prior Info
 #'
-#' @param encompassing_model
-#' @param hyp
+#' Given the encompassing model, get prior mean and covariance matrix
+#'
+#' @param encompassing_model a `brms` fit object of the encompassing model
+#' @param hyp a matrix with the hypothesis constraints returned from
+#'   `get_hypothesis_matrix()` function
 #'
 #' @return list with the prior mean and covariance matrix
 #'
@@ -312,6 +316,7 @@ compute_cond_prob <- function(mean, sigma, n_eq, n_ineq){
 #' drake::loadd(encompassing_model_int)
 #' hyp <- get_hypothesis_matrix(hypothesis = "hierarchical", encompassing_model_int)$hyp
 #' get_prior_info(encompassing_model = encompassing_model_int, hyp = hyp)
+#'
 
 get_prior_info <- function(encompassing_model, hyp){
   prior_sd <- get_prior_sd(encompassing_model)
@@ -327,12 +332,16 @@ get_prior_info <- function(encompassing_model, hyp){
 
 #' Get Posterior Info
 #'
-#' @param encompassing_model
+#' Given the encompassing model, get posterior mean and covariance matrix
+#'
+#' @param encompassing_model a `brms` fit object of the encompassing model
 #'
 #' @return list with the posterior mean and covariance matrix
 #'
+#' @examples
 #' drake::loadd(encompassing_model_int)
 #' get_posterior_info(encompassing_model = encompassing_model_int)
+#'
 
 get_posterior_info <- function(encompassing_model){
   posterior <- brms::fixef(encompassing_model, summary = FALSE) %>%
@@ -357,7 +366,10 @@ get_posterior_info <- function(encompassing_model){
 #' @return list with the transformed mean and covariance matrix
 #'
 #' @examples
-#'
+#' drake::loadd(encompassing_model_int)
+#' param_info <- get_posterior_info(encompassing_model_int)
+#' hyp <- get_hypothesis_matrix("hierarchical", encompassing_model_int)$hyp[1:15, ]
+#' transform_param(param_info, hyp)
 
 transform_param <- function(param_info, hyp){
   param_mean <- hyp %*% param_info$mean
@@ -369,13 +381,15 @@ transform_param <- function(param_info, hyp){
 
 #----    get_BF    ----
 
-#' Title
+#' Compute the Bayes Factor
 #'
-#' @param hypothesis
-#' @param encompassing_model
+#' Given the hypothesis and the encompassing model, compute the Bayes Factor
 #'
-#' @return
-#' @export
+#' @param hypothesis a character indicating the hypothesis ("null", "monotropy",
+#'   "hierarchical", "independent", "iteraction")
+#' @param encompassing_model a `brms` fit object of the encompassing model
+#'
+#' @return numeric value
 #'
 #' @examples
 #' drake::loadd(encompassing_model_int)
@@ -649,6 +663,9 @@ find_composition_betas <- function(hyp, independent_rows){
 
 #' Get Table BF Comparison
 #'
+#' Get Table of Bayes Factor comparison, each cell represent the Bayes Factor
+#' between the model indicated in the row and the model indicated in the column
+#'
 #' @param ... BF to compare
 #'
 #' @return a matrix
@@ -686,9 +703,19 @@ get_table_BF <- function(...){
 
 #' Get BF Weights
 #'
-#' @param ... BF to compare
+#' Given a seet of Bayes Factor, compute the relative weights
 #'
-#' @return a matrix
+#' @param ... BF to compare
+#' @param encompassing_model a `brms` fit object of the encompassing model
+#'
+#' @return a dataframe with columns:
+#'  - `names` - name of the model
+#'  - `bf` - bayes factor value
+#'  - `logml` - log marginal likelihood
+#'  - `diff_logml` - difference  with the log morginal likelihood of the worst
+#'  model
+#'  - `rel_lik` - relative likelihood
+#'  - `weights` - relative weights
 #'
 #' @examples
 #' drake::loadd(c(BF_null_int, BF_monotropy_int,
@@ -728,11 +755,14 @@ get_BF_weights <- function(..., encompassing_model){
 
 #----    get_prior_sensitivity    ----
 
-#' Title
+#' Get Prior Sensitivity
 #'
-#' @param data
+#' Given the encompassing model compute the bayes Factor for the attachment
+#' models and return the relative weights
 #'
-#' @return
+#' @param encompassing_model a `brms` fit object of the encompassing model
+#'
+#' @return a dataframe result of `get_BF_weights()` function
 #'
 #' @examples
 #' drake::loadd(data_cluster)
@@ -762,12 +792,12 @@ get_prior_sensitivity <- function(encompassing_model){
 
 #----    get_summary_sensitivity    ----
 
-#' Title
+#' Get Summary Sensitivity
 #'
-#' @param ...
+#' @param ... dataframes of prior sensitivity to summarize
+#' @param reference dataframes with the default results
 #'
-#' @return
-#' @export
+#' @return a data frame with all the prior sensitivity information
 #'
 #' @examples
 #' drake::loadd(prior_sensitivity_int_.5, prior_sensitivity_int_01,

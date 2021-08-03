@@ -101,6 +101,8 @@ get_rel_weights <- function(..., ic = c("waic", "loo")){
 
 #----    make_stan_data    ----
 
+# function no longer used in thee analysis
+
 make_stan_data <- function(data, formula = "mother + father"){
 
   if(!is.list(formula)){
