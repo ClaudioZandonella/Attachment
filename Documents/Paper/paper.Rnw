@@ -49,6 +49,7 @@
 \usepackage{makecell}
 \usepackage{xcolor}
 
+\usepackage{amsmath}
 \usepackage{csquotes}
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
 \DeclareLanguageMapping{american}{american-apa}
@@ -78,6 +79,8 @@ library(kableExtra)
 \begin{document}
 \maketitle
 
+\section{Introduction}
+
 One of the principal aspects of empirical research is the evaluation of research or theoretical hypothesis. When conducting a study, researcher usually have expectations based on hypotheses or theoretical perspectives they want to evaluate according to observed data.
 
 For example researcher could be interested in evaluating whether the treatment group scores higher than the control group.
@@ -88,19 +91,116 @@ In psychology the most often use tool (the dominant statistical approach) to eva
 
 [classical significance tests are only suitable for testing a null hypothesis against a single alternative, and unsuitable for testing multiple hypotheses with equality as well as order constraints (Silvapulle \& Sen, 2004). Second, traditional model comparison tools (e.g., the AIC, BIC, or CFI) are generally not suitable for evaluating models (or hypotheses) with order constraints on certain parameters (Mulder et al. 2009; Braeken, Mulder, \& Wood, 2015). \textcite{mulderSimpleBayesianTesting2019}]
 
+[broad class of hypotheses]
+
 In general, researchers are interested in comparing different hypothesis and understand which is the most supported by the data. Model comparison is a different approach that allows to compare different models. Models formalized according to researchers expectation or theoretical perspectives are compared against each other according to the data. In this way, it is possible to evaluate the relative plausibility of each model given the data and the set of model considered. Models can be compared using Information criteria (the most popular are the AIC and BIC) and the relative plausibility of each model can be computed. [Information criteria allow to evaluate the ability of the model to predict new data penalizing for model complexity.] Model comparison has several advantages and in particular it allows to directly compute the relative plausibility of each hypothesis. Model comparison, however, is still limited in the possibility to formalize hypothesis that include complex parameter order constraints.
 
 An alternative approach to evaluate research hypotheses is based on the Bayes Factor. In the last 25 years, there has been an increasing interest / growth in popularity in the use of Bayes Factor and its adoption has been proposed (advocated) as the solution to the critical issues of the NHST. Although the Bayes Factor has its own limitations and  does not solve the fundamental issues of the misuse of statistical techniques \url{https://statmodeling.stat.columbia.edu/2019/09/10/i-hate-bayes-factors-when-theyre-used-for-null-hypothesis-significance-testing/}, it offers some clear advantages. In particular, the Bayes Factor allows to compare hypotheses obtaining a relative index of evidence, like in the model comparison approach, but it also allows to easily compare researchers' expectations. In fact, informative hypotheses can be formalized according to researchers expectation using equality and inequality constraints and than compared.
 
 The evaluation of informative hypothesis based on the Bayes Factor has received increasing attention and several contribution can be found in the literature. \textcite{vandeschootIntroductionBayesianModel2011} presented a general introduction to informative hypotheses testing using the Bays Factor, whereas \textcite{hoijtinkInformativeHypothesesTheory2012} offered more detailed description on the development of this approach. Other studies, instead, considered the application of this method in specific models; for example: mixed effect models \parencite{katoBayesianApproachInequality2006}, evaluation of correlation coefficients \parencite{mulderBayesFactorsTesting2016} and multinomial models \parencite{heckMultinomialModelsLinear2019}. In addition, \textcite{guBayesianEvaluationInequality2014} proposed an approximate procedure to evaluate as long as  the structural parameters are unbounded.
 
-Note, however, that all previously mentioned studies considered informative hypothesis only with inequality constraints. Equality constraints could not be defined together with inequality constraints in the same hypothesis but they had to be approximated as "about equality constraints" (i.e., a equality constraints of type $\beta_i = \beta_j$ is approximated as $|\beta_i - \beta_j| < \xi$ for a value of $\xi$ small enough {TODO more below?}).
+Note, however, that all previously mentioned studies considered informative hypothesis only with inequality constraints. Equality constraints could not be defined together with inequality constraints in the same hypothesis but they had to be approximated as "about equality constraints" (i.e., a equality constraints of type $\theta_i = \theta_j$ is approximated as $|\theta_i - \theta_j| < \xi$ for a value of $\xi$ small enough {TODO more below?}).
 
 It's only more recently that \textcite{guApproximatedAdjustedFractional2018} introduced an approximate procedure to evaluate both equality and inequality constraints using the Bayes Factor in the case of general statistical models (i.e., generalized linear mixed models and structural equation models). Subsequentley, this approach was exteended  by \textcite{mulderBayesFactorTesting2019} to the generalized multivariate probit models. Finally, \textcite{mulderSimpleBayesianTesting2019} proposed an accurate procedure (i.e., not based on an approximation) that allows to test informative hypothesis with equality and inequality constraints in linear regression models.
 
-The development and implementation of this approach are of particular interest because, although with its limits, it allows researchers to properly evaluate their expectations and hypotheses. Available literature, however, it is mainly based on articles published in specialize journals of mathematical psychology. The complexity of these articles makes it difficult for non-experts in this approach to clearly understand all the steps involved. On the other hand, articles offering a general introduction to the Bayes Factor do not provide enough details to allow readers to apply autonomously the method to their problems, but they usually relay on ad-hoc solutions implemented in some statistical software.
+The development and implementation of this approach are of particular interest because, although with its limits (discussed latrer), it allows researchers to directly evaluate their expectations and hypotheses. Available literature, however, it is mainly based on articles published in specialize journals of mathematical psychology. The complexity of these articles makes it difficult for non-experts in this approach to clearly understand all the steps involved. On the other hand, articles offering a general introduction to the Bayes Factor do not provide enough details to allow readers to apply autonomously the method to their problems, but they usually relay on ad-hoc solutions implemented in some statistical software.
 
-The aim of this paper is to offer a clear e detailed description of the entire procedure. In particular we refer to the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018} as it is applicable to a wider range of conditions than the more accurate approach proposed by \textcite{mulderSimpleBayesianTesting2019}. The paper is organized as follow. First a detailed description of the method is provided considering a toy example. This allow to clearly understand all the steps and elements involved in this approach. Subsequently an application of the method to real data is presented to offer the opportunity to discuss the typical issues encountered in real complex scenario.
+The aim of this paper is to offer a clear e detailed description of the entire procedure. In particular we refer to the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018} as it is applicable to a wider range of conditions than the more accurate approach proposed by \textcite{mulderSimpleBayesianTesting2019}. The paper is organized as follow. First the method is introduced considering a toy example. This allow to provide a  detailed description of all steps and elements involved in the formalization of informative hypothesis and Bayes Factor computation. Subsequently an application of the method to real data is presented to offer the opportunity to discuss the typical issues encountered in real complex scenario.
+
+[Code provided in the SM]
+
+\section{Bays Factor for Informative Hypothesis Testing}
+
+The evaluation of informative hypothesis with equality and/or inequality constraints involves several steps and elements. In this section, first we describe how to formulate informative hypothesis. Subsequently, we introduce the Bayes Factor considering the encompassing prior approach based on the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018}.
+
+[In order to facilitate the understanding, a toy example is considered.]
+
+\subsection{Formulation of Informative Hypothesis}
+
+Informative hypotheses can be defined according to researchers expectation, evidence form the literature or theoretical perspectives and they are formed by equality and/or inequality constraints on certain model parameters. These constraints are obtain as a linear combination of certain parameters and eventual constant values. For example, it is possible to state that two parameters are equal ($\theta_i = \theta_j$), one parameter is grater than another ($\theta_i > \theta_j$), the difference between two parameter is less than a given value ($\theta_i - \theta_j < .5$) or express other complex conditions ($2\times\theta_i - \theta_j < .1 \times \sigma$).
+
+Thus, an informative hypothesis $H_i$ with equality and inequality constraints can be expressed in the form
+\begin{equation}
+H_i:\ \ R_E\theta = r_E \ ~ \ \& \ ~ \ R_I\theta > r_I,
+\end{equation}
+where $R_E$ is a matrix expressing the equality constraints and $r_E$ is a vector containing the constants of the equality constraints. Whereas, $R_I$ is a matrix expressing the inequality constraints and $r_E$ is a vector containing the constants of the inequality constraints. Finally, $\theta$ is a vector of the model parameters involved in the constraints.
+
+As an example, consider a study evaluating the efficacy of a new psychological treatment that is supposed to improve a given cognitive ability. In the study, a control group receiving no treatment and another group receiving the traditional treatment were included as comparison. Moreover, imagine that the new psychological treatment was administrated in three different modalities to different groups: individually, in group, online. Researchers expect no differences between the three modalities but they assume that the new treatment to perform better than the traditional one that in turn is better than the control condition. We can express this hypothesis as
+\begin{equation}
+H_i:\ \ \theta_{control}< \theta_{traditional} < \theta_{individual} = \theta_{group} = \theta_{online},
+\end{equation}
+were $\theta_{control}$ is the average score of the control group, $\theta_{traditional}$ is the average score of the group receiving the traditional treatment, and $\theta_{individual}$, $\theta_{group}$, and $\theta_{online}$ are the average scores of the groups receiving the new treatment individually, in group, and on-line, respectively. The correspondig formulation of the hypothesis using matrix notation introduced before is
+\begin{equation}
+\begin{aligned}
+H_i: &\\
+& R_E\theta =
+\begin{bmatrix}
+0 & 0 & 1 & -1 & 0\\
+0 & 0 & 0 & 1 & -1
+\end{bmatrix}	\begin{bmatrix} \theta_{control} \\ \theta_{traditional} \\ \theta_{individual} \\ \theta_{group} \\ \theta_{online}\end{bmatrix} = \begin{bmatrix} 0 \\ 0\end{bmatrix} = r_E,\\~\\
+& R_I\theta =
+\begin{bmatrix}
+-1 & 1 & 0 & 0 & 0\\
+0 & -1 & 1 & 0 & 0
+\end{bmatrix}	\begin{bmatrix} \theta_{control} \\ \theta_{traditional} \\ \theta_{individual} \\ \theta_{group} \\ \theta_{online}\end{bmatrix} > \begin{bmatrix} 0 \\ 0\end{bmatrix} = r_I.
+\end{aligned}
+\end{equation}
+Note how each row of $R_E$ and $R_I$ matrices expresses an equality or an inequality constraint, respectively. For example, in the first row of $R_E$ we have $\beta_{individual} - \beta_{group} = 0$ (i.e., $\beta_{individual} = \beta_{group}$) and in the first row of $R_I$ we have $\beta_{traditional} - \beta_{control} > 0$ (i.e., $\beta_{traditional} > \beta_{control}$).
+
+Now that we have understood how to define an informative hypothesis with equality and inequality constraints introducing an appropriate notation, lets see how to evaluate an informative hypothesis using the Bayes Factor.
+
+\subsection{Bayes Factor}
+
+The Bayes Factor of hypothesis $H_1$ against a competing hypothesis $H_2$ is defined as the ration between the marginal likelihoods of the two hypothesis:
+\begin{equation}
+BF_{12} = \frac{Pr(Y|H_1)}{Pr(Y|H_2)} = \frac{\int l(Y|\theta_1, H_1) \pi(\theta_1| H_1)\,d\theta_1}{\int l(Y|\theta_2, H_2) \pi(\theta_2| H_2)\,d\theta_2},
+\end{equation}
+where $Y$ indicates the data, $\theta_i$ is the vector of parameters, $l(Y|\theta_i, , H_i)$ is the likelihood function, and $\pi{\theta_i| H_i}$ is the prior of the parameters under the hypothesis $H_i$. The marginal likelihood $Pr(Y|H_i)$ is a measure of the plausibility of the data under $H_i$.
+
+Therefore, the Bayes Factor $BF_{12}$ quantifies the relative support of the data for the two competing hypotheses (and not the ratio between the probability of the two hypotheses). For values close to 1, the Bayes Factor indicates that $H_1$ and $H_2$ have similar support from the data. Larger values indicate evidence in favor of $H_1$, whereas values close to 0 indicate evidence in favor of $H_2$. The ratio between the posterior probabilities of the two hypotheses can be computed as
+\begin{equation}
+\frac{Pr(H_1|Y)}{Pr(H_2|Y)} = \overbrace{\frac{Pr(Y|H_1)}{Pr(Y|H_2)}}^{BF_{12}} \times \frac{Pr(H_1)}{Pr(H_2)},
+\end{equation}
+where $Pr(H_i)$ is th prior probability of $H_i$ and $Pr(H_i|Y)$ is the posterior probability of $H_i$.For a detailed description of the Bayes Factor considering also its interpretation and application in different context see \textcite{wagenmakersBayesianHypothesisTesting2010, mulderEditorsIntroductionSpecial2016, heckReviewApplicationsBayes2020}.
+
+Note that to compute the marginal likelihood $Pr(Y|H_i)$ of an hypothesis $H_i$ it is necessary to integrate the product between the likelihood and the prior. These integrals, however, are usually difficult to compute [in particular in the case of hypothesis with order constraints]. In the case of hypothesis with equality and inequality constraints, however, it is possible to adopt the encompassing prior approach.
+
+\subsubsection{Encompassing Prior Approach}
+
+The basic idea of the encompassing prior approach is to consider an informative hypothesis as a subset of the parameter space of an unconstrained model. Thus, to evaluate the plausibility of an hypothesis we can consider the proportion of parameters of the unconstrained model that satisfy the constraints. More specifically, given an informative hypothesis $H_i$ and an unconstrained model $H_u$ (or \textit{encompassing model}) that does not contains any constraints on the parameters, if the prior under $H_i$ is defined as a truncation of the proper prior under $H_u$ (\textit{encompassing prior}) according to the constraints, then the Bayes Factor between $H_i$ and $H_u$ can be written as
+\begin{equation}
+\begin{aligned}
+BF_{iu} &= \frac{Pr(\text{Inequality Const|Equality Const, Data, } H_u)}{\pi(\text{Inequality Const|Equality Const, } H_u)} \times \frac{Pr(\text{Equality Const|Data, } H_u)}{\pi(\text{Equality Const}|H_u)} \\ ~\\
+&= \frac{Pr(R_I\theta > r_I | R_E\theta =r_E, Y, H_u)}{\pi(R_I\theta > r_I | R_E\theta =r_E, H_u)} \times \frac{Pr(R_E\theta =r_E| Y, H_u)}{\pi(R_E\theta =r_E| H_u)}.
+\end{aligned}
+\end{equation}
+
+The first term is the ratio between the conditional posterior probability and conditional prior probability that the inequality constraints hold under the unconstrained model $H_u$ given the equality constraints. The second term is the ratio between marginal posterior density and the marginal prior density of the equality constraints under $H_u$, the well-known Savage–Dickey density ratio \parencite{dickeyWeightedLikelihoodRatio1971, wetzelsEncompassingPriorGeneralization2010}. In particular, the four elements can be interpreted as:
+\begin{itemize}
+  \item{The \textbf{conditional posterior probability} $Pr(R_I\theta > r_I | R_E\theta =r_E, Y, H_u)$ is a measure of the fit of the inequality constraints of $H_i$ under $H_u$.}
+  \item{The \textbf{conditional prior probability} $\pi(R_I\theta > r_I | R_E\theta =r_E, H_u)$ is a measure of the complexity of the inequality constraints of $H_i$ under $H_u$.}
+  \item{The \textbf{marginal posterior density} $Pr(R_E\theta =r_E| Y, H_u)$ is a measure of the fit of the equality constraints of $H_i$ under $H_u$.}
+  \item{The \textbf{marginal prior density} $\pi(R_E\theta =r_E| H_u)$ is a measure of the complexity of the equality constraints of $H_i$ under $H_u$.}
+\end{itemize}
+Summarizing at the denominators we have measures of the \textbf{complexity} of the inequality and equality constraints of the informative hypothesis $H_i$; at the numerators, instead, we have measures of th \textbf{fit} of the data to the inequality and equality constraints of the informative hypothesis $H_i$. Thus, if the hypothesis $H_i$, although applying constraints to the parametric space (less complexity), is still able to provide a good description of the data, the Bayes Factor will favor $H_i$. On the contrary, if the support of by the data is poor, the Bayes Factor will favor the unconstrained model $H_u$.
+
+The proof of the formulation of the Bayes Factor following the encompassing prior approach and the evaluation of its consistency (i.e., the probability of selecting the correct hypothesis goes to 1 for the sample size going to infinity) is provided in \textcite{guApproximatedAdjustedFractional2018, mulderBayesFactorTesting2019}. Note that slightly different notation is used here to enhance comprehension and underline that at the numerators we have values computed from the posterior of $H_u$, whereas at the denominators we have values computed from the prior of $H_u$.
+
+To compute the Bayes Factor following the encompassing prior approach, only the prior and the posterior of the unconstrained model are required. In order to do that, we first need to define the encompassing prior for the unconstrained model.
+
+\subsubsection{Definition of Encompassing Prior}
+
+Prior specification is an important element as the resulting value of the Bayes Factor is affected by the prior choice. This aspects is particularly relevant in the case of equality constraints \parencite{lindleyStatisticalParadox1957, bartlettCommentLindleyStatistical1957}, whereas inequality constraints are not affected as long as the prior is symmetric and centered to the focal point of interest (this aspect will be further discussed in the next section).
+
+In order to avoid arbitrary specification of the prior, different methods have been proposed in the literature. For example: Jeffreys-Zellner-Siow (JZS) objective priors do not require subjective specification \parencite{jeffreysTheoryProbability1961,zellnerPosteriorOddsRatios1980, bayarriExtendingConventionalPriors2007}; partial Bayes Factor \parencite{desantisMethodsDefaultRobust1999} uses part of the data to define the prior wheres the other part is used to compute the Bayes Factor; intrinsic Bayes Factor \parencite{bergerIntrinsicBayesFactor1996} and fractional Bayes Factor \parencite{ohaganFractionalBayesFactors1995} are a variation of the partial Bayes Factor where priors are defined according to the average of all possible minimal subsets of the data or to a given small fraction of the data, respectively.
+
+Both, \textcite{guApproximatedAdjustedFractional2018, mulderSimpleBayesianTesting2019} based their approach on the fractional Bayes Factor. Starting from non-informative prior, a minimal fraction of the data is used to obtain a proper updated prior (have you ever heard Lindley's \citeyear{lindleyBayesianStatisticsReview1972} famous quote \textit{“Today’s posterior is tomorrow’s prior”}?) and the remaining part of the data is used to compute the Bayes Factor.
+
+\paragraph{Prior Adjustment}
+
+[definition of prior]
+
+\section{Old Material}
 
 [Problem of nested models?]
 p-value do
@@ -177,11 +277,12 @@ A key difficulty in analyzing inequality-constrained models and theories is that
 
 
 - extra
-  - combination with threshoolds $\beta_1 - \beta_2 < k$
-  - different approach with range constraints $|\beta_1 - \beta_2| < k$
+  - combination with threshoolds $\theta_1 - \theta_2 < k$
+  - different approach with range constraints $|\theta_1 - \theta_2| < k$
   - "the parameters of interest may need to be standardized in some situations. The need for standardization depends on the statistical model and informative hypothesis under evaluation.;  it is undesirable to standardize the parameters h if they represent means." \textcite{guApproximatedAdjustedFractional2018}
-
-- multiverse analysis
+  - issue of consistency
+  - range constrain issue mean prior see Gu 2018
+  - multiverse analysis
 
 \Textcite{andrewBayesianDataAnalysis} said this,
 too \parencite{andrewBayesianDataAnalysis}.  Further evidence comes from

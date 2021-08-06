@@ -175,6 +175,7 @@ drake::loadd(summary_sensitivity_ext)
 
 #===========================#
 
+BF_weights_ext$bf / sum(BF_weights_ext$bf)
 
 #----
 
