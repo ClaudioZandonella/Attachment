@@ -72,8 +72,45 @@
 
   Correspondence concerning this article should be addressed to Claudio Zandonella Callegher, Department of Developmental Psychology and Socialisation, University of Padua, Via Venezia, 8 - 35131 Padova, Italy.  E-mail: claudiozandonella@gmail.com}
 
-<<settings, echo=FALSE>>=
+<<settings, echo=FALSE, message=FALSE>>=
 library(kableExtra)
+
+# Chunks settings
+knitr::opts_chunk$set(echo = FALSE,
+                      # Plot settings
+                      dev = "tikz", dev.args=list(pointsize=12),fig.align='center',
+                      fig.height=3, fig.width=5, fig.pos = "h",
+
+                      # Code output width
+                      tidy=TRUE, tidy.opts = list(width.cutoff = 87),
+                      # comment = NA, prompt = TRUE
+
+                      # Cache options
+                      cache = FALSE, autodep=TRUE)
+
+# Console output width
+options(width = 90)
+
+# Chunk theme
+thm=knit_theme$get("bclear")
+knitr::knit_theme$set(thm)
+knitr::opts_chunk$set(background = c(.98, .98, 1))
+
+# Option KableExtra
+# options(knitr.kable.NA = '')
+
+## ggplot settings
+ggplot2::theme_set(theme_classic()+
+                     theme(text = element_text(size=12)))
+
+
+
+devtools::load_all("../../")
+source("../Utils_report.R")
+
+#----    load drake    ----
+
+drake_load_all()
 @
 
 \begin{document}
@@ -115,7 +152,7 @@ The evaluation of informative hypothesis with equality and/or inequality constra
 
 [In order to facilitate the understanding, a toy example is considered.]
 
-\subsection{Formulation of Informative Hypothesis}
+\subsection{Formulation of Informative Hypothesis}\label{sec:informative-hypothesis}
 
 Informative hypotheses can be defined according to researchers expectation, evidence form the literature or theoretical perspectives and they are formed by equality and/or inequality constraints on certain model parameters. These constraints are obtain as a linear combination of certain parameters and eventual constant values. For example, it is possible to state that two parameters are equal ($\theta_i = \theta_j$), one parameter is grater than another ($\theta_i > \theta_j$), the difference between two parameter is less than a given value ($\theta_i - \theta_j < .5$) or express other complex conditions ($2\times\theta_i - \theta_j < .1 \times \sigma$).
 
@@ -194,11 +231,66 @@ Prior specification is an important element as the resulting value of the Bayes 
 
 In order to avoid arbitrary specification of the prior, different methods have been proposed in the literature. For example: Jeffreys-Zellner-Siow (JZS) objective priors do not require subjective specification \parencite{jeffreysTheoryProbability1961,zellnerPosteriorOddsRatios1980, bayarriExtendingConventionalPriors2007}; partial Bayes Factor \parencite{desantisMethodsDefaultRobust1999} uses part of the data to define the prior wheres the other part is used to compute the Bayes Factor; intrinsic Bayes Factor \parencite{bergerIntrinsicBayesFactor1996} and fractional Bayes Factor \parencite{ohaganFractionalBayesFactors1995} are a variation of the partial Bayes Factor where priors are defined according to the average of all possible minimal subsets of the data or to a given small fraction of the data, respectively.
 
-Both, \textcite{guApproximatedAdjustedFractional2018, mulderSimpleBayesianTesting2019} based their approach on the fractional Bayes Factor. Starting from non-informative prior, a minimal fraction of the data is used to obtain a proper updated prior (have you ever heard Lindley's \citeyear{lindleyBayesianStatisticsReview1972} famous quote \textit{“Today’s posterior is tomorrow’s prior”}?) and the remaining part of the data is used to compute the Bayes Factor.
+Both, \textcite{guApproximatedAdjustedFractional2018, mulderSimpleBayesianTesting2019} based their approach on the fractional Bayes Factor. Starting from a non-informative prior, a minimal fraction of the data is used to obtain a posterior that is subsequently used as proper prior, we refer to it as \textit{fractional prior} (have you ever heard Lindley's \citeyear{lindleyBayesianStatisticsReview1972} famous quote \textit{“Today’s posterior is tomorrow’s prior”}?). The remaining part of the data is used to compute the Bayes Factor. The two approaches, however, have an important difference. \textcite{guApproximatedAdjustedFractional2018} approximated the obtained fractional prior (and also the posterior as we will discuss below) to a (multivariate) normal distribution. In fact, due to large-sample theory \parencite{gelmanBayesianDataAnalysis2013}, parameter posterior distribution can be approximated to a (multivariate) normal distribution. On the contrary, \textcite{mulderSimpleBayesianTesting2019} provided analytic solution in the case of linear regression models obtaining accurate quantification.
 
-\paragraph{Prior Adjustment}
+All methods discussed above suggested objective procedures to avoid arbitrary prior specification. Nevertheless, using subjective (reasonable) priors according to previous information or experts' indication is still a possible approach. Keep in mind, however, that prior specification (even if obtained through an \textit{objective procedure}) affects the Bayes Factor result. Thus, it is fundamental to conduct a prior sensitivity analysis to evaluate the influence of prior specification on the results \parencite{duBayesFactorOnesample2019}.
 
+Going back to our psychological treatment example, we could use independent normal distributions to specify the prior of each parameter of interest (i.e. $\theta_{control}$, $\theta_{traditional}$, $\theta_{individual}$, $\theta_{group}$, and $\theta_{online}$) obtaining as resulting prior a multivariate normal distribution with mean vector $\bm{\theta}$ and covariance matrix $\Sigma_{\theta}$. In this way we can still follow the approach proposed by \textcite{guApproximatedAdjustedFractional2018}, based on normal approximation, that will simplify the computation of the Bayes Factor. For example, suppose that, according to experts indications, a reasonable prior choice for all parameters of interest is a normal distribution with mean zero and standard deviation 2:  $\mathcal{N}(0,2)$. The resulting multivariate normal distribution have mean vector $\bm{\theta}$ and covariance matrix $\Sigma_{\theta}$ equal to:
+\begin{equation}
+\bm{\theta} = \begin{bmatrix}
+0 \\ 0 \\ 0 \\ 0 \\ 0
+\end{bmatrix}, \ \ ~ \ \
+\Sigma_{\theta} = \begin{bmatrix}
+4 & 0 & 0 & 0 & 0\\
+0 & 4 & 0 & 0 & 0\\
+0 & 0 & 4 & 0 & 0\\
+0 & 0 & 0 & 4 & 0\\
+0 & 0 & 0 & 0 & 4
+\end{bmatrix}.
+\end{equation}
+
+At this point, several authors underline the importance of centering the prior distribution on the constraints points of interest. Let's further discuss this issue in the next section.
+
+\subsubsection{Prior Adjustment}
+
+When evaluating informative hypothesis with equality and inequality constraints using the Bayes Factor, priors have to be centered on the focal points of interests  \parencite{zellnerPosteriorOddsRatios1980, jeffreysTheoryProbability1961, mulderPriorAdjustedDefault2014}. In the case of equality constraints, centering the prior allows to consider values close to the point of interest more likely a priori than values far away. This should be in line with researchers' expectation, otherwise one could question why testing that value.
+
+In the case of inequality constraints, instead, this adjustment is done to guarantee that no constrain is favored a priori. Consider the example represented in Figure~\ref{fig:plot-prior-adj} where the hypothesis $\theta_i > k$ is evaluated against $\theta_i < k$. Remember that, when computing the Bayes Factor, prior probability that the constraint hold is used as a measure of complexity of the hypothesis. Thus, if the prior is not centered on the focal point of interest (i.e., $k$), one hypothesis will be erroneously preferred over the other a priori. Only by centering the prior on the focal point the hypotheses will be equally likely a priori.
+
+<<plot-prior-adj, fig.cap="Example of non centered prior considering the constraints $\\theta_i > k$ vs. $\\theta_i < k$">>=
+plot_prior_adj()
+@
+
+Centering the prior to the focal point, however, can be difficult in the case of complex hypothesis where constraints are defined as linear combination of several parameters. To overcome this issue, \textcite{guApproximatedAdjustedFractional2018} proposed the following transformation of the parameters of interest:
+\begin{equation}
+\begin{aligned}
+\bm{\beta} = &R\bm{\theta}-r\\~\\
+\text{with  } \bm{\beta} = \begin{bmatrix}\beta_E\\\beta_I\end{bmatrix},\ R =& \begin{bmatrix}R_E\\R_I\end{bmatrix} \text{  and  } r = \begin{bmatrix}r_E\\r_I\end{bmatrix},
+\end{aligned}
+\end{equation}
+where $\bm{\theta}$ is the vector of original parameters, $R$ is the matrix expressing equality and inequality constraints, and $r$ is the vector with the constants of the equality and inequality constraints. Doing this, the informative hypothesis under evaluation becomes:
+\begin{equation}
+H_i:\ \ \beta_E = 0 \ ~ \ \& \ ~ \ \beta_I > 0.
+\end{equation}
+and to center the prior of the new parameter vector $\bm{\beta}$ we can simply set the values to 0.
+
+This parameter transformation has the advantage of simplifying the hypothesis expression without changing the original expectations. In fact, for example, evaluating $\theta_i > \theta_j$ is equivalent to evaluate $\beta_i = \theta_i - \theta_j > 0$. Thus, given the original prior $\mathcal{N}(\bm{\theta}, \Sigma_{\theta})$, the adjusted prior of the new parameter vector $\bm{\beeta}$ is computed as
+\begin{equation}
+\mathcal{N}(\bm{\beta}, \Sigma_{\beta}) = \mathcal{N}(R\bm{\theta}-r, R\Sigma_{\theta}R^T) = \mathcal{N}(0, \Sigma_{\beta}).
+\end{equation}
+
+Note that this operation is nothing more than applying a linear transformation to the original multivariate normal distribution.
+
+
+note full rank
+
+note on range constraints
 [definition of prior]
+
+
+Note that normal prior distribution can be used only for unbounded parameters. In case of bounded parameters (i.e., correlations or probabilities) adequate bounded prior are required. difference approx for prior and posterior and between density and conditional probability.
+
+Note that prior specification is relevant only for the parameters of interest (i.e., the parameters involved in the constraints) as nuisance parameters are automatically integrated out in the Bayes Factor. insensitive as long as they are vague enough
 
 \section{Old Material}
 

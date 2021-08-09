@@ -48,6 +48,23 @@ get_plot_zinb <- function(model){
   gridExtra::grid.arrange(p_gender, p_attachemnt, layout_matrix = matrix(c(1,2,2,2,2), nrow = 1))
 }
 
+#----    plot_prior_adj    ----
+
+plot_prior_adj <- function(k = 1){
+
+  ggplot(data.frame(x = c(-3,3))) +
+    geom_area(stat = "function", fun = dnorm, col = "gray40", fill = "#F98400", xlim = c(-3, k), size = 1) +
+    geom_area(stat = "function", fun = dnorm, col = "gray40", fill = "#5BBCD6", xlim = c(k, 3), size = 1) +
+    geom_segment(x = k, xend = k , y = 0, yend = .35, size = 1.5, col = "gray20") +
+    annotate(geom = "text", x = k, y = .37, label = "\\textit{k}") +
+    xlim(-3, 3) +
+    labs(x = "$\\theta_i$") +
+    theme_classic() +
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title.y = element_blank(),
+          axis.line.y.left = element_blank())
+}
 
 #----
 

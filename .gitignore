@@ -18,6 +18,9 @@
 *.toc
 *.fff
 *.ttt
+*-tikzDictionary
+
+Documents/Paper/figure/
 
 # paper output
 paper.tex
