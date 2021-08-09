@@ -39,7 +39,8 @@ zinb_brms <- function(data, y, formula){
 
   fit <- brms::brm(brms::bf(as.formula(formula_mu),
                             as.formula(formula_zi)),
-    data = data, family = brms::zero_inflated_negbinomial(), cores = 4)
+    data = data, family = brms::zero_inflated_negbinomial(),
+    cores = 4, seed = 2021)
 
   fit <- brms::add_criterion(fit, criterion = c("loo", "waic"))
   return(fit)

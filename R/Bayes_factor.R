@@ -14,7 +14,7 @@
 #'
 #' @param data dataframe with the cluster groups and other subjects' information
 #'   ("data_cluster")
-#' @param y character indicanting the dependent variable ("internalizin_sum" or
+#' @param y character indicanting the dependent variable ("internalizing_sum" or
 #'   "externalizing_sum")
 #' @param prior_par character indicating the prior or the fixed effect
 #'
@@ -38,7 +38,7 @@ get_encompassing_model <- function(data, y,  prior_par){
                             as.formula(formula_zi)),
                    data = data, family = brms::zero_inflated_negbinomial(),
                    prior = my_prior, chains = 6, iter = 1e4, cores = 6, warmup = 2000,
-                   save_pars = brms::save_pars(all = TRUE))
+                   save_pars = brms::save_pars(all = TRUE), seed = 2021)
 
   return(fit)
 }

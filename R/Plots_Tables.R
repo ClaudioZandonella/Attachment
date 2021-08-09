@@ -1,92 +1,55 @@
-#=================================#
-#====    Utilities Report     ====#
-#=================================#
+#=============================#
+#====    Plots & Tables   ====#
+#=============================#
 
-#----    load_glob_env    ----
+#----    get_plot_zinb    ----
 
-#' Load Drake in Global Environment
+#' Plot of the ZINB Model
 #'
-#' Load drake object in Global Environment
+#' Plot of the marginal effects of the Zero inflated Negative Binomial model (ZINB)
 #'
-#' @param ... parameters passed to `drake::loadd()` function
+#' @param model the ZINB modle
 #'
-#' @return The cached value of the target
-#'
-#' @examples
-#' load_glob_env(BF_weights_int)
-#' BF_weights_int
-#'
-
-load_glob_env <- function(...){
-  drake::loadd(..., envir = globalenv())
-}
-
-#----    drake_load_all    ----
-
-#' Load All Analyisis Objects
-#'
-#' Load all analysis objects
-#'
-#' @return all cached value of the target
+#' @return a ggplot object
 #'
 #' @examples
-#' drake_load_all()
+#' drake::loadd(fit_int_zinb)
+#' get_plot_zinb(model = fit_int_zinb)
 #'
 
-drake_load_all <- function(){
-  # Data
-  load_glob_env(data_raw)
-  load_glob_env(data_munged)
-  load_glob_env(data_cluster)
+get_plot_zinb <- function(model){
 
-  # Cluster
-  load_glob_env(cluster_mother_fit)
-  load_glob_env(cluster_father_fit)
+  marginal_effects_gender <- emmeans::emmeans(model, specs = ~ gender)
 
-  load_glob_env(mclust_mother)
-  load_glob_env(mclust_father)
+  p_gender <- ggplot(as.data.frame(marginal_effects_gender),
+         aes(x = gender, y = emmean, colour = gender)) +
+    geom_point(show.legend = FALSE) +
+    geom_errorbar(aes(ymin=asymp.LCL, ymax = asymp.UCL, colour = gender),
+                  size = 1, width = .2, show.legend = FALSE) +
+    labs(x = "Gender",
+         y = "Problems") +
+    coord_cartesian(ylim = c(0, 8)) +
+    theme_bw()
 
-  #----    Internalizing    ----
+  marginal_effects_att <- emmeans::emmeans(model, specs = ~ mother*father)
 
-  # ZINB anlaysis
-  load_glob_env(fit_int_nb)
+  p_attachemnt <- ggplot(as.data.frame(marginal_effects_att),
+         aes(x = mother, y = emmean, colour = father, group = father)) +
+    geom_point(show.legend = FALSE) +
+    geom_line(show.legend = FALSE) +
+    geom_errorbar(aes(ymin=asymp.LCL, ymax = asymp.UCL, colour = father),
+                  width = .5, show.legend = FALSE) +
+    facet_grid(.~father) +
+    labs(x = "Mother Attachment",
+         y = "Problems") +
+    coord_cartesian(ylim = c(0, 8)) +
+    theme_bw()
 
-  # ANOVA
-  load_glob_env(fit_int_zinb)
-  load_glob_env(plot_zinb_int)
-
-  # brms models
-  load_glob_env(brm_int_mother)
-  load_glob_env(waic_weights_int)
-  load_glob_env(loo_weights_int)
-
-  # BF encompassing
-  load_glob_env(encompassing_model_int)
-  load_glob_env(table_BF_int)
-  load_glob_env(BF_weights_int)
-  load_glob_env(summary_sensitivity_int)
-
-  #----    Externalizing    ----
-
-  # ZINB anlaysis
-  load_glob_env(fit_ext_nb)
-
-  # ANOVA
-  load_glob_env(fit_ext_zinb)
-  load_glob_env(plot_zinb_ext)
-
-  # brms models
-  load_glob_env(brm_ext_mother)
-  load_glob_env(waic_weights_ext)
-  load_glob_env(loo_weights_ext)
-
-  # BF encompassing
-  load_glob_env(encompassing_model_ext)
-  load_glob_env(table_BF_ext)
-  load_glob_env(BF_weights_ext)
-  load_glob_env(summary_sensitivity_ext)
-
+  gridExtra::grid.arrange(p_gender, p_attachemnt, layout_matrix = matrix(c(1,2,2,2,2), nrow = 1))
 }
+
+
+#----
 
 #----    table_grade  ----
 
@@ -156,4 +119,5 @@ sensitivity_plot <- function(){
     xlim(-3, 3)
 }
 
-#=============
+#----
+

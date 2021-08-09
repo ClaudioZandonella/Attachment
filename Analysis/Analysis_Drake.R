@@ -26,7 +26,8 @@ drake::vis_drake_graph(config, font_size = 16, targets_only = FALSE)
 # Run the analysis
 drake::make(prework = "devtools::load_all()",
             envir = env,
-            plan = plan)
+            plan = plan,
+            seed = 2021)
 
 # Plot the analysis plan
 drake::vis_drake_graph(config, font_size = 16, targets_only = FALSE)

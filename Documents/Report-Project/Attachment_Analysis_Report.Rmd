@@ -28,6 +28,8 @@ library(mclust)
 
 devtools::load_all("../../")
 
+source("../Utils_report.R")
+
 path_drake <- "../../.drake"
 
 #----    load drake    ----
