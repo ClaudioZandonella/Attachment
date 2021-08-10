@@ -6,27 +6,27 @@
 %%
 %% apa7.dtx  (with options: `class')
 %% ----------------------------------------------------------------------
-%% 
+%%
 %% apa7 - A LaTeX class for formatting documents in compliance with the
 %% American Psychological Association's Publication Manual, 7th edition
-%% 
+%%
 %% Copyright (C) 2019 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
-%% 
+%%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License (LPPL), either
 %% version 1.3c of this license or (at your option) any later
 %% version.  The latest version of this license is in the file:
-%% 
+%%
 %% http://www.latex-project.org/lppl.txt
-%% 
+%%
 %% Users may freely modify these files without permission, as long as the
 %% copyright line and this statement are maintained intact.
-%% 
+%%
 %% This work is not endorsed by, affiliated with, or probably even known
 %% by, the American Psychological Association.
-%% 
+%%
 %% ----------------------------------------------------------------------
-%% 
+%%
 \ProvidesClass{apa7}[2019/12/30 v1.04 APA formatting (7th edition)]
 \NeedsTeXFormat{LaTeX2e}
 
@@ -997,6 +997,7 @@
 
 \def\@@spacing{1.655}
 
+\newcommand{\@codespacing}{\linespread{1}}
 \newcommand{\@doublespacing}{\linespread{1.655}}
 \@doublespacing
 
@@ -1840,25 +1841,25 @@
       command ignored}}}
 
 
-%% 
+%%
 %% Copyright (C) 2019 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
-%% 
+%%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License (LPPL), either
 %% version 1.3c of this license or (at your option) any later
 %% version.  The latest version of this license is in the file:
-%% 
+%%
 %% http://www.latex-project.org/lppl.txt
-%% 
+%%
 %% Users may freely modify these files without permission, as long as the
 %% copyright line and this statement are maintained intact.
-%% 
+%%
 %% This work is not endorsed by, affiliated with, or probably even known
 %% by, the American Psychological Association.
-%% 
+%%
 %% This work is "maintained" (as per LPPL maintenance status) by
 %% Daniel A. Weiss.
-%% 
+%%
 %% This work consists of the file  apa7.dtx
 %% and the derived files           apa7.ins,
 %%                                 apa7.cls,
@@ -1878,6 +1879,6 @@
 %%                                 shortsample.tex,
 %%                                 longsample.tex, and
 %%                                 bibliography.bib.
-%% 
+%%
 %%
 %% End of file `apa7.cls'.

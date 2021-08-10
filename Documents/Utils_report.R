@@ -88,5 +88,15 @@ drake_load_all <- function(){
 
 }
 
+#----    get_sigma_example    ----
 
+get_sigma_example <- function(){
+  R <- matrix(c( 0, 0, 1,-1, 0,
+                 0, 0, 0, 1,-1,
+                -1, 1, 0, 0, 0,
+                 0,-1, 1, 0, 0), ncol = 5, byrow = TRUE)
+  sigma_theta <- diag(5)*4
+
+  R%*%sigma_theta%*%t(R)
+}
 #=============
