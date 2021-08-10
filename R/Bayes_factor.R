@@ -357,11 +357,13 @@ get_posterior_info <- function(encompassing_model){
 
 #' Linear Transformation of the Parameters
 #'
-#' Compute mean and covariance of the linear transformed parameters
+#' Compute mean and covariance of the linear transformed parameters. If prior
+#' the vector mean is set to zero.
 #'
 #' @param param_info result of `get_posterior_info()` or `get_prior_info()`
 #'   function
 #' @param hyp matrix of the linear transformation
+#' @param prior logical value indicating whether is prior.
 #'
 #' @return list with the transformed mean and covariance matrix
 #'
@@ -371,8 +373,13 @@ get_posterior_info <- function(encompassing_model){
 #' hyp <- get_hypothesis_matrix("hierarchical", encompassing_model_int)$hyp[1:15, ]
 #' transform_param(param_info, hyp)
 
-transform_param <- function(param_info, hyp){
-  param_mean <- hyp %*% param_info$mean
+transform_param <- function(param_info, hyp, prior = FALSE){
+
+  if(isTRUE(prior)){
+    param_mean <- matrix(rep(0, length(param_info$mean)), ncol = 1)
+  } else {
+    param_mean <- hyp %*% param_info$mean
+  }
   param_cov <- hyp %*% param_info$cov %*% t(hyp)
 
   return(list(mean = param_mean,
@@ -433,7 +440,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       #----    Monotropy Hypothesis    ----
 
       # Linear transformation of the parameters
-      prior <- transform_param(prior, hyp_matrix$hyp)
+      prior <- transform_param(prior, hyp_matrix$hyp, prior = TRUE)
       posterior <- transform_param(posterior, hyp_matrix$hyp)
 
       # prior density equality
@@ -465,7 +472,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
                                                   independent_rows = independent_rows)
 
       # Linear transformation of the parameters
-      prior <- transform_param(prior, hyp_matrix$hyp[1:15, ])
+      prior <- transform_param(prior, hyp_matrix$hyp[1:15, ], prior = TRUE)
       posterior <- transform_param(posterior, hyp_matrix$hyp[1:15, ])
 
       # prior density equality
@@ -502,7 +509,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       #----    Independent Hypothesis    ----
 
       # Linear transformation of the parameters
-      prior <- transform_param(prior, hyp_matrix$hyp)
+      prior <- transform_param(prior, hyp_matrix$hyp, prior = TRUE)
       posterior <- transform_param(posterior, hyp_matrix$hyp)
 
       # prior density equality
@@ -523,7 +530,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       #----    Interaction Hypothesis    ----
 
       # Linear transformation of the parameters
-      prior <- transform_param(prior, hyp_matrix$hyp)
+      prior <- transform_param(prior, hyp_matrix$hyp, prior = TRUE)
       posterior <- transform_param(posterior, hyp_matrix$hyp)
 
       # prior density equality
