@@ -21,6 +21,8 @@
 *-tikzDictionary
 
 Documents/Paper/figure/
+Documents/Paper/cache/
+
 
 # paper output
 paper.tex

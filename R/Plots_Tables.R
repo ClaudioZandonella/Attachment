@@ -66,7 +66,49 @@ plot_prior_adj <- function(k = 1){
           axis.line.y.left = element_blank())
 }
 
-#----
+#----    plot_bounded_par    ----
+
+plot_bounded_par <- function(){
+
+  ggplot(data.frame(x = c(-3,3))) +
+    geom_area(stat = "function", fun = dnorm, col = "gray40", fill = "#F98400",
+              args = list(sd = .75), size = 1, alpha = .7) +
+    geom_area(stat = "function", fun = dunif, args = list(min = -1), col = "gray40", fill = "#5BBCD6", size = 1, alpha = .7) +
+    geom_segment(x = 0, xend = 0 , y = 0, yend = .55, size = 1.5, col = "gray20") +
+    xlim(-2.2, 2.2) +
+    labs(x = "$\\rho_i$") +
+    theme_classic() +
+    theme(axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.line.y.left = element_blank())
+}
+
+#----    perc_females    ----
+
+perc_females <- function(perc = TRUE, digits = 2){
+  freq <- table(data_cluster$gender)
+
+  if(isTRUE(perc)){
+    res <- round(freq[1]*100/nrow(data_cluster), digits = digits)
+  } else {
+    res <- freq[1]
+  }
+  return(res)
+}
+
+#----    perc_females    ----
+
+perc_females <- function(perc = TRUE, digits = 2){
+  freq <- table(data_cluster$gender)
+
+  if(isTRUE(perc)){
+    res <- round(freq[1]*100/nrow(data_cluster), digits = digits)
+  } else {
+    res <- freq[1]
+  }
+  return(res)
+}
 
 #----    table_grade  ----
 

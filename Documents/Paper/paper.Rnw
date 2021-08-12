@@ -60,6 +60,7 @@
 \newcommand{\codespacing}{\linespread{1}}
 \newcommand{\doublespacing}{\linespread{1.655}}
 
+\setcounter{secnumdepth}{4} % Show section number
 %----
 
 \title{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
@@ -124,6 +125,10 @@ drake_load_all()
 \begin{document}
 \maketitle
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Introduction}
 
 One of the principal aspects of empirical research is the evaluation of research or theoretical hypothesis. When conducting a study, researcher usually have expectations based on hypotheses or theoretical perspectives they want to evaluate according to observed data.
@@ -154,11 +159,17 @@ The aim of this paper is to offer a clear e detailed description of the entire p
 
 [Code provided in the SM]
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Bays Factor for Informative Hypothesis Testing}
 
 The evaluation of informative hypothesis with equality and/or inequality constraints involves several steps and elements. In this section, first we describe how to formulate informative hypothesis. Subsequently, we introduce the Bayes Factor considering the encompassing prior approach based on the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018}.
 
 [In order to facilitate the understanding, a toy example is considered.]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Formulation of Informative Hypothesis}\label{sec:informative-hypothesis}
 
@@ -194,6 +205,8 @@ Note how each row of $R_E$ and $R_I$ matrices expresses an equality or an inequa
 
 Now that we have understood how to define an informative hypothesis with equality and inequality constraints introducing an appropriate notation, lets see how to evaluate an informative hypothesis using the Bayes Factor.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Bayes Factor}
 
 The Bayes Factor of hypothesis $H_1$ against a competing hypothesis $H_2$ is defined as the ration between the marginal likelihoods of the two hypothesis:
@@ -210,6 +223,7 @@ where $Pr(H_i)$ is th prior probability of $H_i$ and $Pr(H_i|Y)$ is the posterio
 
 Note that to compute the marginal likelihood $Pr(Y|H_i)$ of an hypothesis $H_i$ it is necessary to integrate the product between the likelihood and the prior. These integrals, however, are usually difficult to compute [in particular in the case of hypothesis with order constraints]. In the case of hypothesis with equality and inequality constraints, however, it is possible to adopt the encompassing prior approach.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Encompassing Prior Approach}
 
 The basic idea of the encompassing prior approach is to consider an informative hypothesis as a subset of the parameter space of an unconstrained model. Thus, to evaluate the plausibility of an hypothesis we can consider the proportion of parameters of the unconstrained model that satisfy the constraints. More specifically, given an informative hypothesis $H_i$ and an unconstrained model $H_u$ (or \textit{encompassing model}) that does not contains any constraints on the parameters, if the prior under $H_i$ is defined as a truncation of the proper prior under $H_u$ (\textit{encompassing prior}) according to the constraints, then the Bayes Factor between $H_i$ and $H_u$ can be written as
@@ -233,6 +247,7 @@ The proof of the formulation of the Bayes Factor following the encompassing prio
 
 To compute the Bayes Factor following the encompassing prior approach, only the prior and the posterior of the unconstrained model are required. In order to do that, we first need to define the encompassing prior for the unconstrained model.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Definition of Encompassing Prior}
 
 Prior specification is an important element as the resulting value of the Bayes Factor is affected by the prior choice. This aspects is particularly relevant in the case of equality constraints \parencite{lindleyStatisticalParadox1957, bartlettCommentLindleyStatistical1957}, whereas inequality constraints are not affected as long as the prior is symmetric and centered to the focal point of interest (this aspect will be further discussed in the next section).
@@ -262,6 +277,7 @@ Going back to our psychological treatment example, we could use independent norm
 
 At this point, several authors underline the importance of centering the prior distribution on the constraints points of interest. Let's further discuss this issue in the next section.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Adjusting Prior Mean}
 
 When evaluating informative hypothesis with equality and inequality constraints using the Bayes Factor, the priors have to be centered on the focal points of interests  \parencite{zellnerPosteriorOddsRatios1980, jeffreysTheoryProbability1961, mulderPriorAdjustedDefault2014}. In the case of equality constraints, centering the prior allows to consider values close to the point of interest more likely a priori than values far away. This should be in line with researchers' expectation, otherwise one could question why testing that value.
@@ -285,11 +301,11 @@ H_i:\ \ \beta_E = 0 \ ~ \ \& \ ~ \ \beta_I > 0.
 \end{equation}
 
 This parameter transformation has the advantage of simplifying the hypothesis expression without changing the original expectations. In fact, for example, evaluating $\theta_i > \theta_j$ is equivalent to evaluate $\beta_i = \theta_i - \theta_j > 0$. Thus, given the original prior $\pi(\bm{\theta})\sim\mathcal{N}(\mu_{\theta}, \Sigma_{\theta})$, the prior of the new parameter vector $\bm{\beta}$ is given by
-\begin{equation}
+\begin{equation}\label{eq:normal-transf}
 \pi(\bm{\beta}) \sim \mathcal{N}(\mu_{\beta}, \Sigma_{\beta}) = \mathcal{N}(R\bm{\theta}-r, R\Sigma_{\theta}R^T).
 \end{equation}
 
-Note that this operation is nothing more than applying a linear transformation to the original multivariate normal distribution.\footnote{Given a multivariate normal distribution $Y\sim\mathcal{N}(\mu, \Sigma)$, the result of a linear transformation $AY + b$ is still a multivariate normal distribution with vector mean $\mu_{t}=AY+b$ and covariance matrix $\Sigma_{t} = A\Sigma A^T$.} In order to do that, however, it is necessary for the matrix $R$ to be \textit{full-row-rank} (i.e., all rows are linearly independent). If this is not the case, the obtained matrix $\Sigma_{\beta}$ will not be a proper covariance matrix. In Section~TODO we will discuss a solution to overcome this limit.
+Note that this operation is nothing more than applying a linear transformation to the original multivariate normal distribution.\footnote{Given a multivariate normal distribution $Y\sim\mathcal{N}(\mu, \Sigma)$, the result of a linear transformation $AY + b$ is still a multivariate normal distribution with vector mean $\mu_{t}=AY+b$ and covariance matrix $\Sigma_{t} = A\Sigma A^T$.} In order to do that, however, it is necessary for the matrix $R$ to be \textit{full-row-rank} (i.e., all rows are linearly independent). If this is not the case, the obtained matrix $\Sigma_{\beta}$ will not be a proper covariance matrix. In Section~\ref{sec:rank-hypo} we will discuss a solution to overcome this limit.
 
 Now to center the prior to the focal points we can simply set the mean vector to zero. Thus, the adjusted prior of $\bm{\beta}$ is
 \begin{equation}
@@ -312,6 +328,7 @@ Considering the psychological treatment example, the obtained adjusted prior is 
 
 So far we have defined the prior for the parameter vector $\bm{\theta}$ of the encompassing model. Moreover, we have obtained the adjusted prior for the new transformed parameter vector $\bm{\beta}$ that will allow us to properly evaluate the equality and inequality constraints. At this point we need to compute the posterior of the encompassing model parameters.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Posterior Encompassing Model}
 
 Posterior distribution of the encompassing model parameters can be obtained thorough numerical approximation using Markov Chain Monte Carlo (MCMC) sampling algorithms, such as Metropolis–Hastings algorithm \parencite{hastingsMonteCarloSampling1970} or Gibbs sampling \parencite{gemanStochasticRelaxationGibbs1984}. Bayesian statistical inference methods are implemented in all major statistical software. In R statistical software \parencite{rcoreteamLanguageEnvironmentStatistical2021}, for example, the popular \texttt{brms} package \parencite{burknerBrmsPackageBayesian2017, burknerAdvancedBayesianMultilevel2018a}, which is based on STAN \parencite{standevelopmentteamRStanInterfaceStan2020}, allows to easily conduct Bayesian inference.
@@ -327,13 +344,15 @@ Pr(\bm{\beta}|Y) \sim \mathcal{N}(\hat{\bm{\beta}}, \hat{\Sigma}_{\beta}) = \mat
 
 At this point, we have both the prior and the posterior distributions of the parameters of interests of the encompassing model. Before to proceed, however, let's underline few important aspects.
 
-When defining the prior, we adjusted the prior to center it over the focal point. This change would slightly influence the posterior result as well. However, as underlined by \textcite{guApproximatedAdjustedFractional2018}, small prior changes will result in negligible changes on the posterior for large samples due to large-sample theory. For this reason in their approach, the authors do not adjust the posterior but only the prior. Therefore, when computing the posterior we can simply consider the prior defined at the beginning $\pi(\bm_{\theta})\sim \mathcal{N}(\mu_{\theta}, \Sigma_{\theta})$ without worrying about adjusting it.
+When defining the prior, we adjusted the prior mean centering it over the constraint focal points. This change would slightly influence the posterior result as well. However, as underlined by \textcite{guApproximatedAdjustedFractional2018}, small prior changes will result in negligible changes on the posterior for large samples due to large-sample theory. For this reason in their approach, the authors do not adjust the posterior but only the prior. Therefore, when computing the posterior we can simply consider the prior defined at the beginning $\pi(\bm_{\theta})\sim \mathcal{N}(\mu_{\theta}, \Sigma_{\theta})$ without worrying about adjusting it.
 
 In addition, note that in \textcite{guApproximatedAdjustedFractional2018} approach posterior mean $\hat{\bm{\theta}}$ and posterior covariance $\hat{\Sigma_{\theta}}$ are not computed from the posterior draws but they are obtained using the maximum likelihood estimate and the inverse of the Fisher information matrix, respectively. This has the advantage of being faster (posterior draws are not required) but it may be not possible for some complex model. [TODO add reference? change something, cioè non si rispetta molto l'inferenza bayesiana]
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Computing the Bayes Factor}
 
-In the previous section we compute the adjusted prior and the posterior of the vector of transformed parameters $\bm{\beta}$, respectively
+In the previous section we obtained the adjusted prior and the posterior of the vector of transformed parameters $\bm{\beta}$, respectively
 \begin{equation}
 \pi_{adj}(\bm{\beta}) \sim \mathcal{N}(0, \Sigma_{\beta}) \ \ \text{and} \ \
 Pr(\bm{\beta}|Y) \sim \mathcal{N}(\hat{\bm{\beta}}, \hat{\Sigma}_{\beta}).
@@ -347,6 +366,7 @@ where $\beta_I$ and $\beta_E$ were obtained in Formula~\ref{eq:param-transf} and
 
 Now, thanks to (multivariate) normal distribution approximation, we can easily compute the required conditional probabilities and marginal densities required to calculate the Bayes Factor.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Marginal Density}
 
 Marginal distribution of a subset of variables of a multivariate normal distribution is obtained simply discarding the variables to marginalize out. For example, given the adjusted prior of the psychological treatment example, $\pi_{adj}(\bm{\beta}) \sim \mathcal{N}(\bm{0}, \Sigma_{\beta})$ where
@@ -378,7 +398,7 @@ the marginal distribution of the equality constraints $\bm{\beta}_E$ is
 
 At this point computing the density at $\beta_E = 0$ is elementary. In R, this can be done using the  \texttt{dmvnorm()} function from the \texttt{mvtnorm} package \parencite{genzMvtnormMultivariateNormal2021}. To compute the \textbf{marginal prior density} $\pi_{adj}(\beta_E =0| H_u)$ of the psychological treatment example, we can use the following code:
 \codespacing
-<<marginal-density, echo = TRUE>>=
+<<marginal-density, echo = TRUE, cache=TRUE>>=
 # Prior info
 mu_prior <- c(0, 0, 0, 0)
 Sigma_prior <- matrix(c( 8,-4, 0, 4,
@@ -396,11 +416,12 @@ mvtnorm::dmvnorm(x = c(0, 0),
 
 Analogously, \textbf{marginal posterior density} $\pi_{adj}(\beta_E =0| Y, H_u)$ can be computed considering this time the estimated posterior mean vector $\bm{\hat{\beta}}$ and covariance matrix $\hat{\Sigma}_{\beta}$.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Conditional Probability}
 
-To compute the conditional probability of the inequality constraints given the equality constraints in a multivariate normal distribution, we can use the \texttt{pcmvnorm()} function from the \texttt{condMVNorm} R-package \parencite{varadhanCondMVNormConditionalMultivariate2020}. Considering the psychological treatment example, to compute the \textbf{conditional prior probability} $\pi_{adj}(\beta_I > 0 | \beta_E =0, H_u)$ we can run the following code:
+To compute the conditional probability of the inequality constraints given the equality constraints in a multivariate normal distribution, we can use the \texttt{pcmvnorm()} function from the \texttt{condMVNorm} R-package \parencite{varadhanCondMVNormConditionalMultivariate2020}. Considering the psychological treatment example, to calculate the \textbf{conditional prior probability} $\pi_{adj}(\beta_I > 0 | \beta_E =0, H_u)$ we can run the following code:
 \codespacing
-<<conditional-prob, echo = TRUE>>=
+<<conditional-prob, echo = TRUE, cache=TRUE>>=
 # Conditional prior probability that beta_3 > 0 and beta_4 > 0
 # given beta_1 = 0 and beta_2 = 0
 condMVNorm::pcmvnorm(
@@ -414,6 +435,175 @@ condMVNorm::pcmvnorm(
 
 Analogously, \textbf{conditional posterior probability} $\pi_{adj}(\beta_I > 0 | \beta_E =0, Y, H_u)$ can be computed considering this time the estimated posterior mean vector $\bm{\hat{\beta}}$ and covariance matrix $\hat{\Sigma}_{\beta}$.
 
+At this point we have all the elements required and we can easily compute the Bayes Factor $BF_{iu}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Advanced Elements}
+
+In the previous section we have described in details all the steps and elements required to evaluate informative hypotheses using the Bayes Factor with encompassing prior approach. Before moving to an applied example, however, we consider some more advanced aspects that are important to take into account when applying this method. In particular, we discuss parameters standardization, range constraints, hypothesis matrix rank, comparable hypotheses, and bounded parameter space.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Parameters Standardization}
+When evaluating informative it may be necessary to standardize the parameters of interest. As described by \textcite{guApproximatedAdjustedFractional2018}, parameters have to be standardized when comparing regression coefficient of continuous variables that are measured on different scales. In these cases, in fact, evaluating if $\theta_i>\theta_j$ would be affected by the scale of the two variables. Standardizing the parameters will allow to correctly compare the two parameters. On the contrary, standardizing the parameters is not necessary if they are compared to constants (i.e., $\theta > 3$) or if they represent groups means, such as the case of categorical variables.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Range Constraints}
+It is possible to express range constraints such as $0<\theta_i<1$ in which the parameter is constrained between two values. These constraints can be expressed as the combination of two constraints. For example, the previous hypothesis is equivalent to $\beta_1 = \theta_i>0$ and $\beta_2 = 1 - \theta_i > 0$. However, adjusting the prior mean in the case of range constraints would require to center the prior on the middle of the range space \parencite{mulderBIEMSFortran902012}. Thus, in the previous example we would set $\mu_{\beta_1} = \mu_{\beta_2} = .5$. For a detailed description of prior specification for range constraints consider Appendix A in \textcite{guApproximatedAdjustedFractional2018}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Hypothesis Matrix Rank}\label{sec:rank-hypo}
+In Equation~\ref{eq:normal-transf}, we presented how to obtain the distribution of the transformed parameters $\bm{\beta}$ from the distribution of the original parameters $\bm{\theta}$. This is simply a linear transformation, but, to obtain a proper covariance matrix $\Sigma_{\beta} = R\Sigma_{\theta}R^T$, the hypothesis matrix $R$ has to be \textit{full-row-rank} (i.e., all rows are linearly independent).
+
+To overcome this limit, we can use the same solution adopted by \textcite{mulderBayesFactorsTesting2016, mulderSimpleBayesianTesting2019}. A matrix $R^*$ is defined selecting the maximum number of linearly independent rows of $R$ and it is used to compute the covariance matrix $\Sigma_{\beta} = R^*\Sigma_{\theta}R^{*T}$. This allows us to obtain the distribution of the parameters $\bm{\beta^*}$ that are linearly independent. The remaining constraints can be expressed as linear combinations of the parameters $\bm{\beta^*}$. Finally, to evaluate the probability that all constraints holds we can draw a large sample from the distribution of $\bm{\beta^*}$ and compute the proportion of draws satisfying all the constraints.
+
+Let's see an example to clarify the procedure. Suppose we have the following hypothesis $H_i: 0 = \theta_1 < \{\theta_2, \theta_3\} < \theta_4$. Thus, the corresponding hypothesis matrix is
+\begin{equation}
+\begin{aligned}
+R &= \begin{bmatrix}
+ 1 & 0 & 0 & 0\\
+-1 & 1 & 0 & 0\\
+-1 & 0 & 1 & 0\\
+ 0 &-1 & 0 & 1\\
+ 0 & 0 &-1 & 1\\
+\end{bmatrix} \ ~ \ \text{  with  }
+\end{aligned}
+\qquad
+\begin{aligned}
+\beta_1 &= \theta_1\\
+\beta_2 &= \theta_2 - \theta_1\\
+\beta_3 &= \theta_3 - \theta_1\\
+\beta_4 &= \theta_4 - \theta_2\\
+\beta_5 &= \theta_4 - \theta_3\\
+\end{aligned}
+\end{equation}
+
+Note that only the first four rows ($\beta_1,\beta_2,\beta_3,\beta_4$) are linearly independent. The fifth row, instead, can be obtained as a linear combination: $\beta_5 = \beta_4 - \beta_3 + \beta_2$. A this point, we can define $R^*$ as the first four rows of $R$ and use it to obtain the distribution of $\bm{\beta^*}$ given the original distribution of $\bm{\theta}$. To compute the probability of the inequality constraints, we need to draw a large sample from the multivariate normal distribution conditional to the equality constraints. To do that wee can use the \texttt{rcmvnorm()} function from the R-package \texttt{condMVNorm}.
+\codespacing
+<<example-rank, echo = TRUE, cache=TRUE>>=
+# theta distribution
+theta_mu <- c(0,0,0,0)
+theta_sigma <- diag(4)*2
+
+# Hypothesis matrix
+R <- matrix(c(1, 0, 0, 0,
+             -1, 1, 0, 0,
+             -1, 0, 1, 0,
+              0,-1, 0, 1,
+              0, 0,-1, 1), ncol = 4, byrow = TRUE)
+r <- c(0, 0, 0, 0, 0)
+
+# beta distribution
+beta_mu <- R[1:4,] %*% theta_mu - r[1:4]
+beta_sigma <- R[1:4, ] %*% theta_sigma %*% t(R[1:4, ])
+
+# Obtain draws
+set.seed(2021)
+obs <- condMVNorm::rcmvnorm(
+  1e4, mean = beta_mu, sigma = beta_sigma,
+  dependent.ind = 2:4,        # inequality variables
+  given.ind = 1, X.given = 0) # equality variable and constraint
+
+# Define linearly dependent constraints
+colnames(obs) <- c("beta_2", "beta_3", "beta_4")
+obs <- cbind(obs,
+             "beta_5" = obs[, "beta_4"] - obs[, "beta_3"] + obs[, "beta_2"])
+
+# Evaluate on each draw if all constraints hold
+test <- rowSums(obs > 0) == 4
+
+# Proportion
+mean(test)
+@
+\doublespacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Comparable Hypotheses}
+To compute the Bayes Factor between different informative hypotheses, we can simply consider the ratio of the Bayes Factor of each hypotheses against the encompassing model:
+\begin{equation}
+BF_{ij} = \frac{BF_{iu}}{BF_{ju}}
+\end{equation}
+In order to do that, however, it is necessary for the informative hypotheses considered to be comparable \parencite{guApproximatedAdjustedFractional2018}. That is, the intersection of the constrained region of each hypothesis must be non-empty. Thus, a set of informative hypotheses $\{H_1,\ldots, H_i\}$ is comparable if exist at least one solution to
+\begin{equation}
+\begin{bmatrix}
+R_{1E}\\
+R_{1I}
+\end{bmatrix} \theta = \begin{bmatrix}
+r_{1E}\\
+r_{1I}
+\end{bmatrix}, \ldots,\begin{bmatrix}
+R_{iE}\\
+R_{iI}
+\end{bmatrix} \theta = \begin{bmatrix}
+r_{iE}\\
+r_{iI}
+\end{bmatrix}
+\end{equation}
+This will allow to select a common solution of $\bm{\theta}$  that can be used as the adjusted prior mean of the encompassing model. Note that to solve these equations, also inequality constraints are considered as equality constraints.
+
+For example, $H_1: \theta_1 > \theta_2$ and $H_2: 0 = \theta_1 < \theta_2$ are comparable hypotheses because exists the common solution $\theta_1 = \theta_2 = 0$. On the country, $H_3: \theta_1 < \theta_2 +3 $ and $H_4: \theta_1 = \theta_2$ are not comparable hypotheses because there is no a common solution to $\theta_1 = \theta_2 +3 $ and $\theta_1 = \theta_2$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Bounded Parameter Space}
+
+The described approach using (multivariate) normal approximation can be straightforward applied in the case in which parameters of interest are unbounded. In case of bounded parameters (i.e., variances, correlations, or probabilities), however, appropriate prior distributions are required to take into account the parameters bounded nature.
+
+Note that, if only inequality constraints are considered, the prior distribution is only used to measure the complexity of the inequality constrained hypotheses. In this case, the prior probability that a inequality constraint holds will be insensitive to the exact distributional form as long as the distribution is symmetrical and centered on the focal point. For example, the probability that a correlation coefficient $\rho_i$ is greater than zero is the same if we consider a  uniform distribution between -1 and 1 (taking into account parameter bounded nature) or if we consider a normal distribution centered on zero (without taking into account parameter bounded nature; see Figure~\ref{fig:plot-bounded-par}).
+
+<<plot-bounded-par, fig.cap="The probability that $\\rho_i>0$ is the same under the uniform prior and the normal prior">>=
+plot_bounded_par()
+@
+
+Thus, as suggested by \textcite{guBayesianEvaluationInequality2014}, as long as the complexity of the constrained hypotheses is the same regardless of a (multivariate) normal distribution or an appropriate bonded prior distribution being used, it is still possible to follow the described approach. This is true for hypotheses that belong to an equivalent set \parencite[for an appropriate definition of equivalent set see][]{guBayesianEvaluationInequality2014, hoijtinkInformativeHypothesesTheory2012}.
+
+In the case of equality and inequality constraints, however, normal approximation is possible, based on the same rationale as before, only to compute the conditional prior probability. Instead, to estimate the marginal prior density, alternative solutions have to be adopted using appropriate prior distribution that takes into account the parameters bounded nature. See \textcite{mulderBayesFactorTesting2019} for an example of hypotheses evaluating correlation coefficients in generalized multivariate probit model.
+
+Note that these issues are relevant only when considering the prior distribution. In the case of the posterior distribution, instead, we can safely approximate it to a (multivariate) normal distribution thanks to the large-sample theory. Moreover, prior specification is relevant only for the parameters of interest (i.e., the parameters involved in the constraints) as nuisance parameters are integrated out in the Bayes Factor. Thus, the results will be insensitive to the actual choice of the prior for the nuisance parameters as long as it is vague enough.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Hypotheses Testing in the Attachement Theory}
+
+In this section, we propose a real case study example evaluating different informative hypotheses within the attachment theory. This will allow us to face the common issues found in real research applications. First, we provide required background information regarding the attachment theory and study aims and characteristics. Subsequently, all the steps involved in the evaluation of informative hypotheses using the Bayes Factor with encompassing prior approach are described. Finally, the results are briefly discussed.
+
+All materials, data [?], and analysis code are available at TODO. The analyses report with further details is available online at TODO.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Background Information}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{The Attachamnt Theory}
+
+The attachment theory originates from the pioneering work of \textcite{bowlbyAttachmentLoss1969} and \textcite{ainsworthAttachmentExplorationSeparation1970}. The main tenet of attachment theory is that the relationships with the caregivers that children develop in the early stages of their life (i.e., \textit{attachment bound}) will affect children social and emotional development \parencite{cassidyHandbookAttachmentTheory2016}. The attachment bound concerns particular aspects of a relationship that are related to emotional regulation, proximity and protection. Four main attachment styles have been recognized in the literature according to the different behavioral patterns and internal presentations:
+\begin{itemize}
+  \item{\textbf{Secure Attachment}} - children who are securely attached display optimal emotional regulation and they consider the caregiver as a secure base.
+  \item{\textbf{Anxious Attachment}} - anxious children manifest high level of anxiety in stressful situations and their relationships with the caregivers is ambivalent displaying anger or helplessness.
+  \item{\textbf{Avoidant Attachment}} - avoidant children mask distress in stressful situations displaying little emotions and their relationships with the caregivers is characterized by little involvement.
+  \item{\textbf{Fearful Attachment}} - fearful children lack an adequate emotional regulation in stressful situation displaying disorganized behaviors.
+\end{itemize}
+
+The attachment theory is one of the main and most supported theory in psychology. In the literature, however, there is still an open debate on the relative role of mother and father attachment on children social-emotional development. Four different main theoretical perspectives have been identified \parencite{brethertonFathersAttachmentTheory2010}:
+\begin{itemize}
+  \item{\textbf{Monotropy Theory}} - only the principal attachment figure (usually the mother) has an impact on children development.
+  \item{\textbf{Hierarchy Theory}} - the principal attachment figure (usually the mother) has a greater impact on children development than the subsidiary attachment figure (usually the father).
+  \item{\textbf{Independence Theory}} - all attachment figures are equally important but they they affect differently the children development.
+  \item{\textbf{Integration Theory}} - to understand the impact on children development is necessary to consider attachment relationships taken together.
+\end{itemize}
+Contrasting results have been reported by studies investigating which is the "\textit{correct}" theory. No study, however, have tried to properly evaluate the different theoretical by directly compare the different hypotheses.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Present Study}
+
+The aim of the present study is to directly compare the four different theoretical perspectives regarding the role of father and mother attachment, using the Bayes Factor with the encompassing prior approach.
+
+ ($n =\Sexpr{nrow(data_cluster)}$; \Sexpr{perc_females()}\% Females) Italian children between 8 and 12 years old (\textit{middle childhood}, third to sixth school grade) were included in the analysis,. More information about the sample and the cluster analysis can bee found at TODO
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{important notes}
 
 [definition of prior]
@@ -422,7 +612,7 @@ Note that normal prior distribution can be used only for unbounded parameters. I
 
 note on range constraints
 
-Note that prior specification is relevant only for the parameters of interest (i.e., the parameters involved in the constraints) as nuisance parameters are automatically integrated out in the Bayes Factor. insensitive as long as they are vague enough
+
 
 note on standardize parameters
 
