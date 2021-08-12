@@ -37,9 +37,9 @@ get_analysis_plan <- function(){
     mclust_father = mclust_BIC(data = data_munged,
                                parent = "father"),
 
-    #=============================#
-    #====    Internalizing    ====#
-    #=============================#
+    #=============================
+    #====    Internalizing    ====
+    #=============================
 
     #----    ZINB analysis    ----
     fit_int_nb = MASS::glm.nb(internalizing_sum ~ gender + mother * father,
@@ -90,16 +90,15 @@ get_analysis_plan <- function(){
     # BF hypothesis
     BF_null_int = get_BF(hypothesis = "null", encompassing_model_int),
     BF_monotropy_int = get_BF(hypothesis = "monotropy", encompassing_model_int),
-    BF_hierarchical_int = get_BF(hypothesis = "hierarchical", encompassing_model_int),
-    BF_independent_int = get_BF(hypothesis = "independent", encompassing_model_int),
-    BF_interaction_int = get_BF(hypothesis = "interaction", encompassing_model_int),
+    BF_hierarchy_int = get_BF(hypothesis = "hierarchy", encompassing_model_int),
+    BF_independence_int = get_BF(hypothesis = "independence", encompassing_model_int),
+    BF_integration_int = get_BF(hypothesis = "integration", encompassing_model_int),
 
-    table_BF_int = get_table_BF(BF_null_int, BF_monotropy_int, BF_hierarchical_int,
-                                BF_independent_int, BF_interaction_int),
+    table_BF_int = get_table_BF(BF_null_int, BF_monotropy_int, BF_hierarchy_int,
+                                BF_independence_int, BF_integration_int),
 
-    BF_weights_int = get_BF_weights(BF_null_int, BF_monotropy_int, BF_hierarchical_int,
-                                    BF_independent_int, BF_interaction_int,
-                                    encompassing_model = encompassing_model_int),
+    BF_weights_int = get_BF_weights(BF_null_int, BF_monotropy_int, BF_hierarchy_int,
+                                    BF_independence_int, BF_integration_int),
 
     # Prior Sensitivity
     encompassing_model_ps_int = drake::target(
@@ -122,9 +121,9 @@ get_analysis_plan <- function(){
                                                       prior_sensitivity_int_05,
                                                       prior_sensitivity_int_10),
 
-    #=============================#
-    #====    Externalizing    ====#
-    #=============================#
+    #=============================
+    #----    Externalizing    ----
+    #=============================
 
     #----    ZINB analysis    ----
     fit_ext_nb = MASS::glm.nb(externalizing_sum ~ gender + mother * father,
@@ -175,15 +174,14 @@ get_analysis_plan <- function(){
     # BF hypothesis
     BF_null_ext = get_BF(hypothesis = "null", encompassing_model_ext),
     BF_monotropy_ext = get_BF(hypothesis = "monotropy", encompassing_model_ext),
-    BF_hierarchical_ext = get_BF(hypothesis = "hierarchical", encompassing_model_ext),
-    BF_independent_ext = get_BF(hypothesis = "independent", encompassing_model_ext),
-    BF_interaction_ext = get_BF(hypothesis = "interaction", encompassing_model_ext),
+    BF_hierarchy_ext = get_BF(hypothesis = "hierarchy", encompassing_model_ext),
+    BF_independence_ext = get_BF(hypothesis = "independence", encompassing_model_ext),
+    BF_integration_ext = get_BF(hypothesis = "integration", encompassing_model_ext),
 
-    table_BF_ext = get_table_BF(BF_null_ext, BF_monotropy_ext, BF_hierarchical_ext,
-                                BF_independent_ext, BF_interaction_ext),
-    BF_weights_ext = get_BF_weights(BF_null_ext, BF_monotropy_ext, BF_hierarchical_ext,
-                                    BF_independent_ext, BF_interaction_ext,
-                                    encompassing_model = encompassing_model_ext),
+    table_BF_ext = get_table_BF(BF_null_ext, BF_monotropy_ext, BF_hierarchy_ext,
+                                BF_independence_ext, BF_integration_ext),
+    BF_weights_ext = get_BF_weights(BF_null_ext, BF_monotropy_ext, BF_hierarchy_ext,
+                                    BF_independence_ext, BF_integration_ext),
 
     # Prior Sensitivity
     encompassing_model_ps_ext = drake::target(

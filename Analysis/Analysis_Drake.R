@@ -109,9 +109,9 @@ drake::loadd(encompassing_model_int)
 
 drake::loadd(BF_null_int)
 drake::loadd(BF_monotropy_int)
-drake::loadd(BF_hierarchical_int)
-drake::loadd(BF_independent_int)
-drake::loadd(BF_interaction_int)
+drake::loadd(BF_hierarchy_int)
+drake::loadd(BF_independence_int)
+drake::loadd(BF_integration_int)
 
 drake::loadd(table_BF_int)
 drake::loadd(BF_weights_int)

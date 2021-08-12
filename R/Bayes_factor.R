@@ -100,7 +100,7 @@ get_prior_sd <- function(encompassing_model){
 
 #' Get Model Matrix
 #'
-#' Get the model matrix considering mother and father attachmnt in interaction
+#' Get the model matrix considering mother and father attachment in interaction
 #'
 #' @return a matrix
 #'
@@ -131,7 +131,7 @@ get_model_matrix <- function(){
 #' matrix given by the union of the previous two.
 #'
 #' @param hypothesis a character indicating the hypothesis ("null", "monotropy",
-#'   "hierarchical", "independent", "iteraction")
+#'   "hierarchy", "independence", "integration")
 #' @param encompassing_model a `brms` fit object of the encompassing model
 #'
 #' @return a list with the following matrixes:
@@ -144,8 +144,8 @@ get_model_matrix <- function(){
 #' get_hypothesis_matrix(hypothesis = "null", encompassing_model = encompassing_model_int)
 #'
 
-get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchical",
-                                                 "independent", "interaction"),
+get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchy",
+                                                 "independence", "integration"),
                                   encompassing_model){
   hypothesis <- match.arg(hypothesis)
 
@@ -175,8 +175,8 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchi
     ineq_matrix <- rbind(mm["M_Anx_F_Sec", ],             # M_Anxious > 0
                          c(0, -1, 1, rep(0, n_pars - 3))) # M_Fearful - M_Avoidant > 0
 
-  } else if(hypothesis == "hierarchical"){
-    #----    Hierarchical Hypothesis    ----
+  } else if(hypothesis == "hierarchy"){
+    #----    Hierarchy Hypothesis    ----
 
     # equality constraints
     eq_matrix <- rbind(mm["M_Anx_F_Sec", ] - mm["M_Av_F_Sec", ], # M_Anxious - M_Avoidant = 0
@@ -192,8 +192,8 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchi
                          mm["M_Av_F_Sec", ] - mm["M_Sec_F_Av", ],     # M_Avoidant > F_Avoidant
                          mm["M_Fear_F_Sec", ] - mm["M_Sec_F_Fear", ]) # M_Fearful > F_Fearful
 
-  } else if(hypothesis == "independent"){
-    #----    Independent Hypothesis    ----
+  } else if(hypothesis == "independence"){
+    #----    Independence Hypothesis    ----
 
     # equality constraints
     eq_matrix <- rbind(mm["M_Anx_F_Sec", ] - mm["M_Av_F_Sec", ],  # M_Anxious - M_Avoidant = 0
@@ -207,7 +207,7 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchi
                          mm["M_Sec_F_Fear", ] - mm["M_Sec_F_Av", ]) # F_Fearful - F_Avoidant > 0
 
   } else {
-    #----    Interaction Hypothesis    ----
+    #----    Integration Hypothesis    ----
 
     # equality constraints
     eq_matrix <- rbind(mm["M_Anx_F_Sec", ] - mm["M_Av_F_Sec", ],  # M_anx - M_av = 0
@@ -314,7 +314,7 @@ compute_cond_prob <- function(mean, sigma, n_eq, n_ineq){
 #'
 #' @examples
 #' drake::loadd(encompassing_model_int)
-#' hyp <- get_hypothesis_matrix(hypothesis = "hierarchical", encompassing_model_int)$hyp
+#' hyp <- get_hypothesis_matrix(hypothesis = "hierarchy", encompassing_model_int)$hyp
 #' get_prior_info(encompassing_model = encompassing_model_int, hyp = hyp)
 #'
 
@@ -370,7 +370,7 @@ get_posterior_info <- function(encompassing_model){
 #' @examples
 #' drake::loadd(encompassing_model_int)
 #' param_info <- get_posterior_info(encompassing_model_int)
-#' hyp <- get_hypothesis_matrix("hierarchical", encompassing_model_int)$hyp[1:15, ]
+#' hyp <- get_hypothesis_matrix("hierarchy", encompassing_model_int)$hyp[1:15, ]
 #' transform_param(param_info, hyp)
 
 transform_param <- function(param_info, hyp, prior = FALSE){
@@ -393,7 +393,7 @@ transform_param <- function(param_info, hyp, prior = FALSE){
 #' Given the hypothesis and the encompassing model, compute the Bayes Factor
 #'
 #' @param hypothesis a character indicating the hypothesis ("null", "monotropy",
-#'   "hierarchical", "independent", "iteraction")
+#'   "hierarchy", "independence", "iteraction")
 #' @param encompassing_model a `brms` fit object of the encompassing model
 #'
 #' @return numeric value
@@ -403,8 +403,8 @@ transform_param <- function(param_info, hyp, prior = FALSE){
 #' get_BF(hypothesis = "monotropy", encompassing_model = encompassing_model_int)
 #'
 
-get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
-                                  "independent", "interaction"),
+get_BF <- function(hypothesis = c("null", "monotropy", "hierarchy",
+                                  "independence", "integration"),
                    encompassing_model){
   hypothesis <- match.arg(hypothesis)
 
@@ -457,12 +457,12 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       post_cond_prob <- compute_cond_prob(posterior$mean, posterior$cov,
                                           n_eq = n_eq, n_ineq = n_ineq)
 
-    } else if(hypothesis == "hierarchical"){
-      #----    Hierarchical Hypothesis    ----
+    } else if(hypothesis == "hierarchy"){
+      #----    Hierarchy Hypothesis    ----
 
-      # In the Hierarchical hypothesis the constraints at line 1 to 15 are
-      # linearly independent. The last three inequality constraints are
-      # not linearly independent:
+      # In the Hierarchy hypothesis the constraints at line 1 to 15 are
+      # linearly independence. The last three inequality constraints are
+      # not linearly independence:
       # beta_16 = beta_12 - beta_14
       # beta_17 = - beta_1 + beta_2 + beta_12 - beta_14 = - beta_1 + beta_2 + beta_16
       # beta_18 = - beta_1 + beta_2 + beta_12 + beta_13 - beta_14 - beta_15 = beta_17 + beta_13 - beta_15
@@ -505,8 +505,8 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       test <- composition_betas[c(12:16, 18), paste0("beta_",12:15)] %*% t(obs)
       post_cond_prob <- mean(colSums(test >= 0) == nrow(test))
 
-    } else if(hypothesis == "independent"){
-      #----    Independent Hypothesis    ----
+    } else if(hypothesis == "independence"){
+      #----    Independence Hypothesis    ----
 
       # Linear transformation of the parameters
       prior <- transform_param(prior, hyp_matrix$hyp, prior = TRUE)
@@ -526,8 +526,8 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
       post_cond_prob <- compute_cond_prob(posterior$mean, posterior$cov,
                                           n_eq = n_eq, n_ineq = n_ineq)
 
-    } else if(hypothesis == "interaction"){
-      #----    Interaction Hypothesis    ----
+    } else if(hypothesis == "integration"){
+      #----    Integration Hypothesis    ----
 
       # Linear transformation of the parameters
       prior <- transform_param(prior, hyp_matrix$hyp, prior = TRUE)
@@ -570,7 +570,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchical",
 #' @examples
 #' drake::loadd(encompassing_model_int)
 #' independent_rows <- c(1, 2, 3, 4, 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37)
-#' hyp <- get_hypothesis_matrix(hypothesis = "independent", encompassing_model_int)$hyp
+#' hyp <- get_hypothesis_matrix(hypothesis = "independence", encompassing_model_int)$hyp
 #' find_transform_parameters(hyp = hyp, independent_rows)
 #'
 
@@ -639,7 +639,7 @@ find_transform_parameters <- function(hyp, independent_rows){
 #' @examples
 #' drake::loadd(encompassing_model_int)
 #' independent_rows <- c(1, 2, 3, 4, 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37)
-#' hyp <- get_hypothesis_matrix(hypothesis = "interaction", encompassing_model_int)$hyp
+#' hyp <- get_hypothesis_matrix(hypothesis = "integration", encompassing_model_int)$hyp
 #' find_composition_betas(hyp = hyp, independent_rows)
 #'
 
@@ -679,11 +679,11 @@ find_composition_betas <- function(hyp, independent_rows){
 #'
 #' @examples
 #' drake::loadd(c(BF_null_int, BF_monotropy_int,
-#'        BF_hierarchical_int, BF_independent_int))
+#'        BF_hierarchy_int, BF_independence_int))
 #' get_table_BF(BF_null_int,
 #'              BF_monotropy_int,
-#'              BF_hierarchical_int,
-#'              BF_independent_int)
+#'              BF_hierarchy_int,
+#'              BF_independence_int)
 #'
 
 get_table_BF <- function(...){
@@ -710,6 +710,46 @@ get_table_BF <- function(...){
 
 #' Get BF Weights
 #'
+#' Given a set of Bayes Factor, compute the relative weights
+#'
+#' @param ... BF to compare
+#'
+#' @return a dataframe with columns:
+#'  - `names` - name of the model
+#'  - `bf` - bayes factor value
+#'  - `weights` - relative weights
+#'
+#' @examples
+#' drake::loadd(c(BF_null_int, BF_monotropy_int,
+#'        BF_hierarchy_int, BF_independence_int, BF_integration_int))
+#' get_BF_weights(BF_null_int,
+#'                BF_monotropy_int,
+#'                BF_hierarchy_int,
+#'                BF_independence_int,
+#'                BF_integration_int,
+#'                encompassing_model = encompassing_model_int)
+#'
+
+get_BF_weights <- function(...){
+
+  names_bf <- as.list(match.call(), )[-1] %>%
+    as.character(.)
+
+  list_bf <- list(...)
+
+  bf <- lapply(list_bf[], FUN = function(x){x[1]}) %>%
+    unlist()
+
+  res <- data.frame(names = names_bf,
+                    bf = bf) %>%
+    mutate(weights= bf /sum(bf))
+
+  return(res)
+}
+#----    get_BF_weights_old    ----
+
+#' Get BF Weights OLD
+#'
 #' Given a seet of Bayes Factor, compute the relative weights
 #'
 #' @param ... BF to compare
@@ -726,17 +766,17 @@ get_table_BF <- function(...){
 #'
 #' @examples
 #' drake::loadd(c(BF_null_int, BF_monotropy_int,
-#'        BF_hierarchical_int, BF_independent_int, BF_interaction_int))
+#'        BF_hierarchy_int, BF_independence_int, BF_integration_int))
 #' drake::loadd(encompassing_model_int)
-#' get_BF_weights(BF_null_int,
+#' get_BF_weights_old(BF_null_int,
 #'                BF_monotropy_int,
-#'                BF_hierarchical_int,
-#'                BF_independent_int,
-#'                BF_interaction_int,
+#'                BF_hierarchy_int,
+#'                BF_independence_int,
+#'                BF_integration_int,
 #'                encompassing_model = encompassing_model_int)
 #'
 
-get_BF_weights <- function(..., encompassing_model){
+get_BF_weights_old <- function(..., encompassing_model){
 
   names_bf <- as.list(match.call(), )[-1] %>%
     as.character(.)
@@ -784,15 +824,14 @@ get_prior_sensitivity <- function(encompassing_model){
 
   BF_null <- get_BF(hypothesis = "null",  encompassing_model = encompassing_model)
   BF_monotropy <- get_BF(hypothesis = "monotropy",  encompassing_model = encompassing_model)
-  BF_hierarchical <- get_BF(hypothesis = "hierarchical",  encompassing_model = encompassing_model)
-  BF_independent <- get_BF(hypothesis = "independent",  encompassing_model = encompassing_model)
-  BF_interaction <- get_BF(hypothesis = "interaction",  encompassing_model = encompassing_model)
+  BF_hierarchy <- get_BF(hypothesis = "hierarchy",  encompassing_model = encompassing_model)
+  BF_independence <- get_BF(hypothesis = "independence",  encompassing_model = encompassing_model)
+  BF_integration <- get_BF(hypothesis = "integration",  encompassing_model = encompassing_model)
 
   print("Computing summary BF...")
 
-  res <- get_BF_weights(BF_null, BF_monotropy, BF_hierarchical,
-                        BF_independent, BF_interaction,
-                        encompassing_model = encompassing_model)
+  res <- get_BF_weights(BF_null, BF_monotropy, BF_hierarchy,
+                        BF_independence, BF_integration)
   return(res)
 
 }
