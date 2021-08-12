@@ -597,9 +597,29 @@ Contrasting results have been reported by studies investigating which is the "\t
 
 The aim of the present study is to directly compare the four different theoretical perspectives regarding the role of father and mother attachment, using the Bayes Factor with the encompassing prior approach.
 
- ($n =\Sexpr{nrow(data_cluster)}$; \Sexpr{perc_females()}\% Females) Italian children between 8 and 12 years old (\textit{middle childhood}, third to sixth school grade) were included in the analysis,. More information about the sample and the cluster analysis can bee found at TODO
+In the analysis, $n =\Sexpr{nrow(data_cluster)}$ Italian children (\Sexpr{perc_females()}\% Females) between 8 and 12 years old (\textit{middle childhood}, third to sixth school grade) are included. Attachment towards the mother and towards the father was measured separately using the The brief Experiences in Close Relationships Scale (ECR; [TODO add references]) completed by the children. Subsequently, a cluster analyses were conducted separately for thee mother and the father to identify the 4 attachment styles. The results are reported  in Table~\ref{tab:table-cluster}.
 
+\codespacing
+<<table-cluster, cache=TRUE>>=
+get_table_cluster()
+@
+\doublespacing
 
+Children social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers and separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items. In the analysis, however, only externalizing problems  are considered as teachers are expected to be better at reporting externalizing problems than internalizing problems [TODO spiegare il perchè?]. The distribution of externalizing problems ($M = \Sexpr{round(mean(data_cluster$externalizing_sum), 2)}; SD =  \Sexpr{format(round(sd(data_cluster$externalizing_sum, 2)), nsmall = 2)}$) is presented in Figure~\ref{fig:plo-externalizing-dist}.
+
+<<plot-externalizing-dist, cache=TRUE, fig.cap="Distribution of externalizing problems ($n_{subj} = 847$)">>=
+plot_externalizing_dist()
+@
+
+More information about the sample, descriptive statistics, cluster analysis, and analysis of internalizing problems can be found in the Supplemental Material available online [TODO].
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Evaluting Hypotheses with Bayes Factor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Formalization of Informative Hypotheses}
+
+Each theoretical perspective was formalized into a different informative hypotheses taking into account the it own theoretical tenets, main evidence in the literature, and authors' clinical experience in the field.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -53,8 +53,10 @@ get_plot_zinb <- function(model){
 plot_prior_adj <- function(k = 1){
 
   ggplot(data.frame(x = c(-3,3))) +
-    geom_area(stat = "function", fun = dnorm, col = "gray40", fill = "#F98400", xlim = c(-3, k), size = 1) +
-    geom_area(stat = "function", fun = dnorm, col = "gray40", fill = "#5BBCD6", xlim = c(k, 3), size = 1) +
+    geom_area(stat = "function", fun = dnorm, col = "gray40", fill = "#F98400",
+              xlim = c(-3, k), size = 1, alpha = .8) +
+    geom_area(stat = "function", fun = dnorm, col = "gray40", fill = "#5BBCD6",
+              xlim = c(k, 3), size = 1, alpha = .8) +
     geom_segment(x = k, xend = k , y = 0, yend = .35, size = 1.5, col = "gray20") +
     annotate(geom = "text", x = k, y = .37, label = "\\textit{k}") +
     xlim(-3, 3) +
@@ -97,17 +99,36 @@ perc_females <- function(perc = TRUE, digits = 2){
   return(res)
 }
 
-#----    perc_females    ----
+#----    get_table_cluster    ----
 
-perc_females <- function(perc = TRUE, digits = 2){
-  freq <- table(data_cluster$gender)
+get_table_cluster <- function(perc = TRUE, digits = 2){
 
-  if(isTRUE(perc)){
-    res <- round(freq[1]*100/nrow(data_cluster), digits = digits)
-  } else {
-    res <- freq[1]
-  }
-  return(res)
+  data_cluster %>%
+    select(father, mother) %>%
+    group_by(father, mother) %>%
+    count() %>%
+    pivot_wider(names_from = father, values_from = n) %>%
+    bind_cols(Total = rowSums(.[, 2:5])) %>%
+    ungroup() %>%
+    bind_rows(tibble(mother = "Total",
+                     summarise_at(., vars(Secure:Total), sum))) %>%
+    kable(., booktabs = T, align = c("r", rep("c", 5)),
+          col.names = c("Mother Attachemnt", "Secure", "Anxious", "Avoidant", "Fearful", "Total"),
+          caption = "Attachment styles frequencies ($n_{subj} = 847$)") %>%
+    add_header_above(c(" ", "Father Attachment" = 4, " ")) %>%
+    kable_styling(latex_options = c("hold_position"))
+}
+
+#----    plot_externalizing_dist    ----
+
+plot_externalizing_dist <- function(){
+
+  ggplot(data_cluster) +
+    geom_bar(aes(x = externalizing_sum), fill = "firebrick",
+             col = "gray20", alpha = .8)+
+    labs(x = "Externalizing Problems",
+         y = "Frequency") +
+    theme_classic()
 }
 
 #----    table_grade  ----
