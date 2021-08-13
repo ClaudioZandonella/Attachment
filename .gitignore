@@ -35,8 +35,8 @@ paper.pdf
 # Project folders
 
 # data_raw
-*.rda
-*.rds
+Data/
+Stan/*.rds
 
 # Mac auxiliary files
 .DS_Store

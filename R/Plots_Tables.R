@@ -130,6 +130,115 @@ plot_externalizing_dist <- function(){
          y = "Frequency") +
     theme_classic()
 }
+#----    plot_attachment_marginal    ----
+
+plot_attachment_marginal <- function(mother_score = c(0.05, 0.5, 0.5, 1),
+                                     father_score = c( 0.05, 0.25, 0.25, .5),
+                                     lab_y = "Externalizing Problems"){
+  data_plot <- data.frame(
+    Parent = factor(rep(c("Mother", "Father"), each = 4), levels = c("Mother", "Father")),
+    Attachment = factor(rep(c("Secure", "Anxious", "Avoidant", "Fearful"), times = 2),
+                        levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+    Score = c(mother_score, father_score))
+
+  ggplot(data_plot) +
+    geom_bar(aes(x = Attachment, y = Score, fill = Parent),
+             stat = "identity", show.legend = FALSE, alpha = .8, col = "gray20") +
+    ylim(0, 1) +
+    facet_grid(Parent ~ .) +
+    labs(x = "Attachemnt Style",
+         y = lab_y) +
+    theme_classic() +
+    theme(axis.ticks.y = element_blank(),
+          axis.text.y = element_blank(),
+          panel.border = element_rect(fill = "#FF000000"))
+}
+
+#----    plot_attachment_tile    ----
+
+plot_attachment_tile <- function(problems_score,
+                                 lab_legend = "Externalizing Problems"){
+  data_plot <- expand.grid(
+    Mother = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                    levels = c("Secure", "Anxious", "Avoidant", "Fearful")),
+    Father = factor(c("Secure", "Anxious", "Avoidant", "Fearful"),
+                    levels = c("Secure", "Anxious", "Avoidant", "Fearful")))
+
+  data_plot$Problems <- problems_score
+  range_score <- c(0,max(data_plot$Problems, 1))
+
+
+  ggplot(data_plot) +
+    geom_tile(aes(x = Father, y = Mother, fill = Problems), col = "gray10") +
+    scale_fill_gradient(low = "white", high = "firebrick", limits = range_score,
+                        breaks= range_score, labels = c("Low", "High")) +
+    labs(fill = "Problems",
+         y = "Mother Attachment",
+         x = "Father Attachment")+
+    guides(fill = guide_colourbar(barheight = .75, label = FALSE)) +
+    theme_classic() +
+    theme(plot.margin = margin(t = 30, r = 10, b = 10, l = 10, unit = "pt"),
+          legend.direction = "horizontal",
+          legend.position = c(.5,1.075),
+          legend.background = element_rect(fill = "#FF000000"))
+}
+
+#----    plot_hypothesis    ----
+
+plot_hypothesis <- function(hypothesis = c("null", "monotropy",
+                                           "hierarchy", "independence",
+                                           "integration"),
+                            out_var = "Externalizing Problems"){
+  hypothesis <- match.arg(hypothesis)
+
+  if(hypothesis == "null"){
+    mother_score <- .05
+    father_score <- .05
+  } else if (hypothesis == "monotropy"){
+    mother_score <- c(.05, .5, .5, 1)
+    father_score <- rep(.05, 4)
+  } else if (hypothesis == "hierarchy"){
+    mother_score <- c(.05, .5, .5, 1)
+    father_score <- c(.05, .25, .25, .5)
+  } else if (hypothesis == "independence"){
+    mother_score <- c(.05, .5, .5, 1)
+    father_score <- c(.05, .25, .75, 1)
+  }
+
+
+  if(hypothesis == "integration"){
+    score <- c(.05, .15, .15, NA,
+               .10, .50, .50, .90,
+               .10, .50, .50, .90,
+               NA, .90, .90, 1.0)
+    plot_attachment_tile(problems_score = score,
+                         lab_legend = out_var)
+  } else {
+    plot_1 <- plot_attachment_marginal(mother_score = mother_score,
+                                       father_score = father_score,
+                                       lab_y = out_var)
+
+    score <- rep(mother_score, 4) + rep(father_score, each = 4)
+    plot_2 <- plot_attachment_tile(problems_score = score,
+                                   lab_legend = out_var)
+    gridExtra::grid.arrange(plot_1, plot_2, ncol = 2,
+                            layout_matrix = rbind(c(1,1,1,1,1,2,2,2,2,2,2)))
+  }
+}
+
+#----    perc_rare_condition    ----
+perc_rare_condition <- function(perc = TRUE, digits = 1){
+  test <- with(data_cluster,
+               (mother == "Secure" & father == "Fearful") |
+                 (mother == "Fearful" & father == "Secure"))
+
+  if(isTRUE(perc)){
+    res <- round(mean(test)*100, digits = digits)
+  } else {
+    res <- sum(test)
+  }
+  return(res)
+}
 
 #----    table_grade  ----
 

@@ -60,7 +60,7 @@
 \newcommand{\codespacing}{\linespread{1}}
 \newcommand{\doublespacing}{\linespread{1.655}}
 
-\setcounter{secnumdepth}{4} % Show section number
+\setcounter{secnumdepth}{3} % Show section number
 %----
 
 \title{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
@@ -88,7 +88,7 @@ library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE,
                       # Plot settings
                       dev = "tikz", dev.args=list(pointsize=12),fig.align='center',
-                      fig.height=3, fig.width=5, fig.pos = "h",
+                      fig.height=3, fig.width=5, fig.pos = "!ht",
 
                       # Code output width
                       tidy=TRUE, tidy.opts = list(width.cutoff = 87),
@@ -284,7 +284,7 @@ When evaluating informative hypothesis with equality and inequality constraints 
 
 In the case of inequality constraints, instead, this adjustment is done to guarantee that no constrain is favored a priori. Consider the example represented in Figure~\ref{fig:plot-prior-adj} where the hypothesis $\theta_i > k$ is evaluated against $\theta_i < k$. Remember that, when computing the Bayes Factor, prior probability that the constraint hold is used as a measure of complexity of the hypothesis. Thus, if the prior is not centered on the focal point of interest (i.e., $k$), the less complex hypothesis will be erroneously preferred a priori over the other. Only by centering the prior on the focal point the hypotheses will be equally likely a priori.
 
-<<plot-prior-adj, fig.cap="Example of non centered prior considering the constraints $\\theta_i > k$ vs. $\\theta_i < k$">>=
+<<plot-prior-adj, cache=TRUE, fig.cap="Example of non centered prior considering the constraints $\\theta_i > k$ vs. $\\theta_i < k$">>=
 plot_prior_adj()
 @
 
@@ -444,7 +444,7 @@ At this point we have all the elements required and we can easily compute the Ba
 In the previous section we have described in details all the steps and elements required to evaluate informative hypotheses using the Bayes Factor with encompassing prior approach. Before moving to an applied example, however, we consider some more advanced aspects that are important to take into account when applying this method. In particular, we discuss parameters standardization, range constraints, hypothesis matrix rank, comparable hypotheses, and bounded parameter space.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Parameters Standardization}
+\subsubsection{Parameters Standardization}\label{sec:param-standard}
 When evaluating informative it may be necessary to standardize the parameters of interest. As described by \textcite{guApproximatedAdjustedFractional2018}, parameters have to be standardized when comparing regression coefficient of continuous variables that are measured on different scales. In these cases, in fact, evaluating if $\theta_i>\theta_j$ would be affected by the scale of the two variables. Standardizing the parameters will allow to correctly compare the two parameters. On the contrary, standardizing the parameters is not necessary if they are compared to constants (i.e., $\theta > 3$) or if they represent groups means, such as the case of categorical variables.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -550,7 +550,7 @@ The described approach using (multivariate) normal approximation can be straight
 
 Note that, if only inequality constraints are considered, the prior distribution is only used to measure the complexity of the inequality constrained hypotheses. In this case, the prior probability that a inequality constraint holds will be insensitive to the exact distributional form as long as the distribution is symmetrical and centered on the focal point. For example, the probability that a correlation coefficient $\rho_i$ is greater than zero is the same if we consider a  uniform distribution between -1 and 1 (taking into account parameter bounded nature) or if we consider a normal distribution centered on zero (without taking into account parameter bounded nature; see Figure~\ref{fig:plot-bounded-par}).
 
-<<plot-bounded-par, fig.cap="The probability that $\\rho_i>0$ is the same under the uniform prior and the normal prior">>=
+<<plot-bounded-par, cache=TRUE, fig.cap="The probability that $\\rho_i>0$ is the same under the uniform prior and the normal prior">>=
 plot_bounded_par()
 @
 
@@ -567,7 +567,7 @@ Note that these issues are relevant only when considering the prior distribution
 
 In this section, we propose a real case study example evaluating different informative hypotheses within the attachment theory. This will allow us to face the common issues found in real research applications. First, we provide required background information regarding the attachment theory and study aims and characteristics. Subsequently, all the steps involved in the evaluation of informative hypotheses using the Bayes Factor with encompassing prior approach are described. Finally, the results are briefly discussed.
 
-All materials, data [?], and analysis code are available at TODO. The analyses report with further details is available online at TODO.
+All analyses were conducted using the R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data [?], and analysis code are available at TODO. The analyses report with further details is available online at TODO.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Background Information}
@@ -605,12 +605,10 @@ get_table_cluster()
 @
 \doublespacing
 
-Children social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers and separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items. In the analysis, however, only externalizing problems  are considered as teachers are expected to be better at reporting externalizing problems than internalizing problems [TODO spiegare il perchè?]. The distribution of externalizing problems ($M = \Sexpr{round(mean(data_cluster$externalizing_sum), 2)}; SD =  \Sexpr{format(round(sd(data_cluster$externalizing_sum, 2)), nsmall = 2)}$) is presented in Figure~\ref{fig:plo-externalizing-dist}.
-
+Children social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers and separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items. In the analysis, however, only externalizing problems  are considered as teachers are expected to be better at reporting externalizing problems than internalizing problems [TODO spiegare il perchè?]. The distribution of externalizing problems ($M = \Sexpr{round(mean(data_cluster$externalizing_sum), 2)}; SD =  \Sexpr{format(round(sd(data_cluster$externalizing_sum, 2)), nsmall = 2)}$) is presented in Figure~\ref{fig:plot-externalizing-dist}.
 <<plot-externalizing-dist, cache=TRUE, fig.cap="Distribution of externalizing problems ($n_{subj} = 847$)">>=
 plot_externalizing_dist()
 @
-
 More information about the sample, descriptive statistics, cluster analysis, and analysis of internalizing problems can be found in the Supplemental Material available online [TODO].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -619,22 +617,116 @@ More information about the sample, descriptive statistics, cluster analysis, and
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Formalization of Informative Hypotheses}
 
-Each theoretical perspective was formalized into a different informative hypotheses taking into account the it own theoretical tenets, main evidence in the literature, and authors' clinical experience in the field.
+Each theoretical perspective was formalized into a different informative hypothesis taking into account its own theoretical tenets, main evidences in the literature, and authors' clinical experience in the field.
+
+The following notation is used to formalize the hypothesis. $M$ and $F$ are used to indicate the attachment towards the mother and the father, respectively. The specific attachment style is specified in the subscript where $S$ indicates secure attachment, $Ax$ anxious attachment, $Av$ avoidant attachment, and $F$ fearful attachment. Thus, for example $M_SF_{Ax}$ represents a children with secure attachment towards the mother and anxious attachment towards the father. Moreover, $*$ subscript is used to indicate any attachment style and a set of subscripts is used to indicate "\textit{one among}". For example, $M_SF_{Ax;Av}$ represents a children with secure attachment towards the mother and anxious or avoidant attachment towards the father.
+
+To correctly interpret the following Figures, note that we consider as reference group the children with secure attachment toward both parents ($M_SF_S$) which is always expected to have the lowest level of problems. Thus, the other groups actually indicate the expected difference with respect to the reference group. For example, $M_{Av}F_{Ax}$ indicates how much more problems children in this group are expected to have compared to $M_SF_S$ group.
+
+The actual hypothesis matrix are available at [TODO].
+
+\paragraph{Null Hypothesis} This is a reference hypothesis where mother and father attachment are expected to have no effect. The hypothesis is represented in Figure~\ref{fig:plot-null-hypothesis}
+\begin{equation}
+\begin{gathered}
+M_* = 0\\
+F_* = 0
+\end{gathered}
+\end{equation}
+
+<<plot-null-hypothesis,fig.width=7, fig.high = 4, out.width="100%", cache=TRUE, fig.cap="\textbf{Null Hypothesis.} Expected externalizing problems according to mother and father attachment.">>=
+plot_hypothesis(hypothesis = "null")
+@
+
+\paragraph{Monotropy Hypothesis} Father attachment is expected to have no effect, whereas considering mother attachment we expect the following order: secure children with the lowest level of problems, anxious and avoidant children with similar levels of problems, fearful children with the highest levels of problems. The hypothesis is represented in Figure~\ref{fig:plot-monotropy-hypothesis}
+\begin{equation}
+\begin{gathered}
+M_S < M_{Ax} = M_{Av} < M_F\\
+F_* = 0
+\end{gathered}
+\end{equation}
+
+<<plot-monotropy-hypothesis,fig.width=7, fig.high = 4, out.width="100%", cache=TRUE, fig.cap="\\textbf{Monotropy Hypothesis.} Expected externalizing problems according to mother and father attachment.">>=
+plot_hypothesis(hypothesis = "monotropy")
+@
+
+\paragraph{Hierarchy Hypothesis} Father attachment is expected to have influence in the same way as mother attachment but with a minor role. The hypothesis is represented in Figure~\ref{fig:plot-hierarchy-hypothesis}
+\begin{equation}
+\begin{gathered}
+M_S < M_{Ax} = M_{Av} < M_F\\
+F_S < F_{Ax} = F_{Av} < F_F\\
+F_{Ax}< M_{Ax};\ ~ \ F_{Av}< M_{Av};\ ~ \ F_F< M_F
+\end{gathered}
+\end{equation}
+
+<<plot-hierarchy-hypothesis,fig.width=7, fig.high = 4, out.width="100%", cache=TRUE, fig.cap="\\textbf{Hierarchy Hypothesis.} Expected externalizing problems according to mother and father attachment.">>=
+plot_hypothesis(hypothesis = "hierarchy")
+@
+
+\paragraph{Independence Hypothesis} Mother and father attachment are expected to affect children outcomes differently. In this case, we considered avoidant attachemnt towards the father as a condition of higher risk. The hypothesis is represented in Figure~\ref{fig:plot-independence-hypothesis}
+\begin{equation}
+\begin{gathered}
+M_S < M_{Ax} = M_{Av} < M_F\\
+F_S < F_{Ax} < F_{Av} < F_F\\
+\end{gathered}
+\end{equation}
+
+<<plot-independence-hypothesis,fig.width=7, fig.high = 4, out.width="100%", cache=TRUE, fig.cap="\\textbf{Independence Hypothesis.} Expected externalizing problems according to mother and father attachment.">>=
+plot_hypothesis(hypothesis = "independence")
+@
+
+\paragraph{Integration Hypothesis}  Mother and father attachment are expected to interact. In this case, we consider secure attachment as a protective factor and fearful attachment as a risk condition. We do not specify the conditions $M_SF_F$ and $M_FF_S$ as their frequency is very low (\Sexpr{perc_rare_condition()}\% of the sample). The hypothesis is represented in Figure~\ref{fig:plot-integration-hypothesis}
+\begin{equation}
+\begin{gathered}
+M_SF_S< \{M_SF_{Ax;Av} = M_{Ax;Av}F_S\} < M_{Ax;Av}F_{Ax;Av} <  \{M_FF_{Ax;Av} = M_{Ax;Av}F_F\} <  M_FF_F\\
+\text{with}\\
+M_{Ax}F_{Ax} = M_{Ax}F_{Av} = M_{Av}F_{Ax} = M_{Av}F_{Av}
+\end{gathered}
+\end{equation}
+
+<<plot-integration-hypothesis,fig.width=4, fig.high = 3, cache=TRUE, fig.cap="\\textbf{Integration Hypothesis.} Expected externalizing problems according to mother and father attachment.">>=
+plot_hypothesis(hypothesis = "integration")
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Definition of the Encompassing Model}
+
+A Zero-Inflated Negative Binomial (ZIBM) mixed effect model is defined to take into account the characteristics of the dependent variable and its distribution (see Figure~\ref{fig:plot-externalizing-dist} and see Supplemental Material for more details regarding the analysis of zero inflation [TODO]
+):
+\begin{equation}
+y_{ij} \sim ZINB(p_{ij}, \mu_{ij}, \phi),
+\end{equation}
+where $p_i$ is the probability of an observation $y_{ij}$ being an extra zero (i.e., a zero not coming from the Negative Binomial distribution) and $1-p_i$ indicates the probability of a given observation $y_{ij}$ being gnerated form a Negative Binomial distribution with mean $\mu_{ij}$ and variance $\sigma_{ij}^2 = \mu_{ij} + \frac{\mu_{ij}^2}{\phi}$. Moreover, we define
+\begin{equation}
+\begin{gathered}
+p_{ij} = \text{logit}^{-1}(X_i^T\beta_p+ Z_j^Tu_p),\\
+\mu_{ij} = \text{exp}(X_i^T\beta_{\mu}+ Z_j^Tu_{\mu}).
+\end{gathered}
+\end{equation}
+
+That is, both $\bm{p}$ and $\bm{\mu}$ are modeled separately according to fixed and random effects.
+In particular, we considered the children classroom ID as random effect in both cases to account for teachers' different ability to evaluate children problems. While, regarding fixed effects, only the role of gender for $\bm{p}$ was considered, whereas for $\bm{\mu}$  the interaction between mother and father attachment was included together with gender. In the R formula syntax,
+\codespacing
+<<formula-syntax, eval = FALSE, echo=TRUE>>=
+# Regression on p
+p ~ gender + (1|ID_class)
+
+# Regression on mu
+mu ~ gender + mother * father + (1|ID_class)
+@
+\doublespacing
+
+In order to specifying the priors, it is important to consider contrasts coding and the resulting model parametrization. For mother and father attachment, default treatment contrasts were used \parencite{schadHowCapitalizePriori2019} considering secure attachment as reference category. Therefore, model intercept represents the average score (on a log scale) for children with secure attachment towards both parents ($M_SF_S$). The other parameters, instead, indicate the log ratios between the other groups and the reference group. We specified a normal distribution with mean 0 and standard deviation of 3, $\mathcal{N}(0,3)$ as reasonable prior for the parameters of interest (i.e., those related to mother and father attachment interaction). This prior is intended to be non informative but without being excessively diffuse. The influence of prior specification was evaluated in a prior sensitivity analysis. Regarding the other nuisance parameters (i.e., intercepts, gender effects, random effects and shapes parameters) \texttt{brms} default priors were maintained (see Supplemental Material for further details [TODO]). The encompassing model was estimated using 6 independent chains with 10,000 iterations (warm-up 2,000).
+
+Finally, note that in this case we do not need do standardize our parameters as they represents groups means differences (see Section~\ref{sec:param-standard}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Hypothesis Matrices}
+
+Given the informative hypotheses and the parametrization of the encompassing model, we can now obtain the respective hypotheses matrices.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{important notes}
-
-[definition of prior]
-
-Note that normal prior distribution can be used only for unbounded parameters. In case of bounded parameters (i.e., correlations or probabilities) adequate bounded prior are required. difference approx for prior and posterior and between density and conditional probability.
-
-note on range constraints
-
-
-
-note on standardize parameters
 
 \section{Old Material}
 
@@ -720,119 +812,8 @@ A key difficulty in analyzing inequality-constrained models and theories is that
   - range constrain issue mean prior see Gu 2018
   - multiverse analysis
 
-\Textcite{andrewBayesianDataAnalysis} said this,
-too \parencite{andrewBayesianDataAnalysis}.  Further evidence comes from
-other sources \parencite{andrewBayesianDataAnalysis}.  \lipsum[3]
-
-\section{Method}
-\subsection{Participants}
-
-\subsection{Materials}
-
-\subsection{Design}
-
-\subsection{Procedure}
-
-\subsubsection{Instrument \#1}
-
-\paragraph{Reliability}
-
-\subparagraph{Inter-rater reliability}
-
-\subparagraph{Test-retest reliability}
-
-\paragraph{Validity}
-
-\subparagraph{Face validity}
-
-\subparagraph{Construct validity}
-
-\section{Results}
-Table~\ref{tab:BasicTable} summarizes the data. \lipsum[15]
-
-<<>>=
-plot(rnorm(19))
-@
-
-<<>>=
-kable(data.frame(x=1:3, y = letters[1:3]), booktabs = T) %>%
-  kable_styling(latex_options = "striped")
-@
-
-\begin{table}
-  \caption{Sample Basic Table}
-  \label{tab:BasicTable}
-  \begin{tabular}{@{}llr@{}}         \toprule
-  \multicolumn{2}{c}{Item}        \\ \cmidrule(r){1-2}
-  Animal    & Description & Price \\ \midrule
-  Gnat      & per gram    & 13.65 \\
-            & each        &  0.01 \\
-  Gnu       & stuffed     & 92.50 \\
-  Emu       & stuffed     & 33.33 \\
-  Armadillo & frozen      &  8.99 \\ \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{figure}
-    \caption{This is my first figure caption.}
-    \includegraphics[bb=0in 0in 2.5in 2.5in, height=2.5in, width=2.5in]{Figure1.pdf}
-    \label{fig:Figure1}
-\end{figure}
-
-Figure~\ref{fig:Figure1} shows this trend. \lipsum[16]
-
-\section{Discussion}
 
 \printbibliography
-
-\appendix
-
-\section{Instrument}
-\label{app:instrument}
-
-As shown in Figure~\ref{fig:Figure2}, these results are impressive. \lipsum[20]
-
-\begin{figure}
-    \caption{This is my second figure caption.}
-    \includegraphics[bb=0in 0in 2.5in 2.5in, height=2.5in, width=2.5in]{Figure1.pdf}
-    \label{fig:Figure2}
-\end{figure}
-
-\lipsum[21]
-\section{Pilot Data}
-\label{app:surveydata}
-
-The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
-
-\begin{table}
-  \begin{threeparttable}
-    \caption{A More Complex Decked Table}
-    \label{tab:DeckedTable}
-    \begin{tabular}{@{}lrrr@{}}         \toprule
-    Distribution type  & \multicolumn{2}{l}{Percentage of} & Total number   \\
-                       & \multicolumn{2}{l}{targets with}  & of trials per  \\
-                       & \multicolumn{2}{l}{segment in}    & participant    \\ \cmidrule(r){2-3}
-                                    &  Onset  &  Coda            &          \\ \midrule
-    Categorical -- onset\tabfnm{a}  &    100  &     0            &  196     \\
-    Probabilistic                   &     80  &    20\tabfnm{*}  &  200     \\
-    Categorical -- coda\tabfnm{b}   &      0  &   100\tabfnm{*}  &  196     \\ \midrule
-    \end{tabular}
-    \begin{tablenotes}[para,flushleft]
-        {\small
-            \textit{Note.} All data are approximate.
-
-            \tabfnt{a}Categorical may be onset.
-            \tabfnt{b}Categorical may also be coda.
-
-            \tabfnt{*}\textit{p} < .05.
-            \tabfnt{**}\textit{p} < .01.
-         }
-    \end{tablenotes}
-  \end{threeparttable}
-\end{table}
-
-\lipsum[23]
-
 \end{document}
 
 %%
