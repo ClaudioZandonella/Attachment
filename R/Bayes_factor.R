@@ -172,8 +172,8 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchy
                        diag(n_pars)[4:n_pars, ])                 # All father and interaction terms = 0
 
     # inequality constraints
-    ineq_matrix <- rbind(mm["M_Anx_F_Sec", ],             # M_Anxious > 0
-                         c(0, -1, 1, rep(0, n_pars - 3))) # M_Fearful - M_Avoidant > 0
+    ineq_matrix <- rbind(mm["M_Anx_F_Sec", ],                       # M_Anxious > 0
+                         mm["M_Fear_F_Sec", ] - mm["M_Av_F_Sec", ]) # M_Fearful - M_Avoidant > 0
 
   } else if(hypothesis == "hierarchy"){
     #----    Hierarchy Hypothesis    ----

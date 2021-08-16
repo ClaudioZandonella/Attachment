@@ -240,6 +240,85 @@ perc_rare_condition <- function(perc = TRUE, digits = 1){
   return(res)
 }
 
+#----    get_ggplot_balls    ----
+
+get_ggplot_balls <- function(data, filename = "Documents/Paper/figure/Prova.png"){
+  plot <- data %>%
+    ggplot() +
+    geom_point(aes(x = 0, y = 0, size = weights, fill = weights),
+               shape = 21, stroke = 2, col = "gray20") +
+    scale_size(limits = c(0,1), range = c(15,150),
+               breaks = seq(0,1, length.out =10)) +
+    scale_fill_gradient(limit=c(0,1), high = "#046C9A", low = "white") +
+    theme_classic() +
+    theme(legend.position = "none",
+          axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title = element_blank())
+
+  ggsave(plot = plot, filename = filename, width =4.67, height =4.67)
+}
+
+
+#----    get_table_bf    ----
+
+get_table_bf <- function(bf_result = BF_weights_ext,
+                         path_img = "Documents/Paper/figure/"){
+
+  names_plot <- paste("ball", c("null", "monotropy", "hierarchy",
+                                "independence", "integration"), sep = "_")
+  images <- paste0(path_img, names_plot, ".png")
+
+  for(i in 1:5){
+    get_ggplot_balls(data = bf_result[i,],
+                     filename = images[i])
+  }
+
+  # centerText <- function(text){
+  #   paste0("\\multirow{1}{*}[0pt]{", text, "}")
+  # }
+
+
+
+  bf_result %>%
+    bind_cols(img = "") %>%
+    mutate(hypothesis = c("Null", "Monotropy", "Hierarchy",
+                          "Independence", "Integration"),
+           bf = format(bf, digits = 2),
+           weights = round(weights,2)) %>%
+    select(hypothesis, bf, weights, img) %>%
+    # mutate_at(c("hypothesis", "bf","weights"), centerText) %>%
+    kable(., booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
+          col.names = c("Hypothesis", "Bayes Factor", "Posterior Probability", " "),
+          caption = "Bayes Factor encompassing model and hypothesis posteriro probabilities  ($n_{subj} = 847$)") %>%
+    column_spec(4, image = spec_image(images, 100, 100)) %>%
+    kable_styling(latex_options = c("hold_position"))
+}
+
+
+
+#----    get_table_sens_analysis    ----
+
+get_table_sens_analysis <- function(summary_sensitivity){
+  summary_sensitivity %>%
+    mutate(bf = format(bf, digits = 2),
+           weights = round(weights,2),
+           names = gsub("(_ext$|_int$)", "", names)) %>%
+    pivot_wider(names_from = case, values_from = c(bf, weights)) %>%
+    select(1, 2, 7, 3, 8, 4, 9, 5, 10, 6, 11) %>%
+    mutate(names = c("Null", "Monotropy", "Hierarchy",
+                     "Independence", "Integration")) %>%
+    kable(., booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
+          col.names = c("Hypothesis", rep(c("BF", "PP"), 5)),
+          caption = "Bayes Factor encompassing model v and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$)") %>%
+    add_header_above(c(" ", "$\\\\mathcal{N}(0, .5)$" = 2, "$\\\\mathcal{N}(0, 1)$" = 2,
+                     "$\\\\mathcal{N}(0, 3)$" = 2, "$\\\\mathcal{N}(0, 5)$" = 2,
+                     "$\\\\mathcal{N}(0, 10)$" = 2), escape = FALSE) %>%
+    kable_styling(latex_options = c("hold_position"))
+
+}
+
 #----    table_grade  ----
 
 #' Get Table School Grade
@@ -288,24 +367,44 @@ normal_approximation <- function(){
 
 }
 
-sensitivity_plot <- function(){
-  drake::loadd(encompassing_model_int)
-  par_post <- brms::fixef(encompassing_model_int, summary = FALSE) %>%
+get_plot_sensitivity <- function(encompassing_model = encompassing_model_ext){
+  par_post <- brms::fixef(encompassing_model, summary = FALSE) %>%
     as.data.frame()
 
-  ggplot(par_post) +
-    geom_density(aes(x = motherAnxious)) +
-    geom_density(aes(x = motherAvoidant)) +
-    geom_density(aes(x = motherFearful)) +
+  cols <- c("$\\mathcal{N}(0, .5))$" = "#F8766D",
+            "$\\mathcal{N}(0, 3))$" = "#00BA38",
+            "$\\mathcal{N}(0, 10))$" = "#619CFF",
+            "Par Post" = "black")
+
+  ggplot(par_post[seq(1,nrow(par_post), by = 5), ]) +
+    # geom_density(aes(x = motherAnxious)) +
+    geom_density(aes(x = motherAvoidant), adjust=1.5) +
+    geom_density(aes(x = motherFearful), adjust=1.5) +
     # geom_density(aes(x = fatherAnxious)) +
     # geom_density(aes(x = fatherAvoidant)) +
     # geom_density(aes(x = fatherFearful)) +
-    geom_density(aes(x = `motherAnxious:fatherAnxious`)) +
-    geom_density(aes(x = `motherAvoidant:fatherAvoidant`)) +
-    stat_function(fun = dnorm, args = list(mean = 0, sd = .5), col = "red") +
-    stat_function(fun = dnorm, args = list(mean = 0, sd = 3), col = "blue") +
-    stat_function(fun = dnorm, args = list(mean = 0, sd = 10), col = "green") +
-    xlim(-3, 3)
+    geom_density(aes(x = `motherAnxious:fatherAnxious`), adjust=1.5) +
+    # geom_density(aes(x = `motherAvoidant:fatherAvoidant`),
+    #              aes(color = "black")) +
+    geom_segment(aes(x = 0, y = 0, xend = 0, yend = 1.55), linetype = "dashed") +
+    stat_function(fun = dnorm, args = list(mean = 0, sd = .5),
+                  aes(color = "$\\mathcal{N}(0, .5))$",), size = 1.5) +
+    stat_function(fun = dnorm, args = list(mean = 0, sd = 3),
+                  aes(color = "$\\mathcal{N}(0, 3))$",), size = 1.5) +
+    stat_function(fun = dnorm, args = list(mean = 0, sd = 10),
+                  aes(color = "$\\mathcal{N}(0, 10))$",), size = 1.5)  +
+    scale_colour_manual(values = cols, )+
+    coord_cartesian(xlim = c(-3, 3), ylim = c(0,1.65)) +
+    xlim(-3, 3) +
+    theme_classic() +
+    theme(axis.title = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.line.y = element_blank(),
+          legend.title = element_blank(),
+          legend.direction = "horizontal",
+          legend.position = c(.5,.95))
+
 }
 
 #----

@@ -64,7 +64,7 @@
 %----
 
 \title{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
-\shorttitle{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
+\shorttitle{The Bayes Factor Encompassing Prior Approach}
 
 \author{Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, Gianmarco Altoè}
 \affiliation{UNIPD}
@@ -91,14 +91,14 @@ knitr::opts_chunk$set(echo = FALSE,
                       fig.height=3, fig.width=5, fig.pos = "!ht",
 
                       # Code output width
-                      tidy=TRUE, tidy.opts = list(width.cutoff = 87),
+                      tidy=TRUE, tidy.opts = list(width.cutoff = 80),
                       # comment = NA, prompt = TRUE
 
                       # Cache options
                       cache = FALSE, autodep=TRUE)
 
 # Console output width
-options(width = 90)
+options(width = 80)
 
 # Chunk theme
 thm=knit_theme$get("bclear")
@@ -278,7 +278,7 @@ Going back to our psychological treatment example, we could use independent norm
 At this point, several authors underline the importance of centering the prior distribution on the constraints points of interest. Let's further discuss this issue in the next section.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Adjusting Prior Mean}
+\subsubsection{Adjusting Prior Mean}\label{sec:adj-prior}
 
 When evaluating informative hypothesis with equality and inequality constraints using the Bayes Factor, the priors have to be centered on the focal points of interests  \parencite{zellnerPosteriorOddsRatios1980, jeffreysTheoryProbability1961, mulderPriorAdjustedDefault2014}. In the case of equality constraints, centering the prior allows to consider values close to the point of interest more likely a priori than values far away. This should be in line with researchers' expectation, otherwise one could question why testing that value.
 
@@ -350,7 +350,7 @@ In addition, note that in \textcite{guApproximatedAdjustedFractional2018} approa
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Computing the Bayes Factor}
+\subsection{Computing the Bayes Factor}\label{sec:compute-bf}
 
 In the previous section we obtained the adjusted prior and the posterior of the vector of transformed parameters $\bm{\beta}$, respectively
 \begin{equation}
@@ -565,7 +565,7 @@ Note that these issues are relevant only when considering the prior distribution
 
 \section{Hypotheses Testing in the Attachement Theory}
 
-In this section, we propose a real case study example evaluating different informative hypotheses within the attachment theory. This will allow us to face the common issues found in real research applications. First, we provide required background information regarding the attachment theory and study aims and characteristics. Subsequently, all the steps involved in the evaluation of informative hypotheses using the Bayes Factor with encompassing prior approach are described. Finally, the results are briefly discussed.
+In this section, we propose a real case study example evaluating different informative hypotheses within the attachment theory. This will allow us to face the common issues found in real research applications. First, we provide required background information regarding the attachment theory and study aims and characteristics. Subsequently, all the steps involved in the evaluation of informative hypotheses using the Bayes Factor with encompassing prior approach are described. Finally, the results are briefly discussed considering the prior sensitivity analysis.
 
 All analyses were conducted using the R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data [?], and analysis code are available at TODO. The analyses report with further details is available online at TODO.
 
@@ -619,17 +619,17 @@ More information about the sample, descriptive statistics, cluster analysis, and
 
 Each theoretical perspective was formalized into a different informative hypothesis taking into account its own theoretical tenets, main evidences in the literature, and authors' clinical experience in the field.
 
-The following notation is used to formalize the hypothesis. $M$ and $F$ are used to indicate the attachment towards the mother and the father, respectively. The specific attachment style is specified in the subscript where $S$ indicates secure attachment, $Ax$ anxious attachment, $Av$ avoidant attachment, and $F$ fearful attachment. Thus, for example $M_SF_{Ax}$ represents a children with secure attachment towards the mother and anxious attachment towards the father. Moreover, $*$ subscript is used to indicate any attachment style and a set of subscripts is used to indicate "\textit{one among}". For example, $M_SF_{Ax;Av}$ represents a children with secure attachment towards the mother and anxious or avoidant attachment towards the father.
+The following notation is used to formalize the hypothesis. $M$ and $F$ are used to indicate the attachment towards the mother and the father, respectively. The specific attachment style is specified in the subscript where $S$ indicates secure attachment, $Ax$ anxious attachment, $Av$ avoidant attachment, and $F$ fearful attachment. For example $F_{Av}$ represents children with avoidant attachment towards the father.
 
-To correctly interpret the following Figures, note that we consider as reference group the children with secure attachment toward both parents ($M_SF_S$) which is always expected to have the lowest level of problems. Thus, the other groups actually indicate the expected difference with respect to the reference group. For example, $M_{Av}F_{Ax}$ indicates how much more problems children in this group are expected to have compared to $M_SF_S$ group.
+Note that when we do not expect interaction between mother and father attachment, we can consider the role of the two parents separately. Whereas, if interaction is expected, it is necessary to take into account the unique combination of mother and father attachment. Thus, for example, we use $M_SF_{Ax}$ to indicate children with secure attachment towards the mother and anxious attachment towards the father. Moreover, $*$ subscript is used to indicate any attachment style and a set of subscripts is used to indicate "\textit{one among}". For example, $M_SF_{Ax;Av}$ represents a children with secure attachment towards the mother and anxious or avoidant attachment towards the father.
 
-The actual hypothesis matrix are available at [TODO].
+To correctly interpret the following Figures, note that the order is important, whereas the actual values are only indicative.
 
-\paragraph{Null Hypothesis} This is a reference hypothesis where mother and father attachment are expected to have no effect. The hypothesis is represented in Figure~\ref{fig:plot-null-hypothesis}
+\paragraph{Null Hypothesis} This is a reference hypothesis where mother and father attachment are expected to have no effect. The hypothesis is represented in Figure~\ref{fig:plot-null-hypothesis}:
 \begin{equation}
 \begin{gathered}
-M_* = 0\\
-F_* = 0
+M_* = 0,\\
+F_* = 0.
 \end{gathered}
 \end{equation}
 
@@ -637,11 +637,11 @@ F_* = 0
 plot_hypothesis(hypothesis = "null")
 @
 
-\paragraph{Monotropy Hypothesis} Father attachment is expected to have no effect, whereas considering mother attachment we expect the following order: secure children with the lowest level of problems, anxious and avoidant children with similar levels of problems, fearful children with the highest levels of problems. The hypothesis is represented in Figure~\ref{fig:plot-monotropy-hypothesis}
+\paragraph{Monotropy Hypothesis} Father attachment is expected to have no effect, whereas considering mother attachment we expect the following order: secure children with the lowest level of problems, anxious and avoidant children with similar levels of problems, fearful children with the highest levels of problems. The hypothesis is represented in Figure~\ref{fig:plot-monotropy-hypothesis}:
 \begin{equation}
 \begin{gathered}
-M_S < M_{Ax} = M_{Av} < M_F\\
-F_* = 0
+M_S < M_{Ax} = M_{Av} < M_F,\\
+F_* = 0.
 \end{gathered}
 \end{equation}
 
@@ -649,12 +649,12 @@ F_* = 0
 plot_hypothesis(hypothesis = "monotropy")
 @
 
-\paragraph{Hierarchy Hypothesis} Father attachment is expected to have influence in the same way as mother attachment but with a minor role. The hypothesis is represented in Figure~\ref{fig:plot-hierarchy-hypothesis}
+\paragraph{Hierarchy Hypothesis} Father attachment is expected to have influence in the same way as mother attachment but with a minor role. The hypothesis is represented in Figure~\ref{fig:plot-hierarchy-hypothesis}:
 \begin{equation}
 \begin{gathered}
-M_S < M_{Ax} = M_{Av} < M_F\\
-F_S < F_{Ax} = F_{Av} < F_F\\
-F_{Ax}< M_{Ax};\ ~ \ F_{Av}< M_{Av};\ ~ \ F_F< M_F
+M_S < M_{Ax} = M_{Av} < M_F,\\
+F_S < F_{Ax} = F_{Av} < F_F,\\
+F_{Ax}< M_{Ax};\ ~ \ F_{Av}< M_{Av};\ ~ \ F_F< M_F.
 \end{gathered}
 \end{equation}
 
@@ -662,11 +662,11 @@ F_{Ax}< M_{Ax};\ ~ \ F_{Av}< M_{Av};\ ~ \ F_F< M_F
 plot_hypothesis(hypothesis = "hierarchy")
 @
 
-\paragraph{Independence Hypothesis} Mother and father attachment are expected to affect children outcomes differently. In this case, we considered avoidant attachemnt towards the father as a condition of higher risk. The hypothesis is represented in Figure~\ref{fig:plot-independence-hypothesis}
+\paragraph{Independence Hypothesis} Mother and father attachment are expected to affect children outcomes differently. In this case, we considered avoidant attachemnt towards the father as a condition of higher risk. The hypothesis is represented in Figure~\ref{fig:plot-independence-hypothesis}:
 \begin{equation}
 \begin{gathered}
-M_S < M_{Ax} = M_{Av} < M_F\\
-F_S < F_{Ax} < F_{Av} < F_F\\
+M_S < M_{Ax} = M_{Av} < M_F,\\
+F_S < F_{Ax} < F_{Av} < F_F.\\
 \end{gathered}
 \end{equation}
 
@@ -674,12 +674,12 @@ F_S < F_{Ax} < F_{Av} < F_F\\
 plot_hypothesis(hypothesis = "independence")
 @
 
-\paragraph{Integration Hypothesis}  Mother and father attachment are expected to interact. In this case, we consider secure attachment as a protective factor and fearful attachment as a risk condition. We do not specify the conditions $M_SF_F$ and $M_FF_S$ as their frequency is very low (\Sexpr{perc_rare_condition()}\% of the sample). The hypothesis is represented in Figure~\ref{fig:plot-integration-hypothesis}
+\paragraph{Integration Hypothesis}  Mother and father attachment are expected to interact. In this case, we consider secure attachment as a protective factor and fearful attachment as a risk condition. We do not specify the conditions $M_SF_F$ and $M_FF_S$ as their frequency is very low (\Sexpr{perc_rare_condition()}\% of the sample). The hypothesis is represented in Figure~\ref{fig:plot-integration-hypothesis}:
 \begin{equation}
 \begin{gathered}
-M_SF_S< \{M_SF_{Ax;Av} = M_{Ax;Av}F_S\} < M_{Ax;Av}F_{Ax;Av} <  \{M_FF_{Ax;Av} = M_{Ax;Av}F_F\} <  M_FF_F\\
+M_SF_S< \{M_SF_{Ax;Av} = M_{Ax;Av}F_S\} < M_{Ax;Av}F_{Ax;Av} <  \{M_FF_{Ax;Av} = M_{Ax;Av}F_F\} <  M_FF_F,\\
 \text{with}\\
-M_{Ax}F_{Ax} = M_{Ax}F_{Av} = M_{Av}F_{Ax} = M_{Av}F_{Av}
+M_{Ax}F_{Ax} = M_{Ax}F_{Av} = M_{Av}F_{Ax} = M_{Av}F_{Av}.
 \end{gathered}
 \end{equation}
 
@@ -715,14 +715,104 @@ mu ~ gender + mother * father + (1|ID_class)
 @
 \doublespacing
 
-In order to specifying the priors, it is important to consider contrasts coding and the resulting model parametrization. For mother and father attachment, default treatment contrasts were used \parencite{schadHowCapitalizePriori2019} considering secure attachment as reference category. Therefore, model intercept represents the average score (on a log scale) for children with secure attachment towards both parents ($M_SF_S$). The other parameters, instead, indicate the log ratios between the other groups and the reference group. We specified a normal distribution with mean 0 and standard deviation of 3, $\mathcal{N}(0,3)$ as reasonable prior for the parameters of interest (i.e., those related to mother and father attachment interaction). This prior is intended to be non informative but without being excessively diffuse. The influence of prior specification was evaluated in a prior sensitivity analysis. Regarding the other nuisance parameters (i.e., intercepts, gender effects, random effects and shapes parameters) \texttt{brms} default priors were maintained (see Supplemental Material for further details [TODO]). The encompassing model was estimated using 6 independent chains with 10,000 iterations (warm-up 2,000).
+The parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specified a normal distribution with mean 0 and standard deviation of 3, $\mathcal{N}(0,3)$, as reasonable prior. This prior is intended to be non informative but without being excessively diffuse. The influence of prior specification is subsequently evaluated in a prior sensitivity analysis. Regarding the other nuisance parameters (i.e., intercepts, gender effects, random effects and shapes parameters) \texttt{brms} default priors were maintained (see Supplemental Material for further details [TODO]). The encompassing model was estimated using 6 independent chains with 10,000 iterations (warm-up 2,000).
 
 Finally, note that in this case we do not need do standardize our parameters as they represents groups means differences (see Section~\ref{sec:param-standard}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Hypothesis Matrices}
 
-Given the informative hypotheses and the parametrization of the encompassing model, we can now obtain the respective hypotheses matrices.
+Before computing the hypothesis matrix for each informative hypothesis, it is important to consider the contrasts coding and the resulting parametrization of the encompassing model. For mother and father attachment, default treatment contrasts were used \parencite{schadHowCapitalizePriori2019} considering secure attachment as reference category. Therefore, model intercept represents children with secure attachment towards both parents ($M_SF_S$) and we have parameters indicating the main effects of mother and father attachment and other parameters for the interaction effect.
+
+Now, given the informative hypotheses and the parametrization of the encompassing model, we can now obtain the respective hypotheses matrices. In order to do that, first, we need the model matrix with all the conditions of interest. Note that we hove to considered only condition relevant to the constraints (i.e., those related to mother and father attachment) ignoring other nuisance conditions (i..e, gender).
+
+Subsequently, we can derive the required equality and inequality constraints. In particular, with hypotheses that do not expect interaction between mother and father attachment (i.e., monotropy, hierarchy, and independence hypotheses), all interaction terms are set equal to zero and main effects are obtain considered the reference level of the other parent (i.e., $M_{Ax}F_S$ is the main effect of anxious attachment towards the mother).  As an example, consider the following code:
+\codespacing
+<<echo = TRUE, cache=TRUE, eval = FALSE>>=
+# Define relevant conditions
+attachment <- c("S", "Ax", "Av", "F")
+new_data <- expand.grid(
+  mother = factor(attachment, levels = attachment),
+  father = factor(attachment, levels = attachment)
+)
+
+# Get model matrix
+mm <- model.matrix(~ mother * father, data = new_data)[,-1] # remove intercept
+rownames(mm) <- paste0("M_",new_data$mother, "_F_", new_data$father)
+
+# Get constraints main effect
+# M_Ax = M_Av  --->  M_Ax_F_S - M_Av_F_S = 0
+# F_F > F_Av   --->  M_S_F_F - M_S_F_Av > 0
+rbind(mm["M_Ax_F_S", ] - mm["M_Av_F_S", ],
+      mm["M_S_F_F", ] - mm["M_S_F_Av", ])
+
+# Get constraints interaction
+# M_F_F_Ax = M_Ax_F_F  --->  M_F_F_Ax - M_Ax_F_F = 0
+# M_Ax_F_Av > M_S_F_Ax  --->  M_Ax_F_Av - M_S_F_Ax > 0
+rbind(mm["M_F_F_Ax", ] - mm["M_Ax_F_F", ],
+      mm["M_Ax_F_Av", ] - mm["M_S_F_Ax", ])
+@
+\doublespacing
+In this way, we can easily specify all constraints included in each hypothesis and obtain the respective hypothesis matrix ($R$) and vector with the constraints constants ($r$). In all our hypotheses, however, no constrain include constant values. Thus, $r$ will be always a vector of zeros and it is ignored. Moreover, also the intercept is ignored because there is no constraints that includes $M_SF_S$ alone (e.g., $M_SF_S>k$) but is always compared with another groups (e.g., $M_SF_S< M_{Ax}F_S$). Thus, the inclusion of the intercept is redundant and we ignored it.
+
+The full hypothesis matrices specification is available at [TODO].
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Computing the Bayes Factor}
+
+So far we defined the hypotheses matrices, specified the encompassing prior, and obtained the model posterior distribution. In order to compute the Bayes Factor, we need the adjusted prior and the posterior of the transformed parameters vector $\bm{\beta}$ (i.e., the parameters that identify the constraints) for each hypothesis.
+
+\begin{itemize}
+\item{\textbf{Adjusted Prior $\bm{\beta}$.}} As reported in Section~\ref{sec:adj-prior}, adjusted prior is required to properly evaluate the constraints. Applying the Equation~\ref{eq:normal-transf}, we obtained the prior for the transformed parameter and we set the mean vector to zero.
+\item{\textbf{Posterior $\bm{\beta}$.}} Applying the same transformation used for the prior we obtained the posterior distribution of the transformed parameters vector $\bm{\beta}$.
+\end{itemize}
+
+As discussed in Section~\ref{sec:rank-hypo}, Equation~\ref{eq:normal-transf} requires the hypothesis matrix $R$ to be \textit{full-row-rank} (i.e., all constraints are linearly independent). This is not the case for the hierarchy hypothesis, thus we followed the solution presented in Section~\ref{sec:rank-hypo}. Detailed information are available at [TODO].
+
+Now, we have all the elements required to compute the Bayes Factor for each hypothesis as described in Section~\ref{sec:compute-bf}. Moreover, assuming that each hypothesis is equally likely a priori, we can calculate the posterior probability of each hypothesis as \parencite{hoijtinkInformativeHypothesesTheory2012, guBayesianEvaluationInequality2014},
+\begin{equation}
+\text{Posterior Probability} H_i = \frac{BF_{iu}}{\sum_iBF_{iu}}.
+\end{equation}
+
+Results are reported in Table~\ref{tab:table-bf-results}.
+\codespacing
+<<table-bf-results, cache=TRUE>>=
+get_table_bf(bf_result = BF_weights_ext,
+             path_img = "figure/")
+@
+\doublespacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Results and Prior Sensitivity Analysis}
+
+The results clearly indicate that the Monotropy Theory is the most supported by the data among those considered. Remember, however, that prior specification affects the Bayes Factor results. It is recommended, therefore, to evaluate the results obtained using different prior settings as well. In particular, we considered as possible priors for the parameters of interest:
+\begin{itemize}
+  \item{$\mathcal{N}(0,.5)$} - unreasonable tight prior
+  \item{$\mathcal{N}(0,1)$} - tighter prior
+  \item{$\mathcal{N}(0,3)$} - original prior
+  \item{$\mathcal{N}(0,5)$} - more diffuse prior
+  \item{$\mathcal{N}(0,10)$} - unreasonably diffuse prior
+\end{itemize}
+
+The results of the prior sensitivity analysis are reported in Table~\ref{tab:table-sens-analysis}.
+\codespacing
+<<table-sens-analysis, cache=TRUE>>=
+get_table_sens_analysis(summary_sensitivity = summary_sensitivity_ext)
+@
+\doublespacing
+Overall results are consistent as they always indicate Monotropy Theory as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the Null Theory increase its probability with more diffuse prior, whereas Hierarchy, Independence and Integration Theory increase their probability with tighter priors.
+
+To interpret this patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centered on the focal point. On the contrary, equality constraints are highly affected by prior definition. As the prior gets more diffuse, the value of the density at zero decreases and, even for posterior distributions centered far from zero, the densities ratio at zero will favor the posterior. Thus, as the prior gets more diffuse, the BF will favor more and more hypotheses with equality constraints, whereas for tighter prior the BF will strongly penalize hypotheses with equality constraints if these are not correct (see Figure~\ref{fig:plot-sensitivity-prior}).
+
+All defined hypothesis include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with an higher number of equality constraints (e.g., Null Hypothesis) will be favored over hypothesis with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Theory).
+
+<<plot-sensitivity-prior, cache = TRUE, fig.cap="Evaluating densities at 0 for different prior settings and a selection of parameters posteriors">>=
+get_plot_sensitivity()
+@
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Limits}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
