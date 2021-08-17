@@ -565,7 +565,7 @@ Note that these issues are relevant only when considering the prior distribution
 
 \section{Hypotheses Testing in the Attachement Theory}
 
-In this section, we propose a real case study example evaluating different informative hypotheses within the attachment theory. This will allow us to face the common issues found in real research applications. First, we provide required background information regarding the attachment theory and study aims and characteristics. Subsequently, all the steps involved in the evaluation of informative hypotheses using the Bayes Factor with encompassing prior approach are described. Finally, the results are briefly discussed considering the prior sensitivity analysis.
+In this section, we propose a real case study example evaluating different informative hypotheses within the attachment theory. This will allow us to face the common issues found in real research applications. First, we provide required background information regarding the attachment theory and study aims and characteristics. Subsequently, all the steps involved in the evaluation of informative hypotheses using the Bayes Factor with the encompassing prior approach are described. Finally, the results are briefly discussed considering the prior sensitivity analysis.
 
 All analyses were conducted using the R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data [?], and analysis code are available at TODO. The analyses report with further details is available online at TODO.
 
@@ -763,7 +763,7 @@ The full hypothesis matrices specification is available at [TODO].
 So far we defined the hypotheses matrices, specified the encompassing prior, and obtained the model posterior distribution. In order to compute the Bayes Factor, we need the adjusted prior and the posterior of the transformed parameters vector $\bm{\beta}$ (i.e., the parameters that identify the constraints) for each hypothesis.
 
 \begin{itemize}
-\item{\textbf{Adjusted Prior $\bm{\beta}$.}} As reported in Section~\ref{sec:adj-prior}, adjusted prior is required to properly evaluate the constraints. Applying the Equation~\ref{eq:normal-transf}, we obtained the prior for the transformed parameter and we set the mean vector to zero.
+\item{\textbf{Adjusted Prior $\bm{\beta}$.}} As reported in Section~\ref{sec:adj-prior}, adjusted prior is required to properly evaluate the constraints. Applying the Equation~\ref{eq:normal-transf}, we obtained the prior for the transformed parameter and then we set the mean vector to zero.
 \item{\textbf{Posterior $\bm{\beta}$.}} Applying the same transformation used for the prior we obtained the posterior distribution of the transformed parameters vector $\bm{\beta}$.
 \end{itemize}
 
@@ -774,18 +774,19 @@ Now, we have all the elements required to compute the Bayes Factor for each hypo
 \text{Posterior Probability} H_i = \frac{BF_{iu}}{\sum_iBF_{iu}}.
 \end{equation}
 
-Results are reported in Table~\ref{tab:table-bf-results}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Results and Prior Sensitivity Analysis}
+
+Results, reported in Table~\ref{tab:table-bf-results}, clearly indicate that the Monotropy Hypothesis is the most supported by the data among those considered.
+
 \codespacing
-<<table-bf-results, cache=TRUE>>=
+<<table-bf-results, cache=TRUE,>>=
 get_table_bf(bf_result = BF_weights_ext,
              path_img = "figure/")
 @
 \doublespacing
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Results and Prior Sensitivity Analysis}
-
-The results clearly indicate that the Monotropy Theory is the most supported by the data among those considered. Remember, however, that prior specification affects the Bayes Factor results. It is recommended, therefore, to evaluate the results obtained using different prior settings as well. In particular, we considered as possible priors for the parameters of interest:
+Remember, however, that prior specification affects the Bayes Factor results. It is recommended, therefore, to evaluate the results obtained using different prior settings as well. In particular, we considered as possible priors for the parameters of interest:
 \begin{itemize}
   \item{$\mathcal{N}(0,.5)$} - unreasonable tight prior
   \item{$\mathcal{N}(0,1)$} - tighter prior
@@ -794,25 +795,43 @@ The results clearly indicate that the Monotropy Theory is the most supported by 
   \item{$\mathcal{N}(0,10)$} - unreasonably diffuse prior
 \end{itemize}
 
-The results of the prior sensitivity analysis are reported in Table~\ref{tab:table-sens-analysis}.
+The results of the prior sensitivity analysis are reported in Table~\ref{tab:table-sens-prior-analysis}.
 \codespacing
-<<table-sens-analysis, cache=TRUE>>=
+<<table-sens-prior-analysis, cache=TRUE>>=
 get_table_sens_analysis(summary_sensitivity = summary_sensitivity_ext)
 @
 \doublespacing
-Overall results are consistent as they always indicate Monotropy Theory as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the Null Theory increase its probability with more diffuse prior, whereas Hierarchy, Independence and Integration Theory increase their probability with tighter priors.
+Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the probability of the Null Hypothesis increases with more diffuse prior, whereas the probabilities of the Hierarchy, Independence and Integration Hypothesis increases with tighter priors.
 
-To interpret this patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centered on the focal point. On the contrary, equality constraints are highly affected by prior definition. As the prior gets more diffuse, the value of the density at zero decreases and, even for posterior distributions centered far from zero, the densities ratio at zero will favor the posterior. Thus, as the prior gets more diffuse, the BF will favor more and more hypotheses with equality constraints, whereas for tighter prior the BF will strongly penalize hypotheses with equality constraints if these are not correct (see Figure~\ref{fig:plot-sensitivity-prior}).
+To interpret this patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centered on the constraint focal point. On the contrary, equality constraints are highly affected by prior definition. As the prior gets more diffuse, the value of the density at zero decreases and, even for posterior distributions centered far from zero, the densities ratio at zero will favor the posterior. Thus, as the prior gets more diffuse, the BF will favor more and more the hypotheses with equality constraints, whereas for tighter prior the BF will strongly penalize hypotheses with equality constraints if these are not correct (see Figure~\ref{fig:plot-sensitivity-prior}).
 
-All defined hypothesis include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with an higher number of equality constraints (e.g., Null Hypothesis) will be favored over hypothesis with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Theory).
+All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with an higher number of equality constraints (e.g., Null Hypothesis) will be favored over hypothesis with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
 
 <<plot-sensitivity-prior, cache = TRUE, fig.cap="Evaluating densities at 0 for different prior settings and a selection of parameters posteriors">>=
 get_plot_sensitivity()
 @
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Limits}
+
+When interpreting the results, it is important to take into account the limits of the Bayes Factor. Firsts of all, the selected hypothesis is relative to the data and the set of hypotheses considered. That means that we should be cautious in considering the selected hypothesis as the only "\textit{correct}" one. Maybe we did not considered some important aspects and new hypotheses may revel to be actually much better than the previous ones. For example, regarding the attachment result, taking into account the interaction between children gender and attachment may be fundamental (do you expect that attachment towards the father plays a different role between girls and boys?). This limit, however, becomes an advantage as forces the researchers to focus on the definition of the hypotheses: to obtain good answers first we need to ask the right questions. [strong hypothesis]
+
+Moreover, considering a unique single winning hypothesis may be limiting as different hypotheses could help to explain different aspects of the process under investigation. For example, mother and father attachment may play a different role at different age. Thus, the selected hypothesis may vary according to children age or other conditions. This should warns against interpreting the result in terms of winning/losing focusing uniquely on the selected hypothesis and discording other hypothesis from future studies.
+
+Another important limit we observed, it is the results sensitivity to the prior specification. \textcite{gelmanBayesianDataAnalysis2013} do not recommend the use of the Bayes Factor given its sensitivity to model definition arbitrary choices. Evaluating the results under different conditions and transparently discuss the reasons behind arbitrary choices would help to interpret results more consciously.
+
+Finally, another limit related to the use of Bayes Factor with the encompassing prior approach, it is that we do not obtain the actual estimates of parameters posterior to assess, for example, a given effect size. The only infomation we get is the selected hypothesis, but we have no other information regarding the actual parameters  values. [TODO: è proprio così? non capisco se prendendo le troncature della posterior dell'encompassing model ho effettivamente le posterior dei modelli con i constraints. Da verificare.]
+To overcome this limit we can rely on Bayesian inference to estimate the model parameter posteriors. Consider for example \textcite{katoBayesianApproachInequality2006} where a Gibbs sampler is defined to take into accoutnparameter constraints.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+
+In this paper we presented a detailed description and applied example of the Bayes Factor with the encompassing prior approach. As discussed in the introduction, this approach has several advantages over traditional Null Hypothesis Significance Testing (NHST): it is possible to evaluate complex hypotheses with equality and inequality constrains; multiple hypotheses can be tested simultaneously; Bayes Factor and Posterior Probabilities allow to quantify the relative evidence form the data in favor of the hypotheses.
+
+This approach is of particular interest to the researchers, as it allows them to directly evaluate their expectations or theoretical perspectives. Available literature, however, is often technical and difficult to follow for non experts in the field. This paper filled this gap by providing a detailed description of all steps and elements involved in the computation of the Bayes Factor with the encompassing prior approach. This will enhance researchers' awareness regarding all pros and cons of this method, avoiding to apply statistical techniques as black boxes.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
