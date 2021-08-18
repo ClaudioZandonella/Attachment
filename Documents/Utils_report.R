@@ -88,6 +88,17 @@ drake_load_all <- function(){
 
 }
 
+drake_load_paper <- function(){
+  # Data
+  load_glob_env(data_cluster)
+
+  # BF encompassing
+  load_glob_env(encompassing_model_ext)
+  load_glob_env(BF_weights_ext)
+  load_glob_env(summary_sensitivity_ext)
+
+}
+
 #----    get_sigma_example    ----
 
 get_sigma_example <- function(){
