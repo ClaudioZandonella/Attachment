@@ -113,7 +113,6 @@ theme_set(theme_classic()+
             theme(text = element_text(size=12)))
 
 
-
 devtools::load_all("../../")
 source("../Utils_report.R")
 
@@ -131,37 +130,37 @@ drake_load_paper()
 
 \section{Introduction}
 
-When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate according to the observed data. The evaluation of research and theoretical hypothesis, in fact, is one of the principal goal of the empirical research.
+When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate according to the observed data. In fact, the evaluation of research and theoretical hypothesis is one of the principal goals of empirical research.
 
-In psychology, the dominant statistical approach to evaluate research hypotheses is the Null hypothesis Significance Test (NHST). In the literature, however, the utility and validity of NHST is largely debated \parencite{wassersteinMovingWorld052019}. This approach presents indeed several limitations. First, the NHST places a narrow focus on the statistical testing rather than on the formalization of hypotheses. This has usually led researchers to evaluate data against the catch all null-hypothesis that nothing is going on rather than testing their specific expectation [and the alternative hypothesis is rarely formalized]. Second, the p-value does not quantify the evidence in favor of one hypothesis, thus, it is not possible to *accept* an hypothesis but only to *reject* it. This is inconvenient as, in case of not significant results, the researchers are left in a state of indecision. Third, NHST does not allow testing multiple hypotheses at the same time. Using the NHST the null hypothesis is tested only against a single alternative. Fourth, NHST is unsuitable for testing broad class of hypotheses with equality and inequity constraints \parencite{mulderSimpleBayesianTesting2019}. Expectations can be evaluated using one-side tests, however, when more groups or more variables are involved, it is not possible to evaluate complex parameter constraints that reflect researchers' expectations \parencite{vandeschootIntroductionBayesianModel2011}.
+In psychology, the dominant statistical approach to evaluate research hypotheses is the Null hypothesis Significance Test (NHST). In the literature, however, the utility and validity of NHST are largely debated \parencite{wassersteinMovingWorld052019}. This approach presents indeed several limitations. First, the NHST places a narrow focus on statistical testing rather than on the formalization of hypotheses. This has usually led researchers to evaluate data against the catch-all null-hypothesis that nothing is going on rather than testing their specific expectation [and the alternative hypothesis is rarely formalized]. Second, the p-value does not quantify the evidence in favour of one hypothesis, thus, it is not possible to *accept* a hypothesis but only to *reject* it. This is inconvenient as, in case of not significant results, the researchers are left in a state of indecision. Third, NHST does not allow testing multiple hypotheses at the same time. Using the NHST the null hypothesis is tested only against a single alternative. Fourth, NHST is unsuitable for testing broad classes of hypotheses with equality and inequality constraints \parencite{mulderSimpleBayesianTesting2019}. Expectations can be evaluated using one-side tests, however, when more groups or more variables are involved, it is not possible to evaluate complex parameter constraints that reflect researchers' expectations \parencite{vandeschootIntroductionBayesianModel2011}.
 
-Model comparison is a different approach that allows researchers to compare multiple hypotheses and identify which is the most supported by the data \parencite{mcelreathStatisticalRethinkingBayesian2020}. Hypotheses are first formalized as statistical models  according to researchers expectations or theoretical perspectives. Subsequently, models ability to predict new data is estimated using, for example, the information criteria such as the popular AIC or BIC criteria \parencite{wagenmakersAICModelSelection2004,akaike1973a, schwarzEstimatingDimensionModel1978}. At this point, it is possible to compare the different models evaluating the relative plausibility of each model given the data and the set of model considered. Model comparison has several advantages and in particular it allows to directly compute the relative plausibility of each hypothesis. Model comparison, however, is still limited in the possibility to formalize hypothesis that include complex parameter constraints reflecting researchers' expectations.
+Model comparison is a different approach that allows researchers to compare multiple hypotheses and identify which is the most supported by the data \parencite{mcelreathStatisticalRethinkingBayesian2020}. Hypotheses are first formalized as statistical models according to researchers expectations or theoretical perspectives. Subsequently, models ability to predict new data is estimated using, for example, the information criteria such as the popular AIC or BIC criteria \parencite{wagenmakersAICModelSelection2004,akaike1973a, schwarzEstimatingDimensionModel1978}. At this point, it is possible to compare the different models evaluating the relative plausibility of each model given the data and the set of models considered. Model comparison has several advantages and in particular, it allows to directly compute the relative plausibility of each hypothesis. Model comparison, however, is still limited in the possibility to formalize hypotheses that include complex parameter constraints reflecting researchers' expectations.
 
-An alternative approach to evaluate research hypotheses is based on the Bayes Factor. In the last 25 years, there has been an increasing interest in the Bayes Factor and its use has been proposed as the solution to the critical issues of the NHST \parencite{heckReviewApplicationsBayes2020, mulderEditorsIntroductionSpecial2016}. Although it has its own limitations and it does not solve the fundamental issues of the misuse of statistical techniques \parencite{schadWorkflowTechniquesRobust2021, gelmanBayesianDataAnalysis2013}, the Bayes Factor offers some clear advantages. In particular, the Bayes Factor allows to compare hypotheses obtaining a relative index of evidence, like in the model comparison approach, but it also allows to easily compare complex research hypotheses. In fact, informative hypotheses can be easily formalized according to researchers' expectations or theoretical perspectives using equality and inequality constraints. Subsequently, these hypotheses can be compared against to each other using the Bayes Factor with the encompassing prior approach.
+An alternative approach to evaluate research hypotheses is based on the Bayes Factor. In the last 25 years, there has been an increasing interest in the Bayes Factor and its use has been proposed as the solution to the critical issues of the NHST \parencite{heckReviewApplicationsBayes2020, mulderEditorsIntroductionSpecial2016}. Although it has its own limitations and it does not solve the fundamental issues of the misuse of statistical techniques \parencite{schadWorkflowTechniquesRobust2021, gelmanBayesianDataAnalysis2013}, the Bayes Factor offers some clear advantages. In particular, the Bayes Factor allows us to compare hypotheses obtaining a relative index of evidence, like in the model comparison approach, but it also allows us to easily compare complex research hypotheses. In fact, informative hypotheses can be easily formalized according to researchers' expectations or theoretical perspectives using equality and inequality constraints. Subsequently, these hypotheses can be compared against each other using the Bayes Factor with the encompassing prior approach.
 
-The evaluation of informative hypothesis based on the Bayes Factor with the encompassing prior approach has received increasing attention in the literature. \textcite{vandeschootIntroductionBayesianModel2011} presented a general introduction to informative hypotheses testing using the Bays Factor with the encompassing prior approach, whereas \textcite{hoijtinkInformativeHypothesesTheory2012} offered more detailed description of the development of this method. Other studies, instead, considered the application of this approach with specific statistical models; for example: mixed effect models \parencite{katoBayesianApproachInequality2006}, evaluation of correlation coefficients \parencite{mulderBayesFactorsTesting2016} and multinomial models \parencite{heckMultinomialModelsLinear2019}. In addition, \textcite{guBayesianEvaluationInequality2014} proposed a general approximate procedure to evaluate inequality constraints in a wide range of statistical models.
+The evaluation of informative hypotheses based on the Bayes Factor with the encompassing prior approach has received increasing attention in the literature. \textcite{vandeschootIntroductionBayesianModel2011} presented a general introduction to informative hypotheses testing using the Bayes Factor with the encompassing prior approach, whereas \textcite{hoijtinkInformativeHypothesesTheory2012} offered a more detailed description of the development of this method. Other studies, instead, considered the application of this approach with specific statistical models; for example: mixed effect models \parencite{katoBayesianApproachInequality2006}, evaluation of correlation coefficients \parencite{mulderBayesFactorsTesting2016} and multinomial models \parencite{heckMultinomialModelsLinear2019}. In addition, \textcite{guBayesianEvaluationInequality2014} proposed a general approximate procedure to evaluate inequality constraints in a wide range of statistical models.
 
 All studies mentioned above, however, considered only informative hypotheses with inequality constraints. Evaluating in the same hypothesis equality and inequality constraints, instead, it was no possible and equality constraints had to be approximate to "\textit{about equality constraints}" (i.e., a equality constraints of type $\theta_i = \theta_j$ is approximated to $|\theta_i - \theta_j| < \xi$ for a value of $\xi$ small enough {TODO more below?}).
 
-Only recently, \textcite{guApproximatedAdjustedFractional2018} introduced an approximate procedure to evaluate both equality and inequality constraints using the Bayes Factor with the encompassing prior approach in a wide range of statistical models (i.e., generalized linear mixed models and structural equation models). Subsequently, this approach was extended  by \textcite{mulderBayesFactorTesting2019} to generalized multivariate probit models and, finally, \textcite{mulderSimpleBayesianTesting2019} proposed an accurate procedure (i.e., not based on an approximation) that allows to test informative hypothesis with equality and inequality constraints in linear regression models.
+Only recently, \textcite{guApproximatedAdjustedFractional2018} introduced an approximate procedure to evaluate both equality and inequality constraints using the Bayes Factor with the encompassing prior approach in a wide range of statistical models (i.e., generalized linear mixed models and structural equation models). Subsequently, this approach was extended by \textcite{mulderBayesFactorTesting2019} to generalized multivariate probit models and, finally, \textcite{mulderSimpleBayesianTesting2019} proposed an accurate procedure (i.e., not based on an approximation) that allows testing informative hypotheses with equality and inequality constraints in linear regression models.
 
-The development and implementation of this approach are of particular interest because, although with its limits, it allows researchers to directly evaluate their expectations and hypotheses. Available literature, however, it is mainly based on articles published in specialize journals of mathematical psychology. The complexity of these articles makes it difficult for researches not familiar with this approach to clearly understand all the steps involved. On the other hand, articles offering a general introduction to the Bayes Factor do not provide enough details to allow readers to apply autonomously this method to their problems, but they usually relay on ad-hoc solutions implemented in some statistical software.
+The development and implementation of this approach are of particular interest because, although with its limits, it allows researchers to directly evaluate their expectations and hypotheses. The available literature, however, is mainly based on articles published in specialized journals of mathematical psychology. The complexity of these articles makes it difficult for researchers not familiar with this approach to clearly understand all the steps involved. On the other hand, articles offering a general introduction to the Bayes Factor do not provide enough details to allow readers to autonomously apply this method to their problems, but they usually rely on ad-hoc solutions implemented in some statistical software.
 
-The aim of this paper, therefore, is to offer a clear e detailed description of the Bayes Factor with the encompassing prior approach. In particular we refer to the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018} as it is applicable to a wider range of conditions than the more accurate approach proposed by \textcite{mulderSimpleBayesianTesting2019}. The paper is organized as follow. First the method is introduced providing a detailed description of all steps and elements involved in the formalization of informative hypothesis and Bayes Factor computation. Subsequently an application of the method to real data is presented to offer the opportunity to discuss the typical issues encountered in real complex scenarios.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The aim of this paper, therefore, is to offer a clear e detailed description of the Bayes Factor with the encompassing prior approach. In particular, we refer to the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018} as it applies to a wider range of conditions than the more accurate approach proposed by \textcite{mulderSimpleBayesianTesting2019}. The paper is organized as follows. First, the method is introduced providing a detailed description of all steps and elements involved in the formalization of informative hypothesis and Bayes Factor computation. Subsequently, an application of the method to real data is presented to offer the opportunity to discuss the typical issues encountered in real complex scenarios.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Bays Factor for Informative Hypothesis Testing}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The evaluation of informative hypotheses with equality and/or inequality constraints involves several steps and elements. In this section, first we describe how to formulate informative hypothesis. Subsequently, we introduce the Bayes Factor considering the encompassing prior approach based on the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018}.
+\section{Bayes Factor for Informative Hypothesis Testing}
+
+The evaluation of informative hypotheses with equality and/or inequality constraints involves several steps and elements. In this section, first, we describe how to formulate informative hypotheses. Subsequently, we introduce the Bayes Factor considering the encompassing prior approach based on the approximated method proposed by \textcite{guApproximatedAdjustedFractional2018}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Formulation of Informative Hypothesis}\label{sec:informative-hypothesis}
 
-Informative hypotheses can be defined according to researchers' expectation, evidence form the literature or theoretical perspectives and they are formed by equality and/or inequality constraints on certain model parameters. These constraints are obtained as a linear combination of certain parameters and eventual constant values. For example, it is possible to state that two parameters are equal ($\theta_i = \theta_j$), one parameter is grater than another ($\theta_i > \theta_j$), or express other complex conditions as the difference between two parameter is less than a given value ($\theta_i - \theta_j < .5$; $2\times\theta_i - \theta_j < .1 \times \sigma$).
+Informative hypotheses can be defined according to researchers' expectation, evidence from the literature or theoretical perspectives and they are formed by equality and/or inequality constraints on certain model parameters. These constraints are obtained as a linear combination of certain parameters and eventual constant values. For example, it is possible to state that two parameters are equal ($\theta_i = \theta_j$), one parameter is greater than another ($\theta_i > \theta_j$), or express other complex conditions as the difference between two parameter is less than a given value ($\theta_i - \theta_j < .5$; $2\times\theta_i - \theta_j < .1 \times \sigma$).
 
 Thus, an informative hypothesis $H_i$ with equality and inequality constraints can be expressed in the form
 \begin{equation}
@@ -169,7 +168,7 @@ H_i:\ \ R_E\bm{\theta} = r_E \ ~ \ \& \ ~ \ R_I\bm{\theta} > r_I,
 \end{equation}
 where $R_E$ is a matrix expressing the equality constraints and $r_E$ is a vector containing the constant values of the equality constraints. Whereas, $R_I$ is a matrix expressing the inequality constraints and $r_E$ is a vector containing the constant values of the inequality constraints. Finally, $\bm{\theta}$ a vector with the model parameters involved in the constraints.
 
-As an example, consider a study evaluating the efficacy of a new psychological treatment that is supposed to improve a given cognitive ability. In the study, a control group receiving no treatment and another group receiving the traditional treatment were included as comparison. Moreover, imagine that the new psychological treatment was administrated in three different modalities to different groups: individually, in group, and online. Researchers expect no differences between the three modalities but they hypothesize that the new treatment will perform better than the traditional one that in turn will be better than the no-treatment control condition. We can express this hypothesis as
+As an example, consider a study evaluating the efficacy of a new psychological treatment that is supposed to improve a given cognitive ability. In the study, a control group receiving no treatment and another group receiving the traditional treatment were included as a comparison. Moreover, imagine that the new psychological treatment was administered in three different modalities to different groups: individually, in-group, and online. Researchers expect no differences between the three modalities but they hypothesize that the new treatment will perform better than the traditional one and this, in turn, will be better than the no-treatment control condition. We can express this hypothesis as
 \begin{equation}
 H_i:\ \ \theta_{control}< \theta_{traditional} < \theta_{individual} = \theta_{group} = \theta_{online},
 \end{equation}
@@ -181,12 +180,12 @@ H_i: &\\
 \begin{bmatrix}
 0 & 0 & 1 & -1 & 0\\
 0 & 0 & 0 & 1 & -1
-\end{bmatrix}	\begin{bmatrix} \theta_{control} \\ \theta_{traditional} \\ \theta_{individual} \\ \theta_{group} \\ \theta_{online}\end{bmatrix} = \begin{bmatrix} 0 \\ 0\end{bmatrix} = r_E,\\~\\
+\end{bmatrix}        \begin{bmatrix} \theta_{control} \\ \theta_{traditional} \\ \theta_{individual} \\ \theta_{group} \\ \theta_{online}\end{bmatrix} = \begin{bmatrix} 0 \\ 0\end{bmatrix} = r_E,\\~\\
 & R_I\bm{\theta} =
 \begin{bmatrix}
 -1 & 1 & 0 & 0 & 0\\
 0 & -1 & 1 & 0 & 0
-\end{bmatrix}	\begin{bmatrix} \theta_{control} \\ \theta_{traditional} \\ \theta_{individual} \\ \theta_{group} \\ \theta_{online}\end{bmatrix} > \begin{bmatrix} 0 \\ 0\end{bmatrix} = r_I.
+\end{bmatrix}        \begin{bmatrix} \theta_{control} \\ \theta_{traditional} \\ \theta_{individual} \\ \theta_{group} \\ \theta_{online}\end{bmatrix} > \begin{bmatrix} 0 \\ 0\end{bmatrix} = r_I.
 \end{aligned}
 \end{equation}
 Note how each row of $R_E$ and $R_I$ matrices expresses an equality or an inequality constraint, respectively. For example, in the first row of $R_E$ we have $\theta_{individual} - \theta_{group} = 0$ (i.e., $\theta_{individual} = \theta_{group}$) and in the first row of $R_I$ we have $\theta_{traditional} - \theta_{control} > 0$ (i.e., $\theta_{traditional} > \theta_{control}$).
@@ -197,24 +196,24 @@ Now that we have understood how to define an informative hypothesis with equalit
 
 \subsection{Bayes Factor}
 
-The Bayes Factor of hypothesis $H_1$ against a competing hypothesis $H_2$ is defined as the ratio between the marginal likelihoods of the two hypothesis:
+The Bayes Factor of hypothesis $H_1$ against a competing hypothesis $H_2$ is defined as the ratio between the marginal likelihoods of the two hypotheses:
 \begin{equation}
 BF_{12} = \frac{Pr(Y|H_1)}{Pr(Y|H_2)} = \frac{\int l(Y|\theta_1, H_1) \pi(\theta_1| H_1)\,d\theta_1}{\int l(Y|\theta_2, H_2) \pi(\theta_2| H_2)\,d\theta_2},
 \end{equation}
 where $Y$ indicates the data, $\theta_i$ is the vector of parameters under the hypothesis $H_i$, $l(Y|\theta_i, , H_i)$ is the likelihood function under the hypothesis $H_i$, and $\pi(\theta_i| H_i)$ is the prior of the parameters under the hypothesis $H_i$. The marginal likelihood $Pr(Y|H_i)$ can be interpreted as a measure of the plausibility of the data under $H_i$.
 
-Therefore, the Bayes Factor $BF_{12}$ quantifies the relative support of the data for the two competing hypotheses (and not the ratio between the probability of the two hypotheses). For values close to 1, the Bayes Factor indicates that $H_1$ and $H_2$ have similar support from the data. Larger values indicate evidence in favor of $H_1$, whereas values close to 0 indicate evidence in favor of $H_2$. The ratio between the posterior probabilities of the two hypotheses can be computed as
+Therefore, the Bayes Factor $BF_{12}$ quantifies the relative support of the data for the two competing hypotheses (and not the ratio between the probability of the two hypotheses). For values close to 1, the Bayes Factor indicates that $H_1$ and $H_2$ have similar support from the data. Larger values indicate evidence in favour of $H_1$, whereas values close to 0 indicate evidence in favour of $H_2$. The ratio between the posterior probabilities of the two hypotheses can be computed as
 \begin{equation}
 \frac{Pr(H_1|Y)}{Pr(H_2|Y)} = \overbrace{\frac{Pr(Y|H_1)}{Pr(Y|H_2)}}^{BF_{12}} \times \frac{Pr(H_1)}{Pr(H_2)},
 \end{equation}
-where $Pr(H_i)$ is th prior probability of $H_i$ and $Pr(H_i|Y)$ is the posterior probability of $H_i$. For a detailed description of the Bayes Factor considering also its interpretation and application in different contexts see \textcite{wagenmakersBayesianHypothesisTesting2010, mulderEditorsIntroductionSpecial2016, heckReviewApplicationsBayes2020}.
+where $Pr(H_i)$ is the prior probability of $H_i$ and $Pr(H_i|Y)$ is the posterior probability of $H_i$. For a detailed description of the Bayes Factor considering also its interpretation and application in different contexts see \textcite{wagenmakersBayesianHypothesisTesting2010, mulderEditorsIntroductionSpecial2016, heckReviewApplicationsBayes2020}.
 
-Note that to compute the marginal likelihood $Pr(Y|H_i)$ of an hypothesis $H_i$ it is necessary to integrate the product between the likelihood and the prior. These integrals, however, are usually difficult to compute [in particular when hypotheses include order constraints]. In the case of hypothesis with equality and inequality constraints, however, it is possible to simplify the computation of the Bayes Factor using the encompassing prior approach.
+Note that to compute the marginal likelihood $Pr(Y|H_i)$ of a hypothesis $H_i$ it is necessary to integrate the product between the likelihood and the prior. These integrals, however, are usually difficult to compute [in particular when hypotheses include order constraints]. In the case of hypotheses with equality and inequality constraints, however, it is possible to simplify the computation of the Bayes Factor using the encompassing prior approach.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Encompassing Prior Approach}
 
-The basic idea of the encompassing prior approach is to consider an informative hypothesis as a subset of the parameter space of an unconstrained model. Thus, to evaluate the plausibility of an hypothesis we can consider the proportion of parameter space of the unconstrained model that satisfies the constraints. More specifically, given an informative hypothesis $H_i$ and an unconstrained model $H_u$ (or \textit{encompassing model}) that does not contains any constraints on the parameters, if the prior under $H_i$ is defined as a truncation of the proper prior under $H_u$ (\textit{encompassing prior}) according to the constraints, then the Bayes Factor between $H_i$ and $H_u$ can be written as
+The basic idea of the encompassing prior approach is to consider an informative hypothesis as a subset of the parameter space of an unconstrained model. Thus, to evaluate the plausibility of a hypothesis we can consider the proportion of parameter space of the unconstrained model that satisfies the constraints. More specifically, given an informative hypothesis $H_i$ and an unconstrained model $H_u$ (or \textit{encompassing model}) that does not contain any constraints on the parameters, if the prior under $H_i$ is defined as a truncation of the proper prior under $H_u$ (\textit{encompassing prior}) according to the constraints, then the Bayes Factor between $H_i$ and $H_u$ can be written as
 \begin{equation}\label{eq:BF-encompassing}
 \begin{aligned}
 BF_{iu} &= \frac{Pr(\text{Inequality Const|Equality Const, Data, } H_u)}{\pi(\text{Inequality Const|Equality Const, } H_u)} \times \frac{Pr(\text{Equality Const|Data, } H_u)}{\pi(\text{Equality Const}|H_u)} \\ ~\\
@@ -229,7 +228,7 @@ The first term is the ratio between the conditional posterior probability and co
   \item{The \textbf{marginal posterior density} $Pr(R_E\theta =r_E| Y, H_u)$ is a measure of the fit of the equality constraints of $H_i$ under $H_u$.}
   \item{The \textbf{marginal prior density} $\pi(R_E\theta =r_E| H_u)$ is a measure of the complexity of the equality constraints of $H_i$ under $H_u$.}
 \end{itemize}
-Summarizing at the denominators we have measures of the \textbf{complexity} of the inequality and equality constraints of the informative hypothesis $H_i$; at the numerators, instead, we have measures of the \textbf{fit} of the data to the inequality and equality constraints of the informative hypothesis $H_i$. Thus, if the hypothesis $H_i$, although applying constraints to the parametric space (less complexity), is still able to provide a good description of the data, the Bayes Factor will favor $H_i$. On the contrary, if the support of the data is poor, the Bayes Factor will favor the unconstrained model $H_u$.
+Summarizing at the denominators we have measures of the \textbf{complexity} of the inequality and equality constraints of the informative hypothesis $H_i$; at the numerators, instead, we have measures of the \textbf{fit} of the data to the inequality and equality constraints of the informative hypothesis $H_i$. Thus, if the hypothesis $H_i$, although applying constraints to the parametric space (less complexity), is still able to provide a good description of the data, the Bayes Factor will favour $H_i$. On the contrary, if the support of the data is poor, the Bayes Factor will favour the unconstrained model $H_u$.
 
 The proof of the formulation of the Bayes Factor with the encompassing prior approach and the evaluation of its consistency (i.e., the probability of selecting the correct hypothesis goes to 1 for the sample size going to infinity) is provided in \textcite{guApproximatedAdjustedFractional2018, mulderBayesFactorTesting2019}. Note that slightly different notation is used here to enhance comprehension and underline that at the numerators we have values computed from the posterior of $H_u$, whereas at the denominators we have values computed from the prior of $H_u$.
 
@@ -238,15 +237,15 @@ To compute the Bayes Factor with the encompassing prior approach, only the prior
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Definition of the Encompassing Prior}
 
-Prior specification is an important element as the resulting Bayes Factor value is affected by the prior choice. This aspects is particularly relevant in the case of equality constraints \parencite{lindleyStatisticalParadox1957, bartlettCommentLindleyStatistical1957}, whereas inequality constraints are not affected as long as the prior is symmetric and centered to the focal point of interest (this aspect will be further discussed in Section~\ref{sec:adj-prior}).
+Prior specification is an important element as the resulting Bayes Factor value is affected by the prior choice. This aspect is particularly relevant in the case of equality constraints \parencite{lindleyStatisticalParadox1957, bartlettCommentLindleyStatistical1957}, whereas inequality constraints are not affected as long as the prior is symmetric and centred to the focal point of interest (this aspect will be further discussed in Section~\ref{sec:adj-prior}).
 
-In order to avoid arbitrary prior specification, different methods have been proposed in the literature. For example: Jeffreys-Zellner-Siow (JZS) objective priors do not require subjective specification \parencite{jeffreysTheoryProbability1961,zellnerPosteriorOddsRatios1980, bayarriExtendingConventionalPriors2007}; partial Bayes Factor \parencite{desantisMethodsDefaultRobust1999} defines the prior according to part of the data, wheres the remaining part is used to compute the Bayes Factor; intrinsic Bayes Factor \parencite{bergerIntrinsicBayesFactor1996} and fractional Bayes Factor \parencite{ohaganFractionalBayesFactors1995} are a variation of the partial Bayes Factor where priors are defined according to the average of all possible minimal subsets of the data or to a given small fraction of the data, respectively.
+To avoid arbitrary prior specification, different methods have been proposed in the literature. For example: Jeffreys-Zellner-Siow (JZS) objective priors do not require subjective specification \parencite{jeffreysTheoryProbability1961,zellnerPosteriorOddsRatios1980, bayarriExtendingConventionalPriors2007}; partial Bayes Factor \parencite{desantisMethodsDefaultRobust1999} defines the prior according to part of the data, whereas the remaining part is used to compute the Bayes Factor; intrinsic Bayes Factor \parencite{bergerIntrinsicBayesFactor1996} and fractional Bayes Factor \parencite{ohaganFractionalBayesFactors1995} are a variation of the partial Bayes Factor where priors are defined according to the average of all possible minimal subsets of the data or to a given small fraction of the data, respectively.
 
-Both, \textcite{guApproximatedAdjustedFractional2018, mulderSimpleBayesianTesting2019} based their approach on the fractional Bayes Factor. Starting from a non-informative prior, a minimal fraction of the data is used to obtain a posterior that is subsequently used as proper prior, we refer to it as \textit{fractional prior} (have you ever heard Lindley's \citeyear{lindleyBayesianStatisticsReview1972} famous quote \textit{“Today’s posterior is tomorrow’s prior”}?). The remaining part of the data is used to compute the Bayes Factor. The two approaches, however, have an important difference. \textcite{guApproximatedAdjustedFractional2018} approximated the obtained fractional prior (as well as the posterior, see Section~\ref{sec:posteerior-encompassing}) to a (multivariate) normal distribution. In fact, due to large-sample theory \parencite{gelmanBayesianDataAnalysis2013}, parameter posterior distribution can be approximated to a (multivariate) normal distribution. On the contrary, \textcite{mulderSimpleBayesianTesting2019} provided analytic solution in the case of linear regression models, obtaining an accurate quantification of the distribution.
+Both, \textcite{guApproximatedAdjustedFractional2018, mulderSimpleBayesianTesting2019} based their approach on the fractional Bayes Factor. Starting from a non-informative prior, a minimal fraction of the data is used to obtain a posterior that is subsequently used as proper prior, we refer to it as \textit{fractional prior} (have you ever heard Lindley's \citeyear{lindleyBayesianStatisticsReview1972} famous quote \textit{“Today’s posterior is tomorrow’s prior”}?). The remaining part of the data is used to compute the Bayes Factor. The two approaches, however, have an important difference. \textcite{guApproximatedAdjustedFractional2018} approximated the obtained fractional prior (as well as the posterior, see Section~\ref{sec:posteerior-encompassing}) to a (multivariate) normal distribution. In fact, due to large-sample theory \parencite{gelmanBayesianDataAnalysis2013}, parameter posterior distribution can be approximated to a (multivariate) normal distribution. On the contrary, \textcite{mulderSimpleBayesianTesting2019} provided an analytic solution in the case of linear regression models, obtaining an accurate quantification of the distribution.
 
-All methods discussed above suggests objective procedures to avoid arbitrary prior specification. Nevertheless, using subjective (reasonable) priors according to previous information or experts' indication is still a possible approach. Keep in mind, however, that prior specification (even if obtained through an \textit{objective procedure}) affects the Bayes Factor results. Thus, it is fundamental to conduct a prior sensitivity analysis to evaluate the influence of prior specification on the results \parencite{schadWorkflowTechniquesRobust2021, duBayesFactorOnesample2019}.
+All methods discussed above suggest objective procedures to avoid arbitrary prior specification. Nevertheless, using subjective (reasonable) priors according to previous information or experts' indications is still a possible approach. Keep in mind, however, that prior specification (even if obtained through an \textit{objective procedure}) affects the Bayes Factor results. Thus, it is fundamental to conduct a prior sensitivity analysis to evaluate the influence of prior specification on the results \parencite{schadWorkflowTechniquesRobust2021, duBayesFactorOnesample2019}.
 
-Going back to our psychological treatment example, we could use independent normal distributions to specify the prior of each parameter of interest (i.e. $\theta_{control}$, $\theta_{traditional}$, $\theta_{individual}$, $\theta_{group}$, and $\theta_{online}$) obtaining as resulting prior a multivariate normal distribution with mean vector $\mu_{\theta}$ and covariance matrix $\Sigma_{\theta}$. In this way we can still follow the approach proposed by \textcite{guApproximatedAdjustedFractional2018}, based on normal approximation, that will simplify the computation of the Bayes Factor. For example, suppose that, according to experts indications, a reasonable prior choice for all parameters of interest is a normal distribution with mean zero and standard deviation 2:  $\mathcal{N}(0,2)$. The resulting prior is a multivariate normal distribution have mean vector $\mu_{\theta}$ and covariance matrix $\Sigma_{\theta}$:
+Going back to our psychological treatment example, we could use independent normal distributions to specify the prior of each parameter of interest (i.e. $\theta_{control}$, $\theta_{traditional}$, $\theta_{individual}$, $\theta_{group}$, and $\theta_{online}$) obtaining as resulting prior a multivariate normal distribution with mean vector $\mu_{\theta}$ and covariance matrix $\Sigma_{\theta}$. In this way we can still follow the approach proposed by \textcite{guApproximatedAdjustedFractional2018}, based on normal approximation, that will simplify the computation of the Bayes Factor. For example, suppose that, according to experts' indications, a reasonable prior choice for all parameters of interest is a normal distribution with mean zero and standard deviation 2:  $\mathcal{N}(0,2)$. The resulting prior is a multivariate normal distribution have mean vector $\mu_{\theta}$ and covariance matrix $\Sigma_{\theta}$:
 \begin{equation}
 \begin{gathered}
 \pi(\bm{\theta})\sim \mathcal{N}(\mu_{\theta}, \Sigma_{\theta})\\~\\
@@ -263,20 +262,20 @@ Going back to our psychological treatment example, we could use independent norm
 \end{gathered}
 \end{equation}
 
-At this point, several authors underline the importance of centering the prior distribution on the constraints points of interest. Let's further discuss this issue in the next section.
+At this point, several authors underline the importance of centring the prior distribution on the constraints points of interest. Let's further discuss this issue in the next section.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Adjusting Prior Mean}\label{sec:adj-prior}
 
-When evaluating informative hypotheses with equality and inequality constraints using the Bayes Factor, the priors have to be centered on the focal points of interests  \parencite{zellnerPosteriorOddsRatios1980, jeffreysTheoryProbability1961, mulderPriorAdjustedDefault2014}. In the case of equality constraints, centering the prior allows to consider values close to the point of interest more likely a priori than distant values. This should be in line with researchers' expectation, otherwise one could question why testing that value.
+When evaluating informative hypotheses with equality and inequality constraints using the Bayes Factor, the priors have to be centred on the focal points of interests  \parencite{zellnerPosteriorOddsRatios1980, jeffreysTheoryProbability1961, mulderPriorAdjustedDefault2014}. In the case of equality constraints, centring the prior allows one to consider values close to the point of interest more likely a priori than distant values. This should be in line with researchers' expectations, otherwise one could question why testing that value.
 
-In the case of inequality constraints, instead, this adjustment is done to guarantee that no constrain is favored a priori. Consider the example represented in Figure~\ref{fig:plot-prior-adj} where the hypothesis $\theta_i > k$ is evaluated against $\theta_i < k$. Remember that, when computing the Bayes Factor, prior probability that the constraint holds is used as a measure of complexity of the hypothesis. Thus, if the prior is not centered on the focal point of interest (i.e., $k$), the less complex hypothesis will be erroneously preferred a priori over the other. Only by centering the prior on the focal point the hypotheses will be equally likely a priori.
+In the case of inequality constraints, instead, this adjustment is done to guarantee that no constraint is favoured a priori. Consider the example represented in Figure~\ref{fig:plot-prior-adj} where the hypothesis $\theta_i > k$ is evaluated against $\theta_i < k$. Remember that, when computing the Bayes Factor, the prior probability that the constraint holds is used as a measure of the complexity of the hypothesis. Thus, if the prior is not centred on the focal point of interest (i.e., $k$), the less complex hypothesis will be erroneously preferred a priori over the other. Only by centring the prior on the focal point, the hypotheses will be equally likely a priori.
 
 <<plot-prior-adj, cache=TRUE, fig.cap="Example of non centered prior considering the constraints $\\theta_i > k$ vs. $\\theta_i < k$">>=
 plot_prior_adj()
 @
 
-Centering the prior to the focal point, however, can be difficult in the case of complex hypotheses where constraints are defined as linear combination of several parameters. To overcome this issue, \textcite{guApproximatedAdjustedFractional2018} proposed the following transformation of the parameters of interest:
+Centering the prior to the focal point, however, can be difficult in the case of complex hypotheses where constraints are defined as a linear combination of several parameters. To overcome this issue, \textcite{guApproximatedAdjustedFractional2018} proposed the following transformation of the parameters of interest:
 \begin{equation} \label{eq:param-transf}
 \begin{aligned}
 \bm{\beta} = &R\bm{\theta}-r\\~\\
@@ -288,12 +287,12 @@ where $\bm{\theta}$ is the vector of original parameters, $R$ is the matrix expr
 H_i:\ \ \beta_E = 0 \ ~ \ \& \ ~ \ \beta_I > 0.
 \end{equation}
 
-This parameter transformation has the advantage of simplifying the hypothesis expression without changing the original expectations. In fact, for example, evaluating $\theta_i > \theta_j$ is equivalent to evaluate $\beta_i = \theta_i - \theta_j > 0$. Thus, given the original prior $\pi(\bm{\theta})\sim\mathcal{N}(\mu_{\theta}, \Sigma_{\theta})$, the prior of the new parameter vector $\bm{\beta}$ is given by
+This parameter transformation has the advantage of simplifying the hypothesis expression without changing the original expectations. In fact, for example, evaluating $\theta_i > \theta_j$ is equivalent to evaluating $\beta_i = \theta_i - \theta_j > 0$. Thus, given the original prior $\pi(\bm{\theta})\sim\mathcal{N}(\mu_{\theta}, \Sigma_{\theta})$, the prior of the new parameter vector $\bm{\beta}$ is given by
 \begin{equation}\label{eq:normal-transf}
 \pi(\bm{\beta}) \sim \mathcal{N}(\mu_{\beta}, \Sigma_{\beta}) = \mathcal{N}(R\bm{\theta}-r, R\Sigma_{\theta}R^T).
 \end{equation}
 
-Note that this operation is nothing more than applying a linear transformation to the original multivariate normal distribution.\footnote{Given a multivariate normal distribution $Y\sim\mathcal{N}(\mu, \Sigma)$, the result of a linear transformation $AY + b$ is still a multivariate normal distribution with vector mean $\mu_{t}=AY+b$ and covariance matrix $\Sigma_{t} = A\Sigma A^T$.} In order to do that, however, it is necessary for the matrix $R$ to be \textit{full-row-rank} (i.e., all rows are linearly independent). If this is not the case, the obtained matrix $\Sigma_{\beta}$ will not be a proper covariance matrix. In Section~\ref{sec:rank-hypo}, we will discuss a solution to overcome this limit.
+Note that this operation is nothing more than applying a linear transformation to the original multivariate normal distribution.\footnote{Given a multivariate normal distribution $Y\sim\mathcal{N}(\mu, \Sigma)$, the result of a linear transformation $AY + b$ is still a multivariate normal distribution with vector mean $\mu_{t}=AY+b$ and covariance matrix $\Sigma_{t} = A\Sigma A^T$.} In order to do that, however, the matrix $R$ must be \textit{full-row-rank} (i.e., all rows are linearly independent). If this is not the case, the obtained matrix $\Sigma_{\beta}$ will not be a proper covariance matrix. In Section~\ref{sec:rank-hypo}, we will discuss a solution to overcome this limit.
 
 Now, to center the prior of $\bm{\beta}$ to the focal points, we can simply set the mean vector to zero. Thus, the adjusted prior of $\bm{\beta}$ is
 \begin{equation}
@@ -314,14 +313,14 @@ Considering the psychological treatment example, the obtained adjusted prior is 
 \end{bmatrix}.
 \end{equation}
 
-So far we have defined the prior for the parameter vector $\bm{\theta}$ of the encompassing model. Moreover, we have obtained the adjusted prior for the new transformed parameter vector $\bm{\beta}$ that will allow us to properly evaluate the equality and inequality constraints. At this point we need to compute the posterior of the encompassing model parameters.
+So far we have defined the prior for the parameter vector $\bm{\theta}$ of the encompassing model. Moreover, we have obtained the adjusted prior for the new transformed parameter vector $\bm{\beta}$ that will allow us to properly evaluate the equality and inequality constraints. At this point, we need to compute the posterior of the encompassing model parameters.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Posterior Encompassing Model}\label{sec:posteerior-encompassing}
 
-Posterior distribution of the encompassing model parameters can be obtained thorough numerical approximation using Markov Chain Monte Carlo (MCMC) sampling algorithms, such as Metropolis–Hastings algorithm \parencite{hastingsMonteCarloSampling1970} or Gibbs sampling \parencite{gemanStochasticRelaxationGibbs1984}. Bayesian statistical inference methods are implemented in all major statistical software. In R statistical software \parencite{rcoreteamLanguageEnvironmentStatistical2021}, for example, the popular \texttt{brms} package \parencite{burknerBrmsPackageBayesian2017, burknerAdvancedBayesianMultilevel2018a}, which is based on STAN \parencite{standevelopmentteamRStanInterfaceStan2020}, allows to easily conduct Bayesian inference.
+Posterior distribution of the encompassing model parameters can be obtained through numerical approximation using Markov Chain Monte Carlo (MCMC) sampling algorithms, such as Metropolis–Hastings algorithm \parencite{hastingsMonteCarloSampling1970} or Gibbs sampling \parencite{gemanStochasticRelaxationGibbs1984}. Bayesian statistical inference methods are implemented in all major statistical software. In R statistical software \parencite{rcoreteamLanguageEnvironmentStatistical2021}, for example, the popular \texttt{brms} package \parencite{burknerBrmsPackageBayesian2017, burknerAdvancedBayesianMultilevel2018a}, which is based on STAN \parencite{standevelopmentteamRStanInterfaceStan2020}, allows to easily conduct Bayesian inference.
 
-Following \textcite{guApproximatedAdjustedFractional2018} approach, once we obtained the model posterior, we can approximate it to a (multivariate) normal distribution. Thus, the resulting posterior distribution is
+Following \textcite{guApproximatedAdjustedFractional2018} approach, once we obtain the model posterior, we can approximate it to a (multivariate) normal distribution. Thus, the resulting posterior distribution is
 \begin{equation}
 Pr(\bm{\theta}|Y) \sim \mathcal{N}(\hat{\bm{\theta}}, \hat{\Sigma}_{\theta})
 \end{equation}
@@ -330,11 +329,11 @@ where posterior mean $\hat{\bm{\theta}}$ and posterior covariance $\hat{\Sigma}_
 Pr(\bm{\beta}|Y) \sim \mathcal{N}(\hat{\bm{\beta}}, \hat{\Sigma}_{\beta}) = \mathcal{N}(R\hat{\bm{\theta}}-r, R\hat{\Sigma}_{\theta}R^T).
 \end{equation}
 
-At this point, we have both the prior and the posterior distributions of the parameters of interests of the encompassing model. Before to proceed, however, let's underline few important aspects.
+At this point, we have both the prior and the posterior distributions of the parameters of interests of the encompassing model. Before proceeding, however, let's underline some important aspects.
 
-When defining the prior, we adjusted the prior mean centering it over the constraint focal points. This change would slightly influence the resulting posterior as well. However, as underlined by \textcite{guApproximatedAdjustedFractional2018}, small prior changes will result in negligible changes on the posterior for large samples due to large-sample theory. For this reason, the authors do not adjust the posterior in their approach, but only the prior. Therefore, when computing the posterior we can simply consider the prior $\pi(\bm{\theta})\sim \mathcal{N}(\mu_{\theta}, \Sigma_{\theta})$ defined at the beginning, without worrying about adjusting it.
+When defining the prior, we adjusted the prior mean centring it over the constraint focal points. This change would slightly influence the resulting posterior as well. However, as underlined by \textcite{guApproximatedAdjustedFractional2018}, small prior changes will result in negligible changes on the posterior for large samples due to large-sample theory. For this reason, the authors do not adjust the posterior in their approach, but only the prior. Therefore, when computing the posterior we can simply consider the prior $\pi(\bm{\theta})\sim \mathcal{N}(\mu_{\theta}, \Sigma_{\theta})$ defined at the beginning, without worrying about adjusting it.
 
-In addition, note that, in \textcite{guApproximatedAdjustedFractional2018} original approach, the posterior mean $\hat{\bm{\theta}}$ and the posterior covariance $\hat{\Sigma_{\theta}}$ are not obtained from the posterior draws but they are computed directly from the sample data using the maximum likelihood estimate and the inverse of the Fisher information matrix, respectively. This has the advantage of being faster (posterior draws are not required) but it may be not possible for some complex model. [TODO add reference? change something, dire che così non si rispetta molto l'inferenza bayesiana, cioè mi sempra un po' una porcata come approsimazione]
+In addition, note that, in \textcite{guApproximatedAdjustedFractional2018} original approach, the posterior mean $\hat{\bm{\theta}}$ and the posterior covariance $\hat{\Sigma_{\theta}}$ are not obtained from the posterior draws but they are computed directly from the sample data using the maximum likelihood estimate and the inverse of the Fisher information matrix, respectively. This has the advantage of being faster (posterior draws are not required) but it may be not possible for some complex models. [TODO add references? change something, dire che così non si rispetta molto l'inferenza bayesiana, cioè mi sempra un po' una porcata come approsimazione]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -423,23 +422,23 @@ condMVNorm::pcmvnorm(
 
 Analogously, it is possible to compute the \textbf{conditional posterior probability} $\pi_{adj}(\beta_I > 0 | \beta_E =0, Y, H_u)$ considering this time the estimated posterior mean vector $\bm{\hat{\beta}}$ and the estimated posterior covariance matrix $\hat{\Sigma}_{\beta}$.
 
-At this point we have all the elements required and we can easily compute the Bayes Factor $BF_{iu}$.
+At this point, we have all the elements required and we can easily compute the Bayes Factor $BF_{iu}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Advanced Elements}
 
-In the previous sections, we have described in details all the steps and elements required to evaluate informative hypotheses using the Bayes Factor with encompassing prior approach. Before moving to an applied example, however, we consider some more advanced aspects that are important to take into account when applying this method. In particular, we discuss issues related to parameters standardization, range constraints, hypothesis matrix rank, comparable hypotheses, and bounded parameter space.
+In the previous sections, we have described in detail all the steps and elements required to evaluate informative hypotheses using the Bayes Factor with the encompassing prior approach. Before moving to an applied example, however, we consider some more advanced aspects that are important to take into account when applying this method. In particular, we discuss issues related to parameters standardization, range constraints, hypothesis matrix rank, comparable hypotheses, and bounded parameter space.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Parameters Standardization}\label{sec:param-standard}
 
-When evaluating informativehypothesis, it may be necessary to standardize the parameters of interest. As described by \textcite{guApproximatedAdjustedFractional2018}, parameters have to be standardized when comparing regression coefficient of continuous variables that are measured on different scales. In these cases, in fact, evaluating if $\theta_i>\theta_j$ is affected by the scale of the two variables. Standardizing the parameters allows to correctly compare the two parameters. On the contrary, standardizing the parameters is not necessary if they are compared to constants (i.e., $\theta > 3$) or if they represent groups means, such as the case of categorical variables.
+When evaluating informative hypotheses, it may be necessary to standardize the parameters of interest. As described by \textcite{guApproximatedAdjustedFractional2018}, parameters have to be standardized when comparing regression coefficients of continuous variables that are measured on different scales. In these cases, in fact, evaluating if $\theta_i>\theta_j$ is affected by the scale of the two variables. Standardizing the parameters allows to correctly compare the two parameters. On the contrary, standardizing the parameters is not necessary if they are compared to constants (i.e., $\theta > 3$) or if they represent groups means, such as the case of categorical variables.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Range Constraints}
 
-It is possible to express range constraints such as $0<\theta_i<1$ in which the parameter is constrained between two values. These constraints can be expressed as the combination of two constraints. For example, the previous hypothesis is equivalent to $\beta_1 = \theta_i>0$ and $\beta_2 = 1 - \theta_i > 0$. However, adjusting the prior mean in the case of range constraints, it would require to center the prior on the middle of the range space \parencite{mulderBIEMSFortran902012}. Thus, in the previous example we would set $\mu_{\beta_1} = \mu_{\beta_2} = .5$. For a detailed description of prior specification in the case of range constraints, consider Appendix A in \textcite{guApproximatedAdjustedFractional2018}.
+It is possible to express range constraints such as $0<\theta_i<1$ in which the parameter is constrained between two values. These constraints can be expressed as the combination of two constraints. For example, the previous hypothesis is equivalent to $\beta_1 = \theta_i>0$ and $\beta_2 = 1 - \theta_i > 0$. However, adjusting the prior mean in the case of range constraints would require to centre the prior on the middle of the range space \parencite{mulderBIEMSFortran902012}. Thus, in the previous example we would set $\mu_{\beta_1} = \mu_{\beta_2} = .5$. For a detailed description of prior specification in the case of range constraints, consider Appendix A in \textcite{guApproximatedAdjustedFractional2018}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Hypothesis Matrix Rank}\label{sec:rank-hypo}
@@ -448,7 +447,7 @@ In Equation~\ref{eq:normal-transf}, we presented how to obtain the distribution 
 
 To overcome this limit, we can use the same solution adopted by \textcite{mulderBayesFactorsTesting2016, mulderSimpleBayesianTesting2019}. A matrix $R^*$ is defined selecting the maximum number of linearly independent rows of $R$ and it is used to compute the covariance matrix $\Sigma_{\beta} = R^*\Sigma_{\theta}R^{*T}$. This allows us to obtain the distribution of the parameters $\bm{\beta^*}$ that are linearly independent. The remaining constraints can be expressed as linear combinations of the parameters $\bm{\beta^*}$. Finally, to evaluate the probability that all constraints holds we can draw a large sample from the distribution of $\bm{\beta^*}$ and compute the proportion of draws satisfying all the constraints.
 
-Let's see an example to clarify this procedure. Suppose we have the following hypothesis $H_i: 0 = \theta_1 < \{\theta_2, \theta_3\} < \theta_4$. Thus, the corresponding hypothesis matrix is
+Let's see an example to clarify this procedure. Suppose we have the following hypothesis: $H_i: 0 = \theta_1 < \{\theta_2, \theta_3\} < \theta_4$. Thus, the corresponding hypothesis matrix is
 \begin{equation}
 \begin{aligned}
 R &= \begin{bmatrix}
@@ -532,65 +531,65 @@ r_{iI}
 \end{bmatrix}.
 \end{equation}
 
-This will allow to select a common solution of $\bm{\theta}$  that can be used as the adjusted prior mean of the encompassing model. Note that to solve these equations, also inequality constraints are considered as equality constraints.
+This will allow us to select a common solution of $\bm{\theta}$  that can be used as the adjusted prior mean of the encompassing model. Note that to solve these equations, also inequality constraints are considered as equality constraints.
 
 For example, $H_1: \theta_1 > \theta_2$ and $H_2: 0 = \theta_1 < \theta_2$ are comparable hypotheses because exists a common solution ($\theta_1 = \theta_2 = 0$). On the country, $H_3: \theta_1 < \theta_2 +3 $ and $H_4: \theta_1 = \theta_2$ are not comparable hypotheses because there is no a common solution to $\theta_1 = \theta_2 +3 $ and $\theta_1 = \theta_2$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Bounded Parameter Space}
 
-The described approach using (multivariate) normal approximation can be straightforward applied when parameters of interest are unbounded. In case of bounded parameters (i.e., variances, correlations, or probabilities), however, appropriate prior distributions are required to take into account the parameters bounded nature.
+The described approach using (multivariate) normal approximation can be straightforward applied when parameters of interest are unbounded. In the case of bounded parameters (i.e., variances, correlations, or probabilities), however, appropriate prior distributions are required to take into account the parameters bounded nature.
 
-Note that, if only inequality constraints are considered, the prior distribution is only used to measure the complexity of the inequality constrained hypotheses. In this case, the prior probability that an inequality constraint holds will be insensitive to the exact distributional form, as long as the distribution is symmetrical and centered on the focal point. For example, the probability that a correlation coefficient $\rho_i$ is greater than zero is the same if we consider a  uniform distribution between -1 and 1 (taking into account parameter bounded nature) or if we consider a normal distribution centered on zero (without taking into account parameter bounded nature; see Figure~\ref{fig:plot-bounded-par}).
+Note that, if only inequality constraints are considered, the prior distribution is only used to measure the complexity of the inequality constrained hypotheses. In this case, the prior probability that an inequality constraint holds will be insensitive to the exact distributional form, as long as the distribution is symmetrical and centred on the focal point. For example, the probability that a correlation coefficient $\rho_i$ is greater than zero is the same if we consider a  uniform distribution between -1 and 1 (taking into account parameter bounded nature) or if we consider a normal distribution centred on zero (without taking into account parameter bounded nature; see Figure~\ref{fig:plot-bounded-par}).
 
 <<plot-bounded-par, cache=TRUE, fig.cap="The probability that $\\rho_i>0$ is the same under the uniform prior and the normal prior">>=
 plot_bounded_par()
 @
 
-Thus, as suggested by \textcite{guBayesianEvaluationInequality2014}, as long as the complexity of the constrained hypotheses is the same regardless of a (multivariate) normal distribution or an appropriate bonded prior distribution being used, it is still possible to follow the described approach. This is true for hypotheses that belong to an equivalent set \parencite[for an rigorous definition of equivalent set see][]{guBayesianEvaluationInequality2014, hoijtinkInformativeHypothesesTheory2012}.
+Thus, as suggested by \textcite{guBayesianEvaluationInequality2014}, as long as the complexity of the constrained hypotheses is the same regardless of a (multivariate) normal distribution or an appropriate bonded prior distribution being used, it is still possible to follow the described approach. This is true for hypotheses that belong to an equivalent set \parencite[for a rigorous definition of equivalent set see][]{guBayesianEvaluationInequality2014, hoijtinkInformativeHypothesesTheory2012}.
 
-In the case of equality and inequality constraints, however, normal approximation is possible, based on the same rationale as before, only to compute the conditional prior probability. Instead, to estimate the marginal prior density, alternative solutions have to be adopted using appropriate prior distribution to take into account the parameters bounded nature. See \textcite{mulderBayesFactorTesting2019} for an example of hypotheses evaluating correlation coefficients in generalized multivariate probit model.
+In the case of equality and inequality constraints, however, normal approximation is possible, based on the same rationale as before, only to compute the conditional prior probability. Instead, to estimate the marginal prior density, alternative solutions have to be adopted using appropriate prior distribution to take into account the bounded nature of the parameters. See \textcite{mulderBayesFactorTesting2019} for an example of hypotheses evaluating correlation coefficients in generalized multivariate probit models.
 
 Note that these issues are relevant only when considering the prior distribution. In the case of the posterior distribution, instead, we can safely approximate it to a (multivariate) normal distribution thanks to the large-sample theory. Moreover, prior specification is relevant only for the parameters of interest (i.e., the parameters involved in the constraints) as nuisance parameters are integrated out in the Bayes Factor. Thus, the results will be insensitive to the actual choice of the prior for the nuisance parameters as long as it is vague enough.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Hypotheses Testing in the Attachement Theory}
+\section{Hypotheses Testing in the Attachment Theory}
 
 In this section, we propose a real case study evaluating different informative hypotheses within the attachment theory. This will allow us to face the common issues found in real research applications. First, we provide the required background information regarding the attachment theory and the study aims and characteristics. Subsequently, all the steps involved in the evaluation of informative hypotheses using the Bayes Factor with the encompassing prior approach are described. Finally, the results are briefly discussed considering the prior sensitivity analysis and limits of this approach.
 
-All analyses were conducted using the R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data [?], and analysis code are available at TODO. The analyses report with further details is also available online at TODO.
+All analyses were conducted using the R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data [?], and analysis code are available at TODO. The analysis report with further details is also available online at TODO.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Background Information}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{The Attachamnt Theory}
+\subsubsection{The Attachment Theory}
 
-The attachment theory originates from the pioneering work of \textcite{bowlbyAttachmentLoss1969} and \textcite{ainsworthAttachmentExplorationSeparation1970}. The main tenet of attachment theory is that the relationships with the caregivers that children develop in the early stages of their life (i.e., \textit{attachment bound}) will affect children social and emotional future development \parencite{cassidyHandbookAttachmentTheory2016}. The attachment bound concerns particular aspects of the relationship that are related to emotional regulation, proximity and protection. Four main attachment styles have been recognized in the literature according to the different behavioral patterns and internal representations:
+The attachment theory originates from the pioneering work of \textcite{bowlbyAttachmentLoss1969} and \textcite{ainsworthAttachmentExplorationSeparation1970}. The main tenet of attachment theory is that the relationships with the caregivers that children develop in the early stages of their life (i.e., \textit{attachment bound}) will affect children social and emotional future development \parencite{cassidyHandbookAttachmentTheory2016}. The attachment bound concerns particular aspects of the relationship that are related to emotional regulation, proximity and protection. Four main attachment styles have been recognized in the literature according to the different behavioural patterns and internal representations:
 \begin{itemize}
   \item{\textbf{Secure Attachment}} - children who are securely attached display optimal emotional regulation and they consider the caregiver as a secure base.
-  \item{\textbf{Anxious Attachment}} - anxious children manifest high level of anxiety in stressful situations and their relationships with the caregivers is ambivalent displaying anger or helplessness.
+  \item{\textbf{Anxious Attachment}} - anxious children manifest high levels of anxiety in stressful situations and their relationships with the caregivers is ambivalent displaying anger or helplessness.
   \item{\textbf{Avoidant Attachment}} - avoidant children mask distress in stressful situations displaying little emotions and their relationships with the caregivers is characterized by little involvement.
-  \item{\textbf{Fearful Attachment}} - fearful children lack an adequate emotional regulation in stressful situation displaying disorganized behaviors.
+  \item{\textbf{Fearful Attachment}} - fearful children lack adequate emotional regulation in stressful situations displaying disorganized behaviors.
 \end{itemize}
 
-The attachment theory is one of the main and most supported theory in psychology \parencite{cassidyHandbookAttachmentTheory2016}. In the literature, however, there is still an open debate on the relative role of mother and father attachment on children social-emotional development. Four different main theoretical perspectives have been identified \parencite{brethertonFathersAttachmentTheory2010}:
+The attachment theory is one of the main and most supported theories in psychology \parencite{cassidyHandbookAttachmentTheory2016}. In the literature, however, there is still an open debate on the relative role of mother and father attachment on children's social-emotional development. Four different main theoretical perspectives have been identified \parencite{brethertonFathersAttachmentTheory2010}:
 \begin{itemize}
-  \item{\textbf{Monotropy Theory}} - only the principal attachment figure (usually the mother) has an impact on children development.
+  \item{\textbf{Monotropy Theory}} - only the principal attachment figure (usually the mother) has an impact on children's development.
   \item{\textbf{Hierarchy Theory}} - the principal attachment figure (usually the mother) has a greater impact on children development than the subsidiary attachment figure (usually the father).
-  \item{\textbf{Independence Theory}} - all attachment figures are equally important but they affect differently the children development.
-  \item{\textbf{Integration Theory}} - to understand the impact on children development is necessary to consider attachment relationships taken together.
+  \item{\textbf{Independence Theory}} - all attachment figures are equally important but they affect the children's development differently.
+  \item{\textbf{Integration Theory}} - to understand the impact on children's development it is necessary to consider attachment relationships taken together.
 \end{itemize}
-Contrasting results have been reported by studies investigating which is the "\textit{correct}" theory. No study, however, have tried to properly evaluate the different theoretical perspectives by directly compare the different hypotheses. [TODO add some refrence]
+Contrasting results have been reported by studies investigating which is the "\textit{correct}" theory. No study, however, has tried to properly evaluate the different theoretical perspectives by directly comparing the different hypotheses. [TODO add some references]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Present Study}
 
-The aim of the present study is to directly compare the four different theoretical perspectives regarding the role of father and mother attachment, using the Bayes Factor with the encompassing prior approach.
+The present study aims to directly compare the four different theoretical perspectives regarding the role of father and mother attachment, using the Bayes Factor with the encompassing prior approach.
 
-In the analysis, $n =\Sexpr{nrow(data_cluster)}$ Italian children (\Sexpr{perc_females()}\% Females) between 8 and 12 years old (\textit{middle childhood}, third to sixth school grade) were included. Attachment towards the mother and towards the father was measured separately using the The brief Experiences in Close Relationships Scale (ECR; [TODO add references]) completed by the children. Subsequently, a cluster analyses were conducted separately for the mother and the father to identify the 4 attachment styles. The results of the classification are reported in Table~\ref{tab:table-cluster}.
+In the analysis, $n =\Sexpr{nrow(data_cluster)}$ Italian children (\Sexpr{perc_females()}\% Females) between 8 and 12 years old (\textit{middle childhood}, third to sixth school grade) were included. Attachment towards the mother and the father was measured separately using the brief Experiences in Close Relationships Scale (ECR; [TODO add references]) completed by the children. Subsequently, cluster analyses were conducted separately for the mother and the father to identify the 4 attachment styles. The results of the classification are reported in Table~\ref{tab:table-cluster}.
 
 \codespacing
 <<table-cluster, cache=TRUE>>=
@@ -598,7 +597,7 @@ get_table_cluster()
 @
 \doublespacing
 
-Children social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers. Separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items. In the analysis, however, only externalizing problems  are considered as teachers are expected to be better at reporting externalizing problems than internalizing problems [TODO spiegare meglio il perchè? aggiungere ref?]. The distribution of externalizing problems ($M = \Sexpr{round(mean(data_cluster$externalizing_sum), 2)}; SD =  \Sexpr{format(round(sd(data_cluster$externalizing_sum, 2)), nsmall = 2)}$) is presented in Figure~\ref{fig:plot-externalizing-dist}.
+Children's social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers. Separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items. In the analysis, however, only externalizing problems  are considered as teachers are expected to be better at reporting externalizing problems than internalizing problems [TODO spiegare meglio il perchè? aggiungere ref?]. The distribution of externalizing problems ($M = \Sexpr{round(mean(data_cluster$externalizing_sum), 2)}; SD =  \Sexpr{format(round(sd(data_cluster$externalizing_sum, 2)), nsmall = 2)}$) is presented in Figure~\ref{fig:plot-externalizing-dist}.
 <<plot-externalizing-dist, cache=TRUE, fig.cap="Distribution of externalizing problems ($n_{subj} = 847$)">>=
 plot_externalizing_dist()
 @
@@ -610,11 +609,11 @@ More information about the sample, descriptive statistics, cluster analysis, and
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Formalization of Informative Hypotheses}
 
-Each theoretical perspective was formalized into a different informative hypothesis taking into account its own theoretical tenets, main evidences in the literature, and authors' clinical experience in the field.
+Each theoretical perspective was formalized into a different informative hypothesis taking into account its own theoretical tenets, main evidence in the literature, and authors' clinical experience in the field.
 
 The following notation is used to formalize the hypothesis. $M$ and $F$ are used to indicate the attachment towards the mother and the father, respectively. The specific attachment style is specified in the subscript where $S$ indicates secure attachment, $Ax$ anxious attachment, $Av$ avoidant attachment, and $F$ fearful attachment. For example, $F_{Av}$ represents children with avoidant attachment towards the father.
 
-Note that when we do not expect interaction between mother and father attachment, we can consider the role of the two parents separately. Whereas, if interaction is expected, it is necessary to take into account the unique combination of mother and father attachment. Thus, for example, we use $M_SF_{Ax}$ to indicate children with secure attachment towards the mother and anxious attachment towards the father. Moreover, $*$ subscript is used to indicate any attachment style and a set of subscripts is used to indicate "\textit{one among}". For example, $M_SF_{Ax;Av}$ represents a children with secure attachment towards the mother and anxious or avoidant attachment towards the father.
+Note that when we do not expect interaction between mother and father attachment, we can consider the role of the two parents separately. Whereas, if an interaction is expected, it is necessary to take into account the unique combination of mother and father attachment. Thus, for example, we use $M_SF_{Ax}$ to indicate children with secure attachment towards the mother and anxious attachment towards the father. Moreover, $*$ subscript is used to indicate any attachment style and a set of subscripts is used to indicate "\textit{one among}". For example, $M_SF_{Ax;Av}$ represents children with secure attachment towards the mother and anxious or avoidant attachment towards the father.
 
 To correctly interpret the following Figures, note that the order is important, whereas the actual values are only indicative.
 
@@ -642,7 +641,7 @@ F_* = 0.
 plot_hypothesis(hypothesis = "monotropy")
 @
 
-\paragraph{Hierarchy Hypothesis} Father attachment is expected follow the same pattern as the mother attachment, but its influence is expected to be smaller. The hypothesis is represented in Figure~\ref{fig:plot-hierarchy-hypothesis}:
+\paragraph{Hierarchy Hypothesis} Father attachment is expected to follow the same pattern as the mother attachment, but its influence is expected to be smaller. The hypothesis is represented in Figure~\ref{fig:plot-hierarchy-hypothesis}:
 \begin{equation}
 \begin{gathered}
 M_S < M_{Ax} = M_{Av} < M_F,\\
@@ -697,8 +696,8 @@ p_{ij} = \text{logit}^{-1}(X_i^T\beta_p+ Z_j^Tu_p),\\
 
 [TODO check indexes notation]
 
-That is, both $\bm{p}$ and $\bm{\mu}$ are modeled separately according to fixed and random effects.
-In particular, we consider the children classroom ID as random effect in both cases to account for teachers' different ability to evaluate children problems. While, regarding fixed effects, only the role of gender is considered for $\bm{p}$, whereas for $\bm{\mu}$ the interaction between mother and father attachment are included together with gender. In the R formula syntax, we have
+That is, both $\bm{p}$ and $\bm{\mu}$ are modelled separately according to fixed and random effects.
+In particular, we consider the children's classroom ID as a random effect in both cases to account for teachers' different ability to evaluate children's problems. While, regarding fixed effects, only the role of gender is considered for $\bm{p}$, whereas for $\bm{\mu}$ the interaction between mother and father attachment are included together with gender. In the R formula syntax, we have
 \codespacing
 <<formula-syntax, eval = FALSE, echo=TRUE>>=
 # Regression on p
@@ -709,16 +708,16 @@ mu ~ gender + mother * father + (1|ID_class)
 @
 \doublespacing
 
-The parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specify a normal distribution with mean 0 and standard deviation of 3, $\mathcal{N}(0,3)$, as reasonable prior. This prior is intended to be non informative but without being excessively diffuse. The influence of prior specification is subsequently evaluated in a prior sensitivity analysis. Regarding the other nuisance parameters (i.e., intercepts, gender effects, random effects and shapes parameters) \texttt{brms} default priors are maintained (see Supplemental Material for further details [TODO]). The encompassing model was estimated using 6 independent chains with 10,000 iterations (warm-up 2,000).
+The parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specify a normal distribution with mean 0 and standard deviation of 3, $\mathcal{N}(0,3)$, as reasonable prior. This prior is intended to be non-informative but without being excessively diffuse. The influence of prior specification is subsequently evaluated in a prior sensitivity analysis. Regarding the other nuisance parameters (i.e., intercepts, gender effects, random effects and shapes parameters) \texttt{brms} default priors are maintained (see Supplemental Material for further details [TODO]). The encompassing model was estimated using 6 independent chains with 10,000 iterations (warm-up 2,000).
 
-Finally, note that in this case we do not need to standardize our parameters as they represents groups means differences (see Section~\ref{sec:param-standard}).
+Finally, note that in this case, we do not need to standardize our parameters as they represent groups means differences (see Section~\ref{sec:param-standard}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Hypothesis Matrices}
 
-Before computing the hypothesis matrix for each informative hypothesis, it is important to consider the contrasts coding and the resulting parametrization of the encompassing model. For mother and father attachment, default treatment contrasts are used \parencite{schadHowCapitalizePriori2019} considering secure attachment as reference category. Therefore, model intercept represents children with secure attachment towards both parents ($M_SF_S$) and we have parameters indicating the main effects of mother and father attachment and other parameters for the interaction effect.
+Before computing the hypothesis matrix for each informative hypothesis, it is important to consider the contrasts coding and the resulting parametrization of the encompassing model. For mother and father attachment, default treatment contrasts are used \parencite{schadHowCapitalizePriori2019} considering secure attachment as the reference category. Therefore, model intercept represents children with secure attachment towards both parents ($M_SF_S$) and we have parameters indicating the main effects of mother and father attachment and other parameters for the interaction effect.
 
-Now, given the informative hypotheses and the parametrization of the encompassing model, we can obtain the respective hypotheses matrices. In order to do that, first, we need the model matrix with all the conditions of interest. Note that we have to considered only condition relevant to the constraints (i.e., those related to mother and father attachment) ignoring other nuisance conditions (i.e., gender and classroom ID).
+Now, given the informative hypotheses and the parametrization of the encompassing model, we can obtain the respective hypotheses matrices. To do that, first, we need the model matrix with all the conditions of interest. Note that we have to consider only conditions relevant to the constraints (i.e., those related to mother and father attachment) ignoring other nuisance conditions (i.e., gender and classroom ID).
 
 Subsequently, we can derive the required equality and inequality constraints. In particular, with hypotheses that do not expect interaction between mother and father attachment (i.e., monotropy, hierarchy, and independence hypotheses), all interaction terms are set equal to zero and main effects are obtain considered the reference level of the other parent (i.e., $M_{Ax}F_S$ is the main effect of anxious attachment towards the mother).  As an example, consider the following code:
 \codespacing
@@ -747,21 +746,21 @@ rbind(mm["M_F_F_Ax", ] - mm["M_Ax_F_F", ],
       mm["M_Ax_F_Av", ] - mm["M_S_F_Ax", ])
 @
 \doublespacing
-In this way, we can easily specify all the constraints obtaining the respective hypothesis matrix ($R$) and vector with the constraints constant values ($r$) for each hypothesis. In all our hypotheses, however, no constrain include constant values. Thus, $r$ is always a vector of zeros and it can be ignored. Moreover, also the intercept is ignored because there is no constraints that includes $M_SF_S$ alone (e.g., $M_SF_S>k$) but is always compared with another groups (e.g., $M_SF_S< M_{Ax}F_S$). Thus, the inclusion of the intercept is redundant and we can ignore it.
+In this way, we can easily specify all the constraints obtaining the respective hypothesis matrix ($R$) and the vector with the constraints constant values ($r$) for each hypothesis. In all our hypotheses, however, no constraints include constant values. Thus, $r$ is always a vector of zeros and it can be ignored. Moreover, also the intercept is ignored because there are no constraints that include $M_SF_S$ alone (e.g., $M_SF_S>k$) but is always compared with other groups (e.g., $M_SF_S< M_{Ax}F_S$). Thus, the inclusion of the intercept is redundant and we can ignore it.
 
-The full hypothesis matrices specification is available at [TODO].
+Full hypothesis matrix specification for each hypothesis is available at [TODO].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Computing the Bayes Factor}
 
-So far we defined the hypotheses matrices, specified the encompassing prior, and obtained the model posterior distribution. In order to compute the Bayes Factor, we need now the adjusted prior and the posterior of the transformed parameters vector $\bm{\beta}$ (i.e., the parameters that identify the constraints) for each hypothesis.
+So far we defined the hypotheses matrices, specified the encompassing prior, and obtained the model posterior distribution. To compute the Bayes Factor, we now need the adjusted prior and the posterior of the transformed parameters vector $\bm{\beta}$ (i.e., the parameters that identify the constraints) for each hypothesis.
 
 \begin{itemize}
 \item{\textbf{Adjusted Prior $\bm{\beta}$.}} As reported in Section~\ref{sec:adj-prior}, adjusted prior is required to properly evaluate the constraints. Applying the Equation~\ref{eq:normal-transf}, we obtain the prior for the transformed parameter and then we set the mean vector to zero.
 \item{\textbf{Posterior $\bm{\beta}$.}} The same transformation used for the prior can be applied, this time considering the estimated posterior mean $\hat{\bm{\theta}}$ and the estimated posterior covariance $\hat{\Sigma}_{\theta}$, to obtain the posterior distribution of the transformed parameters vector $\bm{\beta}$.
 \end{itemize}
 
-As discussed in Section~\ref{sec:rank-hypo}, Equation~\ref{eq:normal-transf} requires the hypothesis matrix $R$ to be \textit{full-row-rank} (i.e., all constraints are linearly independent). However, this is not the case of the hierarchy hypothesis. Thus, we followed the solution presented in Section~\ref{sec:rank-hypo}. Detailed information are available at [TODO].
+As discussed in Section~\ref{sec:rank-hypo}, Equation~\ref{eq:normal-transf} requires the hypothesis matrix $R$ to be \textit{full-row-rank} (i.e., all constraints are linearly independent). However, this is not the case of the hierarchy hypothesis. Thus, we followed the solution presented in Section~\ref{sec:rank-hypo}. Detailed information is available at [TODO].
 
 Now, we have all the elements required to compute the Bayes Factor for each hypothesis as described in Section~\ref{sec:compute-bf}. Moreover, assuming that each hypothesis is equally likely a priori, we can calculate the posterior probability of each hypothesis as \parencite{hoijtinkInformativeHypothesesTheory2012, guBayesianEvaluationInequality2014},
 \begin{equation}
@@ -797,9 +796,9 @@ get_table_sens_analysis(summary_sensitivity = summary_sensitivity_ext)
 \doublespacing
 Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the probability of the Null Hypothesis increases with more diffuse prior, whereas the probabilities of the Hierarchy, Independence and Integration Hypothesis increases with tighter priors.
 
-To interpret this patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centered on the constraint focal point. On the contrary, equality constraints are highly affected by prior definition. As the prior gets more diffuse, the density value at zero decreases as well and, even for posterior distributions centered far from zero, the densities ratio at zero will favor the posterior. Thus, as the prior gets more diffuse, the Bayes Factor will favor more and more the hypotheses with equality constraints, whereas for tighter prior the Bayes Factor will strongly penalize hypotheses with equality constraints if these are not correct (see Figure~\ref{fig:plot-sensitivity-prior}).
+To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition. As the prior gets more diffuse, the density value at zero decreases as well and, even for posterior distributions centred far from zero, the densities ratio at zero will favour the posterior. Thus, as the prior gets more diffuse, the Bayes Factor will favour more and more the hypotheses with equality constraints, whereas for tighter prior the Bayes Factor will strongly penalize hypotheses with equality constraints if these are not correct (see Figure~\ref{fig:plot-sensitivity-prior}).
 
-All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with an higher number of equality constraints (e.g., Null Hypothesis) will be favored over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
+All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with a higher number of equality constraints (e.g., Null Hypothesis) will be favoured over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
 
 <<plot-sensitivity-prior, cache = TRUE, fig.cap="Evaluating densities at 0 for different prior settings and a selection of parameters posteriors">>=
 get_plot_sensitivity()
@@ -808,39 +807,35 @@ get_plot_sensitivity()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Limits}
 
-When interpreting the results, it is important to take into account the limits of the Bayes Factor. Firsts of all, the selected hypothesis is relative to the data and the set of hypotheses considered. That means that we should not interpret the selected hypothesis as the only "\textit{correct}" one. Maybe we did not consider some important aspects and new hypotheses may reveal themselves to be actually much better than the previous ones. For example, regarding the attachment results, taking into account the interaction between children gender and attachment may be fundamental (do you expect that attachment towards the father plays a different role between girls and boys?). This limit, however, becomes an advantage as it forces the researchers to focus on the definition of the hypotheses: to obtain good answers first we need to ask the right questions.
+When interpreting the results, it is important to take into account the limits of the Bayes Factor. First of all, the selected hypothesis is relative to the data and the set of hypotheses considered. That means that we should not interpret the selected hypothesis as the only "\textit{correct}" one. Maybe we did not consider some important aspects and new hypotheses may reveal themselves to be actually much better than the previous ones. For example, regarding the attachment results, taking into account the interaction between children's gender and attachment may be fundamental (do you expect that attachment towards the father plays a different role between girls and boys?). This limit, however, becomes an advantage as it forces the researchers to focus on the definition of the hypotheses: to obtain good answers first we need to ask the right questions.
 
-Moreover, considering a unique single winning hypothesis may be limiting as different hypotheses could help to explain different aspects of the process under investigation. For example, mother and father attachment may play a different role at different age. Thus, the selected hypothesis may vary according to children age or other conditions. This should warns against interpreting the result in terms of winning/losing focusing uniquely on the selected hypothesis and discarding other hypotheses from further investigations.
+Moreover, considering a unique single winning hypothesis may be limiting as different hypotheses could help to explain different aspects of the process under investigation. For example, mother and father attachment may play a different role at different ages. Thus, the selected hypothesis may vary according to children's age or other conditions. This should warn against interpreting the result in terms of winning/losing focusing uniquely on the selected hypothesis and discarding other hypotheses from further investigations.
 
-Another important limit we observed is the results sensitivity to the prior specification. \textcite{gelmanBayesianDataAnalysis2013} do not recommend the use of the Bayes Factor given its sensitivity to model definition arbitrary choices. Evaluating the results under different conditions and transparently discuss the reasons behind arbitrary choices would help to interpret results more consciously \parencite{schadWorkflowTechniquesRobust2021}.
+Another important limit we observed is the sensitivity of the results to the prior specification. \textcite{gelmanBayesianDataAnalysis2013} do not recommend the use of the Bayes Factor given its sensitivity to model definition arbitrary choices. Evaluating the results under different conditions and transparently discussing the reasons behind arbitrary choices would help to interpret results more consciously \parencite{schadWorkflowTechniquesRobust2021}.
 
-Finally, another limit related to the use of Bayes Factor with the encompassing prior approach, it is that we do not obtain the actual estimates of the parameters posterior. The only information we get is the selected hypothesis, but we have no other information regarding the actual parameters values. Therefore, for example, we are not able to assess the actual effect sizes. [TODO: è proprio così? non capisco se prendendo le troncature della posterior dell'encompassing model ho effettivamente le posterior dei modelli con i constraints. Da verificare.]
+Finally, another limit related to the use of the Bayes Factor with the encompassing prior approach is that we do not obtain the actual estimates of the parameters posterior. The only information we get is the selected hypothesis, but we have no other information regarding the actual parameters values. Therefore, for example, we are not able to assess the actual effect sizes. [TODO: è proprio così? non capisco se prendendo le troncature della posterior dell'encompassing model ho effettivamente le posterior dei modelli con i constraints. Da verificare.]
 To overcome this limit we can rely on Bayesian inference that allows us to effectively estimate the model parameter posteriors. Consider, for example, \textcite{katoBayesianApproachInequality2006} where a Gibbs sampler is defined taking into account parameter constraints.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
 
-In this paper we presented a detailed description and an applied example of the Bayes Factor with the encompassing prior approach. As discussed in the introduction, this approach has several advantages over traditional Null Hypothesis Significance Testing (NHST): it is possible to evaluate complex hypotheses with equality and inequality constrains; multiple hypotheses can be tested simultaneously; Bayes Factor and Posterior Probabilities allow to quantify the relative evidence form the data in favor of the hypotheses.
+In this paper, we presented a detailed description and an applied example of the Bayes Factor with the encompassing prior approach. As discussed in the introduction, this approach has several advantages over traditional Null Hypothesis Significance Testing (NHST): it is possible to evaluate complex hypotheses with equality and inequality constraints; multiple hypotheses can be tested simultaneously; Bayes Factor and Posterior Probabilities allow to quantify the relative evidence form the data in favour of the hypotheses.
 
-This approach is of particular interest to the researchers, as it allows them to directly evaluate their expectations or theoretical perspectives. Available literature, however, is often technical and difficult to follow for non experts in this approach. This paper filled this gap by providing a detailed description of all steps and elements involved in the computation of the Bayes Factor with the encompassing prior approach. This will enhance researchers' awareness regarding all pros and cons of this method, avoiding to apply statistical techniques as black boxes.
+This approach is of particular interest to the researchers, as it allows them to directly evaluate their expectations or theoretical perspectives. The available literature, however, is often technical and difficult to follow for non-experts in this approach. This paper filled this gap by providing a detailed description of all steps and elements involved in the computation of the Bayes Factor with the encompassing prior approach. This will enhance researchers' awareness regarding all pros and cons of this method, avoiding applying statistical techniques as black boxes.
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \section{Old Material and Notes}
-
 
 [Problem of nested models?]
 [multiverse analysis]
 [issue of consistencyv]
 
-
 "Informative hypotheses covers a much broader range of scientific expectations than the class of standard null hypotheses; In addition, by testing competing informative hypotheses directly against each other a researcher obtains a direct answer as to which scientific theory is most supported by the data." \textcite{guApproximatedAdjustedFractional2018}
-
 
 \printbibliography
 \end{document}
@@ -890,4 +885,3 @@ This approach is of particular interest to the researchers, as it allows them to
 <<biber>>=
 system(paste("biber", sub("\\.Rnw$", "", current_input())))
 @
-
