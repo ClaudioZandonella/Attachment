@@ -112,7 +112,6 @@ knitr::opts_chunk$set(background = c(.98, .98, 1))
 theme_set(theme_classic()+
             theme(text = element_text(size=12)))
 
-
 devtools::load_all("../../")
 source("../Utils_report.R")
 
@@ -130,9 +129,9 @@ drake_load_paper()
 
 \section{Introduction}
 
-When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate according to the observed data. In fact, the evaluation of research and theoretical hypothesis is one of the principal goals of empirical research.
+When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate according to the observed data. In fact, the evaluation of research and theoretical hypotheses is one of the principal goals of empirical research.
 
-In psychology, the dominant statistical approach to evaluate research hypotheses is the Null hypothesis Significance Test (NHST). In the literature, however, the utility and validity of NHST are largely debated \parencite{wassersteinMovingWorld052019}. This approach presents indeed several limitations. First, the NHST places a narrow focus on statistical testing rather than on the formalization of hypotheses. This has usually led researchers to evaluate data against the catch-all null-hypothesis that nothing is going on rather than testing their specific expectation [and the alternative hypothesis is rarely formalized]. Second, the p-value does not quantify the evidence in favour of one hypothesis, thus, it is not possible to *accept* a hypothesis but only to *reject* it. This is inconvenient as, in case of not significant results, the researchers are left in a state of indecision. Third, NHST does not allow testing multiple hypotheses at the same time. Using the NHST the null hypothesis is tested only against a single alternative. Fourth, NHST is unsuitable for testing broad classes of hypotheses with equality and inequality constraints \parencite{mulderSimpleBayesianTesting2019}. Expectations can be evaluated using one-side tests, however, when more groups or more variables are involved, it is not possible to evaluate complex parameter constraints that reflect researchers' expectations \parencite{vandeschootIntroductionBayesianModel2011}.
+In psychology, the dominant statistical approach to evaluate research hypotheses is the Null Hypothesis Significance Testing (NHST). In the literature, however, the utility and validity of NHST are largely debated \parencite{wassersteinMovingWorld052019}. This approach presents indeed several limitations. First, the NHST places a narrow focus on statistical testing rather than on the formalization of hypotheses. This has usually led researchers to evaluate data against the catch-all null-hypothesis that nothing is going on rather than testing their specific expectation [and the alternative hypothesis is rarely formalized]. Second, the p-value does not quantify the evidence in favour of one hypothesis, thus, it is not possible to *accept* a hypothesis but only to *reject* it. This is inconvenient as, in case of not significant results, the researchers are left in a state of indecision. Third, NHST does not allow testing multiple hypotheses at the same time. Using the NHST the null hypothesis is tested only against a single alternative. Fourth, NHST is unsuitable for testing broad classes of hypotheses with equality and inequality constraints \parencite{mulderSimpleBayesianTesting2019}. Expectations can be evaluated using one-side tests, however, when more groups or more variables are involved, it is not possible to evaluate complex parameter constraints that reflect researchers' expectations \parencite{vandeschootIntroductionBayesianModel2011}.
 
 Model comparison is a different approach that allows researchers to compare multiple hypotheses and identify which is the most supported by the data \parencite{mcelreathStatisticalRethinkingBayesian2020}. Hypotheses are first formalized as statistical models according to researchers expectations or theoretical perspectives. Subsequently, models ability to predict new data is estimated using, for example, the information criteria such as the popular AIC or BIC criteria \parencite{wagenmakersAICModelSelection2004,akaike1973a, schwarzEstimatingDimensionModel1978}. At this point, it is possible to compare the different models evaluating the relative plausibility of each model given the data and the set of models considered. Model comparison has several advantages and in particular, it allows to directly compute the relative plausibility of each hypothesis. Model comparison, however, is still limited in the possibility to formalize hypotheses that include complex parameter constraints reflecting researchers' expectations.
 
@@ -833,7 +832,7 @@ This approach is of particular interest to the researchers, as it allows them to
 
 [Problem of nested models?]
 [multiverse analysis]
-[issue of consistencyv]
+[issue of consistency]
 
 "Informative hypotheses covers a much broader range of scientific expectations than the class of standard null hypotheses; In addition, by testing competing informative hypotheses directly against each other a researcher obtains a direct answer as to which scientific theory is most supported by the data." \textcite{guApproximatedAdjustedFractional2018}
 
