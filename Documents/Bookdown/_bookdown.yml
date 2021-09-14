@@ -1,0 +1,8 @@
+book_filename: "attachment-bayes-factor"
+repo: "https://github.com/ClaudioZandonella/Attachment"
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true
+output_dir: "../../docs"
+

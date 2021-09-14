@@ -32,7 +32,12 @@ paper.pdf
 *.html
 *.docx
 
-# Project folders
+#---- Bookdown Auxiliary ----
+
+_bookdown_files
+
+
+#---- Project folders ----
 
 # data_raw
 Data/

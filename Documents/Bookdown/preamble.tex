@@ -1,0 +1,95 @@
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+
+%----    define infoboxes    ----%
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+
+% colors
+\definecolor{background}{HTML}{fcfcfc}
+\definecolor{tip-text}{HTML}{e7b002}
+\definecolor{tip-line}{HTML}{fdce38}
+\definecolor{warning-text}{HTML}{b06336}
+\definecolor{warning-line}{HTML}{c97d50}
+\definecolor{deffun-text}{HTML}{0b797e}
+\definecolor{deffun-line}{HTML}{6CC2C9}
+\definecolor{design-text}{HTML}{7c972e}
+\definecolor{design-line}{HTML}{a7c84a}
+\definecolor{trick-text}{HTML}{8c3031}
+\definecolor{trick-line}{HTML}{A3595A}
+
+\newtcolorbox{mybox}[1][black]{
+  colback=background,
+  coltext=black,
+  colframe=#1,
+  boxsep=5pt,
+  arc=4pt}
+
+% tip
+\newenvironment{tip}[1][Title]
+  {
+  \setlength{\fboxsep}{1em}
+  \begin{mybox}[tip-line]
+    \raisebox{-.2\height}{\includegraphics[height=.6cm]{images/lightbulb.png}} \large \textcolor{tip-text}{Tip-Box: #1}
+    \vspace{1em}
+    }
+    {
+  \end{mybox}
+  }
+
+% warning
+\newenvironment{warning}[1][Title]
+  {
+  \setlength{\fboxsep}{1em}
+  \begin{mybox}[warning-line]
+    \raisebox{-.2\height}{\includegraphics[height=.6cm]{images/gotcha.png}} \large \textcolor{warning-text}{Warning-Box: #1}
+    \vspace{1em}
+    }
+    {
+  \end{mybox}
+  }
+
+% deffun
+\newenvironment{deffun}[1][Title]
+  {
+  \setlength{\fboxsep}{1em}
+  \begin{mybox}[deffun-line]
+    \raisebox{-.2\height}{\includegraphics[height=.6cm]{images/gears.png}} \large \textcolor{deffun-text}{Definition-Box: #1}
+    \vspace{1em}
+    }
+    {
+  \end{mybox}
+  }
+
+% design
+\newenvironment{design}[1][Title]
+  {
+  \setlength{\fboxsep}{1em}
+  \begin{mybox}[design-line]
+    \raisebox{-.2\height}{\includegraphics[height=.6cm]{images/design.png}} \large \textcolor{design-text}{Design-Box: #1}
+    \vspace{1em}
+    }
+    {
+  \end{mybox}
+  }
+
+% trick
+\newenvironment{trick}[1][Title]
+  {
+  \setlength{\fboxsep}{1em}
+  \begin{mybox}[trick-line]
+    \raisebox{-.2\height}{\includegraphics[height=.6cm]{images/hat.png}} \large \textcolor{trick-text}{Trick-Box: #1}
+    \vspace{1em}
+    }
+    {
+  \end{mybox}
+  }
+
+

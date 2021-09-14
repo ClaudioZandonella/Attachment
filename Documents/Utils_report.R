@@ -114,4 +114,18 @@ get_sigma_example <- function(){
   R%*%sigma_theta%*%t(R)
 }
 
+#----    make_my_book    ----
+
+make_my_book <- function(subdir = "Documents/Bookdown/") {
+
+  origwd <- setwd(file.path(subdir))
+  on.exit(setwd(origwd))
+  bookdown::render_book(input='_bookdown.yml', config_file='_bookdown.yml',
+                        output_format = "bookdown::gitbook",
+                        params = list(format = "html"))
+  bookdown::render_book(input='_bookdown.yml', config_file='_bookdown.yml',
+                        output_format = "bookdown::pdf_book",
+                        params = list(format = "latex"))
+}
+
 #=============

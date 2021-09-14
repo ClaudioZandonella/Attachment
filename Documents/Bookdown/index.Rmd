@@ -1,0 +1,65 @@
+--- 
+title: "Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach"
+subtitle: "Supplemental Material"
+author: "Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: ["../Biblio-attachment.bib"]
+csl: "../apa.csl"
+link-citations: yes
+github-repo: ClaudioZandonella/Attachment
+description: "This the Suppleemental Material of the article ..."
+cover-image: "images/logo_psicostat.png"
+header-includes: 
+  - \usepackage{titlepic}
+  - \titlepic{\includegraphics[width=\textwidth]{images/logo_psicostat.pdf}}
+url: 'https\://ClaudioZandonella.github.io/Attachment/'
+params:
+  format: html
+---
+
+```{r, echo = FALSE}
+library(kableExtra)
+library(ggplot2)
+
+# Chunks settings
+knitr::opts_chunk$set(echo = FALSE,
+                      # Plot settings
+                      # dev = "tikz", dev.args=list(pointsize=12),fig.align='center',
+                      # fig.height=3, fig.width=5, fig.pos = "!ht",
+
+                      # Code output width
+                      tidy=TRUE, tidy.opts = list(width.cutoff = 80),
+                      # comment = NA, prompt = TRUE
+
+                      # Cache options
+                      cache = FALSE, autodep=TRUE)
+
+# Console output width
+options(width = 80)
+
+# Chunk theme
+thm = knitr::knit_theme$get("bclear")
+knitr::knit_theme$set(thm)
+knitr::opts_chunk$set(background = c(.98, .98, 1))
+
+# Option KableExtra
+# options(knitr.kable.NA = '')
+
+## ggplot settings
+theme_set(theme_classic()+
+            theme(text = element_text(size=12)))
+
+devtools::load_all("../../")
+source("../Utils_report.R")
+
+#----    load drake    ----
+
+drake_load_paper()
+```
+
+
+# Prerequisites {-}
+
+trial

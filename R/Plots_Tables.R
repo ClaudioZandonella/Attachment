@@ -101,7 +101,7 @@ perc_females <- function(perc = TRUE, digits = 2){
 
 #----    get_table_cluster    ----
 
-get_table_cluster <- function(perc = TRUE, digits = 2){
+get_table_cluster <- function(perc = TRUE, digits = 2, format = "latex"){
 
   data_cluster %>%
     select(father, mother) %>%
@@ -112,7 +112,7 @@ get_table_cluster <- function(perc = TRUE, digits = 2){
     ungroup() %>%
     bind_rows(tibble(mother = "Total",
                      summarise_at(., vars(Secure:Total), sum))) %>%
-    kable(., format = "latex", booktabs = TRUE, align = c("r", rep("c", 5)),
+    kable(., format = format, booktabs = TRUE, align = c("r", rep("c", 5)),
           col.names = c("Mother Attachemnt", "Secure", "Anxious", "Avoidant", "Fearful", "Total"),
           caption = "Attachment styles frequencies ($n_{subj} = 847$).") %>%
     add_header_above(c(" ", "Father Attachment" = 4, " "), bold = TRUE) %>%
