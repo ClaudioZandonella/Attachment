@@ -35,6 +35,7 @@ paper.pdf
 #---- Bookdown Auxiliary ----
 
 _bookdown_files
+!docs/*.html
 
 
 #---- Project folders ----
