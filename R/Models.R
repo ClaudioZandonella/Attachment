@@ -100,6 +100,18 @@ get_rel_weights <- function(..., ic = c("waic", "loo")){
   return(res)
 }
 
+#----    get_data_prior_predict    ----
+
+get_data_prior_predict <- function(){
+  tibble(prior_sd = c(.5, 1, 3, 5, 10),
+         prior = paste0("$\\mathcal{N}(0, ", prior_sd, ")$")) %>%
+    mutate(q_1 = exp(1 - 1 * prior_sd),
+           q_2 = exp(1 - .5 * prior_sd),
+           q_mean = exp(1 + 0 * prior_sd),
+           q_3 = exp(1 + .5 * prior_sd),
+           q_4 = exp(1 + 1 * prior_sd))
+}
+
 #----    make_stan_data    ----
 
 # function no longer used in thee analysis

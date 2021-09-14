@@ -20,7 +20,6 @@ get_analysis_plan <- function(){
     data_raw = readRDS("Data/data_ECR.rds"),
     data_munged = munge_data(data = data_raw),
 
-
     #----    Cluster Analysis    ----
     # Get cluster fit
     cluster_mother_fit = get_cluster_fit(data = data_munged, parent = "mother"),
@@ -204,6 +203,7 @@ get_analysis_plan <- function(){
                                                       prior_sensitivity_ext_05,
                                                       prior_sensitivity_ext_10),
 
+    data_prior_predict = get_data_prior_predict(),
   )
 }
 

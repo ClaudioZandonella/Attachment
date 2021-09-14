@@ -86,6 +86,7 @@ drake_load_all <- function(){
   load_glob_env(BF_weights_ext)
   load_glob_env(summary_sensitivity_ext)
 
+  load_glob_env(data_prior_predict)
 }
 
 drake_load_paper <- function(){
@@ -96,6 +97,8 @@ drake_load_paper <- function(){
   load_glob_env(encompassing_model_ext)
   load_glob_env(BF_weights_ext)
   load_glob_env(summary_sensitivity_ext)
+
+  load_glob_env(data_prior_predict)
 
 }
 
@@ -110,4 +113,5 @@ get_sigma_example <- function(){
 
   R%*%sigma_theta%*%t(R)
 }
+
 #=============

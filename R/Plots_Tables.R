@@ -112,11 +112,35 @@ get_table_cluster <- function(perc = TRUE, digits = 2){
     ungroup() %>%
     bind_rows(tibble(mother = "Total",
                      summarise_at(., vars(Secure:Total), sum))) %>%
-    kable(., booktabs = T, align = c("r", rep("c", 5)),
+    kable(., format = "latex", booktabs = TRUE, align = c("r", rep("c", 5)),
           col.names = c("Mother Attachemnt", "Secure", "Anxious", "Avoidant", "Fearful", "Total"),
-          caption = "Attachment styles frequencies ($n_{subj} = 847$)") %>%
-    add_header_above(c(" ", "Father Attachment" = 4, " ")) %>%
+          caption = "Attachment styles frequencies ($n_{subj} = 847$).") %>%
+    add_header_above(c(" ", "Father Attachment" = 4, " "), bold = TRUE) %>%
+    row_spec(0, bold = TRUE) %>%
     kable_styling(latex_options = c("hold_position"))
+}
+
+#----    get_table_cluster_ext    ----
+
+get_table_cluster_ext <- function(){
+  data_cluster %>%
+    group_by(father, mother) %>%
+    summarize(mean = my_round(mean(externalizing_sum), 2),
+              median = my_round(median(externalizing_sum), 1),
+              sd =  my_round(sd(externalizing_sum), 2),
+              summary = paste0(mean, " (",
+                               sd, ")")) %>%
+    select(father, mother, summary, median) %>%
+    pivot_wider(names_from = father, values_from = c(summary, median)) %>%
+    select(mother, dplyr::ends_with("Secure"), dplyr::ends_with("Anxious"),
+           dplyr::ends_with("Avoidant"),  dplyr::ends_with("Fearful")) %>%
+    kable(.,format = "latex", booktabs = TRUE, align = c("r", rep("c", 8)),
+          col.names = c("Mother Attachemnt", rep(c("Mean (SD)", "Median"), 4)),
+          caption = "Externalizing problems according to attachment styles ($n_{subj} = 847$).") %>%
+    add_header_above(c(" ", "Secure" = 2, "Anxious" = 2, "Avoidant" = 2, "Fearful" = 2), bold = TRUE) %>%
+    add_header_above(c(" ", "Father Attachment" = 8), bold = TRUE) %>%
+    row_spec(0, bold = TRUE) %>%
+    kable_styling(latex_options = c("hold_position", "scale_down"))
 }
 
 #----    plot_externalizing_dist    ----
@@ -125,7 +149,8 @@ plot_externalizing_dist <- function(){
 
   ggplot(data_cluster) +
     geom_bar(aes(x = externalizing_sum), fill = "firebrick",
-             col = "gray20", alpha = .8)+
+             col = "gray20", alpha = .8) +
+    scale_x_continuous(limits = c(-0.5,20)) +
     labs(x = "Externalizing Problems",
          y = "Frequency") +
     theme_classic()
@@ -240,6 +265,18 @@ perc_rare_condition <- function(perc = TRUE, digits = 1){
   return(res)
 }
 
+#----    get_table_prior_predict    ----
+
+get_table_prior_predict <- function(data = data_prior_predict){
+  data %>%
+    dplyr::select(- prior_sd) %>%
+    mutate_if(is.numeric, round, 1) %>%
+    kable(., booktabs = TRUE, align = c("r", rep("c", 5)), escape = FALSE,
+          col.names = c("Prior", "- 1 SD", "- .5 SD", "+ 0 SD", "+ .5 SD", "+ 1 SD"),
+          caption = "Prior prediction acording to different prior settings assuming $exp(1)$ as intercept value.") %>%
+    add_header_above(c(" " = 1, "Predicted Problems" = 5)) %>%
+    kable_styling(latex_options = c("hold_position"))
+}
 #----    get_ggplot_balls    ----
 
 get_ggplot_balls <- function(data, filename = "Documents/Paper/figure/Prova.png"){
@@ -289,10 +326,12 @@ get_table_bf <- function(bf_result = BF_weights_ext,
            weights = round(weights,2)) %>%
     select(hypothesis, bf, weights, img) %>%
     # mutate_at(c("hypothesis", "bf","weights"), centerText) %>%
-    kable(., booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
+    kable(., booktabs = TRUE, align = c("r", rep("c", 3)), escape = FALSE,
           col.names = c("Hypothesis", "Bayes Factor", "Posterior Probability", " "),
-          caption = "Bayes Factor encompassing model and hypothesis posteriro probabilities  ($n_{subj} = 847$)") %>%
-    column_spec(4, image = spec_image(images, 100, 100)) %>%
+          caption = "Bayes Factor encompassing model and hypothesis posteriro probabilities  ($n_{subj} = 847$).") %>%
+    column_spec(4, image = spec_image(images, 100, 100),
+                width = "1cm", latex_valign = "m") %>%
+    row_spec(0, bold = TRUE) %>%
     kable_styling(latex_options = c("hold_position"))
 }
 
@@ -311,11 +350,16 @@ get_table_sens_analysis <- function(summary_sensitivity){
                      "Independence", "Integration")) %>%
     kable(., booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
           col.names = c("Hypothesis", rep(c("BF", "PP"), 5)),
-          caption = "Bayes Factor encompassing model v and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$)") %>%
-    add_header_above(c(" ", "$\\\\mathcal{N}(0, .5)$" = 2, "$\\\\mathcal{N}(0, 1)$" = 2,
-                     "$\\\\mathcal{N}(0, 3)$" = 2, "$\\\\mathcal{N}(0, 5)$" = 2,
-                     "$\\\\mathcal{N}(0, 10)$" = 2), escape = FALSE) %>%
-    kable_styling(latex_options = c("hold_position"))
+          caption = "Bayes Factor encompassing model v and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$).") %>%
+    add_header_above(c(" ", "$\\\\bm{\\\\mathcal{N}(0, .5)}$" = 2,
+                       "$\\\\bm{\\\\mathcal{N}(0, 1)}$" = 2,
+                       "$\\\\bm{\\\\mathcal{N}(0, 3)}$" = 2,
+                       "$\\\\bm{\\\\mathcal{N}(0, 5)}$" = 2,
+                       "$\\\\bm{\\\\mathcal{N}(0, 10)}$" = 2),
+                     escape = FALSE, bold = TRUE) %>%
+    row_spec(0, bold = TRUE) %>%
+    column_spec(1, bold = TRUE) %>%
+    kable_styling(latex_options = c("hold_position", "scale_down"))
 
 }
 
@@ -367,14 +411,16 @@ normal_approximation <- function(){
 
 }
 
+#----    get_plot_sensitivity    ----
+
 get_plot_sensitivity <- function(encompassing_model = encompassing_model_ext){
   par_post <- brms::fixef(encompassing_model, summary = FALSE) %>%
     as.data.frame()
 
-  cols <- c("$\\mathcal{N}(0, .5))$" = "#F8766D",
-            "$\\mathcal{N}(0, 3))$" = "#00BA38",
-            "$\\mathcal{N}(0, 10))$" = "#619CFF",
-            "Par Post" = "black")
+  cols <- c("$\\mathcal{N}(0, .5)$" = "#F8766D",
+            "$\\mathcal{N}(0, 3)$" = "#00BA38",
+            "$\\mathcal{N}(0, 10)$" = "#619CFF",
+            "Parameter Posterior" = "black")
 
   ggplot(par_post[seq(1,nrow(par_post), by = 5), ]) +
     # geom_density(aes(x = motherAnxious)) +
@@ -388,12 +434,12 @@ get_plot_sensitivity <- function(encompassing_model = encompassing_model_ext){
     #              aes(color = "black")) +
     geom_segment(aes(x = 0, y = 0, xend = 0, yend = 1.55), linetype = "dashed") +
     stat_function(fun = dnorm, args = list(mean = 0, sd = .5),
-                  aes(color = "$\\mathcal{N}(0, .5))$",), size = 1.5) +
+                  aes(color = "$\\mathcal{N}(0, .5)$",), size = 1.5) +
     stat_function(fun = dnorm, args = list(mean = 0, sd = 3),
-                  aes(color = "$\\mathcal{N}(0, 3))$",), size = 1.5) +
+                  aes(color = "$\\mathcal{N}(0, 3)$",), size = 1.5) +
     stat_function(fun = dnorm, args = list(mean = 0, sd = 10),
-                  aes(color = "$\\mathcal{N}(0, 10))$",), size = 1.5)  +
-    scale_colour_manual(values = cols, )+
+                  aes(color = "$\\mathcal{N}(0, 10)$",), size = 1.5)  +
+    scale_colour_manual(values = cols)+
     coord_cartesian(xlim = c(-3, 3), ylim = c(0,1.65)) +
     xlim(-3, 3) +
     theme_classic() +
