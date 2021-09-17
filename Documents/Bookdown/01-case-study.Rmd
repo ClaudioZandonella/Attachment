@@ -1,0 +1,194 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Case Study {#case-study}
+
+In this chapter, first, we describe the sample included in the study. Subsequently, we present the results of the cluster analysis to classify the different attachment patterns.
+
+For more information regarding Attachment theory and the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article].
+
+## The Study Sample
+
+To evaluate the different role of father attachment and mother attachment, we consider `r tot_subj()` Italian children from third to sixth school grade. Only middle-childhood children are included in the analysis (`r tot_subj_older()` participants are excluded as older than 12.3 years and `r tot_subj_NA()` participants are excluded are excluded as the age is missing). The total sample size included in the analysis is `r tot_subj_included()` (`r perc_females()` \% Females). Participants frequencies by grade and gender are reported in Table~\@ref(tab:table-gender-grade).
+
+```{r table-gender-grade, cache=TRUE}
+table_gender_grade(format = params$format)
+```
+
+Participants age mean is `r var_info("age_year")`. The participants age summary statistics are reported below and the distribution is presented in Figure~\@ref(fig:plot-age).
+
+```{r, cache=TRUE}
+var_summary("age_year")
+```
+
+
+```{r plot-age, cache=TRUE, fig.cap="Participants age distribution ($n_{subj} = 847$)"}
+plot_age_dist()
+```
+
+
+## Attachment Styles
+
+Attachment towards the mother and the father was measured separately using the brief Experiences in Close Relationships Scale (ECR; [TODO add references]) completed by the children. Four main attachment styles have been recognized in the literature according to thee levels of *anxiety* and *avoidance*:
+
+- **Secure Attachment -** children with low levels of anxiety and avoidance.
+- **Anxious Attachment -** children characterized by high levels of anxiety.
+- **Avoidant Attachment -** children characterized by high levels of avoidance.
+- **Fearful Attachment -** children with high levels of anxiety and avoidance.
+
+To identify children attachment styles towards the mother and towards the father, we conduct two separate cluster analyses. Clusters are obtained using the function `hclust()` (with argument `method="ward.D"`) considering *Euclidean* distances between participants responses to the ECR items.
+
+### Mother Cluster Analysis
+
+Regarding mother attachment, 4 groups are selected from the cluster analysis results (see Figure~\@ref(fig:plot-cluster-mother)).
+
+```{r plot-cluster-mother, cache=TRUE, fig.cap = "Mother attachment cluster dendrogram ($n_{subj} = 847$)."}
+plot(cluster_mother_fit, main = NULL,  xlab="ECR Mother")
+rect.hclust(cluster_mother_fit, k=4, border="red")
+```
+
+
+In Figure~\@ref(fig:plot-scores-mother), Anxiety (“*Anx*”) and Avoidance (“*Av*”) scores are presented according to mother attachment styles. The frequencies of mother attachment styles according to gender are reported in Table~\ref{tab:table-cluster-mother}.
+
+```{r plot-scores-mother, cache=TRUE, fig.asp=.55, fig.cap="Anxiety (“Anx”) and Avoidance (“Av”) scores according to mother attachment styles. Dashed lines represents overall average values ($n_{subj} = 847$)."}
+plot_scores_cluster(parent = "mother")
+```
+
+```{r table-cluster-mother, cache=TRUE}
+table_parent_clusters(parent = "mother", format = params$format)
+```
+
+Compared to the overall average values of anxiety and avoidance, we can observe that:
+
+- *Secure* children have lower levels of anxiety and avoidance 
+- *Anxious* children have higher levels of anxiety and about the average levels of avoidance
+- *Avoidant* children have lower levels of anxiety and higher levels of avoidance
+- *Fearful* children have higher levels of anxiety and avoidance 
+
+These results reflect the traditional definition of the four attachment styles. Moreover, attachment styles frequencies are in lines with general results in the literature [TODO: add reference values].
+
+#### Mclust Check {-}
+
+To evaluate if 4 cluster is an appropriate choice, we compare the BIC values of different model-based clustering options. To do that we use the function `mclustBIC()` from the `mclust` R-package [@scruccaMclustClusteringClassification2016]. BIC values of the best three model-based clustering are reported below and overall results are presented in Figure~\@ref(fig:plot-mclust-mother). See `?mclustBIC()` help page for further information.
+
+```{r mother-mclust, cache=TRUE}
+parent_mclust(parent = "mother")
+```
+
+```{r plot-mclust-mother, fig.cap="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information."}
+plot(mclust_mother)
+```
+
+Results indicate the possible presence of a larger number of clusters. However, considering only 4 clusters seems to us the most reasonable choice. This is in line with attachment theory and general results in the literature. The important thing is hat no smaller number of clusters provided better results than the division in 4 clusters.
+
+### Father Cluster Analysis
+
+Regarding father attachment, 4 groups are selected from the cluster analysis results (see Figure~\@ref(fig:plot-cluster-father)).
+
+```{r plot-cluster-father, cache=TRUE, fig.cap = "Father attachment cluster dendrogram ($n_{subj} = 847$)."}
+plot(cluster_father_fit, main = NULL,  xlab="ECR Father")
+rect.hclust(cluster_father_fit, k=4, border="red")
+```
+
+
+In Figure~\@ref(fig:plot-scores-father), Anxiety (“*Anx*”) and Avoidance (“*Av*”) scores are presented according to father attachment styles. The frequencies of father attachment styles according to gender are reported in Table~\ref{tab:table-cluster-father}.
+
+```{r plot-scores-father, cache=TRUE, fig.asp=.55, fig.cap="Anxiety (“Anx”) and Avoidance (“Av”) scores according to father attachment styles. Dashed lines represents overall average values ($n_{subj} = 847$)."}
+plot_scores_cluster(parent = "father")
+```
+
+```{r table-cluster-father, cache=TRUE}
+table_parent_clusters(parent = "father", format = params$format)
+```
+
+Compared to the overall average values of anxiety and avoidance, we can observe that:
+
+- *Secure* children have lower levels of anxiety and avoidance 
+- *Anxious* children have lower levels of anxiety and avoidance
+- *Avoidant* children have lower levels of anxiety and higher levels of avoidance
+- *Fearful* children have higher levels of anxiety and avoidance 
+
+These results are no as good as in the mother attachment classification, but they are still reasonable. Moreover, attachment styles frequencies are close to the general results in the literature [TODO: add reference values].
+
+#### Mclust Check {-}
+
+To evaluate if 4 cluster is an appropriate choice, we compare the BIC values of different model-based clustering options as before.  BIC values of the best three model-based clustering are reported below and overall results are presented in Figure~\@ref(fig:plot-mclust-father). 
+
+```{r father-mclust, cache=TRUE}
+parent_mclust(parent = "father")
+```
+
+```{r plot-mclust-father, fig.cap="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information."}
+plot(mclust_father)
+```
+
+As for the mother, results indicate the possible presence of a larger number of clusters. However, considering only 4 clusters seems to us the most reasonable choice for the same reasons as before.
+
+### Mother and Father
+
+The frequencies of mother attachment and father attachment styles are reported in Table~\@ref(tab:table-cluster-mother-father).
+
+```{r table-cluster-mother-father, cache=TRUE}
+table_mother_father_clusters(format = params$format)
+```
+
+We can observe how values on the diagonal (same attachment styles towards both parents) tends to be larger than others.
+
+## Children Outcomes
+
+Children's social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers. Separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items.
+
+
+### Externalizing Problems
+
+Participants externalizing problems mean is `r var_info("externalizing_sum")`. The participants externalizing problems summary statistics are reported below and the distribution is presented in Figure~\@ref(fig:plot-externalizing-dist).
+
+```{r, cache=TRUE}
+var_summary("externalizing_sum")
+```
+
+```{r plot-externalizing-dist, cache=TRUE, fig.cap="Participants externalizing problems distribution ($n_{subj} = 847$)"}
+plot_problems_dist("ext")
+```
+
+
+Externalizing problems according to attachment styles are reported in Table~\@ref(tab:table-cluster-ext).
+
+```{r table-cluster-ext, cache=TRUE}
+get_table_cluster_prob("ext", format = params$format)
+```
+
+### Internalizing Problems
+
+Participants internalizing problems mean is `r var_info("internalizing_sum")`. The participants internalizing problems summary statistics are reported below and the distribution is presented in Figure~\@ref(fig:plot-internalizing-dist).
+
+```{r, cache=TRUE}
+var_summary("internalizing_sum")
+```
+
+```{r plot-internalizing-dist, cache=TRUE, fig.cap="Participants internalizing problems distribution ($n_{subj} = 847$)"}
+plot_problems_dist("int")
+```
+
+Internalizing problems according to attachment styles are reported in Table~\ref(tab:table-cluster-ext).
+
+```{r table-cluster-int, cache=TRUE}
+get_table_cluster_prob("int", format = params$format)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

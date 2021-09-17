@@ -1,6 +1,6 @@
-#=============================#
-#====    Plots & Tables   ====#
-#=============================#
+#=====================#
+#====    Plots    ====#
+#=====================#
 
 #----    get_plot_zinb    ----
 
@@ -84,63 +84,6 @@ plot_bounded_par <- function(){
           axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.line.y.left = element_blank())
-}
-
-#----    perc_females    ----
-
-perc_females <- function(perc = TRUE, digits = 2){
-  freq <- table(data_cluster$gender)
-
-  if(isTRUE(perc)){
-    res <- round(freq[1]*100/nrow(data_cluster), digits = digits)
-  } else {
-    res <- freq[1]
-  }
-  return(res)
-}
-
-#----    get_table_cluster    ----
-
-get_table_cluster <- function(perc = TRUE, digits = 2, format = "latex"){
-
-  data_cluster %>%
-    select(father, mother) %>%
-    group_by(father, mother) %>%
-    count() %>%
-    pivot_wider(names_from = father, values_from = n) %>%
-    bind_cols(Total = rowSums(.[, 2:5])) %>%
-    ungroup() %>%
-    bind_rows(tibble(mother = "Total",
-                     summarise_at(., vars(Secure:Total), sum))) %>%
-    kable(., format = format, booktabs = TRUE, align = c("r", rep("c", 5)),
-          col.names = c("Mother Attachemnt", "Secure", "Anxious", "Avoidant", "Fearful", "Total"),
-          caption = "Attachment styles frequencies ($n_{subj} = 847$).") %>%
-    add_header_above(c(" ", "Father Attachment" = 4, " "), bold = TRUE) %>%
-    row_spec(0, bold = TRUE) %>%
-    kable_styling(latex_options = c("hold_position"))
-}
-
-#----    get_table_cluster_ext    ----
-
-get_table_cluster_ext <- function(){
-  data_cluster %>%
-    group_by(father, mother) %>%
-    summarize(mean = my_round(mean(externalizing_sum), 2),
-              median = my_round(median(externalizing_sum), 1),
-              sd =  my_round(sd(externalizing_sum), 2),
-              summary = paste0(mean, " (",
-                               sd, ")")) %>%
-    select(father, mother, summary, median) %>%
-    pivot_wider(names_from = father, values_from = c(summary, median)) %>%
-    select(mother, dplyr::ends_with("Secure"), dplyr::ends_with("Anxious"),
-           dplyr::ends_with("Avoidant"),  dplyr::ends_with("Fearful")) %>%
-    kable(.,format = "latex", booktabs = TRUE, align = c("r", rep("c", 8)),
-          col.names = c("Mother Attachemnt", rep(c("Mean (SD)", "Median"), 4)),
-          caption = "Externalizing problems according to attachment styles ($n_{subj} = 847$).") %>%
-    add_header_above(c(" ", "Secure" = 2, "Anxious" = 2, "Avoidant" = 2, "Fearful" = 2), bold = TRUE) %>%
-    add_header_above(c(" ", "Father Attachment" = 8), bold = TRUE) %>%
-    row_spec(0, bold = TRUE) %>%
-    kable_styling(latex_options = c("hold_position", "scale_down"))
 }
 
 #----    plot_externalizing_dist    ----
@@ -251,32 +194,6 @@ plot_hypothesis <- function(hypothesis = c("null", "monotropy",
   }
 }
 
-#----    perc_rare_condition    ----
-perc_rare_condition <- function(perc = TRUE, digits = 1){
-  test <- with(data_cluster,
-               (mother == "Secure" & father == "Fearful") |
-                 (mother == "Fearful" & father == "Secure"))
-
-  if(isTRUE(perc)){
-    res <- round(mean(test)*100, digits = digits)
-  } else {
-    res <- sum(test)
-  }
-  return(res)
-}
-
-#----    get_table_prior_predict    ----
-
-get_table_prior_predict <- function(data = data_prior_predict){
-  data %>%
-    dplyr::select(- prior_sd) %>%
-    mutate_if(is.numeric, round, 1) %>%
-    kable(., booktabs = TRUE, align = c("r", rep("c", 5)), escape = FALSE,
-          col.names = c("Prior", "- 1 SD", "- .5 SD", "+ 0 SD", "+ .5 SD", "+ 1 SD"),
-          caption = "Prior prediction acording to different prior settings assuming $exp(1)$ as intercept value.") %>%
-    add_header_above(c(" " = 1, "Predicted Problems" = 5)) %>%
-    kable_styling(latex_options = c("hold_position"))
-}
 #----    get_ggplot_balls    ----
 
 get_ggplot_balls <- function(data, filename = "Documents/Paper/figure/Prova.png"){
@@ -297,93 +214,6 @@ get_ggplot_balls <- function(data, filename = "Documents/Paper/figure/Prova.png"
   ggsave(plot = plot, filename = filename, width =4.67, height =4.67)
 }
 
-
-#----    get_table_bf    ----
-
-get_table_bf <- function(bf_result = BF_weights_ext,
-                         path_img = "Documents/Paper/figure/"){
-
-  names_plot <- paste("ball", c("null", "monotropy", "hierarchy",
-                                "independence", "integration"), sep = "_")
-  images <- paste0(path_img, names_plot, ".png")
-
-  for(i in 1:5){
-    get_ggplot_balls(data = bf_result[i,],
-                     filename = images[i])
-  }
-
-  # centerText <- function(text){
-  #   paste0("\\multirow{1}{*}[0pt]{", text, "}")
-  # }
-
-
-
-  bf_result %>%
-    bind_cols(img = "") %>%
-    mutate(hypothesis = c("Null", "Monotropy", "Hierarchy",
-                          "Independence", "Integration"),
-           bf = format(bf, digits = 2),
-           weights = round(weights,2)) %>%
-    select(hypothesis, bf, weights, img) %>%
-    # mutate_at(c("hypothesis", "bf","weights"), centerText) %>%
-    kable(., booktabs = TRUE, align = c("r", rep("c", 3)), escape = FALSE,
-          col.names = c("Hypothesis", "Bayes Factor", "Posterior Probability", " "),
-          caption = "Bayes Factor encompassing model and hypothesis posteriro probabilities  ($n_{subj} = 847$).") %>%
-    column_spec(4, image = spec_image(images, 100, 100),
-                width = "1cm", latex_valign = "m") %>%
-    row_spec(0, bold = TRUE) %>%
-    kable_styling(latex_options = c("hold_position"))
-}
-
-
-
-#----    get_table_sens_analysis    ----
-
-get_table_sens_analysis <- function(summary_sensitivity){
-  summary_sensitivity %>%
-    mutate(bf = format(bf, digits = 2),
-           weights = round(weights,2),
-           names = gsub("(_ext$|_int$)", "", names)) %>%
-    pivot_wider(names_from = case, values_from = c(bf, weights)) %>%
-    select(1, 2, 7, 3, 8, 4, 9, 5, 10, 6, 11) %>%
-    mutate(names = c("Null", "Monotropy", "Hierarchy",
-                     "Independence", "Integration")) %>%
-    kable(., booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
-          col.names = c("Hypothesis", rep(c("BF", "PP"), 5)),
-          caption = "Bayes Factor encompassing model v and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$).") %>%
-    add_header_above(c(" ", "$\\\\bm{\\\\mathcal{N}(0, .5)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 1)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 3)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 5)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 10)}$" = 2),
-                     escape = FALSE, bold = TRUE) %>%
-    row_spec(0, bold = TRUE) %>%
-    column_spec(1, bold = TRUE) %>%
-    kable_styling(latex_options = c("hold_position", "scale_down"))
-
-}
-
-#----    table_grade  ----
-
-#' Get Table School Grade
-#'
-#' Get table school grade from data_raw selcting subjeects accroding to age
-#'
-#' @param data_raw the row dataset
-#'
-#' @return a contingency table
-#'
-#' @examples
-#' drake::loadd(data_raw)
-#' table_grade(data_raw)
-#'
-
-table_grade <- function(data_raw){
-  data_raw %>%
-    dplyr::filter(age_year < 12.30) %>%
-    select(classe) %>%
-    table()
-}
 
 #----    normal_approximation    ----
 
@@ -453,5 +283,85 @@ get_plot_sensitivity <- function(encompassing_model = encompassing_model_ext){
 
 }
 
+
+#====    bookdown    ====
+
+#----    plot_age_dist    ----
+
+plot_age_dist <- function(){
+  data_cluster %>%
+    ggplot() +
+    geom_histogram(aes(x = age_year), bins = 17,
+                   col = "gray40", fill = "#3B9AB2", alpha = .8) +
+    labs(x = "Years",
+         y = "Frequency")
+}
+
+
+#----    plot_scores_cluster    ----
+
+plot_scores_cluster <- function(parent = c("mother", "father")){
+  parent <- match.arg(parent)
+  parent_sym <- sym(parent)
+
+  if(parent == "mother"){
+    parent_lab <- "Mother"
+    Anx_sym <- sym("Anxm")
+    Av_sym <- sym("Avm")
+  } else {
+    parent_lab <- "Father"
+    Anx_sym <- sym("Anxp")
+    Av_sym <- sym("Avp")
+  }
+
+
+  data_plot <- data_cluster %>%
+    select(!!parent_sym, !!Anx_sym, !!Av_sym) %>%
+    pivot_longer(c(!!Anx_sym, !!Av_sym), names_to = "scale")
+
+  avg <- data_plot %>%
+    group_by(scale) %>%
+    summarise(mean = mean(value)) %>%
+    pivot_wider(names_from = scale, values_from = mean)
+
+  names(avg) <- c("Anx", "Av")
+
+  data_plot %>%
+    mutate(scale = factor(scale, labels = c("Anx", "Av"))) %>%
+    ggplot() +
+    geom_boxplot(aes(x = scale, y = value, fill = scale),
+                 show.legend = FALSE, color = "gray40", alpha = .8) +
+    geom_segment(aes(x = .5, xend = 1.5, y = avg$Anx, yend = avg$Anx),
+                 col = "gray20", linetype = "dashed", size = .7) +
+    geom_segment(aes(x = 1.5, xend = 2.5, y = avg$Av, yend = avg$Av),
+                 col = "gray20", linetype = "dashed", size = .7) +
+    facet_grid(cols = vars(!!parent_sym)) +
+    labs(y = "Value") +
+    theme(axis.title.x = element_blank())
+}
+
+#----    plot_problems_dist    ----
+
+plot_problems_dist <- function(prob = c("ext", "int")){
+
+  prob <- match.arg(prob)
+
+  if(prob == "ext"){
+    prob_sym <- sym("externalizing_sum")
+    my_fill <-  "firebrick"
+    label_x <- "Externalizing Problems"
+  } else {
+    prob_sym <- sym("internalizing_sum")
+    my_fill <-  "#46ACC8"
+    label_x <- "Internalizing Problems"
+  }
+
+  ggplot(data_cluster) +
+    geom_bar(aes(x = !!prob_sym), fill = my_fill,
+             col = "gray20", alpha = .8) +
+    scale_x_continuous(limits = c(-0.5,20)) +
+    labs(x = label_x,
+         y = "Frequency")
+}
 #----
 

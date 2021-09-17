@@ -102,6 +102,26 @@ drake_load_paper <- function(){
 
 }
 
+drake_load_bookdown <- function(){
+  # Data
+  load_glob_env(data_raw)
+  load_glob_env(data_cluster)
+
+  # Cluster
+  load_glob_env(cluster_mother_fit)
+  load_glob_env(cluster_father_fit)
+
+  load_glob_env(mclust_mother)
+  load_glob_env(mclust_father)
+
+  # BF encompassing
+  load_glob_env(encompassing_model_ext)
+  load_glob_env(BF_weights_ext)
+  load_glob_env(summary_sensitivity_ext)
+
+  load_glob_env(data_prior_predict)
+}
+
 #----    get_sigma_example    ----
 
 get_sigma_example <- function(){
