@@ -41,6 +41,19 @@ my_check_zeroinflation <- function(x, tolerance = 0.05){
 }
 
 
+#----    zinb_fit    ----
+
+zinb_fit<- function(data, y, formula){
+
+  formula_mu<- paste0(y ," ~ ", formula, " + (1|ID_class)")
+
+  fit <- glmmTMB::glmmTMB(as.formula(formula_mu),
+                          ziformula = ~ gender + (1|ID_class),
+                          data = data, family = glmmTMB::nbinom2())
+
+  return(fit)
+}
+
 #----    zinb_brms    ----
 
 #' Fit ZINB Model
@@ -85,6 +98,26 @@ zinb_brms <- function(data, y, formula){
   return(fit)
 }
 
+#----    get_model_df    ----
+
+get_model_df<- function(fit){
+
+  if(is(fit, "brmsfit")){
+    n_fixed <- nrow(brms::fixef(fit))
+    n_random <- nrow(fit[["ranef"]])
+  } else {
+    fixed <- glmmTMB::fixef(fit)
+    n_fixed <- length(fixed$cond) + length(fixed$zi)
+
+    random <- glmmTMB::ranef(fit)
+    n_random <- length(random$cond) + length(random$zi)
+  }
+
+  res <- n_fixed + n_random
+
+  return(res)
+}
+
 #----    get_rel_weights    ----
 
 #' Get Relative Fit Criterion Weights
@@ -109,7 +142,7 @@ zinb_brms <- function(data, y, formula){
 #'                 brm_int_inter, ic = "loo")
 #'
 
-get_rel_weights <- function(..., ic = c("waic", "loo")){
+get_rel_weights <- function(..., ic = c("waic", "loo", "AIC", "BIC")){
   ic <- match.arg(ic)
 
   names_fit <- as.list(match.call(), )[-1] %>%
@@ -123,14 +156,20 @@ get_rel_weights <- function(..., ic = c("waic", "loo")){
     fit_ics <- lapply(list_fit, FUN = function(x){
       brms::waic(x)$estimates["waic", 1]
       })
-  } else {
+  } else if(ic == "loo"){
     fit_ics <- lapply(list_fit, FUN = function(x){
       brms::loo(x)$estimates["looic", 1]
     })
+  } else if(ic == "AIC"){
+    fit_ics <- lapply(list_fit, FUN = AIC)
+  } else {
+    fit_ics <- lapply(list_fit, FUN = BIC)
   }
 
+  model_df <- vapply(list_fit, FUN = get_model_df, FUN.VALUE = numeric(1))
 
   res <- data.frame(names = names_fit,
+                    df = model_df,
                     ic = unlist(fit_ics)) %>%
     mutate(diff_ic=max(ic)-ic,         # Compute difference
            rel_lik=exp(diff_ic/2),       # Compute relative likelihood

@@ -77,7 +77,7 @@ To evaluate if 4 cluster is an appropriate choice, we compare the BIC values of 
 parent_mclust(parent = "mother")
 ```
 
-```{r plot-mclust-mother, fig.cap="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information."}
+```{r plot-mclust-mother, cache=TRUE, fig.cap="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information."}
 plot(mclust_mother)
 ```
 
@@ -120,7 +120,7 @@ To evaluate if 4 cluster is an appropriate choice, we compare the BIC values of 
 parent_mclust(parent = "father")
 ```
 
-```{r plot-mclust-father, fig.cap="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information."}
+```{r plot-mclust-father, cache=TRUE, fig.cap="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information."}
 plot(mclust_father)
 ```
 

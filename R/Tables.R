@@ -273,6 +273,72 @@ get_table_cluster_prob <- function(prob = c("ext", "int"), format = "html"){
                   full_width = FALSE, font_size = font_size)
 }
 
+#----    get_table_AIC_BIC    ----
+
+# drake::loadd(AIC_weights_ext, BIC_weights_ext)
+get_table_AIC_BIC <- function(AIC_weights = AIC_weights_ext,
+                              BIC_weights = BIC_weights_ext,
+                              problem = c("ext", "int"),
+                              format = c("html", "latex"),
+                              path_img = "Documents/Bookdown/images/"){
+
+  problem <- match.arg(problem)
+  format <- match.arg(format)
+
+  names_plot_AIC <- paste("ball_AIC", problem, c("zero", "mother", "additive",
+                                "inter"), sep = "_")
+  names_plot_BIC <- paste("ball_BIC", problem, c("zero", "mother", "additive",
+                                                 "inter"), sep = "_")
+  images_AIC <- paste0(path_img, names_plot_AIC, ".png")
+  images_BIC <- paste0(path_img, names_plot_BIC, ".png")
+
+  for(i in seq_along(images_AIC)){
+    get_ggplot_balls(data = AIC_weights[i,],
+                     filename = images_AIC[i])
+    get_ggplot_balls(data = BIC_weights[i, ],
+                     filename = images_BIC[i])
+  }
+
+  data_table <- AIC_weights %>%
+    left_join(BIC_weights, by = "names", suffix = c("_AIC", "_BIC")) %>%
+    mutate(img_AIC = "",
+           img_BIC = "") %>%
+    mutate_at(vars(starts_with("weights")), round, 2) %>%
+    mutate_at(vars(starts_with("ic")), round, 1) %>%
+    select(names, df_AIC, ic_AIC, weights_AIC, img_AIC,
+           ic_BIC, weights_BIC, img_BIC)
+
+
+  if(format == "latex"){
+    data_table <- data_table %>%
+      mutate(names = gsub("_", "-", names))
+    col_width <- "1cm"
+    image_size <- 100
+  } else {
+    col_width <- "50pt"
+    image_size <- 125
+  }
+
+  problem_title <- if_else(problem == "ext", "externalizing", "internalizing")
+
+  kable(data_table, format = format, booktabs = TRUE, align = c("r", rep("c", 7)), escape = FALSE,
+          col.names = c("Model", "Df", "AIC", "AIC$_{weights}$", " ",
+                        "BIC", "BIC$_{weights}$", " "),
+          caption = sprintf("Model comparison %s problems ($n_{subj} = 847$).", problem_title)) %>%
+    column_spec(5, image = spec_image(images_AIC, image_size, image_size),
+                extra_css = "vertical-align:middle;padding-bottom: 0px;",
+                width = col_width, latex_valign = "m") %>%
+    column_spec(8, image = spec_image(images_BIC, image_size, image_size),
+                extra_css = "vertical-align:middle;padding-bottom: 0px;",
+                width = col_width, latex_valign = "m") %>%
+    row_spec(0, bold = TRUE) %>%
+    kable_styling(latex_options = c("hold_position", "scale_down"),
+                  bootstrap_options = c("hover"),
+                  full_width = FALSE)
+}
+
+
+
 #----
 
 

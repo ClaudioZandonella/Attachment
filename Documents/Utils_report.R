@@ -48,12 +48,18 @@ drake_load_all <- function(){
 
   #----    Internalizing    ----
 
-  # ZINB anlaysis
+  # ZINB analysis
   load_glob_env(fit_int_nb)
 
   # ANOVA
   load_glob_env(fit_int_zinb)
   load_glob_env(plot_zinb_int)
+
+  # model comparison
+  load_glob_env(fit_int_zero)
+  load_glob_env(fit_int_mother)
+  load_glob_env(AIC_weights_int)
+  load_glob_env(BIC_weights_int)
 
   # brms models
   load_glob_env(brm_int_mother)
@@ -68,12 +74,18 @@ drake_load_all <- function(){
 
   #----    Externalizing    ----
 
-  # ZINB anlaysis
+  # ZINB anslysis
   load_glob_env(fit_ext_nb)
 
   # ANOVA
   load_glob_env(fit_ext_zinb)
   load_glob_env(plot_zinb_ext)
+
+  # model comparison
+  load_glob_env(fit_ext_zero)
+  load_glob_env(fit_ext_mother)
+  load_glob_env(AIC_weights_ext)
+  load_glob_env(BIC_weights_ext)
 
   # brms models
   load_glob_env(brm_ext_mother)
@@ -121,7 +133,11 @@ drake_load_bookdown <- function(){
 
   # ANOVA
   load_glob_env(fit_ext_zinb)
-  #load_glob_env(plot_zinb_ext)
+
+  # model comparison
+  load_glob_env(fit_ext_mother)
+  load_glob_env(AIC_weights_ext)
+  load_glob_env(BIC_weights_ext)
 
   # BF encompassing
   load_glob_env(encompassing_model_ext)

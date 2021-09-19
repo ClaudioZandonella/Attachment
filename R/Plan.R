@@ -52,6 +52,25 @@ get_analysis_plan <- function(){
 
     plot_zinb_int = get_plot_zinb(model = fit_int_zinb, attachment = "mother"),
 
+    #----    Model Comparison int    ----
+    fit_int_zero = zinb_fit(data = data_cluster, y = "internalizing_sum",
+                            formula = "gender"),
+    fit_int_mother = zinb_fit(data = data_cluster, y = "internalizing_sum",
+                              formula = "gender + mother"),
+    fit_int_additive = zinb_fit(data = data_cluster, y = "internalizing_sum",
+                                formula = "gender + mother + father"),
+    fit_int_inter = zinb_fit(data = data_cluster, y = "internalizing_sum",
+                             formula = "gender + mother * father"),
+
+    # AIC BIC Weights
+    AIC_weights_int = get_rel_weights(fit_int_zero,
+                                      fit_int_mother,
+                                      fit_int_additive,
+                                      fit_int_inter, ic = "AIC"),
+    BIC_weights_int = get_rel_weights(fit_int_zero,
+                                      fit_int_mother,
+                                      fit_int_additive,
+                                      fit_int_inter, ic = "BIC"),
     #----    brms Models int    ----
     brm_int_zero = zinb_brms(data = data_cluster,
                             y = "internalizing_sum",
@@ -136,6 +155,26 @@ get_analysis_plan <- function(){
                                     data = data_cluster, family = glmmTMB::nbinom2()),
 
     plot_zinb_ext = get_plot_zinb(model = fit_ext_zinb, attachment = "mother"),
+
+    #----    Model Comparison ext    ----
+    fit_ext_zero = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                             formula = "gender"),
+    fit_ext_mother = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                               formula = "gender + mother"),
+    fit_ext_additive = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                                 formula = "gender + mother + father"),
+    fit_ext_inter = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                              formula = "gender + mother * father"),
+
+    # AIC BIC Weights
+    AIC_weights_ext = get_rel_weights(fit_ext_zero,
+                                       fit_ext_mother,
+                                       fit_ext_additive,
+                                       fit_ext_inter, ic = "AIC"),
+    BIC_weights_ext = get_rel_weights(fit_ext_zero,
+                                      fit_ext_mother,
+                                      fit_ext_additive,
+                                      fit_ext_inter, ic = "BIC"),
 
     #----    brms Models ext    ----
     brm_ext_zero = zinb_brms(data = data_cluster,

@@ -7,7 +7,7 @@ editor_options:
 
 In this chapter, we present the analyses to evaluate the different role of mother attachment and father attachment on children's externalizing problems. First, we discuss the appropriate models family to to take into account data characteristics. Next we conduct inference following three different approaches: 1) traditional Null Hypothesis Significance Testing (NHST) 2) Model Comparison using the AIC and BIC criteria 3) Bayes Factor with encompassing prior approach.
 
-## Models Family Choiche
+## Models Family Choiche {#model-choice}
 
 Externalizing problems are computed as the sum of 10 items of the SDQ, obtaining discrete scores that range from 0 to 20. Thus, we should use appropriate discrete distribution such as the *Poisson* distribution or the *Negative Binomial*. In the Poisson distribution mean and variance are defined according to the same parameter $\lambda$. On the contrary, Negative Binomial has an extra parameter to adjust the variance allowing more flexibility. Considering data distribution (see Figure~\@ref(fig:plot-externalizing-dist)), we can observe that data have high dispersion with a long right tail. In this case, Poisson distribution would be a poor choice and we prefer Negative Binomial instead.
 
@@ -53,7 +53,7 @@ Overall, results indicate that the ZINB model performs better than the Negative 
 
 ## NHST 
 
-Following traditional NHST approach, we consider the model previously defind that includes all possible effects of interest. That is the gender effect and the interaction between mother attachment and father attachment. Subsequently, we can run an analysis of deviance to evaluate the significance of the predictors using the function `Anova()` from the R-package `car` [@foxCompanionAppliedRegression2019].
+Following traditional NHST approach, we consider the model previously defined that includes all effects of interest. That is the gender effect and the interaction between mother attachment and father attachment. Subsequently, we can run an analysis of deviance to evaluate the significance of the predictors using the function `Anova()` from the R-package `car` [@foxCompanionAppliedRegression2019].
 ```{r, echo =TRUE, cache=TRUE}
 car::Anova(fit_ext_zinb)
 ```
@@ -62,10 +62,81 @@ Results indicate a statistically significant effect of gender and mother attachm
 summary(fit_ext_zinb)
 ```
 To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~\@ref(fig:plot-nhst-effects). Not that the marginal predicted values for gender are averaged over mother and father attachment effects. Whereas, the marginal predicted values for mother attachment are averaged over father attachment and gender effect.
-```{r plot-nhst-effects, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)."}
+```{r plot-nhst-effects, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)."}
 get_plot_zinb(model = fit_ext_zinb, attachment = "mother")
 ```
 
+Post-hoc test are run to evaluate differences between mother attachment styles. To do that we use the `contrast()` function from the `emmeans` R-package, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. This approach is less restrictive than traditional *“Bonferroni”* method, as it determines the adjustment according to a multivariate *t*-distribution with the same covariance structure as the estimates. Results are reported below,
+```{r, cache=TRUE, echo = TRUE}
+emmeans::contrast(emmeans::emmeans(fit_ext_zinb, specs = ~ mother ),
+                  "pairwise", adjust = "mvt")
+```
+
+Overall, results indicate that Males have more externalizing problems than Females and, regarding mother attachment, Fearful children have more problems than Secure children.
+
+To evaluate the fit of model to the data, we used $R^2$. In the case of generalized mixed-effects models, however, there are several definitions of $R^2$. We computed the *Marginal* $R^2$ and the *Conditional* $R^2$ as suggested by @nakagawaCoefficientDeterminationR22017. *Marginal* $R^2$ is concerned with the variance explained by fixed factors of the model, and *Conditional* $R^2$ is concerned with the variance explained by both fixed and random factors of the model. To do that we use the function `performance::r2()`.
+
+```{r, echo=TRUE, message=FALSE, cache=TRUE}
+performance::r2(fit_ext_zinb)
+```
+
+We can see that the actual variance explained by fixed factors is really small.
+
+#### Conclusions {-}
+
+Considering attachment theoretical perspectives, results indicate only the role of mother attachment. Note, however, that traditional NHST does not allow us to evaluate evidence in favour of an hypotheses. Moreover, we actually have not tested our hypotheses but only the catch-all null hypothesis that *“nothing is going on”*.
+
+## Model Comparison
+
+Model comparison allows us to compare multiple hypotheses and identify which is the most supported by the data [@mcelreathStatisticalRethinkingBayesian2020]. First, we need to formalize models according to our hypotheses. Subsequently,we can evaluate which is the most supported model among those considered according to the data using the AIC and BIC [@wagenmakersAICModelSelection2004; @akaike1973a; @schwarzEstimatingDimensionModel1978].
+
+### Formalize Models
+
+Following the same reasons as before (see Section~\@ref(model-choice)), we consider Zero Inflated Negative Binomial Mixed-Effects models. Again, we consider only the role of gender as fixed effect and children's classroom ID as random effect for $p$. Whereas, considering $\mu$, we define four different models to take into account the different theoretical perspectives:
+
+- `fit_ext_zero`: we consider only the effect of gender. This model assumes that attachment plays no role.
+- `fit_ext_mother`: we consider the additive effects of gender and mother attachment. This model supports the idea that only mother attachment is important (**Monotropy Theory**).
+- `fit_ext_additive`: we consider the additive effects of gender,  mother attachment, and father attachment. This model supports the idea that both mother attachment and father attachment are important, but not their interaction (**Hierarchy Theory** or **Independence Theory**).
+- `fit_ext_inter`: we consider the additive effects of gender and the interaction between mother attachment and father attachment. This model supports the idea that the interaction between mother attachment and father attachment is important (**Integration Theory**).
+
+Moreover, in all models we include children's classroom ID as random effect to take into  account teachers' different ability to evaluate children's problems. Using R formula syntax, we have
+```{r, echo = TRUE, eval=FALSE}
+# formula for p (same for all models)
+p ~ gender + (1|ID_class)
+
+# formula for mu
+
+# fit_ext_zero
+mu ~ gender + (1|ID_class)
+
+# fit_ext_mother
+mu ~ gender + mother + (1|ID_class)
+
+# fit_ext_additive
+mu ~ gender + mother + father + (1|ID_class)
+
+# fit_ext_inter
+mu ~ gender + mother * father + (1|ID_class)
+```
+
+### AIC and BIC Results
+
+After estimating the models, the AIC and BIC values together with their relative weights are computed. Results are reported in Table~\@ref(tab:table-AIC-BIC-weights).
+
+```{r table-AIC-BIC-weights}
+get_table_AIC_BIC(AIC_weights = AIC_weights_ext,
+                  BIC_weights = BIC_weights_ext,
+                  problem = "ext",
+                  format = params$format,
+                  path_img = "images/")
+```
+
+
+Accordinng to AIC, the most likely model is `fit\_ext\_mother` (92\%) and the second most likely model is `fit\_ext\_additive` (8\%) given the data and the set of models considered. According to BIC, instead,  the most likely model is `fit\_ext\_zero` (78\%) and the second most likely model is `fit\_ext\_mother` (22\%) given the data and the set of models considered.
+
+To interpret these results note that, AIC tends to select more complex models that can better explain the data, on the contrary, BIC penalizes complex models to a greater extent.  As pointed by @kuhaAICBICComparisons2004, using the two criteria together is always advocated as agreement provides reassurance on the robustness of the results and disagreement still provides useful information for the discussion. We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.
+
+### Selected Model
 
 
 

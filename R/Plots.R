@@ -13,8 +13,8 @@
 #' @return a ggplot object
 #'
 #' @examples
-#' drake::loadd(fit_int_zinb)
-#' get_plot_zinb(model = fit_int_zinb, attachment = "mother")
+#' drake::loadd(fit_ext_zinb)
+#' get_plot_zinb(model = fit_ext_zinb, attachment = "mother")
 #'
 
 get_plot_zinb <- function(model, attachment = c("interaction", "mother")){
@@ -22,16 +22,17 @@ get_plot_zinb <- function(model, attachment = c("interaction", "mother")){
 
   marginal_effects_gender <- emmeans::emmeans(model, specs = ~ gender) %>%
     as.data.frame() %>%
-    mutate_at(vars(emmean, lower.CL, upper.CL), exp)
+    mutate_at(vars(emmean, lower.CL, upper.CL), exp) %>%
+    mutate(gender = recode_factor(gender, "F" = "Female", "M" = "Male"))
 
-  p_gender <- ggplot(as.data.frame(marginal_effects_gender),
-         aes(x = gender, y = emmean, colour = gender)) +
+  p_gender <- ggplot(marginal_effects_gender,
+                     aes(x = gender, y = emmean, colour = gender)) +
     geom_point(show.legend = FALSE, size = 3) +
     geom_errorbar(aes(ymin=lower.CL, ymax = upper.CL, colour = gender),
                   size = 1, width = .2, show.legend = FALSE) +
     labs(x = "Gender",
          y = "Problems") +
-    coord_cartesian(ylim = c(0, 6)) +
+    coord_cartesian(ylim = c(0, 7.5)) +
     theme_bw()
 
   if(attachment == "interaction"){
@@ -39,7 +40,7 @@ get_plot_zinb <- function(model, attachment = c("interaction", "mother")){
       as.data.frame() %>%
       mutate_at(vars(emmean, lower.CL, upper.CL), exp)
 
-    p_attachemnt <- ggplot(as.data.frame(marginal_effects_att),
+    p_attachemnt <- ggplot(marginal_effects_att,
                            aes(x = mother, y = emmean, colour = father, group = father)) +
       geom_point(show.legend = FALSE) +
       geom_line(show.legend = FALSE) +
@@ -57,14 +58,14 @@ get_plot_zinb <- function(model, attachment = c("interaction", "mother")){
       as.data.frame() %>%
       mutate_at(vars(emmean, lower.CL, upper.CL), exp)
 
-    p_attachemnt <- ggplot(as.data.frame(marginal_effects_att),
+    p_attachemnt <- ggplot(marginal_effects_att,
                            aes(x = mother, y = emmean, colour = mother)) +
       geom_point(show.legend = FALSE, size = 3) +
       geom_errorbar(aes(ymin=lower.CL, ymax = upper.CL, colour = mother),
                     width = .5, show.legend = FALSE, size = 1) +
       labs(x = "Mother Attachment",
            y = "Problems") +
-      coord_cartesian(ylim = c(0, 6)) +
+      coord_cartesian(ylim = c(0, 7.5)) +
       scale_color_manual(values=c("#3B9AB2", "#EBCC2A", "#E1AF00", "#F21A00")) +
       theme_bw()
 
@@ -233,6 +234,8 @@ get_ggplot_balls <- function(data, filename = "Documents/Paper/figure/Prova.png"
     scale_fill_gradient(limit=c(0,1), high = "#046C9A", low = "white") +
     theme_classic() +
     theme(legend.position = "none",
+          panel.background = element_rect(fill = "transparent"),
+          plot.background = element_rect(fill = "transparent", color = NA),
           axis.line = element_blank(),
           axis.text = element_blank(),
           axis.ticks = element_blank(),
