@@ -2,6 +2,45 @@
 #====    Model Definition    ====#
 #================================#
 
+#----    my_check_zeroinflation    ----
+
+# fix bug glmmTMB in performance::check_zeroinflation()
+# https://github.com/easystats/performance/issues/367
+
+my_check_zeroinflation <- function(x, tolerance = 0.05){
+  model_info <- insight::model_info(x)
+  if (!model_info$is_count) {
+    stop("Model must be from Poisson-family.", call. = FALSE)
+  }
+  obs.zero <- sum(insight::get_response(x, verbose = FALSE) ==
+                    0)
+  if (obs.zero == 0) {
+    insight::print_color("Model has no observed zeros in the response variable.\n",
+                         "red")
+    return(NULL)
+  }
+
+  # get theta
+  if(is(x, "glmmTMB")){
+    theta <- stats::sigma(x)
+  } else {
+    theta <- x$theta
+  }
+  mu <- stats::fitted(x)
+  if (model_info$is_negbin && !is.null(theta)) {
+    pred.zero <- round(sum(stats::dnbinom(x = 0, size = theta,
+                                          mu = mu)))
+  }
+  else {
+    pred.zero <- round(sum(stats::dpois(x = 0, lambda = mu)))
+  }
+  structure(class = "check_zi", list(predicted.zeros = pred.zero,
+                                     observed.zeros = obs.zero, ratio = pred.zero/obs.zero,
+                                     tolerance = tolerance))
+
+}
+
+
 #----    zinb_brms    ----
 
 #' Fit ZINB Model

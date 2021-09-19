@@ -5,7 +5,7 @@ editor_options:
 ---
 # Case Study {#case-study}
 
-In this chapter, first, we describe the sample included in the study. Subsequently, we present the results of the cluster analysis to classify the different attachment patterns.
+In this chapter, we describe the sample included in the study. First we present general information about the sample. Subsequently, we present the results of the cluster analysis to classify the different attachment patterns. Finally, we consider children's social-emotional problems.
 
 For more information regarding Attachment theory and the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article].
 
@@ -141,7 +141,7 @@ We can observe how values on the diagonal (same attachment styles towards both p
 Children's social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers. Separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items.
 
 
-### Externalizing Problems
+### Externalizing Problems {-}
 
 Participants externalizing problems mean is `r var_info("externalizing_sum")`. The participants externalizing problems summary statistics are reported below and the distribution is presented in Figure~\@ref(fig:plot-externalizing-dist).
 
@@ -153,14 +153,13 @@ var_summary("externalizing_sum")
 plot_problems_dist("ext")
 ```
 
-
-Externalizing problems according to attachment styles are reported in Table~\@ref(tab:table-cluster-ext).
+Overall, externalizing problems are low. This is expected as the sample is not a clinical sample. Externalizing problems according to attachment styles are reported in Table~\@ref(tab:table-cluster-ext).
 
 ```{r table-cluster-ext, cache=TRUE}
 get_table_cluster_prob("ext", format = params$format)
 ```
 
-### Internalizing Problems
+### Internalizing Problems {-}
 
 Participants internalizing problems mean is `r var_info("internalizing_sum")`. The participants internalizing problems summary statistics are reported below and the distribution is presented in Figure~\@ref(fig:plot-internalizing-dist).
 
@@ -172,23 +171,9 @@ var_summary("internalizing_sum")
 plot_problems_dist("int")
 ```
 
-Internalizing problems according to attachment styles are reported in Table~\ref(tab:table-cluster-ext).
+Overall, internalizing problems are low. Again, this is expected as the sample is not a clinical sample. Internalizing problems according to attachment styles are reported in Table~\ref(tab:table-cluster-ext).
 
 ```{r table-cluster-int, cache=TRUE}
 get_table_cluster_prob("int", format = params$format)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

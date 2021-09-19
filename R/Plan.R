@@ -41,15 +41,16 @@ get_analysis_plan <- function(){
     #=============================
 
     #----    ZINB analysis    ----
-    fit_int_nb = MASS::glm.nb(internalizing_sum ~ gender + mother * father,
-                              data = data_cluster),
-    test_zero_inflated_int = performance::check_zeroinflation(fit_int_nb),
+    fit_int_nb = glmmTMB::glmmTMB(internalizing_sum ~ gender + mother * father + (1|ID_class),
+                                  data = data_cluster, family = glmmTMB::nbinom2()),
+    test_zero_inflated_int = my_check_zeroinflation(fit_int_nb),
 
     #----    anova approach ----
-    fit_int_zinb = pscl::zeroinfl(internalizing_sum ~ gender + mother * father | gender,
-                                  data = data_cluster, dist = "negbin"),
+    fit_int_zinb = glmmTMB::glmmTMB(internalizing_sum ~ gender + mother * father + (1|ID_class),
+                                    ziformula = ~ gender + (1|ID_class),
+                                    data = data_cluster, family = glmmTMB::nbinom2()),
 
-    plot_zinb_int = get_plot_zinb(model = fit_int_zinb),
+    plot_zinb_int = get_plot_zinb(model = fit_int_zinb, attachment = "mother"),
 
     #----    brms Models int    ----
     brm_int_zero = zinb_brms(data = data_cluster,
@@ -125,15 +126,16 @@ get_analysis_plan <- function(){
     #=============================
 
     #----    ZINB analysis    ----
-    fit_ext_nb = MASS::glm.nb(externalizing_sum ~ gender + mother * father,
-                              data = data_cluster),
-    test_zero_inflated_ext = performance::check_zeroinflation(fit_ext_nb),
+    fit_ext_nb = glmmTMB::glmmTMB(externalizing_sum ~ gender + mother * father + (1|ID_class),
+                                  data = data_cluster, family = glmmTMB::nbinom2()),
+    test_zero_inflated_ext = my_check_zeroinflation(fit_ext_nb),
 
     #----    anova approach ----
-    fit_ext_zinb = pscl::zeroinfl(externalizing_sum ~ gender + mother * father | gender,
-                                  data = data_cluster, dist = "negbin"),
+    fit_ext_zinb = glmmTMB::glmmTMB(externalizing_sum ~ gender + mother * father + (1|ID_class),
+                                    ziformula = ~ gender + (1|ID_class),
+                                    data = data_cluster, family = glmmTMB::nbinom2()),
 
-    plot_zinb_ext = get_plot_zinb(model = fit_ext_zinb),
+    plot_zinb_ext = get_plot_zinb(model = fit_ext_zinb, attachment = "mother"),
 
     #----    brms Models ext    ----
     brm_ext_zero = zinb_brms(data = data_cluster,
