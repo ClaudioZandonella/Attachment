@@ -112,7 +112,7 @@ get_model_matrix <- function(){
 
   levels <- c("Sec", "Anx", "Av", "Fear")
 
-  new_data <- expand_grid(mother = factor(levels, levels = levels),
+  new_data <- expand.grid(mother = factor(levels, levels = levels),
                           father = factor(levels, levels = levels))
 
   mm <- model.matrix(~mother*father, new_data)[,-1] # remove intercept column
