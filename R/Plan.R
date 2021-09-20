@@ -245,6 +245,13 @@ get_analysis_plan <- function(){
                                                       prior_sensitivity_ext_10),
 
     data_prior_predict = get_data_prior_predict(),
+
+    # selected model
+    brm_selected_ext = brms::brm(brms::bf(externalizing_sum ~ gender + mother + (1|ID_class),
+                                          zi ~ gender + (1|ID_class)),
+                                 family = brms::zero_inflated_negbinomial(),
+                                 data = data_cluster,
+                                 chains = 6, iter = 6000, cores = 6, warmup = 2000, seed = 2021)
   )
 }
 

@@ -122,6 +122,92 @@ get_model_matrix <- function(){
   return(mm)
 }
 
+#----    get_hyp_rownames    ----
+
+get_hyp_rownames <- function(hypothesis = c("null", "monotropy", "hierarchy",
+                                            "independence", "integration"),
+                             par_names){
+  hypothesis <- match.arg(hypothesis)
+  n_pars <- length(par_names)
+
+  if(hypothesis == "null"){
+    #----    Null Hypothesis    ----
+
+    # names equality constraints
+    names_eq <- par_names
+
+    # names inequality constraints
+    names_ineq <- NULL
+
+  } else if(hypothesis == "monotropy"){
+    #----    Monotropy Hypothesis    ----
+
+    # names equality constraints
+    names_eq <- c("[M_Anx_F_Sec - M_Av_F_Sec]",
+                  par_names[4:n_pars])
+
+    # inequality constraints
+    names_ineq <- c("[M_Anx_F_Sec]",
+                    "[M_Fear_F_Sec - M_Av_F_Sec]")
+
+  } else if(hypothesis == "hierarchy"){
+    #----    Hierarchy Hypothesis    ----
+
+    # names equality constraints
+    names_eq <- c("[M_Anx_F_Sec - M_Av_F_Sec]",
+                  "[M_Sec_F_Anx - M_Sec_F_Av]",
+                  par_names[7:n_pars])
+
+    # inequality constraints
+    names_ineq <- c("[M_Anx_F_Sec]",
+                    "[M_Fear_F_Sec - M_Av_F_Sec]",
+                    "[M_Sec_F_Anx]",
+                    "[M_Sec_F_Fear - M_Sec_F_Av]",
+                    "[M_Anx_F_Sec - M_Sec_F_Anx]",
+                    "[M_Av_F_Sec - M_Sec_F_Av]",
+                    "[M_Fear_F_Sec - M_Sec_F_Fear]")
+
+  } else if(hypothesis == "independence"){
+    #----    Independence Hypothesis    ----
+    # names equality constraints
+    names_eq <- c("[M_Anx_F_Sec - M_Av_F_Sec]",
+                  par_names[7:n_pars])
+
+    # inequality constraints
+    names_ineq <- c("[M_Anx_F_Sec]",
+                    "[M_Fear_F_Sec - M_Av_F_Sec]",
+                    "[M_Sec_F_Anx]",
+                    "[M_Sec_F_Av - M_Sec_F_Anx]",
+                    "[M_Sec_F_Fear - M_Sec_F_Av]")
+
+  } else {
+    #----    Integration Hypothesis    ----
+    # names equality constraints
+    names_eq <- c("[M_Anx_F_Sec - M_Av_F_Sec]",
+                  "[M_Anx_F_Sec - M_Sec_F_Anx]",
+                  "[M_Anx_F_Sec - M_Sec_F_Av]",
+
+                  "[M_Anx_F_Anx - M_Anx_F_Av]",
+                  "[M_Anx_F_Anx - M_Av_F_Anx]",
+                  "[M_Anx_F_Anx - M_Av_F_Av]",
+
+                  "[M_Fear_F_Anx - M_Fear_F_Av]",
+                  "[M_Fear_F_Anx - M_Anx_F_Fear]",
+                  "[M_Fear_F_Anx - M_Av_F_Fear]")
+
+    # inequality constraints
+    names_ineq <- c("[M_Anx_F_Sec]",
+                    "[M_Anx_F_Anx - M_Anx_F_Sec]",
+                    "[M_Fear_F_Anx - M_Anx_F_Anx]",
+                    "[M_Fear_F_Fear - M_Fear_F_Anx]")
+    }
+
+  res <- list(eq = names_eq,
+              ineq = names_ineq)
+
+  return(res)
+}
+
 #----    get_hypothesis_matrix    ----
 
 #' Get Hypothesis Matrix
@@ -229,10 +315,15 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchy
                          mm["M_Fear_F_Fear", ] - mm["M_Fear_F_Anx", ])  # F_f + M_f_F_f - F_anx - M_f_F_anx > 0
     }
 
+  # set matrix rows and col names
+  row_names <- get_hyp_rownames(hypothesis = hypothesis, par_names = par_names)
+  rownames(eq_matrix) <- row_names$eq
+
   if(hypothesis == "null"){
     colnames(eq_matrix) <- par_names
   } else {
     colnames(eq_matrix) <- colnames(ineq_matrix) <- par_names
+    rownames(ineq_matrix) <- row_names$ineq
   }
   hyp <- rbind(eq_matrix, ineq_matrix)
 
@@ -569,8 +660,8 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchy",
 #'
 #' @examples
 #' drake::loadd(encompassing_model_int)
-#' independent_rows <- c(1, 2, 3, 4, 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37)
-#' hyp <- get_hypothesis_matrix(hypothesis = "independence", encompassing_model_int)$hyp
+#' independent_rows <- 1:15
+#' hyp <- get_hypothesis_matrix(hypothesis = "hierarchy", encompassing_model_int)$hyp
 #' find_transform_parameters(hyp = hyp, independent_rows)
 #'
 
@@ -638,8 +729,8 @@ find_transform_parameters <- function(hyp, independent_rows){
 #'
 #' @examples
 #' drake::loadd(encompassing_model_int)
-#' independent_rows <- c(1, 2, 3, 4, 5, 9, 13, 15, 17, 19, 21, 25, 29, 33, 37)
-#' hyp <- get_hypothesis_matrix(hypothesis = "integration", encompassing_model_int)$hyp
+#' independent_rows <- 1:15
+#' hyp <- get_hypothesis_matrix(hypothesis = "hierarchy", encompassing_model_int)$hyp
 #' find_composition_betas(hyp = hyp, independent_rows)
 #'
 

@@ -67,9 +67,13 @@ get_table_prior_predict <- function(data = data_prior_predict, format = c("latex
 #----    get_table_bf    ----
 
 get_table_bf <- function(bf_result = BF_weights_ext,
-                         path_img = "Documents/Paper/figure/"){
+                         path_img = "Documents/Paper/figure/",
+                         problem = c("ext", "int"),
+                         format = c("latex", "html")){
+  format <- match.arg(format)
+  problem <- match.arg(problem)
 
-  names_plot <- paste("ball", c("null", "monotropy", "hierarchy",
+  names_plot <- paste("ball_BF",problem, c("null", "monotropy", "hierarchy",
                                 "independence", "integration"), sep = "_")
   images <- paste0(path_img, names_plot, ".png")
 
@@ -78,11 +82,13 @@ get_table_bf <- function(bf_result = BF_weights_ext,
                      filename = images[i])
   }
 
-  # centerText <- function(text){
-  #   paste0("\\multirow{1}{*}[0pt]{", text, "}")
-  # }
-
-
+  if(format == "latex"){
+    col_width <- "1cm"
+    image_size <- 100
+  } else {
+    col_width <- "50pt"
+    image_size <- 125
+  }
 
   bf_result %>%
     bind_cols(img = "") %>%
@@ -92,21 +98,28 @@ get_table_bf <- function(bf_result = BF_weights_ext,
            weights = round(weights,2)) %>%
     select(hypothesis, bf, weights, img) %>%
     # mutate_at(c("hypothesis", "bf","weights"), centerText) %>%
-    kable(., booktabs = TRUE, align = c("r", rep("c", 3)), escape = FALSE,
+    kable(., format = format, booktabs = TRUE, align = c("r", rep("c", 3)), escape = FALSE,
           col.names = c("Hypothesis", "Bayes Factor", "Posterior Probability", " "),
           caption = "Bayes Factor encompassing model and hypothesis posteriro probabilities  ($n_{subj} = 847$).") %>%
-    column_spec(4, image = spec_image(images, 100, 100),
-                width = "1cm", latex_valign = "m") %>%
+    column_spec(4, image = spec_image(images, image_size, image_size),
+                extra_css = "vertical-align:middle;padding-bottom: 0px;",
+                width = col_width, latex_valign = "m") %>%
     row_spec(0, bold = TRUE) %>%
-    kable_styling(latex_options = c("hold_position"))
+    kable_styling(latex_options = c("hold_position"),
+                  bootstrap_options = c("hover"),
+                  full_width = FALSE)
 }
 
 
 
 #----    get_table_sens_analysis    ----
 
-get_table_sens_analysis <- function(summary_sensitivity){
-  summary_sensitivity %>%
+get_table_sens_analysis <- function(summary_sensitivity, format = c("latex", "html"),
+                                    bookdown = FALSE){
+  format <- match.arg(format)
+  font_size <- NULL
+
+  table <- summary_sensitivity %>%
     mutate(bf = format(bf, digits = 2),
            weights = round(weights,2),
            names = gsub("(_ext$|_int$)", "", names)) %>%
@@ -114,18 +127,42 @@ get_table_sens_analysis <- function(summary_sensitivity){
     select(1, 2, 7, 3, 8, 4, 9, 5, 10, 6, 11) %>%
     mutate(names = c("Null", "Monotropy", "Hierarchy",
                      "Independence", "Integration")) %>%
-    kable(., booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
+    kable(., format = format, booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
           col.names = c("Hypothesis", rep(c("BF", "PP"), 5)),
-          caption = "Bayes Factor encompassing model v and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$).") %>%
-    add_header_above(c(" ", "$\\\\bm{\\\\mathcal{N}(0, .5)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 1)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 3)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 5)}$" = 2,
-                       "$\\\\bm{\\\\mathcal{N}(0, 10)}$" = 2),
-                     escape = FALSE, bold = TRUE) %>%
+          caption = "Bayes Factor encompassing model v and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$).")
+
+  if(format == "html"){
+    table <- table %>%
+      add_header_above(c(" ", "$\\mathcal{N}(0, .5)$" = 2,
+                         "$\\mathcal{N}(0, 1)$" = 2,
+                         "$\\mathcal{N}(0, 3)$" = 2,
+                         "$\\mathcal{N}(0, 5)$" = 2,
+                         "$\\mathcal{N}(0, 10)$" = 2),
+                       escape = FALSE, bold = TRUE)
+    font_size <-  12
+  } else if(isTRUE(bookdown)){
+    table <- table %>%
+      add_header_above(c(" ", "$\\\\mathcal{N}(0, .5)$" = 2,
+                         "$\\\\mathcal{N}(0, 1)$" = 2,
+                         "$\\\\mathcal{N}(0, 3)$" = 2,
+                         "$\\\\mathcal{N}(0, 5)$" = 2,
+                         "$\\\\mathcal{N}(0, 10)$" = 2),
+                       escape = FALSE, bold = TRUE)
+  } else {
+    table <- table %>%
+      add_header_above(c(" ", "$\\\\bm{\\\\mathcal{N}(0, .5)}$" = 2,
+                         "$\\\\bm{\\\\mathcal{N}(0, 1)}$" = 2,
+                         "$\\\\bm{\\\\mathcal{N}(0, 3)}$" = 2,
+                         "$\\\\bm{\\\\mathcal{N}(0, 5)}$" = 2,
+                         "$\\\\bm{\\\\mathcal{N}(0, 10)}$" = 2),
+                       escape = FALSE, bold = TRUE)
+  }
+  table %>%
     row_spec(0, bold = TRUE) %>%
     column_spec(1, bold = TRUE) %>%
-    kable_styling(latex_options = c("hold_position", "scale_down"))
+    kable_styling(latex_options = c("hold_position", "scale_down"),
+                  bootstrap_options = c("striped", "hover"),
+                  full_width = FALSE, font_size = font_size)
 
 }
 
