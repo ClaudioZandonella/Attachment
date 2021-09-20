@@ -80,7 +80,7 @@ To evaluate the fit of model to the data, we used $R^2$. In the case of generali
 performance::r2(fit_ext_zinb)
 ```
 
-We can see that the actual variance explained by fixed factors is really small.
+We can see that the actual variance explained by fixed effects is almost 10\%, not bad for psychology.
 
 #### Conclusions {-}
 
@@ -88,7 +88,7 @@ Considering attachment theoretical perspectives, results indicate only the role 
 
 ## Model Comparison
 
-Model comparison allows us to compare multiple hypotheses and identify which is the most supported by the data [@mcelreathStatisticalRethinkingBayesian2020]. First, we need to formalize models according to our hypotheses. Subsequently,we can evaluate which is the most supported model among those considered according to the data using the AIC and BIC [@wagenmakersAICModelSelection2004; @akaike1973a; @schwarzEstimatingDimensionModel1978].
+Model comparison allows us to compare multiple hypotheses and identify which is the most supported by the data [@mcelreathStatisticalRethinkingBayesian2020]. First, we need to formalize models according to our hypotheses. Subsequently, we can evaluate which is the most supported model among those considered according to the data using the AIC and BIC [@wagenmakersAICModelSelection2004; @akaike1973a; @schwarzEstimatingDimensionModel1978].
 
 ### Formalize Models
 
@@ -123,7 +123,7 @@ mu ~ gender + mother * father + (1|ID_class)
 
 After estimating the models, the AIC and BIC values together with their relative weights are computed. Results are reported in Table~\@ref(tab:table-AIC-BIC-weights).
 
-```{r table-AIC-BIC-weights}
+```{r table-AIC-BIC-weights, cache=TRUE}
 get_table_AIC_BIC(AIC_weights = AIC_weights_ext,
                   BIC_weights = BIC_weights_ext,
                   problem = "ext",
@@ -132,16 +132,84 @@ get_table_AIC_BIC(AIC_weights = AIC_weights_ext,
 ```
 
 
-Accordinng to AIC, the most likely model is `fit\_ext\_mother` (92\%) and the second most likely model is `fit\_ext\_additive` (8\%) given the data and the set of models considered. According to BIC, instead,  the most likely model is `fit\_ext\_zero` (78\%) and the second most likely model is `fit\_ext\_mother` (22\%) given the data and the set of models considered.
+Accordinng to AIC, the most likely model is `fit_ext_mother` (`r perc_model_ext("fit_ext_mother", "AIC")`\%) and the second most likely model is `fit_ext_additive` (`r perc_model_ext("fit_ext_additive", "AIC")`\%) given the data and the set of models considered. According to BIC, instead,  the most likely model is `fit_ext_zero` (`r perc_model_ext("fit_ext_zero", "BIC")`\%) and the second most likely model is `fit_ext_mother` (`r perc_model_ext("fit_ext_mother", "BIC")`\%) given the data and the set of models considered.
 
 To interpret these results note that, AIC tends to select more complex models that can better explain the data, on the contrary, BIC penalizes complex models to a greater extent.  As pointed by @kuhaAICBICComparisons2004, using the two criteria together is always advocated as agreement provides reassurance on the robustness of the results and disagreement still provides useful information for the discussion. We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.
 
 ### Selected Model
 
+Considering model `fit_ext_mother`, we can run an analysis of deviance to evaluate the significance of the predictors.
+```{r, echo =TRUE, cache=TRUE}
+car::Anova(fit_ext_mother)
+```
+Results confirm a statistically significant effect of gender and mother attachment. Model summary is reported below.
+```{r, echo =TRUE, cache=TRUE}
+summary(fit_ext_mother)
+```
+To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~\@ref(fig:plot-comparison-effects). Not that the marginal predicted values for gender are averaged over mother attachment. Whereas, the marginal predicted values for mother attachment are averaged over gender.
+```{r plot-comparison-effects, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment ($n_{subj} = 847$)."}
+get_plot_zinb(model = fit_ext_mother, attachment = "mother")
+```
 
+Post-hoc test are run to evaluate differences between mother attachment styles, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. Results are reported below,
+```{r, cache=TRUE, echo = TRUE}
+emmeans::contrast(emmeans::emmeans(fit_ext_mother, specs = ~ mother ),
+                  "pairwise", adjust = "mvt")
+```
 
+Overall, results indicate that Males have more externalizing problems than Females. Regarding mother attachment, Fearful and Avoidant children have more problems than Secure children. Moreover, also the difference between Anxious and Secure children and the difference between Anxious and Fearful children have a low (but not statistically significant) *p*-value.
 
+To evaluate the fit of model to the data, we computed the *Marginal* $R^2$ and the *Conditional* $R^2$.
 
+```{r, echo=TRUE, message=FALSE, cache=TRUE}
+performance::r2(fit_ext_mother)
+```
+
+We can see that the actual variance explained by fixed effects is around 7\%, not bad for psychology.
+
+#### Conclusions {-}
+
+Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the **Monotropy Theory**. Note, however, that the compared models contain no information regarding the expected direction of the effects but we only include/exclude predictors.
+
+## Bayes Factor
+
+To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes Factor with encompassing prior approach. See the main article for a detailed introduction to this approach [TODO: add link article].
+
+First, we define the encompassing model. Subsequently, we obtain the hypotheses matrices according to the informative hypotheses. Next, we compute the Bayes Factor and, finally, we describe the selected model.
+
+### Encompassing Model 
+
+We define a Zero-Inflated Negative Binomial (ZINB) mixed-effects model to take into account the characteristics of the dependent variable and its distribution (see Section~\@ref(model-choice)).  Again, we consider only the role of gender as fixed effect and children’s classroom ID as random effect for $p$. Whereas, regarding $\mu$, we consider the interaction between mother and father attachment together with gender as fixed effects and children’s classroom ID as random effect. In the R formula syntax, we have
+```{r, echo=TRUE, eval=FALSE}
+# formula for p
+p ~ gender + (1|ID_class)
+
+# formula for mu
+mu ~ gender + mother * father + (1|ID_class)
+```
+
+The encompassing model is estimated using 6 independent chains with 10,000 iterations (warm-up 2,000). To do that we use the `brm()` fucntion from the `brms` R-package [@burknerBrmsPackageBayesian2017; burknerAdvancedBayesianMultilevel2018a], which is based on STAN [@standevelopmentteamRStanInterfaceStan2020].
+
+#### Prior Choiche {-}
+
+Prior choice is important for the parameters involved in the equality and inequality constraints. In our case, the parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specify as prior a normal distribution with mean 0 and a given standard deviation. Considering the standard deviation, however, we have to choose a value so that the resulting prior is non-informative but without being excessively diffuse. 
+
+We can evaluate the consequences of different values choice considering the resulting prior predictions. To facilitate this step, we compute prior prediction considering only the intercept and a single parameter of interest. Remembering that the inverse link function (i.e., function that in a GLM transform the model linear prediction into the value on the original response scale) is the exponential function, we consider as intercept the value 1, because $exp(1) \approx 2.7$ that is close to the externalizing problems sample mean  `r ext_mean()`. In Table~\@ref(table-prior-predict), summary information about prior predictions for different standard deviation values are reported.
+```{r table-prior-predict}
+get_table_prior_predict(format = params$format)
+```
+
+Considering that externalizing problems are bounded between 0 and 20, a reasonable prior is  $\mathcal{N}(0,3)$. as prior predicted values cover all possible values without including excessively large values. More diffuse priors would result in values with a higher order of magnitude and tighter priors would exclude plausible values. The influence of prior specification will be subsequently evaluated in a prior sensitivity analysis. 
+
+Regarding the other nuisance parameters (i.e., intercepts, random effects and shapes parameters) `brms` default priors are maintained. The resulting prior settings are
+```{r prior-seettings}
+options(width = 300)
+brms::prior_summary(encompassing_model_ext)
+```
+
+#### Hypotheses Matrices {-}
+
+Finally, note that in this case, we do not need to standardize our parameters as they represent mean groups differences (see main article [TODO: add link article]).
 
 
 

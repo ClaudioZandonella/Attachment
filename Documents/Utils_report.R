@@ -140,6 +140,8 @@ drake_load_bookdown <- function(){
   load_glob_env(BIC_weights_ext)
 
   # BF encompassing
+  load_glob_env(data_prior_predict)
+
   load_glob_env(encompassing_model_ext)
   load_glob_env(BF_weights_ext)
   load_glob_env(summary_sensitivity_ext)

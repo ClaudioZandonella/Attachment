@@ -48,15 +48,21 @@ get_table_cluster_ext <- function(){
 
 #----    get_table_prior_predict    ----
 
-get_table_prior_predict <- function(data = data_prior_predict){
+# drake::loadd(data_prior_predict)
+
+get_table_prior_predict <- function(data = data_prior_predict, format = c("latex", "html")){
+  format <- match.arg(format)
+
   data %>%
     dplyr::select(- prior_sd) %>%
     mutate_if(is.numeric, round, 1) %>%
-    kable(., booktabs = TRUE, align = c("r", rep("c", 5)), escape = FALSE,
-          col.names = c("Prior", "- 1 SD", "- .5 SD", "+ 0 SD", "+ .5 SD", "+ 1 SD"),
+    kable(., format = format, booktabs = TRUE, align = c("r", rep("c", 5)), escape = FALSE,
+          col.names = c("Prior", "$-1$ SD", "$-.5$ SD", "$+0$ SD", "$+ .5$ SD", "$+ 1$ SD"),
           caption = "Prior prediction acording to different prior settings assuming $exp(1)$ as intercept value.") %>%
     add_header_above(c(" " = 1, "Predicted Problems" = 5)) %>%
-    kable_styling(latex_options = c("hold_position"))
+    kable_styling(latex_options = c("hold_position"),
+                  bootstrap_options = c("hover", "striped"),
+                  full_width = FALSE)
 }
 #----    get_table_bf    ----
 
@@ -279,7 +285,7 @@ get_table_cluster_prob <- function(prob = c("ext", "int"), format = "html"){
 get_table_AIC_BIC <- function(AIC_weights = AIC_weights_ext,
                               BIC_weights = BIC_weights_ext,
                               problem = c("ext", "int"),
-                              format = c("html", "latex"),
+                              format = c("latex", "html"),
                               path_img = "Documents/Bookdown/images/"){
 
   problem <- match.arg(problem)

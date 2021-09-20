@@ -5,7 +5,18 @@ editor_options:
 ---
 # Case Study {#case-study}
 
-In this chapter, we describe the sample included in the study. First we present general information about the sample. Subsequently, we present the results of the cluster analysis to classify the different attachment patterns. Finally, we consider children's social-emotional problems.
+In this chapter, we describe the sample included in the study. First we describe the aim of the study. Subsequently, we present general information about the sample and the results of the cluster analysis to classify the different attachment patterns. Finally, we consider children's social-emotional problems.
+
+## Aim of the Study
+
+The aim of the study is to compare the different theoretical perspectives regarding the role of mother attachment and father attachment on children's social emotional development. In the literature, four different main theoretical perspectives have been identified [@brethertonFathersAttachmentTheory2010]:
+
+- **Monotropy Theory** - only the mother has an impact on children's development.
+- **Hierarchy Theory** - the mother has a greater impact on children development than the  the father.
+- **Independence Theory** - all attachment figures are equally important but they affect the children's development differently.
+- **Integration Theory** - to understand the impact on children's development it is necessary to consider attachment relationships taken together.
+
+Contrasting results have been reported by studies investigating which is the “correct” theory. No study, however, has tried to properly evaluate the different theoretical perspectives by directly comparing the different hypotheses.
 
 For more information regarding Attachment theory and the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article].
 
@@ -141,7 +152,7 @@ We can observe how values on the diagonal (same attachment styles towards both p
 Children's social-emotional development was measured using the Strength \& Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers. Separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items.
 
 
-### Externalizing Problems {-}
+### Externalizing Problems
 
 Participants externalizing problems mean is `r var_info("externalizing_sum")`. The participants externalizing problems summary statistics are reported below and the distribution is presented in Figure~\@ref(fig:plot-externalizing-dist).
 
@@ -159,7 +170,7 @@ Overall, externalizing problems are low. This is expected as the sample is not a
 get_table_cluster_prob("ext", format = params$format)
 ```
 
-### Internalizing Problems {-}
+### Internalizing Problems
 
 Participants internalizing problems mean is `r var_info("internalizing_sum")`. The participants internalizing problems summary statistics are reported below and the distribution is presented in Figure~\@ref(fig:plot-internalizing-dist).
 

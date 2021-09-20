@@ -125,6 +125,24 @@ parent_mclust <- function(parent = c("mother", "father")){
 }
 
 
+#-
+#----    perc_model_ext    ----
+perc_model_ext <- function(model, ic = c("AIC", "BIC")){
+  ic <- match.arg(ic)
+
+  if(ic == "AIC"){
+    res <- AIC_weights_ext[AIC_weights_ext$names == model, "weights"]
+  } else {
+    res <- BIC_weights_ext[BIC_weights_ext$names == model, "weights"]
+  }
+
+  return(my_perc(res, 0))
+}
+#----    ext_mean    ----
+
+ext_mean <- function(){
+  my_round(mean(data_cluster$externalizing_sum))
+}
 #-----
 
 #-------

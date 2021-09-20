@@ -65,8 +65,8 @@ get_par_names<- function(encompassing_model){
     .[grep("^b_(?!.*(Intercept|zi|gender))", ., perl = TRUE)] %>%
     gsub("^b_", replacement = "", .) %>%  # remove initial "b_"
     gsub("mother", replacement = "M_", .) %>%
-    gsub("father", replacement = "F_", .) %>%
-    gsub(":", replacement = "_", .)
+    gsub("father", replacement = "F_", .)
+    # gsub(":", replacement = "_", .)
 
   return(par_names)
 }

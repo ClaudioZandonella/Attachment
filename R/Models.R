@@ -43,13 +43,13 @@ my_check_zeroinflation <- function(x, tolerance = 0.05){
 
 #----    zinb_fit    ----
 
-zinb_fit<- function(data, y, formula){
+zinb_fit<- function(data_cluster, y, formula){
 
   formula_mu<- paste0(y ," ~ ", formula, " + (1|ID_class)")
 
   fit <- glmmTMB::glmmTMB(as.formula(formula_mu),
                           ziformula = ~ gender + (1|ID_class),
-                          data = data, family = glmmTMB::nbinom2())
+                          data = data_cluster, family = glmmTMB::nbinom2())
 
   return(fit)
 }
