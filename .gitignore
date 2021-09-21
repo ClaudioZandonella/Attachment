@@ -31,12 +31,13 @@ paper.pdf
 # htlm output
 *.html
 *.docx
+ball_*.png
 
 #---- Bookdown Auxiliary ----
 
 _bookdown_files
 !docs/*.html
-ball_*.png
+!docs/images/ball_*.png
 
 #---- Project folders ----
 
