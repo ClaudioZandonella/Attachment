@@ -1,0 +1,108 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Bayes Factor {#BF-int}
+
+## Encompassing Model 
+
+We define a Zero-Inflated Negative Binomial (ZINB) mixed-effects considering only the role of gender as a fixed effect and children’s classroom ID as a random effect for $p$. Whereas, regarding $\mu$, we consider the interaction between mother and father attachment together with gender as fixed effects and children’s classroom ID as a random effect. In the R formula syntax, we have
+```{r, echo=TRUE, eval=FALSE}
+# formula for p
+p ~ gender + (1|ID_class)
+
+# formula for mu
+mu ~ gender + mother * father + (1|ID_class)
+```
+
+### Prior Choiche
+
+We set the same prior as for the externalizing problems analysis. The resulting prior settings are
+```{r prior-settings-encompassing-int}
+options(width = 300)
+brms::prior_summary(encompassing_model_int)
+```
+
+### Posterior
+
+The encompassing model is estimated using 6 independent chains with 10,000 iterations (warm-up 2,000). Summary of the encompassing model is presented below.
+```{r, cache=TRUE}
+summary(encompassing_model_int)
+```
+
+## Hypothesis Matrices
+
+Hypothesis matrices are the same as for the externalizing problems analysis.
+
+## Centering and Adjusting
+
+Centering and adjusting procedures are the same as for the externalizing problems analysis.
+
+## Results and Sensitivity
+
+Bayes Factor and posterior probability of each hypothesis are reported in Table~\@ref(tab:table-bf-results-int).
+
+```{r table-bf-results-int, cache = TRUE}
+get_table_bf(bf_result = BF_weights_int,
+             path_img = "images/", problem = "int",
+             format = params$format)
+```
+
+Prior sensitivity analysis is conducted considering the same prior as for the externalizing problems analysis. The results of the prior sensitivity analysis are reported in Table~\@ref(tab:table-sens-prior-analysis-int).
+
+```{r table-sens-prior-analysis-int, cache = TRUE}
+get_table_sens_analysis(summary_sensitivity_int,
+                        format = params$format,
+                        bookdown = TRUE)
+```
+
+Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe the same patterns as for the externalizing problems analysis. More diffuse prior, favour hypothesis with more equality constraints. Whereas, tighter prior penalize hypothesis with more equality constraints.
+
+## Selected Model
+
+In the model we consider only the role of gender and mother attachment as fixed effects of $\mu$. In the R formula syntax, we have
+```{r, echo=TRUE, eval=FALSE}
+# formula for p
+p ~ gender + (1|ID_class)
+
+# formula for mu
+mu ~ gender + mother + (1|ID_class)
+```
+Again, we specify the same prior distributions as before. The resulting prior settings are
+```{r prior-settings-selcted-int, cache=TRUE}
+brms::prior_summary(brm_selected_int)
+```
+
+The model is estimated using 6 independent chains with 6,000 iterations (warm-up 2,000). The model summary is presented below.
+```{r cache=TRUE}
+summary(brm_selected_int)
+```
+
+Marginal effects are presented in Figure~\@ref(fig:plot-marginal-int) and differences between mother attachment patterns are reported in Figure~\@ref(fig:plot-diff-int).
+```{r plot-marginal-int, cache=TRUE, fig.asp=.5, out.width="95%", message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment ($n_{subj} = 847$)."}
+plot_post_pred(post_pred_int, problem = "Internalizing")
+```
+
+```{r plot-diff-int, cache=TRUE, fig.asp=.5, message=FALSE, fig.cap="Predicted differences between mother attachment patterns ($n_{subj} = 847$)."}
+plot_post_diff(post_pred_int, problem = "Internalizing")
+```
+
+Overall, results indicate that Fearful, and Anxious children have more problems than Secure children. Moreover, Fearful children have more problems than Avoidant children. Finally, also the difference between Avoidant and Anxious children is close to the threshold.
+
+To evaluate the fit of the model to the data, we computed the *Bayesian* $R^2$ and using the function `brms::bayes_R2()`, and we present Posterior Predictions in Figure~\@ref(fig:plot-ppcheck-int).
+
+```{r, echo=TRUE, message=FALSE, cache=TRUE}
+r2_int
+```
+
+```{r plot-ppcheck-int, cache=TRUE, fig.cap="Posterior predictive check ($n_{subj} = 847$).", message=FALSE,}
+my_pp_check(brm_selected_int, problem = "Internalizing")
+```
+
+We can see that the actual variance explained by fixed effects and random effect is around 22\%. Moreover, posterior predictive check indicates a good fit to the data.
+
+#### Conclusions{-}
+
+Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the Monotropy Theory.
+

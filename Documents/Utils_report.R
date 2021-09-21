@@ -146,12 +146,31 @@ drake_load_bookdown <- function(){
   load_glob_env(BF_weights_ext)
   load_glob_env(summary_sensitivity_ext)
 
-  load_glob_env(data_prior_predict)
-
   load_glob_env(brm_selected_ext)
   load_glob_env(post_pred_ext)
   load_glob_env(r2_ext)
+
   #----    Internalizing    ----
+  # Zero inflation
+  load_glob_env(fit_int_nb)
+
+  # ANOVA
+  load_glob_env(fit_int_zinb)
+
+  # model comparison
+  load_glob_env(fit_int_mother)
+  load_glob_env(AIC_weights_int)
+  load_glob_env(BIC_weights_int)
+
+  # BF encompassing
+  load_glob_env(encompassing_model_int)
+  load_glob_env(BF_weights_int)
+  load_glob_env(summary_sensitivity_int)
+
+
+  load_glob_env(brm_selected_int)
+  load_glob_env(post_pred_int)
+  load_glob_env(r2_int)
 }
 
 #----    get_sigma_example    ----

@@ -33,9 +33,9 @@ mu ~ gender + mother * father + (1|ID_class)
 
 ## AIC and BIC Results
 
-After estimating the models, the AIC and BIC values together with their relative weights are computed. Results are reported in Table~\@ref(tab:table-AIC-BIC-weights).
+After estimating the models, the AIC and BIC values together with their relative weights are computed. Results are reported in Table~\@ref(tab:table-AIC-BIC-weights-ext).
 
-```{r table-AIC-BIC-weights, cache=TRUE}
+```{r table-AIC-BIC-weights-ext, cache=TRUE}
 get_table_AIC_BIC(AIC_weights = AIC_weights_ext,
                   BIC_weights = BIC_weights_ext,
                   problem = "ext",
@@ -57,8 +57,8 @@ Results confirm a statistically significant effect of gender and mother attachme
 ```{r, echo =TRUE, cache=TRUE}
 summary(fit_ext_mother)
 ```
-To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~\@ref(fig:plot-comparison-effects). Not that the marginal predicted values for gender are averaged over mother attachment. Whereas, the marginal predicted values for mother attachment are averaged over gender.
-```{r plot-comparison-effects, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment ($n_{subj} = 847$)."}
+To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~\@ref(fig:plot-comparison-effects-ext). Not that the marginal predicted values for gender are averaged over mother attachment. Whereas, the marginal predicted values for mother attachment are averaged over gender.
+```{r plot-comparison-effects-ext, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment ($n_{subj} = 847$)."}
 get_plot_zinb(model = fit_ext_mother, attachment = "mother")
 ```
 

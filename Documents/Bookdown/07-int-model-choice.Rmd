@@ -1,0 +1,42 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# (PART\*) Internalizing Problems {-}
+
+# Models Family Choice  {#model-choice-int}
+
+In this chapter, we discuss the appropriate models family to to take into account data characteristics. 
+
+Internalizing problems are computed as the sum of 10 items of the SDQ, obtaining discrete scores that range from 0 to 20. Considering data distribution (see Figure~\@ref(fig:plot-internalizing-dist)), we choose a **Negative Binomial** distribution to model the data.
+
+## Zero Inflated Negative Binomial
+
+As in the case of externalizing problems, we evaluate whether a *Zero-Inflated* model may be appropriate. We compare the number of observed zeros and expected zeros in a Negative Binomial mixed effects model considering the same predictors as in the case of externalizing problems. Using R formula syntax, we have
+```{r echo = TRUE, eval=FALSE}
+# model formula
+internalizing_sum ~ gender + mother * father + (1|ID_class)
+```
+
+Comparing the number of observed zero and expected zeros, we get 
+```{r echo = TRUE, cache=TRUE}
+my_check_zeroinflation(fit_int_nb)
+```
+Results indicate that the model is slightly under-fitting the number of zeros. Thus, we can fit a *Zero Inflated Negative Binomial* (ZINB) model and compare the performance of the two models. Using R formula syntax, we have
+```{r echo = TRUE, eval=FALSE}
+# formula for p
+p ~ gender + (1|ID_class)
+
+# formula for mu
+mu ~ gender + mother * father + (1|ID_class)
+```
+
+Below we report results of the analysis of deviance.
+```{r echo=TRUE, cache=TRUE}
+anova(fit_int_nb, fit_int_zinb)
+```
+
+Overall, results indicate that the ZINB model performs better than the Negative Binomial model. Note, however, that BIC actually prefers the model without zero inflation. Nevertheless, in the following analyses we decide to use ZINB models to be consistent with the externalizing problems analysis.
+
+

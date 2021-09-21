@@ -82,7 +82,7 @@ In this section, we describe the aim of the study and the sample included in the
 
 #### 2) Exteranlizing Problems {-}
 
-In this section, the analyses to evaluate the different role of mother attachment and father attachment on children's externalizing problems are presented following three different approaches.
+In this section, we present the analyses evaluating the different role of mother attachment and father attachment on children's externalizing problems. We follow three different approaches.
 
 - **Chapter \@ref(model-choice-ext) - Models Family Choice.**  We discuss the appropriate models family to to take into account data characteristics.
 - **Chapter \@ref(nhst-ext) - NHST.**  Analysis are conducted following the traditional Null Hypothesis Significance Testing (NHST).
@@ -93,7 +93,13 @@ In this section, the analyses to evaluate the different role of mother attachmen
 
 #### 3) Interanlizing Problems {-}
 
-- **Chapter \@ref(int) - Internalizing Problems.** The analyses regarding internalizing problems are presented. The analyses follow the same structure as the case of externalizing problems. Thus, only differences will be highlighted.
+In this section, we present the analyses evaluating the different role of mother attachment and father attachment on children's internalizing problems. We follow the three different approaches as for the externalizing problems analysis. This section is shorter than previous as we focus only on the results without repeating all the descriptions of the methods.
+
+- **Chapter \@ref(model-choice-int) - Models Family Choice.**  We discuss the appropriate models family to to take into account data characteristics.
+- **Chapter \@ref(nhst-int) - NHST.**  Analysis are conducted following the traditional Null Hypothesis Significance Testing (NHST).
+- **Chapter \@ref(model-comparison-int) - Model Comparison.**  Analysis are conducted according to the  Model Comparison approach using the AIC and BIC criteria.
+- **Chapter \@ref(BF-int) - Bayes Factor.**  Analysis are conducted following the Bayes Factor with encompassing prior approach.
+- **Chapter \@ref(conclusion-int) - Conclusion.**  Results of the three approaches are discussed.
 
 
 

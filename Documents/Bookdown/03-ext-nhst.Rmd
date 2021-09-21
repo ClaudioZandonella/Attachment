@@ -8,8 +8,8 @@ Results indicate a statistically significant effect of gender and mother attachm
 ```{r, echo =TRUE, cache=TRUE}
 summary(fit_ext_zinb)
 ```
-To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~\@ref(fig:plot-nhst-effects). Not that the marginal predicted values for gender are averaged over mother and father attachment effects. Whereas, the marginal predicted values for mother attachment are averaged over father attachment and gender effect.
-```{r plot-nhst-effects, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)."}
+To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~\@ref(fig:plot-nhst-effects-ext). Not that the marginal predicted values for gender are averaged over mother and father attachment effects. Whereas, the marginal predicted values for mother attachment are averaged over father attachment and gender effect.
+```{r plot-nhst-effects-ext, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)."}
 get_plot_zinb(model = fit_ext_zinb, attachment = "mother")
 ```
 

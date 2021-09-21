@@ -17,23 +17,8 @@
 #' get_plot_zinb(model = fit_ext_zinb, attachment = "mother")
 #'
 
-get_plot_zinb <- function(model, attachment = c("interaction", "mother")){
+get_plot_zinb <- function(model, attachment = c("interaction", "mother"), gender = TRUE){
   attachment <- match.arg(attachment)
-
-  marginal_effects_gender <- emmeans::emmeans(model, specs = ~ gender) %>%
-    as.data.frame() %>%
-    mutate_at(vars(emmean, lower.CL, upper.CL), exp) %>%
-    mutate(gender = recode_factor(gender, "F" = "Female", "M" = "Male"))
-
-  p_gender <- ggplot(marginal_effects_gender,
-                     aes(x = gender, y = emmean, colour = gender)) +
-    geom_point(show.legend = FALSE, size = 3) +
-    geom_errorbar(aes(ymin=lower.CL, ymax = upper.CL, colour = gender),
-                  size = 1, width = .2, show.legend = FALSE) +
-    labs(x = "Gender",
-         y = "Problems") +
-    coord_cartesian(ylim = c(0, 7.5)) +
-    theme_bw()
 
   if(attachment == "interaction"){
     marginal_effects_att <- emmeans::emmeans(model, specs = ~ mother*father) %>%
@@ -72,8 +57,28 @@ get_plot_zinb <- function(model, attachment = c("interaction", "mother")){
     layout <- matrix(c(1,1,2,2,2), nrow = 1)
   }
 
+  if(isTRUE(gender)){
+    marginal_effects_gender <- emmeans::emmeans(model, specs = ~ gender) %>%
+      as.data.frame() %>%
+      mutate_at(vars(emmean, lower.CL, upper.CL), exp) %>%
+      mutate(gender = recode_factor(gender, "F" = "Female", "M" = "Male"))
 
-  gridExtra::grid.arrange(p_gender, p_attachemnt, layout_matrix = layout)
+    p_gender <- ggplot(marginal_effects_gender,
+                       aes(x = gender, y = emmean, colour = gender)) +
+      geom_point(show.legend = FALSE, size = 3) +
+      geom_errorbar(aes(ymin=lower.CL, ymax = upper.CL, colour = gender),
+                    size = 1, width = .2, show.legend = FALSE) +
+      labs(x = "Gender",
+           y = "Problems") +
+      coord_cartesian(ylim = c(0, 7.5)) +
+      theme_bw()
+
+    gridExtra::grid.arrange(p_gender, p_attachemnt, layout_matrix = layout)
+  } else {
+    p_attachemnt
+  }
+
+
 }
 
 #----    plot_prior_adj    ----
@@ -452,10 +457,10 @@ plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizin
                    "Fearful - Anxious", "Fearful - Secure")
     colors <- c("#5F808E", "#3B9AB2", "#A84D47", "#84666A", "#CD3323", "#F21A00")
   } else {
-    labs_diff <- c("Avoidance - Anxious", "Anxious - Secure",
-                   "Fearful - Avoidant", "Avoidant - Secure",
-                   "Fearful - Anxious", "Fearful - Secure")
-    colors <- c("#5F808E", "#3B9AB2", "#A84D47", "#84666A", "#CD3323", "#F21A00")
+    labs_diff <- c("Avoidance - Anxious", "Avoidant - Secure",
+                   "Fearful - Anxious", "Anxious - Secure",
+                   "Fearful - Avoidant", "Fearful - Secure")
+    colors <- c( "#A84D47", "#3B9AB2", "#5F808E", "#CD3323", "#84666A", "#F21A00")
   }
 
   data <- post_pred %>%

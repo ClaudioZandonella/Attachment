@@ -1,0 +1,80 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Model Comparison {#model-comparison-int}
+
+## Formalize Models
+
+We consider Zero Inflated Negative Binomial Mixed-Effects models with only the role of gender as a fixed effect and children's classroom ID as a random effect for $p$. Whereas, considering $\mu$, we define the same models as in the analysis of externalizing problems. Using R formula syntax, we have
+```{r, echo = TRUE, eval=FALSE}
+# formula for p (same for all models)
+p ~ gender + (1|ID_class)
+
+# formula for mu
+
+# fit_int_zero
+mu ~ gender + (1|ID_class)
+
+# fit_int_mother
+mu ~ gender + mother + (1|ID_class)
+
+# fit_int_additive
+mu ~ gender + mother + father + (1|ID_class)
+
+# fit_int_inter
+mu ~ gender + mother * father + (1|ID_class)
+```
+
+## AIC and BIC Results
+
+AIC and BIC values together with their relative weights are computed are reported in Table~\@ref(tab:table-AIC-BIC-weights-int).
+
+```{r table-AIC-BIC-weights-int, cache=TRUE}
+get_table_AIC_BIC(AIC_weights = AIC_weights_int,
+                  BIC_weights = BIC_weights_int,
+                  problem = "int",
+                  format = params$format,
+                  path_img = "images/")
+```
+
+According to AIC, the most likely model is `fit_int_mother` (`r perc_model_int("fit_int_mother", "AIC")`\%) and the second most likely model is `fit_int_additive` (`r perc_model_int("fit_int_additive", "AIC")`\%) given the data and the set of models considered. According to BIC, instead, `fit_int_zero` and `fit_int_mother` models have almost the same probability, `r perc_model_int("fit_int_zero", "BIC")`\% and `r perc_model_int("fit_int_mother", "BIC")`\% respectively.
+
+We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.
+
+## Selected Model
+
+Results of analysis of deviance for  model `fit_int_mother` are reported below.
+```{r, echo =TRUE, cache=TRUE}
+car::Anova(fit_int_mother)
+```
+Results confirm a statistically significant effect of mother attachment. The model summary is reported below.
+```{r, echo =TRUE, cache=TRUE}
+summary(fit_int_mother)
+```
+To evaluate the effect of mother attachment, the marginal predicted values are presented in Figure~\@ref(fig:plot-comparison-effects-int). Not that the marginal predicted values for gender are averaged over mother attachment. Whereas, the marginal predicted values for mother attachment are averaged over gender.
+```{r plot-comparison-effects-int, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment ($n_{subj} = 847$)."}
+get_plot_zinb(model = fit_int_mother, attachment = "mother", gender = FALSE)
+```
+
+Post-hoc tests are run, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. Results are reported below,
+```{r, cache=TRUE, echo = TRUE}
+emmeans::contrast(emmeans::emmeans(fit_int_mother, specs = ~ mother ),
+                  "pairwise", adjust = "mvt")
+```
+
+Results indicate that Fearful and Anxious children have more problems than Secure children. Moreover, also the difference between Avoidant and Fearful children is significant.
+
+To evaluate the fit of the model to the data, we computed the *Marginal* $R^2$ and the *Conditional* $R^2$.
+
+```{r, echo=TRUE, message=FALSE, cache=TRUE}
+performance::r2(fit_int_mother)
+```
+
+We can see that the actual variance explained by fixed effects is 3\%, not that much.
+
+#### Conclusions {-}
+
+Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the **Monotropy Theory**. Note, however, that the compared models contain no information regarding the expected direction of the effects but we only include/exclude predictors.
+

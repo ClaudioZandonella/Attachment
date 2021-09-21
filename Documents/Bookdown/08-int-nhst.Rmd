@@ -1,0 +1,45 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# NHST {#nhst-int}
+
+Following the traditional NHST approach, we consider the model previously defined that includes all effects of interest (gender effect and the interaction between mother attachment and father attachment). Results of the analysis of deviance are reported below.
+```{r, echo =TRUE, cache=TRUE}
+car::Anova(fit_int_zinb)
+```
+Results indicate only a statistically significant effect of mother attachment. On the contrary, the interaction and father attachment are not significant. The model summary is reported below.
+```{r, echo =TRUE, cache=TRUE}
+summary(fit_int_zinb)
+```
+To evaluate the effect of mother attachment, the marginal predicted values are presented in Figure~\@ref(fig:plot-nhst-effects-int). Not that the marginal predicted values are averaged over father attachment and gender effect.
+```{r plot-nhst-effects-int, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)."}
+get_plot_zinb(model = fit_int_zinb, attachment = "mother", gender = FALSE)
+```
+
+Post-hoc tests are run to evaluate differences between mother attachment styles, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. Results are reported below,
+```{r, cache=TRUE, echo = TRUE}
+emmeans::contrast(emmeans::emmeans(fit_int_zinb, specs = ~ mother ),
+                  "pairwise", adjust = "mvt")
+```
+
+After adjusting p-values we actually get that there are no statistically significant differences. Without adjusting, difference between Anxious and Secure children and the difference between Fearful and Secure children have a low (but not statistically significant) *p*-value.
+```{r, cache=TRUE, echo = TRUE}
+emmeans::contrast(emmeans::emmeans(fit_int_zinb, specs = ~ mother ),
+                  "pairwise", adjust = NULL)
+```
+
+To evaluate the fit of the model to the data, we computed the *Marginal* $R^2$ and the *Conditional* $R^2$.
+
+```{r, echo=TRUE, message=FALSE, cache=TRUE}
+performance::r2(fit_int_zinb)
+```
+
+We can see that the actual variance explained by fixed effects is less than 5\%, not that much.
+
+#### Conclusions {-}
+
+Results are difficult to interpret because we have a statistically significant effect of mother attachment, but, considering pot-hoc tests, we get no statistically significant difference.
+Overall, we could say that, in some way, results indicate a role of mother attachment but this probably is small.
+

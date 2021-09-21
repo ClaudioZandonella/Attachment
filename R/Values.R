@@ -143,6 +143,19 @@ perc_model_ext <- function(model, ic = c("AIC", "BIC")){
 ext_mean <- function(){
   my_round(mean(data_cluster$externalizing_sum))
 }
+
+#----    perc_model_int    ----
+perc_model_int <- function(model, ic = c("AIC", "BIC")){
+  ic <- match.arg(ic)
+
+  if(ic == "AIC"){
+    res <- AIC_weights_int[AIC_weights_int$names == model, "weights"]
+  } else {
+    res <- BIC_weights_int[BIC_weights_int$names == model, "weights"]
+  }
+
+  return(my_perc(res, 0))
+}
 #-----
 
 #-------

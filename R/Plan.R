@@ -140,6 +140,13 @@ get_analysis_plan <- function(){
                                                       prior_sensitivity_int_05,
                                                       prior_sensitivity_int_10),
 
+    # selected model
+    brm_selected_int = zinb_brms_selected(data = data_cluster,
+                                          y = "internalizing_sum",
+                                          prior_par = "normal(0, 3)"),
+    post_pred_int = get_post_pred(brm_selected_int),
+    r2_int = brms::bayes_R2(brm_selected_int),
+
     #=============================
     #----    Externalizing    ----
     #=============================
