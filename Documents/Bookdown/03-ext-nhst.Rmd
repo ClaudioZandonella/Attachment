@@ -1,0 +1,35 @@
+# NHST {#nhst-ext}
+
+Following the traditional NHST approach, we consider the model previously defined that includes all effects of interest. That is the gender effect and the interaction between mother attachment and father attachment. Subsequently, we can run an analysis of deviance to evaluate the significance of the predictors using the function `Anova()` from the R-package `car` [@foxCompanionAppliedRegression2019].
+```{r, echo =TRUE, cache=TRUE}
+car::Anova(fit_ext_zinb)
+```
+Results indicate a statistically significant effect of gender and mother attachment. On the contrary, the interaction and father attachment are not significant. The model summary is reported below.
+```{r, echo =TRUE, cache=TRUE}
+summary(fit_ext_zinb)
+```
+To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~\@ref(fig:plot-nhst-effects). Not that the marginal predicted values for gender are averaged over mother and father attachment effects. Whereas, the marginal predicted values for mother attachment are averaged over father attachment and gender effect.
+```{r plot-nhst-effects, cache=TRUE, fig.asp=.65, message=FALSE, fig.cap="Marginal predicted values according to gender and mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)."}
+get_plot_zinb(model = fit_ext_zinb, attachment = "mother")
+```
+
+Post-hoc tests are run to evaluate differences between mother attachment styles. To do that we use the `contrast()` function from the `emmeans` R-package, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. This approach is less restrictive than the traditional *“Bonferroni”* method, as it determines the adjustment according to a multivariate *t*-distribution with the same covariance structure as the estimates. Results are reported below,
+```{r, cache=TRUE, echo = TRUE}
+emmeans::contrast(emmeans::emmeans(fit_ext_zinb, specs = ~ mother ),
+                  "pairwise", adjust = "mvt")
+```
+
+Overall, results indicate that Males have more externalizing problems than Females and, regarding mother attachment, Fearful children have more problems than Secure children.
+
+To evaluate the fit of the model to the data, we used $R^2$. In the case of generalized mixed-effects models, however, there are several definitions of $R^2$. We computed the *Marginal* $R^2$ and the *Conditional* $R^2$ as suggested by @nakagawaCoefficientDeterminationR22017. *Marginal* $R^2$ is concerned with the variance explained by fixed factors of the model, and *Conditional* $R^2$ is concerned with the variance explained by both fixed and random factors of the model. To do that we use the function `performance::r2()`.
+
+```{r, echo=TRUE, message=FALSE, cache=TRUE}
+performance::r2(fit_ext_zinb)
+```
+
+We can see that the actual variance explained by fixed effects is almost 10\%, not bad for psychology.
+
+#### Conclusions {-}
+
+Considering attachment theoretical perspectives, results indicate only the role of mother attachment. Note, however, that traditional NHST does not allow us to evaluate evidence in favour of a hypothesis. Moreover, we actually have not tested our hypotheses but only the catch-all null hypothesis that *“nothing is going on”*.
+

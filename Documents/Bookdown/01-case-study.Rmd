@@ -3,9 +3,11 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
+# (PART\*) Presentation {-}
+
 # Case Study {#case-study}
 
-In this chapter, we describe the sample included in the study. First we describe the aim of the study. Subsequently, we present general information about the sample and the results of the cluster analysis to classify the different attachment patterns. Finally, we consider children's social-emotional problems.
+In this chapter, first, we describe the aim of the study. Subsequently,  we describe the sample included in the study. We present general information about the sample and the results of the cluster analysis to classify the different attachment patterns. Finally, we consider children's social-emotional problems.
 
 ## Aim of the Study
 

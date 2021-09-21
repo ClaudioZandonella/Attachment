@@ -1,0 +1,16 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Conclusions Externalizing Problems {#conclusion-ext}
+
+Overall, we obtained consistent results from the three different approaches. Males have more problems than Females and, regarding attachment, only mother attachment influence children's externalizing problems. In particular, we observed the following pattern: Secure children have the lowest level of problems, Anxious and Avoidant children have a similar, intermediate, level of problems, and Fearful children have the highest level of problems. Taken together, these results support the Monotropy Theory. 
+
+Although if the different approaches lead to apparently similar results, the rigorous interpretation of the results is very different. 
+
+- Considering the NHST approach, we actually only found that it is unlikely that mother attachment has no effect. Thus, we reject the null hypothesis but we can not quantify the evidence in favour of any of our hypotheses. 
+- Only model comparison allow us to quantify the relative evidence of our models. Model comparison results clearly indicated evidence in favour of an effect of mother attachment but not father attachment. However, using information criteria we could not directly evaluate our informative hypotheses regarding the expected effects, but only the presence of any effect.
+- Bayes Factor with encompassing prior approach allowed us to directly test our informative hypotheses regarding the expected effects. Results clearly selected the Monotropy theory as the most likely theory among those considered.
+
+To summarize, the apparently identical results actually have a completely different meaning and what we learn from the data is very different. Hopefully, now it is clear that statistical inference is a complex process that requires careful thinking. In particular, to answer the questions we are actually interested in, we need to apply the appropriate statistical techniques.
