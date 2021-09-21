@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 NHST | Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach</title>
+  <meta name="description" content="This the Supplemental Material of the article “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 NHST | Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://ClaudioZandonella.github.io/Attachment/" />
+  <meta property="og:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
+  <meta property="og:description" content="This the Supplemental Material of the article “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”" />
+  <meta name="github-repo" content="ClaudioZandonella/Attachment" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 NHST | Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach" />
+  
+  <meta name="twitter:description" content="This the Supplemental Material of the article “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”" />
+  <meta name="twitter:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
+
+<meta name="author" content="Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè" />
+
+
+<meta name="date" content="2021-09-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="model-choice-ext.html"/>
+<link rel="next" href="model-comparison-ext.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+<link rel="stylesheet" href="assets/toc.css" type="text/css" />
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/hex_psicostat.png"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#study-summary"><i class="fa fa-check"></i>Study Summary</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#supplemental-material-structure"><i class="fa fa-check"></i>Supplemental Material Structure</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#github"><i class="fa fa-check"></i>GitHub</a></li>
+</ul></li>
+<li class="part"><span><b>Presentation</b></span></li>
+<li class="chapter" data-level="1" data-path="case-study.html"><a href="case-study.html"><i class="fa fa-check"></i><b>1</b> Case Study</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="case-study.html"><a href="case-study.html#aim-of-the-study"><i class="fa fa-check"></i><b>1.1</b> Aim of the Study</a></li>
+<li class="chapter" data-level="1.2" data-path="case-study.html"><a href="case-study.html#the-study-sample"><i class="fa fa-check"></i><b>1.2</b> The Study Sample</a></li>
+<li class="chapter" data-level="1.3" data-path="case-study.html"><a href="case-study.html#attachment-styles"><i class="fa fa-check"></i><b>1.3</b> Attachment Styles</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="case-study.html"><a href="case-study.html#mother-cluster-analysis"><i class="fa fa-check"></i><b>1.3.1</b> Mother Cluster Analysis</a></li>
+<li class="chapter" data-level="1.3.2" data-path="case-study.html"><a href="case-study.html#father-cluster-analysis"><i class="fa fa-check"></i><b>1.3.2</b> Father Cluster Analysis</a></li>
+<li class="chapter" data-level="1.3.3" data-path="case-study.html"><a href="case-study.html#mother-and-father"><i class="fa fa-check"></i><b>1.3.3</b> Mother and Father</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="case-study.html"><a href="case-study.html#children-outcomes"><i class="fa fa-check"></i><b>1.4</b> Children Outcomes</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="case-study.html"><a href="case-study.html#externalizing-problems"><i class="fa fa-check"></i><b>1.4.1</b> Externalizing Problems</a></li>
+<li class="chapter" data-level="1.4.2" data-path="case-study.html"><a href="case-study.html#internalizing-problems"><i class="fa fa-check"></i><b>1.4.2</b> Internalizing Problems</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Externalizing Problems</b></span></li>
+<li class="chapter" data-level="2" data-path="model-choice-ext.html"><a href="model-choice-ext.html"><i class="fa fa-check"></i><b>2</b> Models Family Choice</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="model-choice-ext.html"><a href="model-choice-ext.html#negative-binomial"><i class="fa fa-check"></i><b>2.1</b> Negative Binomial</a></li>
+<li class="chapter" data-level="2.2" data-path="model-choice-ext.html"><a href="model-choice-ext.html#zero-inflated-negative-binomial"><i class="fa fa-check"></i><b>2.2</b> Zero Inflated Negative Binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="nhst-ext.html"><a href="nhst-ext.html"><i class="fa fa-check"></i><b>3</b> NHST</a></li>
+<li class="chapter" data-level="4" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html"><i class="fa fa-check"></i><b>4</b> Model Comparison</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html#formalize-models"><i class="fa fa-check"></i><b>4.1</b> Formalize Models</a></li>
+<li class="chapter" data-level="4.2" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html#aic-and-bic-results"><i class="fa fa-check"></i><b>4.2</b> AIC and BIC Results</a></li>
+<li class="chapter" data-level="4.3" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html#selected-model"><i class="fa fa-check"></i><b>4.3</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="BF-ext.html"><a href="BF-ext.html"><i class="fa fa-check"></i><b>5</b> Bayes Factor</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="BF-ext.html"><a href="BF-ext.html#encompassing-model"><i class="fa fa-check"></i><b>5.1</b> Encompassing Model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="BF-ext.html"><a href="BF-ext.html#prior-choiche"><i class="fa fa-check"></i><b>5.1.1</b> Prior Choiche</a></li>
+<li class="chapter" data-level="5.1.2" data-path="BF-ext.html"><a href="BF-ext.html#posterior"><i class="fa fa-check"></i><b>5.1.2</b> Posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="BF-ext.html"><a href="BF-ext.html#hypothesis-matrices"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Matrices</a></li>
+<li class="chapter" data-level="5.3" data-path="BF-ext.html"><a href="BF-ext.html#centering-and-adjusting"><i class="fa fa-check"></i><b>5.3</b> Centering and Adjusting</a></li>
+<li class="chapter" data-level="5.4" data-path="BF-ext.html"><a href="BF-ext.html#results-and-sensitivity"><i class="fa fa-check"></i><b>5.4</b> Results and Sensitivity</a></li>
+<li class="chapter" data-level="5.5" data-path="BF-ext.html"><a href="BF-ext.html#selected-model-1"><i class="fa fa-check"></i><b>5.5</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion-ext.html"><a href="conclusion-ext.html"><i class="fa fa-check"></i><b>6</b> Conclusions</a></li>
+<li class="part"><span><b>Internalizing Problems</b></span></li>
+<li class="chapter" data-level="7" data-path="model-choice-int.html"><a href="model-choice-int.html"><i class="fa fa-check"></i><b>7</b> Models Family Choice</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="model-choice-int.html"><a href="model-choice-int.html#zero-inflated-negative-binomial-1"><i class="fa fa-check"></i><b>7.1</b> Zero Inflated Negative Binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="nhst-int.html"><a href="nhst-int.html"><i class="fa fa-check"></i><b>8</b> NHST</a></li>
+<li class="chapter" data-level="9" data-path="model-comparison-int.html"><a href="model-comparison-int.html"><i class="fa fa-check"></i><b>9</b> Model Comparison</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-comparison-int.html"><a href="model-comparison-int.html#formalize-models-1"><i class="fa fa-check"></i><b>9.1</b> Formalize Models</a></li>
+<li class="chapter" data-level="9.2" data-path="model-comparison-int.html"><a href="model-comparison-int.html#aic-and-bic-results-1"><i class="fa fa-check"></i><b>9.2</b> AIC and BIC Results</a></li>
+<li class="chapter" data-level="9.3" data-path="model-comparison-int.html"><a href="model-comparison-int.html#selected-model-2"><i class="fa fa-check"></i><b>9.3</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="BF-int.html"><a href="BF-int.html"><i class="fa fa-check"></i><b>10</b> Bayes Factor</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="BF-int.html"><a href="BF-int.html#encompassing-model-1"><i class="fa fa-check"></i><b>10.1</b> Encompassing Model</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="BF-int.html"><a href="BF-int.html#prior-choiche-1"><i class="fa fa-check"></i><b>10.1.1</b> Prior Choiche</a></li>
+<li class="chapter" data-level="10.1.2" data-path="BF-int.html"><a href="BF-int.html#posterior-1"><i class="fa fa-check"></i><b>10.1.2</b> Posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="BF-int.html"><a href="BF-int.html#hypothesis-matrices-1"><i class="fa fa-check"></i><b>10.2</b> Hypothesis Matrices</a></li>
+<li class="chapter" data-level="10.3" data-path="BF-int.html"><a href="BF-int.html#centering-and-adjusting-1"><i class="fa fa-check"></i><b>10.3</b> Centering and Adjusting</a></li>
+<li class="chapter" data-level="10.4" data-path="BF-int.html"><a href="BF-int.html#results-and-sensitivity-1"><i class="fa fa-check"></i><b>10.4</b> Results and Sensitivity</a></li>
+<li class="chapter" data-level="10.5" data-path="BF-int.html"><a href="BF-int.html#selected-model-3"><i class="fa fa-check"></i><b>10.5</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="conclusion-int.html"><a href="conclusion-int.html"><i class="fa fa-check"></i><b>11</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+  <!--script src="https://kit.fontawesome.com/6a26f47516.js"></script-->
+  <script src="assets/hideOutput.js"></script>
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+
+
+
+<div class="hero-image-container">
+  <img class= "hero-image" src="images/banner.png">
+</div>
+<div id="nhst-ext" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> NHST</h1>
+<p>Following the traditional NHST approach, we consider the model previously defined that includes all effects of interest. That is the gender effect and the interaction between mother attachment and father attachment. Subsequently, we can run an analysis of deviance to evaluate the significance of the predictors using the function <code>Anova()</code> from the R-package <code>car</code> <span class="citation">(<a href="#ref-foxCompanionAppliedRegression2019" role="doc-biblioref">Fox &amp; Weisberg, 2019</a>)</span>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="nhst-ext.html#cb11-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(fit_ext_zinb)</span>
+<span id="cb11-2"><a href="nhst-ext.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Deviance Table (Type II Wald chisquare tests)</span></span>
+<span id="cb11-3"><a href="nhst-ext.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-4"><a href="nhst-ext.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: externalizing_sum</span></span>
+<span id="cb11-5"><a href="nhst-ext.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Chisq Df Pr(&gt;Chisq)    </span></span>
+<span id="cb11-6"><a href="nhst-ext.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## gender        15.2947  1  9.197e-05 ***</span></span>
+<span id="cb11-7"><a href="nhst-ext.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">## mother        15.6195  3   0.001357 ** </span></span>
+<span id="cb11-8"><a href="nhst-ext.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## father         1.1006  3   0.776938    </span></span>
+<span id="cb11-9"><a href="nhst-ext.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">## mother:father  8.9096  9   0.445657    </span></span>
+<span id="cb11-10"><a href="nhst-ext.html#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb11-11"><a href="nhst-ext.html#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>Results indicate a statistically significant effect of gender and mother attachment. On the contrary, the interaction and father attachment are not significant. The model summary is reported below.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="nhst-ext.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_ext_zinb)</span>
+<span id="cb12-2"><a href="nhst-ext.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  Family: nbinom2  ( log )</span></span>
+<span id="cb12-3"><a href="nhst-ext.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula:          externalizing_sum ~ gender + mother * father + (1 | ID_class)</span></span>
+<span id="cb12-4"><a href="nhst-ext.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero inflation:                     ~gender + (1 | ID_class)</span></span>
+<span id="cb12-5"><a href="nhst-ext.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Data: data_cluster</span></span>
+<span id="cb12-6"><a href="nhst-ext.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-7"><a href="nhst-ext.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      AIC      BIC   logLik deviance df.resid </span></span>
+<span id="cb12-8"><a href="nhst-ext.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   3867.6   3971.9  -1911.8   3823.6      825 </span></span>
+<span id="cb12-9"><a href="nhst-ext.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-10"><a href="nhst-ext.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Random effects:</span></span>
+<span id="cb12-11"><a href="nhst-ext.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-12"><a href="nhst-ext.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
+<span id="cb12-13"><a href="nhst-ext.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
+<span id="cb12-14"><a href="nhst-ext.html#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 0.08132  0.2852  </span></span>
+<span id="cb12-15"><a href="nhst-ext.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
+<span id="cb12-16"><a href="nhst-ext.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-17"><a href="nhst-ext.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
+<span id="cb12-18"><a href="nhst-ext.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
+<span id="cb12-19"><a href="nhst-ext.html#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 0.7669   0.8757  </span></span>
+<span id="cb12-20"><a href="nhst-ext.html#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
+<span id="cb12-21"><a href="nhst-ext.html#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-22"><a href="nhst-ext.html#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Dispersion parameter for nbinom2 family (): 1.86 </span></span>
+<span id="cb12-23"><a href="nhst-ext.html#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-24"><a href="nhst-ext.html#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
+<span id="cb12-25"><a href="nhst-ext.html#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="do">##                               Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb12-26"><a href="nhst-ext.html#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)                    1.01996    0.12814   7.960 1.72e-15 ***</span></span>
+<span id="cb12-27"><a href="nhst-ext.html#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM                        0.31556    0.08069   3.911 9.20e-05 ***</span></span>
+<span id="cb12-28"><a href="nhst-ext.html#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious                  0.30735    0.18664   1.647   0.0996 .  </span></span>
+<span id="cb12-29"><a href="nhst-ext.html#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant                 0.14496    0.25509   0.568   0.5699    </span></span>
+<span id="cb12-30"><a href="nhst-ext.html#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful                  0.62950    0.39550   1.592   0.1115    </span></span>
+<span id="cb12-31"><a href="nhst-ext.html#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherAnxious                  0.21543    0.19156   1.125   0.2607    </span></span>
+<span id="cb12-32"><a href="nhst-ext.html#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherAvoidant                -0.46555    0.21138  -2.202   0.0276 *  </span></span>
+<span id="cb12-33"><a href="nhst-ext.html#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherFearful                  0.07138    0.41737   0.171   0.8642    </span></span>
+<span id="cb12-34"><a href="nhst-ext.html#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherAnxious   -0.38346    0.26981  -1.421   0.1553    </span></span>
+<span id="cb12-35"><a href="nhst-ext.html#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherAnxious  -0.09675    0.33041  -0.293   0.7697    </span></span>
+<span id="cb12-36"><a href="nhst-ext.html#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherAnxious   -0.40811    0.49348  -0.827   0.4082    </span></span>
+<span id="cb12-37"><a href="nhst-ext.html#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherAvoidant   0.34281    0.28290   1.212   0.2256    </span></span>
+<span id="cb12-38"><a href="nhst-ext.html#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherAvoidant  0.63111    0.32765   1.926   0.0541 .  </span></span>
+<span id="cb12-39"><a href="nhst-ext.html#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherAvoidant   0.34025    0.46490   0.732   0.4642    </span></span>
+<span id="cb12-40"><a href="nhst-ext.html#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherFearful   -0.04630    0.47448  -0.098   0.9223    </span></span>
+<span id="cb12-41"><a href="nhst-ext.html#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherFearful   0.11794    0.56413   0.209   0.8344    </span></span>
+<span id="cb12-42"><a href="nhst-ext.html#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherFearful   -0.20316    0.58602  -0.347   0.7288    </span></span>
+<span id="cb12-43"><a href="nhst-ext.html#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb12-44"><a href="nhst-ext.html#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb12-45"><a href="nhst-ext.html#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-46"><a href="nhst-ext.html#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
+<span id="cb12-47"><a href="nhst-ext.html#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb12-48"><a href="nhst-ext.html#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  -1.1239     0.2417   -4.65 3.32e-06 ***</span></span>
+<span id="cb12-49"><a href="nhst-ext.html#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM      -0.7145     0.2516   -2.84  0.00451 ** </span></span>
+<span id="cb12-50"><a href="nhst-ext.html#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb12-51"><a href="nhst-ext.html#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+To evaluate the effect of gender and mother attachment, the marginal predicted values according to gender and mother attachment are presented separately in Figure~<a href="nhst-ext.html#fig:plot-nhst-effects-ext">3.1</a>. Not that the marginal predicted values for gender are averaged over mother and father attachment effects. Whereas, the marginal predicted values for mother attachment are averaged over father attachment and gender effect.
+<div class="figure" style="text-align: center"><span id="fig:plot-nhst-effects-ext"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-nhst-effects-ext-1.png" alt="Marginal predicted values according to gender and mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)." width="672" />
+<p class="caption">
+Figure 3.1: Marginal predicted values according to gender and mother attachment. Values are averaged over the other effects (<span class="math inline">\(n_{subj} = 847\)</span>).
+</p>
+</div>
+<p>Post-hoc tests are run to evaluate differences between mother attachment styles. To do that we use the <code>contrast()</code> function from the <code>emmeans</code> R-package, considering pairwise comparisons and adjusting <em>p</em>-values according to multivariate <em>t</em>-distribution. This approach is less restrictive than the traditional <em>“Bonferroni”</em> method, as it determines the adjustment according to a multivariate <em>t</em>-distribution with the same covariance structure as the estimates. Results are reported below,</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="nhst-ext.html#cb13-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fit_ext_zinb, <span class="at">specs =</span> <span class="sc">~</span> mother ),</span>
+<span id="cb13-2"><a href="nhst-ext.html#cb13-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;mvt&quot;</span>)</span>
+<span id="cb13-3"><a href="nhst-ext.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Results may be misleading due to involvement in interactions</span></span>
+<span id="cb13-4"><a href="nhst-ext.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  contrast           estimate    SE  df t.ratio p.value</span></span>
+<span id="cb13-5"><a href="nhst-ext.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Anxious    -0.2856 0.140 825  -2.034  0.1719</span></span>
+<span id="cb13-6"><a href="nhst-ext.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Avoidant   -0.3080 0.162 825  -1.902  0.2227</span></span>
+<span id="cb13-7"><a href="nhst-ext.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Fearful    -0.5617 0.178 825  -3.149  0.0090</span></span>
+<span id="cb13-8"><a href="nhst-ext.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Avoidant  -0.0224 0.124 825  -0.181  0.9978</span></span>
+<span id="cb13-9"><a href="nhst-ext.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Fearful   -0.2761 0.146 825  -1.885  0.2300</span></span>
+<span id="cb13-10"><a href="nhst-ext.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Avoidant - Fearful  -0.2537 0.167 825  -1.522  0.4180</span></span>
+<span id="cb13-11"><a href="nhst-ext.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb13-12"><a href="nhst-ext.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are averaged over the levels of: gender, father </span></span>
+<span id="cb13-13"><a href="nhst-ext.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are given on the log (not the response) scale. </span></span>
+<span id="cb13-14"><a href="nhst-ext.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment: mvt method for 6 tests</span></span></code></pre></div>
+<p>Overall, results indicate that Males have more externalizing problems than Females and, regarding mother attachment, Fearful children have more problems than Secure children.</p>
+<p>To evaluate the fit of the model to the data, we used <span class="math inline">\(R^2\)</span>. In the case of generalized mixed-effects models, however, there are several definitions of <span class="math inline">\(R^2\)</span>. We computed the <em>Marginal</em> <span class="math inline">\(R^2\)</span> and the <em>Conditional</em> <span class="math inline">\(R^2\)</span> as suggested by <span class="citation"><a href="#ref-nakagawaCoefficientDeterminationR22017" role="doc-biblioref">Nakagawa et al.</a> (<a href="#ref-nakagawaCoefficientDeterminationR22017" role="doc-biblioref">2017</a>)</span>. <em>Marginal</em> <span class="math inline">\(R^2\)</span> is concerned with the variance explained by fixed factors of the model, and <em>Conditional</em> <span class="math inline">\(R^2\)</span> is concerned with the variance explained by both fixed and random factors of the model. To do that we use the function <code>performance::r2()</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="nhst-ext.html#cb14-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_ext_zinb)</span>
+<span id="cb14-2"><a href="nhst-ext.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: mu of 4.2 is too close to zero, estimate of random effect variances may be</span></span>
+<span id="cb14-3"><a href="nhst-ext.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   unreliable.</span></span>
+<span id="cb14-4"><a href="nhst-ext.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # R2 for Mixed Models</span></span>
+<span id="cb14-5"><a href="nhst-ext.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-6"><a href="nhst-ext.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Conditional R2: 0.191</span></span>
+<span id="cb14-7"><a href="nhst-ext.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      Marginal R2: 0.091</span></span></code></pre></div>
+<p>We can see that the actual variance explained by fixed effects is almost 10%, not bad for psychology.</p>
+<div id="conclusions" class="section level4 unnumbered">
+<h4>Conclusions</h4>
+<p>Considering attachment theoretical perspectives, results indicate only the role of mother attachment. Note, however, that traditional NHST does not allow us to evaluate evidence in favour of a hypothesis. Moreover, we actually have not tested our hypotheses but only the catch-all null hypothesis that <em>“nothing is going on”</em>.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-foxCompanionAppliedRegression2019" class="csl-entry">
+Fox, J., &amp; Weisberg, S. (2019). <em>An <span>R Companion</span> to <span>Applied Regression</span></em> (Third). <span>Sage</span>. <a href="https://socialsciences.mcmaster.ca/jfox/Books/Companion/">https://socialsciences.mcmaster.ca/jfox/Books/Companion/</a>
+</div>
+<div id="ref-nakagawaCoefficientDeterminationR22017" class="csl-entry">
+Nakagawa, S., Johnson, P. C. D., &amp; Schielzeth, H. (2017). The coefficient of determination <span>R2</span> and intra-class correlation coefficient from generalized linear mixed-effects models revisited and expanded. <em>Journal of The Royal Society Interface</em>, <em>14</em>, 20170213. https://doi.org/<a href="http://dx.doi.org/10.1098/rsif.2017.0213">http://dx.doi.org/10.1098/rsif.2017.0213</a>
+</div>
+</div>
+<hr>
+<center>
+  <div class="footer">
+    All materials <a href= "https://creativecommons.org/licenses/by/2.0/"> CC-BY </a> unless noted otherwise.
+    <br>
+    To know more about <span style="color: #8C3031; font-weight:bold"> Psicostat</span> and our activities visit <a href= "https://psicostat.dpss.psy.unipd.it/">https://psicostat.dpss.psy.unipd.it/</a>.
+  </div>
+</center>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="model-choice-ext.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-comparison-ext.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": true
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ClaudioZandonella/Attachment/edit/master/03-ext-nhst.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["attachment-bayes-factor.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true,
+"toc_float": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

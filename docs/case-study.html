@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Case Study | Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach</title>
+  <meta name="description" content="This the Supplemental Material of the article “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Case Study | Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://ClaudioZandonella.github.io/Attachment/" />
+  <meta property="og:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
+  <meta property="og:description" content="This the Supplemental Material of the article “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”" />
+  <meta name="github-repo" content="ClaudioZandonella/Attachment" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Case Study | Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach" />
+  
+  <meta name="twitter:description" content="This the Supplemental Material of the article “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”" />
+  <meta name="twitter:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
+
+<meta name="author" content="Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè" />
+
+
+<meta name="date" content="2021-09-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="model-choice-ext.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+<link rel="stylesheet" href="assets/toc.css" type="text/css" />
+<link rel="stylesheet" href="assets/custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/hex_psicostat.png"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#study-summary"><i class="fa fa-check"></i>Study Summary</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#supplemental-material-structure"><i class="fa fa-check"></i>Supplemental Material Structure</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#github"><i class="fa fa-check"></i>GitHub</a></li>
+</ul></li>
+<li class="part"><span><b>Presentation</b></span></li>
+<li class="chapter" data-level="1" data-path="case-study.html"><a href="case-study.html"><i class="fa fa-check"></i><b>1</b> Case Study</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="case-study.html"><a href="case-study.html#aim-of-the-study"><i class="fa fa-check"></i><b>1.1</b> Aim of the Study</a></li>
+<li class="chapter" data-level="1.2" data-path="case-study.html"><a href="case-study.html#the-study-sample"><i class="fa fa-check"></i><b>1.2</b> The Study Sample</a></li>
+<li class="chapter" data-level="1.3" data-path="case-study.html"><a href="case-study.html#attachment-styles"><i class="fa fa-check"></i><b>1.3</b> Attachment Styles</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="case-study.html"><a href="case-study.html#mother-cluster-analysis"><i class="fa fa-check"></i><b>1.3.1</b> Mother Cluster Analysis</a></li>
+<li class="chapter" data-level="1.3.2" data-path="case-study.html"><a href="case-study.html#father-cluster-analysis"><i class="fa fa-check"></i><b>1.3.2</b> Father Cluster Analysis</a></li>
+<li class="chapter" data-level="1.3.3" data-path="case-study.html"><a href="case-study.html#mother-and-father"><i class="fa fa-check"></i><b>1.3.3</b> Mother and Father</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="case-study.html"><a href="case-study.html#children-outcomes"><i class="fa fa-check"></i><b>1.4</b> Children Outcomes</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="case-study.html"><a href="case-study.html#externalizing-problems"><i class="fa fa-check"></i><b>1.4.1</b> Externalizing Problems</a></li>
+<li class="chapter" data-level="1.4.2" data-path="case-study.html"><a href="case-study.html#internalizing-problems"><i class="fa fa-check"></i><b>1.4.2</b> Internalizing Problems</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Externalizing Problems</b></span></li>
+<li class="chapter" data-level="2" data-path="model-choice-ext.html"><a href="model-choice-ext.html"><i class="fa fa-check"></i><b>2</b> Models Family Choice</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="model-choice-ext.html"><a href="model-choice-ext.html#negative-binomial"><i class="fa fa-check"></i><b>2.1</b> Negative Binomial</a></li>
+<li class="chapter" data-level="2.2" data-path="model-choice-ext.html"><a href="model-choice-ext.html#zero-inflated-negative-binomial"><i class="fa fa-check"></i><b>2.2</b> Zero Inflated Negative Binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="nhst-ext.html"><a href="nhst-ext.html"><i class="fa fa-check"></i><b>3</b> NHST</a></li>
+<li class="chapter" data-level="4" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html"><i class="fa fa-check"></i><b>4</b> Model Comparison</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html#formalize-models"><i class="fa fa-check"></i><b>4.1</b> Formalize Models</a></li>
+<li class="chapter" data-level="4.2" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html#aic-and-bic-results"><i class="fa fa-check"></i><b>4.2</b> AIC and BIC Results</a></li>
+<li class="chapter" data-level="4.3" data-path="model-comparison-ext.html"><a href="model-comparison-ext.html#selected-model"><i class="fa fa-check"></i><b>4.3</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="BF-ext.html"><a href="BF-ext.html"><i class="fa fa-check"></i><b>5</b> Bayes Factor</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="BF-ext.html"><a href="BF-ext.html#encompassing-model"><i class="fa fa-check"></i><b>5.1</b> Encompassing Model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="BF-ext.html"><a href="BF-ext.html#prior-choiche"><i class="fa fa-check"></i><b>5.1.1</b> Prior Choiche</a></li>
+<li class="chapter" data-level="5.1.2" data-path="BF-ext.html"><a href="BF-ext.html#posterior"><i class="fa fa-check"></i><b>5.1.2</b> Posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="BF-ext.html"><a href="BF-ext.html#hypothesis-matrices"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Matrices</a></li>
+<li class="chapter" data-level="5.3" data-path="BF-ext.html"><a href="BF-ext.html#centering-and-adjusting"><i class="fa fa-check"></i><b>5.3</b> Centering and Adjusting</a></li>
+<li class="chapter" data-level="5.4" data-path="BF-ext.html"><a href="BF-ext.html#results-and-sensitivity"><i class="fa fa-check"></i><b>5.4</b> Results and Sensitivity</a></li>
+<li class="chapter" data-level="5.5" data-path="BF-ext.html"><a href="BF-ext.html#selected-model-1"><i class="fa fa-check"></i><b>5.5</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion-ext.html"><a href="conclusion-ext.html"><i class="fa fa-check"></i><b>6</b> Conclusions</a></li>
+<li class="part"><span><b>Internalizing Problems</b></span></li>
+<li class="chapter" data-level="7" data-path="model-choice-int.html"><a href="model-choice-int.html"><i class="fa fa-check"></i><b>7</b> Models Family Choice</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="model-choice-int.html"><a href="model-choice-int.html#zero-inflated-negative-binomial-1"><i class="fa fa-check"></i><b>7.1</b> Zero Inflated Negative Binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="nhst-int.html"><a href="nhst-int.html"><i class="fa fa-check"></i><b>8</b> NHST</a></li>
+<li class="chapter" data-level="9" data-path="model-comparison-int.html"><a href="model-comparison-int.html"><i class="fa fa-check"></i><b>9</b> Model Comparison</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-comparison-int.html"><a href="model-comparison-int.html#formalize-models-1"><i class="fa fa-check"></i><b>9.1</b> Formalize Models</a></li>
+<li class="chapter" data-level="9.2" data-path="model-comparison-int.html"><a href="model-comparison-int.html#aic-and-bic-results-1"><i class="fa fa-check"></i><b>9.2</b> AIC and BIC Results</a></li>
+<li class="chapter" data-level="9.3" data-path="model-comparison-int.html"><a href="model-comparison-int.html#selected-model-2"><i class="fa fa-check"></i><b>9.3</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="BF-int.html"><a href="BF-int.html"><i class="fa fa-check"></i><b>10</b> Bayes Factor</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="BF-int.html"><a href="BF-int.html#encompassing-model-1"><i class="fa fa-check"></i><b>10.1</b> Encompassing Model</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="BF-int.html"><a href="BF-int.html#prior-choiche-1"><i class="fa fa-check"></i><b>10.1.1</b> Prior Choiche</a></li>
+<li class="chapter" data-level="10.1.2" data-path="BF-int.html"><a href="BF-int.html#posterior-1"><i class="fa fa-check"></i><b>10.1.2</b> Posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="BF-int.html"><a href="BF-int.html#hypothesis-matrices-1"><i class="fa fa-check"></i><b>10.2</b> Hypothesis Matrices</a></li>
+<li class="chapter" data-level="10.3" data-path="BF-int.html"><a href="BF-int.html#centering-and-adjusting-1"><i class="fa fa-check"></i><b>10.3</b> Centering and Adjusting</a></li>
+<li class="chapter" data-level="10.4" data-path="BF-int.html"><a href="BF-int.html#results-and-sensitivity-1"><i class="fa fa-check"></i><b>10.4</b> Results and Sensitivity</a></li>
+<li class="chapter" data-level="10.5" data-path="BF-int.html"><a href="BF-int.html#selected-model-3"><i class="fa fa-check"></i><b>10.5</b> Selected Model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="conclusion-int.html"><a href="conclusion-int.html"><i class="fa fa-check"></i><b>11</b> Conclusions</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+  <!--script src="https://kit.fontawesome.com/6a26f47516.js"></script-->
+  <script src="assets/hideOutput.js"></script>
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+
+
+
+<div class="hero-image-container">
+  <img class= "hero-image" src="images/banner.png">
+</div>
+<div id="case-study" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Case Study</h1>
+<p>In this chapter, first, we describe the aim of the study. Subsequently, we describe the sample included in the study. We present general information about the sample and the results of the cluster analysis to classify the different attachment patterns. Finally, we consider children’s social-emotional problems.</p>
+<div id="aim-of-the-study" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Aim of the Study</h2>
+<p>The aim of the study is to compare the different theoretical perspectives regarding the role of mother attachment and father attachment on children’s social emotional development. In the literature, four different main theoretical perspectives have been identified <span class="citation">(<a href="#ref-brethertonFathersAttachmentTheory2010" role="doc-biblioref">Bretherton, 2010</a>)</span>:</p>
+<ul>
+<li><strong>Monotropy Theory</strong> - only the mother has an impact on children’s development.</li>
+<li><strong>Hierarchy Theory</strong> - the mother has a greater impact on children development than the the father.</li>
+<li><strong>Independence Theory</strong> - all attachment figures are equally important but they affect the children’s development differently.</li>
+<li><strong>Integration Theory</strong> - to understand the impact on children’s development it is necessary to consider attachment relationships taken together.</li>
+</ul>
+<p>Contrasting results have been reported by studies investigating which is the “correct” theory. No study, however, has tried to properly evaluate the different theoretical perspectives by directly comparing the different hypotheses.</p>
+<p>For more information regarding Attachment theory and the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article].</p>
+</div>
+<div id="the-study-sample" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> The Study Sample</h2>
+<p>To evaluate the different role of father attachment and mother attachment, we consider 854 Italian children from third to sixth school grade. Only middle-childhood children are included in the analysis (5 participants are excluded as older than 12.3 years and 2 participants are excluded are excluded as the age is missing). The total sample size included in the analysis is 847 (50.65 % Females). Participants frequencies by grade and gender are reported in Table~<a href="case-study.html#tab:table-gender-grade">1.1</a>.</p>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:table-gender-grade">Table 1.1: </span>Participants frequancies by grade and gender (<span class="math inline">\(n_{subj} = 847\)</span>).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Gender
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:right;font-weight: bold;">
+Grade
+</th>
+<th style="text-align:center;font-weight: bold;">
+Females
+</th>
+<th style="text-align:center;font-weight: bold;">
+Males
+</th>
+<th style="text-align:center;font-weight: bold;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+3rd
+</td>
+<td style="text-align:center;">
+133
+</td>
+<td style="text-align:center;">
+127
+</td>
+<td style="text-align:center;">
+260
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+4th
+</td>
+<td style="text-align:center;">
+81
+</td>
+<td style="text-align:center;">
+75
+</td>
+<td style="text-align:center;">
+156
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+5th
+</td>
+<td style="text-align:center;">
+36
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+68
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+6th
+</td>
+<td style="text-align:center;">
+179
+</td>
+<td style="text-align:center;">
+184
+</td>
+<td style="text-align:center;">
+363
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Total
+</td>
+<td style="text-align:center;">
+429
+</td>
+<td style="text-align:center;">
+418
+</td>
+<td style="text-align:center;">
+847
+</td>
+</tr>
+</tbody>
+</table>
+<p>Participants age mean is 10.28 (SD = 1.34). The participants age summary statistics are reported below and the distribution is presented in Figure~<a href="case-study.html#fig:plot-age">1.1</a>.</p>
+<pre><code>##   # Age summary statistics
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    7.92    9.00   10.25   10.28   11.58   12.25</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:plot-age"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-age-1.png" alt="Participants age distribution ($n_{subj} = 847$)" width="672" />
+<p class="caption">
+Figure 1.1: Participants age distribution (<span class="math inline">\(n_{subj} = 847\)</span>)
+</p>
+</div>
+</div>
+<div id="attachment-styles" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Attachment Styles</h2>
+<p>Attachment towards the mother and the father was measured separately using the brief Experiences in Close Relationships Scale (ECR; [TODO add references]) completed by the children. Four main attachment styles have been recognized in the literature according to thee levels of <em>anxiety</em> and <em>avoidance</em>:</p>
+<ul>
+<li><strong>Secure Attachment -</strong> children with low levels of anxiety and avoidance.</li>
+<li><strong>Anxious Attachment -</strong> children characterized by high levels of anxiety.</li>
+<li><strong>Avoidant Attachment -</strong> children characterized by high levels of avoidance.</li>
+<li><strong>Fearful Attachment -</strong> children with high levels of anxiety and avoidance.</li>
+</ul>
+<p>To identify children attachment styles towards the mother and towards the father, we conduct two separate cluster analyses. Clusters are obtained using the function <code>hclust()</code> (with argument <code>method="ward.D"</code>) considering <em>Euclidean</em> distances between participants responses to the ECR items.</p>
+<div id="mother-cluster-analysis" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Mother Cluster Analysis</h3>
+<p>Regarding mother attachment, 4 groups are selected from the cluster analysis results (see Figure~<a href="case-study.html#fig:plot-cluster-mother">1.2</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:plot-cluster-mother"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-cluster-mother-1.png" alt="Mother attachment cluster dendrogram ($n_{subj} = 847$)." width="672" />
+<p class="caption">
+Figure 1.2: Mother attachment cluster dendrogram (<span class="math inline">\(n_{subj} = 847\)</span>).
+</p>
+</div>
+<p>In Figure~<a href="case-study.html#fig:plot-scores-mother">1.3</a>, Anxiety (“<em>Anx</em>”) and Avoidance (“<em>Av</em>”) scores are presented according to mother attachment styles. The frequencies of mother attachment styles according to gender are reported in Table~.</p>
+<div class="figure" style="text-align: center"><span id="fig:plot-scores-mother"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-scores-mother-1.png" alt="Anxiety (“Anx”) and Avoidance (“Av”) scores according to mother attachment styles. Dashed lines represents overall average values ($n_{subj} = 847$)." width="672" />
+<p class="caption">
+Figure 1.3: Anxiety (“Anx”) and Avoidance (“Av”) scores according to mother attachment styles. Dashed lines represents overall average values (<span class="math inline">\(n_{subj} = 847\)</span>).
+</p>
+</div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:table-cluster-mother">Table 1.2: </span>Mother attachment styles by gender (<span class="math inline">\(n_{subj} = 847\)</span>).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Attachment Style
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;font-weight: bold;">
+Gender
+</th>
+<th style="text-align:center;font-weight: bold;">
+Secure
+</th>
+<th style="text-align:center;font-weight: bold;">
+Anxious
+</th>
+<th style="text-align:center;font-weight: bold;">
+Avoidant
+</th>
+<th style="text-align:center;font-weight: bold;">
+Fearful
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Females
+</td>
+<td style="text-align:center;">
+132 (16%)
+</td>
+<td style="text-align:center;">
+131 (15%)
+</td>
+<td style="text-align:center;">
+111 (13%)
+</td>
+<td style="text-align:center;">
+55 ( 6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Males
+</td>
+<td style="text-align:center;">
+99 (12%)
+</td>
+<td style="text-align:center;">
+155 (18%)
+</td>
+<td style="text-align:center;">
+119 (14%)
+</td>
+<td style="text-align:center;">
+45 ( 5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Total
+</td>
+<td style="text-align:center;">
+231 (27%)
+</td>
+<td style="text-align:center;">
+286 (34%)
+</td>
+<td style="text-align:center;">
+230 (27%)
+</td>
+<td style="text-align:center;">
+100 (12%)
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compared to the overall average values of anxiety and avoidance, we can observe that:</p>
+<ul>
+<li><em>Secure</em> children have lower levels of anxiety and avoidance</li>
+<li><em>Anxious</em> children have higher levels of anxiety and about the average levels of avoidance</li>
+<li><em>Avoidant</em> children have lower levels of anxiety and higher levels of avoidance</li>
+<li><em>Fearful</em> children have higher levels of anxiety and avoidance</li>
+</ul>
+<p>These results reflect the traditional definition of the four attachment styles. Moreover, attachment styles frequencies are in lines with general results in the literature [TODO: add reference values].</p>
+<div id="mclust-check" class="section level4 unnumbered">
+<h4>Mclust Check</h4>
+<p>To evaluate if 4 cluster is an appropriate choice, we compare the BIC values of different model-based clustering options. To do that we use the function <code>mclustBIC()</code> from the <code>mclust</code> R-package <span class="citation">(<a href="#ref-scruccaMclustClusteringClassification2016" role="doc-biblioref">Scrucca et al., 2016</a>)</span>. BIC values of the best three model-based clustering are reported below and overall results are presented in Figure~<a href="case-study.html#fig:plot-mclust-mother">1.4</a>. See <code>?mclustBIC()</code> help page for further information.</p>
+<pre><code>##   # Best model-based clustering for mother attachment
+## Best BIC values:
+##              EEV,6       EEV,7      EEV,8
+## BIC      -23978.93 -24842.2437 -25039.952
+## BIC diff      0.00   -863.3168  -1061.025</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:plot-mclust-mother"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-mclust-mother-1.png" alt="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information." width="672" />
+<p class="caption">
+Figure 1.4: BIC values of different model-based clustering options. See ‘?mclustBIC()’ help page for further information.
+</p>
+</div>
+<p>Results indicate the possible presence of a larger number of clusters. However, considering only 4 clusters seems to us the most reasonable choice. This is in line with attachment theory and general results in the literature. The important thing is hat no smaller number of clusters provided better results than the division in 4 clusters.</p>
+</div>
+</div>
+<div id="father-cluster-analysis" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Father Cluster Analysis</h3>
+<p>Regarding father attachment, 4 groups are selected from the cluster analysis results (see Figure~<a href="case-study.html#fig:plot-cluster-father">1.5</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:plot-cluster-father"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-cluster-father-1.png" alt="Father attachment cluster dendrogram ($n_{subj} = 847$)." width="672" />
+<p class="caption">
+Figure 1.5: Father attachment cluster dendrogram (<span class="math inline">\(n_{subj} = 847\)</span>).
+</p>
+</div>
+<p>In Figure~<a href="case-study.html#fig:plot-scores-father">1.6</a>, Anxiety (“<em>Anx</em>”) and Avoidance (“<em>Av</em>”) scores are presented according to father attachment styles. The frequencies of father attachment styles according to gender are reported in Table~.</p>
+<div class="figure" style="text-align: center"><span id="fig:plot-scores-father"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-scores-father-1.png" alt="Anxiety (“Anx”) and Avoidance (“Av”) scores according to father attachment styles. Dashed lines represents overall average values ($n_{subj} = 847$)." width="672" />
+<p class="caption">
+Figure 1.6: Anxiety (“Anx”) and Avoidance (“Av”) scores according to father attachment styles. Dashed lines represents overall average values (<span class="math inline">\(n_{subj} = 847\)</span>).
+</p>
+</div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:table-cluster-father">Table 1.3: </span>Father attachment styles by gender (<span class="math inline">\(n_{subj} = 847\)</span>).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Attachment Style
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;font-weight: bold;">
+Gender
+</th>
+<th style="text-align:center;font-weight: bold;">
+Secure
+</th>
+<th style="text-align:center;font-weight: bold;">
+Anxious
+</th>
+<th style="text-align:center;font-weight: bold;">
+Avoidant
+</th>
+<th style="text-align:center;font-weight: bold;">
+Fearful
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Females
+</td>
+<td style="text-align:center;">
+99 (12%)
+</td>
+<td style="text-align:center;">
+104 (12%)
+</td>
+<td style="text-align:center;">
+163 (19%)
+</td>
+<td style="text-align:center;">
+63 ( 7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Males
+</td>
+<td style="text-align:center;">
+107 (13%)
+</td>
+<td style="text-align:center;">
+126 (15%)
+</td>
+<td style="text-align:center;">
+148 (17%)
+</td>
+<td style="text-align:center;">
+37 ( 4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Total
+</td>
+<td style="text-align:center;">
+206 (24%)
+</td>
+<td style="text-align:center;">
+230 (27%)
+</td>
+<td style="text-align:center;">
+311 (37%)
+</td>
+<td style="text-align:center;">
+100 (12%)
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compared to the overall average values of anxiety and avoidance, we can observe that:</p>
+<ul>
+<li><em>Secure</em> children have lower levels of anxiety and avoidance</li>
+<li><em>Anxious</em> children have lower levels of anxiety and avoidance</li>
+<li><em>Avoidant</em> children have lower levels of anxiety and higher levels of avoidance</li>
+<li><em>Fearful</em> children have higher levels of anxiety and avoidance</li>
+</ul>
+<p>These results are no as good as in the mother attachment classification, but they are still reasonable. Moreover, attachment styles frequencies are close to the general results in the literature [TODO: add reference values].</p>
+<div id="mclust-check-1" class="section level4 unnumbered">
+<h4>Mclust Check</h4>
+<p>To evaluate if 4 cluster is an appropriate choice, we compare the BIC values of different model-based clustering options as before. BIC values of the best three model-based clustering are reported below and overall results are presented in Figure~<a href="case-study.html#fig:plot-mclust-father">1.7</a>.</p>
+<pre><code>##   # Best model-based clustering for father attachment
+## Best BIC values:
+##              EEV,9       EEV,8      EEV,5
+## BIC      -25351.43 -25790.9130 -25905.197
+## BIC diff      0.00   -439.4807   -553.765</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:plot-mclust-father"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-mclust-father-1.png" alt="BIC values of different model-based clustering options. See '?mclustBIC()' help page for further information." width="672" />
+<p class="caption">
+Figure 1.7: BIC values of different model-based clustering options. See ‘?mclustBIC()’ help page for further information.
+</p>
+</div>
+<p>As for the mother, results indicate the possible presence of a larger number of clusters. However, considering only 4 clusters seems to us the most reasonable choice for the same reasons as before.</p>
+</div>
+</div>
+<div id="mother-and-father" class="section level3" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Mother and Father</h3>
+<p>The frequencies of mother attachment and father attachment styles are reported in Table~<a href="case-study.html#tab:table-cluster-mother-father">1.4</a>.</p>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:table-cluster-mother-father">Table 1.4: </span>Mother attachment and father attachemtn styles (<span class="math inline">\(n_{subj} = 847\)</span>).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Father Attachment
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;font-weight: bold;">
+Mother Attachment
+</th>
+<th style="text-align:center;font-weight: bold;">
+Secure
+</th>
+<th style="text-align:center;font-weight: bold;">
+Anxious
+</th>
+<th style="text-align:center;font-weight: bold;">
+Avoidant
+</th>
+<th style="text-align:center;font-weight: bold;">
+Fearful
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Secure
+</td>
+<td style="text-align:center;">
+125 (15%)
+</td>
+<td style="text-align:center;">
+49 ( 6%)
+</td>
+<td style="text-align:center;">
+49 ( 6%)
+</td>
+<td style="text-align:center;">
+8 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Anxious
+</td>
+<td style="text-align:center;">
+51 ( 6%)
+</td>
+<td style="text-align:center;">
+100 (12%)
+</td>
+<td style="text-align:center;">
+98 (12%)
+</td>
+<td style="text-align:center;">
+37 (4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Avoidant
+</td>
+<td style="text-align:center;">
+25 ( 3%)
+</td>
+<td style="text-align:center;">
+67 ( 8%)
+</td>
+<td style="text-align:center;">
+126 (15%)
+</td>
+<td style="text-align:center;">
+12 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Fearful
+</td>
+<td style="text-align:center;">
+5 ( 1%)
+</td>
+<td style="text-align:center;">
+14 ( 2%)
+</td>
+<td style="text-align:center;">
+38 ( 4%)
+</td>
+<td style="text-align:center;">
+43 (5%)
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can observe how values on the diagonal (same attachment styles towards both parents) tends to be larger than others.</p>
+</div>
+</div>
+<div id="children-outcomes" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Children Outcomes</h2>
+<p>Children’s social-emotional development was measured using the Strength &amp; Difficulties Questionnaire (SDQ; [TODO add references]) completed by the teachers. Separate scores for externalizing and internalizing problems were obtained as sum of the questionnaire items.</p>
+<div id="externalizing-problems" class="section level3" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> Externalizing Problems</h3>
+<p>Participants externalizing problems mean is 3.35 (SD = 3.91). The participants externalizing problems summary statistics are reported below and the distribution is presented in Figure~<a href="case-study.html#fig:plot-externalizing-dist">1.8</a>.</p>
+<pre><code>##   # Externalizing problems summary statistics
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   0.000   2.000   3.349   6.000  18.000</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:plot-externalizing-dist"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-externalizing-dist-1.png" alt="Participants externalizing problems distribution ($n_{subj} = 847$)" width="672" />
+<p class="caption">
+Figure 1.8: Participants externalizing problems distribution (<span class="math inline">\(n_{subj} = 847\)</span>)
+</p>
+</div>
+<p>Overall, externalizing problems are low. This is expected as the sample is not a clinical sample. Externalizing problems according to attachment styles are reported in Table~<a href="case-study.html#tab:table-cluster-ext">1.5</a>.</p>
+<table class="table table-striped table-hover" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:table-cluster-ext">Table 1.5: </span>Externalizing problems according to attachment styles (<span class="math inline">\(n_{subj} = 847\)</span>).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="8">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Father Attachment
+</div>
+</th>
+</tr>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Secure
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Anxious
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Avoidant
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Fearful
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;font-weight: bold;">
+Mother Attachemnt
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Secure
+</td>
+<td style="text-align:center;">
+2.63 (3.57)
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+3.45 (4.48)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+1.61 (2.13)
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+2.88 (3.44)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Anxious
+</td>
+<td style="text-align:center;">
+3.69 (4.07)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.01 (3.61)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.32 (4.12)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+4.05 (3.61)
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Avoidant
+</td>
+<td style="text-align:center;">
+2.84 (3.34)
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+3.31 (3.65)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.71 (4.19)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.75 (4.81)
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Fearful
+</td>
+<td style="text-align:center;">
+7.60 (4.04)
+</td>
+<td style="text-align:center;">
+8.0
+</td>
+<td style="text-align:center;">
+4.64 (3.84)
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+4.76 (4.67)
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+4.26 (4.07)
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="internalizing-problems" class="section level3" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Internalizing Problems</h3>
+<p>Participants internalizing problems mean is 2.96 (SD = 3.14). The participants internalizing problems summary statistics are reported below and the distribution is presented in Figure~<a href="case-study.html#fig:plot-internalizing-dist">1.9</a>.</p>
+<pre><code>##   #
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   0.000   2.000   2.955   4.000  18.000</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:plot-internalizing-dist"></span>
+<img src="attachment-bayes-factor_files/figure-html/plot-internalizing-dist-1.png" alt="Participants internalizing problems distribution ($n_{subj} = 847$)" width="672" />
+<p class="caption">
+Figure 1.9: Participants internalizing problems distribution (<span class="math inline">\(n_{subj} = 847\)</span>)
+</p>
+</div>
+<p>Overall, internalizing problems are low. Again, this is expected as the sample is not a clinical sample. Internalizing problems according to attachment styles are reported in Table~(tab:table-cluster-ext).</p>
+<table class="table table-striped table-hover" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:table-cluster-int">Table 1.6: </span>Internalizing problems according to attachment styles (<span class="math inline">\(n_{subj} = 847\)</span>).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="8">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Father Attachment
+</div>
+</th>
+</tr>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Secure
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Anxious
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Avoidant
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Fearful
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:right;font-weight: bold;">
+Mother Attachemnt
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+<th style="text-align:center;font-weight: bold;">
+Mean (SD)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Median
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Secure
+</td>
+<td style="text-align:center;">
+2.29 (2.64)
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+2.63 (2.75)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+2.67 (2.75)
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+3.62 (3.46)
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Anxious
+</td>
+<td style="text-align:center;">
+3.29 (3.48)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.15 (3.09)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.28 (3.72)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.11 (3.81)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Avoidant
+</td>
+<td style="text-align:center;">
+1.88 (2.28)
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+2.99 (3.22)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+2.65 (2.86)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+4.08 (3.78)
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Fearful
+</td>
+<td style="text-align:center;">
+4.40 (3.65)
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+<td style="text-align:center;">
+2.07 (1.69)
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+3.68 (3.68)
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+4.37 (3.12)
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-brethertonFathersAttachmentTheory2010" class="csl-entry">
+Bretherton, I. (2010). Fathers in attachment theory and research: <span>A</span> review. <em>Early Child Development and Care</em>, <em>180</em>(1-2), 9–23. <a href="https://doi.org/10.1080/03004430903414661">https://doi.org/10.1080/03004430903414661</a>
+</div>
+<div id="ref-scruccaMclustClusteringClassification2016" class="csl-entry">
+Scrucca, L., Fop, M., Murphy, T. B., &amp; Raftery, A. E. (2016). <span class="nocase">mclust</span> 5: Clustering, classification and density estimation using <span>Gaussian</span> finite mixture models. <em>The R Journal</em>, <em>8</em>(1), 289–317. <a href="https://doi.org/10.32614/RJ-2016-021">https://doi.org/10.32614/RJ-2016-021</a>
+</div>
+</div>
+<hr>
+<center>
+  <div class="footer">
+    All materials <a href= "https://creativecommons.org/licenses/by/2.0/"> CC-BY </a> unless noted otherwise.
+    <br>
+    To know more about <span style="color: #8C3031; font-weight:bold"> Psicostat</span> and our activities visit <a href= "https://psicostat.dpss.psy.unipd.it/">https://psicostat.dpss.psy.unipd.it/</a>.
+  </div>
+</center>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-choice-ext.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": true
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ClaudioZandonella/Attachment/edit/master/01-case-study.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["attachment-bayes-factor.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true,
+"toc_float": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
