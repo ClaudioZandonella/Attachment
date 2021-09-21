@@ -393,5 +393,121 @@ plot_problems_dist <- function(prob = c("ext", "int")){
     labs(x = label_x,
          y = "Frequency")
 }
+#----    plot_post_pred    ----
+
+# drake::loadd(post_pred_ext)
+plot_post_pred <-  function(post_pred = post_pred_ext, problem = c("Externalizing", "Internalizing")){
+  problem <- match.arg(problem)
+
+  data <- post_pred %>%
+    mutate_all(exp) %>%
+    mutate(Female = (F_Secure + F_Anxious + F_Avoidant + F_Fearful)/4,
+           Male = (M_Secure + M_Anxious + M_Avoidant + M_Fearful)/4,
+           Secure = (F_Secure + M_Secure)/2,
+           Anxious = (F_Anxious + M_Anxious)/2,
+           Avoidant = (F_Avoidant + M_Avoidant)/2,
+           Fearful = (F_Fearful + M_Fearful)/2) %>%
+    select(Female:Fearful)
+
+  p_gender <- data %>%
+    select(Female, Male) %>%
+    pivot_longer(c(Female, Male), names_to = "Gender", values_to = "Problems") %>%
+    ggplot() +
+    ggridges::stat_density_ridges(aes(x = Problems, y = Gender, fill = factor(stat(quantile))),
+                                  geom = "density_ridges_gradient", show.legend = FALSE,
+                                  calc_ecdf = TRUE, quantiles = c(0.025, 0.975), color = "gray30") +
+    ggridges::stat_density_ridges(aes(x = Problems, y = Gender, fill = Gender), show.legend = FALSE,
+                                  quantile_lines = TRUE, quantiles = c(0.025,.5, 0.975), color = "gray30", alpha = 0.7) +
+    scale_fill_manual(values = c("gray10", "#ffffff00", "gray10", "#F8766D", "#00BFC4")) +
+    scale_y_discrete(expand = expansion(add = c(.3, 1.5))) +
+    labs(x = sprintf("%s Problems", problem))
+
+  p_attachemnt <- data %>%
+    select(Secure, Anxious, Avoidant, Fearful) %>%
+    pivot_longer(c(Secure, Anxious, Avoidant, Fearful), names_to = "Mother", values_to = "Problems") %>%
+    mutate(Mother = factor(Mother, levels = c("Secure", "Anxious", "Avoidant", "Fearful"))) %>%
+    ggplot() +
+    ggridges::stat_density_ridges(aes(x = Problems, y = Mother, fill = factor(stat(quantile))),
+                                  geom = "density_ridges_gradient", show.legend = FALSE,
+                                  calc_ecdf = TRUE, quantiles = c(0.025, 0.975), color = "gray30") +
+    ggridges::stat_density_ridges(aes(x = Problems, y = Mother, fill = Mother), show.legend = FALSE,
+                                  quantile_lines = TRUE, quantiles = c(0.025,.5, 0.975), color = "gray30", alpha = 0.7) +
+    scale_fill_manual( values = c("gray10", "#ffffff00", "gray10",
+                                  "#EBCC2A", "#E1AF00", "#F21A00","#3B9AB2")) +
+    scale_y_discrete(expand = expansion(add = c(.3, 1.1))) +
+    labs(x = sprintf("%s Problems", problem),
+         y = "Mother Attachment")
+
+  gridExtra::grid.arrange(p_gender, p_attachemnt, layout_matrix = matrix(c(1,1,2,2), nrow = 1))
+}
+#----    plot_post_diff    ----
+
+# drake::loadd(post_pred_ext)
+plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizing", "Internalizing")){
+  problem <- match.arg(problem)
+
+  if (problem == "Extrnalizing"){
+    labs_diff <- c("Avoidance - Anxious", "Anxious - Secure",
+                   "Fearful - Avoidant", "Avoidant - Secure",
+                   "Fearful - Anxious", "Fearful - Secure")
+    colors <- c("#5F808E", "#3B9AB2", "#A84D47", "#84666A", "#CD3323", "#F21A00")
+  } else {
+    labs_diff <- c("Avoidance - Anxious", "Anxious - Secure",
+                   "Fearful - Avoidant", "Avoidant - Secure",
+                   "Fearful - Anxious", "Fearful - Secure")
+    colors <- c("#5F808E", "#3B9AB2", "#A84D47", "#84666A", "#CD3323", "#F21A00")
+  }
+
+  data <- post_pred %>%
+    mutate_all(exp) %>%
+    mutate(Secure = (F_Secure + M_Secure)/2,
+           Anxious = (F_Anxious + M_Anxious)/2,
+           Avoidant = (F_Avoidant + M_Avoidant)/2,
+           Fearful = (F_Fearful + M_Fearful)/2) %>%
+    mutate(diff_fear_sec = Fearful - Secure,
+           diff_avo_sec = Avoidant - Secure,
+           diff_anx_sec = Anxious - Secure,
+
+           diff_fear_anx = Fearful - Anxious,
+           diff_avo_anx = Avoidant - Anxious,
+
+           diff_far_avo = Fearful - Avoidant) %>%
+    select(dplyr::starts_with("diff_")) %>%
+    pivot_longer(dplyr::starts_with("diff_"), names_to = "Difference", values_to = "Problems")
+
+  data %>%
+    mutate(Difference = fct_reorder(Difference, Problems, median)) %>%
+    ggplot() +
+    ggridges::stat_density_ridges(aes(x = Problems, y = Difference, fill = factor(stat(quantile))),
+                                  geom = "density_ridges_gradient", show.legend = FALSE,
+                                  calc_ecdf = TRUE, quantiles = c(0.025, 0.975), color = "gray30") +
+    ggridges::stat_density_ridges(aes(x = Problems, y = Difference, fill = Difference), show.legend = FALSE,
+                                  quantile_lines = TRUE, quantiles = c(0.025,.5, 0.975), color = "gray30", alpha = 0.7) +
+    geom_vline(xintercept = 0, linetype = "longdash", size = .6, col = "gray30") +
+    scale_fill_manual(values = c("gray10", "#ffffff00", "gray10", colors)) +
+    scale_y_discrete(labels = labs_diff, expand = expansion(add = c(.3, 1.2))) +
+    labs(x = sprintf("%s Problems", problem)) +
+    theme(axis.title.y = element_blank())
+  }
+
+#----    my_my_pp_checkppcheck    ----
+
+# drake::loadd(brm_selected_ext)
+
+my_pp_check <- function(brm_fit = brm_selected_ext,  problem = c("Externalizing", "Internalizing")){
+  problem <- match.arg(problem)
+
+  plot <- brms::pp_check(brm_fit, nsamples = 30)
+
+  plot +
+    theme_bw() +
+    labs(x = sprintf("%s Problems", problem)) +
+    coord_cartesian(xlim = c(-.5, 45)) +
+    theme(legend.position = c(.8,.8),
+          legend.background = element_rect(fill = "transparent"),
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank())
+}
+
 #----
 

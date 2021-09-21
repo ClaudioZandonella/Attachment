@@ -148,6 +148,9 @@ drake_load_bookdown <- function(){
 
   load_glob_env(data_prior_predict)
 
+  load_glob_env(brm_selected_ext)
+  load_glob_env(post_pred_ext)
+  load_glob_env(r2_ext)
   #----    Internalizing    ----
 }
 

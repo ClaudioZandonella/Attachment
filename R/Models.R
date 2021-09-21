@@ -98,6 +98,24 @@ zinb_brms <- function(data, y, formula){
   return(fit)
 }
 
+#----    zinb_brms_selected    ----
+
+zinb_brms_selected <- function(data, y, prior_par){
+
+  formula_mu<- paste0(y ," ~ gender + mother + (1|ID_class)")
+
+  my_prior <- brms::set_prior(prior_par, class = "b")
+
+  fit <- brms::brm(brms::bf(as.formula(formula_mu),
+                            zi ~ gender + (1|ID_class)),
+                   family = brms::zero_inflated_negbinomial(),
+                   data = data, prior = my_prior,
+                   chains = 6, iter = 6000, cores = 6, warmup = 2000, seed = 2021)
+
+  return(fit)
+}
+
+
 #----    get_model_df    ----
 
 get_model_df<- function(fit){
@@ -189,6 +207,22 @@ get_data_prior_predict <- function(){
            q_3 = exp(1 + .5 * prior_sd),
            q_4 = exp(1 + 1 * prior_sd))
 }
+
+#----    get_post_pred    ----
+
+get_post_pred <- function(model){
+  levels <- c("Secure", "Anxious", "Avoidant", "Fearful")
+  new_data <- expand_grid(gender = factor(c("F", "M")),
+                          mother = factor(levels, levels = levels))
+
+  post_pred <- brms::posterior_linpred(model, newdata = new_data,
+                                       re_formula = NA, summary = FALSE)
+
+  colnames(post_pred) <- paste(new_data$gender, new_data$mother, sep = "_")
+
+  return(as.data.frame(post_pred))
+}
+
 
 #----    make_stan_data    ----
 

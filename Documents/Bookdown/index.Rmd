@@ -26,7 +26,8 @@ library(ggplot2)
 # Chunks settings
 knitr::opts_chunk$set(echo = FALSE,
                       # Plot settings
-                      # dev = "tikz", dev.args=list(pointsize=12),fig.align='center',
+                      fig.align='center',
+                      # dev = "tikz", dev.args=list(pointsize=12),
                       # fig.height=3, fig.width=5, fig.pos = "!ht",
 
                       # Code output width

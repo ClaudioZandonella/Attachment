@@ -247,11 +247,11 @@ get_analysis_plan <- function(){
     data_prior_predict = get_data_prior_predict(),
 
     # selected model
-    brm_selected_ext = brms::brm(brms::bf(externalizing_sum ~ gender + mother + (1|ID_class),
-                                          zi ~ gender + (1|ID_class)),
-                                 family = brms::zero_inflated_negbinomial(),
-                                 data = data_cluster,
-                                 chains = 6, iter = 6000, cores = 6, warmup = 2000, seed = 2021)
+    brm_selected_ext = zinb_brms_selected(data = data_cluster,
+                                          y = "externalizing_sum",
+                                          prior_par = "normal(0, 3)"),
+    post_pred_ext = get_post_pred(brm_selected_ext),
+    r2_ext = brms::bayes_R2(brm_selected_ext)
   )
 }
 

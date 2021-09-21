@@ -30,6 +30,7 @@ Imports:
     bookdown,
     brms,
     car,
+    ggridges,
     kableExtra,
     mclust,
     performance,
