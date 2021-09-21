@@ -21,7 +21,7 @@ To evaluate the presence of zero inflation in our data, we compare the number of
 externalizing_sum ~ gender + mother * father + (1|ID_class)
 ```
 
-The model is fitted using the function `glmmTMB()` from the `glmmTMB` R-package [@brooksGlmmTMBBalancesSpeed2017]. Next, we compare the number of observed zero and expected zeros using an adapted version the function `check_zeroinflation()` from the R-package `performance` [@ludeckePerformancePackageAssessment2021] that solves a small bug (see issue https://github.com/easystats/performance/issues/367).
+The model is fitted using the function `glmmTMB()` from the `glmmTMB` R-package [@brooksGlmmTMBBalancesSpeed2017]. Next, we compare the number of observed zero and expected zeros using an adapted version of the function `check_zeroinflation()` from the R-package `performance` [@ludeckePerformancePackageAssessment2021] that solves a small bug (see issue https://github.com/easystats/performance/issues/367).
 ```{r echo = TRUE, cache=TRUE}
 my_check_zeroinflation(fit_ext_nb)
 ```
@@ -35,7 +35,7 @@ $$
 p_{ij} = \text{logit}^{-1}(X_i^T\beta_p+ Z_j^Tu_p),\\
 \mu_{ij} = \text{exp}(X_i^T\beta_{\mu}+ Z_j^Tu_{\mu}).
 $$
-That is, both $p$ and $\mu$ are modelled separately according to (possibly) different variables. In our case, we consider only the role of gender for $p$ (i.e., the probability of having externalizing problems depends on gender), whereas for $\mu$ the consider also the interaction between mother attachment and father attachment. In both cases, we consider the children's classroom ID as a random effect (teachers may differ in they ability to detect children's problem and quantify them). Using R formula syntax, we have
+That is, both $p$ and $\mu$ are modelled separately according to (possibly) different variables. In our case, we consider only the role of gender for $p$ (i.e., the probability of having externalizing problems depends on gender), whereas for $\mu$ the consider also the interaction between mother attachment and father attachment. In both cases, we consider the children's classroom ID as a random effect (teachers may differ in the ability to detect children's problems and quantify them). Using R formula syntax, we have
 ```{r echo = TRUE, eval=FALSE}
 # formula for p
 p ~ gender + (1|ID_class)
@@ -49,15 +49,15 @@ The ZINB model is fitted using the function `zeroinfl()` from the `pscl` R-packa
 anova(fit_ext_nb, fit_ext_zinb)
 ```
 
-Overall, results indicate that the ZINB model performs better than the Negative Binomial model. Thus, in the following analyses we decide to use ZINB models.
+Overall, results indicate that the ZINB model performs better than the Negative Binomial model. Thus, in the following analyses, we decide to use ZINB models.
 
 ## NHST 
 
-Following traditional NHST approach, we consider the model previously defined that includes all effects of interest. That is the gender effect and the interaction between mother attachment and father attachment. Subsequently, we can run an analysis of deviance to evaluate the significance of the predictors using the function `Anova()` from the R-package `car` [@foxCompanionAppliedRegression2019].
+Following the traditional NHST approach, we consider the model previously defined that includes all effects of interest. That is the gender effect and the interaction between mother attachment and father attachment. Subsequently, we can run an analysis of deviance to evaluate the significance of the predictors using the function `Anova()` from the R-package `car` [@foxCompanionAppliedRegression2019].
 ```{r, echo =TRUE, cache=TRUE}
 car::Anova(fit_ext_zinb)
 ```
-Results indicate a statistically significant effect of gender and mother attachment. On the contrary, the interaction and father attachment are no significant. Model summary is reported below.
+Results indicate a statistically significant effect of gender and mother attachment. On the contrary, the interaction and father attachment are not significant. The model summary is reported below.
 ```{r, echo =TRUE, cache=TRUE}
 summary(fit_ext_zinb)
 ```
@@ -66,7 +66,7 @@ To evaluate the effect of gender and mother attachment, the marginal predicted v
 get_plot_zinb(model = fit_ext_zinb, attachment = "mother")
 ```
 
-Post-hoc test are run to evaluate differences between mother attachment styles. To do that we use the `contrast()` function from the `emmeans` R-package, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. This approach is less restrictive than traditional *“Bonferroni”* method, as it determines the adjustment according to a multivariate *t*-distribution with the same covariance structure as the estimates. Results are reported below,
+Post-hoc tests are run to evaluate differences between mother attachment styles. To do that we use the `contrast()` function from the `emmeans` R-package, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. This approach is less restrictive than the traditional *“Bonferroni”* method, as it determines the adjustment according to a multivariate *t*-distribution with the same covariance structure as the estimates. Results are reported below,
 ```{r, cache=TRUE, echo = TRUE}
 emmeans::contrast(emmeans::emmeans(fit_ext_zinb, specs = ~ mother ),
                   "pairwise", adjust = "mvt")
@@ -74,7 +74,7 @@ emmeans::contrast(emmeans::emmeans(fit_ext_zinb, specs = ~ mother ),
 
 Overall, results indicate that Males have more externalizing problems than Females and, regarding mother attachment, Fearful children have more problems than Secure children.
 
-To evaluate the fit of model to the data, we used $R^2$. In the case of generalized mixed-effects models, however, there are several definitions of $R^2$. We computed the *Marginal* $R^2$ and the *Conditional* $R^2$ as suggested by @nakagawaCoefficientDeterminationR22017. *Marginal* $R^2$ is concerned with the variance explained by fixed factors of the model, and *Conditional* $R^2$ is concerned with the variance explained by both fixed and random factors of the model. To do that we use the function `performance::r2()`.
+To evaluate the fit of the model to the data, we used $R^2$. In the case of generalized mixed-effects models, however, there are several definitions of $R^2$. We computed the *Marginal* $R^2$ and the *Conditional* $R^2$ as suggested by @nakagawaCoefficientDeterminationR22017. *Marginal* $R^2$ is concerned with the variance explained by fixed factors of the model, and *Conditional* $R^2$ is concerned with the variance explained by both fixed and random factors of the model. To do that we use the function `performance::r2()`.
 
 ```{r, echo=TRUE, message=FALSE, cache=TRUE}
 performance::r2(fit_ext_zinb)
@@ -84,7 +84,7 @@ We can see that the actual variance explained by fixed effects is almost 10\%, n
 
 #### Conclusions {-}
 
-Considering attachment theoretical perspectives, results indicate only the role of mother attachment. Note, however, that traditional NHST does not allow us to evaluate evidence in favour of an hypotheses. Moreover, we actually have not tested our hypotheses but only the catch-all null hypothesis that *“nothing is going on”*.
+Considering attachment theoretical perspectives, results indicate only the role of mother attachment. Note, however, that traditional NHST does not allow us to evaluate evidence in favour of a hypothesis. Moreover, we actually have not tested our hypotheses but only the catch-all null hypothesis that *“nothing is going on”*.
 
 ## Model Comparison
 
@@ -92,14 +92,14 @@ Model comparison allows us to compare multiple hypotheses and identify which is 
 
 ### Formalize Models
 
-Following the same reasons as before (see Section~\@ref(model-choice)), we consider Zero Inflated Negative Binomial Mixed-Effects models. Again, we consider only the role of gender as fixed effect and children's classroom ID as random effect for $p$. Whereas, considering $\mu$, we define four different models to take into account the different theoretical perspectives:
+Following the same reasons as before (see Section~\@ref(model-choice)), we consider Zero Inflated Negative Binomial Mixed-Effects models. Again, we consider only the role of gender as a fixed effect and children's classroom ID as a random effect for $p$. Whereas, considering $\mu$, we define four different models to take into account the different theoretical perspectives:
 
 - `fit_ext_zero`: we consider only the effect of gender. This model assumes that attachment plays no role.
 - `fit_ext_mother`: we consider the additive effects of gender and mother attachment. This model supports the idea that only mother attachment is important (**Monotropy Theory**).
 - `fit_ext_additive`: we consider the additive effects of gender,  mother attachment, and father attachment. This model supports the idea that both mother attachment and father attachment are important, but not their interaction (**Hierarchy Theory** or **Independence Theory**).
 - `fit_ext_inter`: we consider the additive effects of gender and the interaction between mother attachment and father attachment. This model supports the idea that the interaction between mother attachment and father attachment is important (**Integration Theory**).
 
-Moreover, in all models we include children's classroom ID as random effect to take into  account teachers' different ability to evaluate children's problems. Using R formula syntax, we have
+Moreover, in all models, we include children's classroom ID as a random effect to take into account teachers' different ability to evaluate children's problems. Using R formula syntax, we have
 ```{r, echo = TRUE, eval=FALSE}
 # formula for p (same for all models)
 p ~ gender + (1|ID_class)
@@ -131,10 +131,9 @@ get_table_AIC_BIC(AIC_weights = AIC_weights_ext,
                   path_img = "images/")
 ```
 
-
 According to AIC, the most likely model is `fit_ext_mother` (`r perc_model_ext("fit_ext_mother", "AIC")`\%) and the second most likely model is `fit_ext_additive` (`r perc_model_ext("fit_ext_additive", "AIC")`\%) given the data and the set of models considered. According to BIC, instead,  the most likely model is `fit_ext_zero` (`r perc_model_ext("fit_ext_zero", "BIC")`\%) and the second most likely model is `fit_ext_mother` (`r perc_model_ext("fit_ext_mother", "BIC")`\%) given the data and the set of models considered.
 
-To interpret these results note that, AIC tends to select more complex models that can better explain the data, on the contrary, BIC penalizes complex models to a greater extent.  As pointed by @kuhaAICBICComparisons2004, using the two criteria together is always advocated as agreement provides reassurance on the robustness of the results and disagreement still provides useful information for the discussion. We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.
+To interpret these results, note that, AIC tends to select more complex models that can better explain the data, on the contrary, BIC penalizes complex models to a greater extent.  As pointed by @kuhaAICBICComparisons2004, using the two criteria together is always advocated as agreement provides reassurance on the robustness of the results and disagreement still provides useful information for the discussion. We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.
 
 ### Selected Model
 
@@ -142,7 +141,7 @@ Considering model `fit_ext_mother`, we can run an analysis of deviance to evalua
 ```{r, echo =TRUE, cache=TRUE}
 car::Anova(fit_ext_mother)
 ```
-Results confirm a statistically significant effect of gender and mother attachment. Model summary is reported below.
+Results confirm a statistically significant effect of gender and mother attachment. The model summary is reported below.
 ```{r, echo =TRUE, cache=TRUE}
 summary(fit_ext_mother)
 ```
@@ -151,7 +150,7 @@ To evaluate the effect of gender and mother attachment, the marginal predicted v
 get_plot_zinb(model = fit_ext_mother, attachment = "mother")
 ```
 
-Post-hoc test are run to evaluate differences between mother attachment styles, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. Results are reported below,
+Post-hoc tests are run to evaluate differences between mother attachment styles, considering pairwise comparisons and adjusting *p*-values according to multivariate *t*-distribution. Results are reported below,
 ```{r, cache=TRUE, echo = TRUE}
 emmeans::contrast(emmeans::emmeans(fit_ext_mother, specs = ~ mother ),
                   "pairwise", adjust = "mvt")
@@ -159,7 +158,7 @@ emmeans::contrast(emmeans::emmeans(fit_ext_mother, specs = ~ mother ),
 
 Overall, results indicate that Males have more externalizing problems than Females. Regarding mother attachment, Fearful and Avoidant children have more problems than Secure children. Moreover, also the difference between Anxious and Secure children and the difference between Anxious and Fearful children have a low (but not statistically significant) *p*-value.
 
-To evaluate the fit of model to the data, we computed the *Marginal* $R^2$ and the *Conditional* $R^2$.
+To evaluate the fit of the model to the data, we computed the *Marginal* $R^2$ and the *Conditional* $R^2$.
 
 ```{r, echo=TRUE, message=FALSE, cache=TRUE}
 performance::r2(fit_ext_mother)
@@ -179,7 +178,7 @@ First, we define the encompassing model. Subsequently, we obtain the hypotheses 
 
 ### Encompassing Model 
 
-We define a Zero-Inflated Negative Binomial (ZINB) mixed-effects model to take into account the characteristics of the dependent variable and its distribution (see Section~\@ref(model-choice)).  Again, we consider only the role of gender as fixed effect and children’s classroom ID as random effect for $p$. Whereas, regarding $\mu$, we consider the interaction between mother and father attachment together with gender as fixed effects and children’s classroom ID as random effect. In the R formula syntax, we have
+We define a Zero-Inflated Negative Binomial (ZINB) mixed-effects model to take into account the characteristics of the dependent variable and its distribution (see Section~\@ref(model-choice)).  Again, we consider only the role of gender as a fixed effect and children’s classroom ID as a random effect for $p$. Whereas, regarding $\mu$, we consider the interaction between mother and father attachment together with gender as fixed effects and children’s classroom ID as a random effect. In the R formula syntax, we have
 ```{r, echo=TRUE, eval=FALSE}
 # formula for p
 p ~ gender + (1|ID_class)
@@ -190,9 +189,9 @@ mu ~ gender + mother * father + (1|ID_class)
 
 #### Prior Choiche {-}
 
-Prior choice is important for the parameters involved in the equality and inequality constraints. In our case, the parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specify as prior a normal distribution with mean 0 and a given standard deviation. Considering the standard deviation, however, we have to choose a value so that the resulting prior is non-informative but without being excessively diffuse. 
+The prior choice is important for the parameters involved in the equality and inequality constraints. In our case, the parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specify as prior a normal distribution with mean 0 and a given standard deviation. Considering the standard deviation, however, we have to choose a value so that the resulting prior is non-informative but without being excessively diffuse. 
 
-We can evaluate the consequences of different values choice considering the resulting prior predictions. To facilitate this step, we compute prior prediction considering only the intercept and a single parameter of interest. Remembering that the inverse link function (i.e., function that in a GLM transform the model linear prediction into the value on the original response scale) is the exponential function, we consider as intercept the value 1, because $exp(1) \approx 2.7$ that is close to the externalizing problems sample mean  `r ext_mean()`. In Table~\@ref(tab:table-prior-predict), summary information about prior predictions for different standard deviation values are reported.
+We can evaluate the consequences of different values choice considering the resulting prior predictions. To facilitate this step, we compute prior prediction considering only the intercept and a single parameter of interest. Remembering that the inverse link function (i.e., function that in a GLM transform the model linear prediction into the value on the original response scale) is the exponential function, we consider as intercept the value 1 because $exp(1) \approx 2.7$ that is close to the externalizing problems sample mean  `r ext_mean()`. In Table~\@ref(tab:table-prior-predict), summary information about prior predictions for different standard deviation values is reported.
 ```{r table-prior-predict}
 get_table_prior_predict(format = params$format)
 ```
@@ -213,9 +212,9 @@ summary(encompassing_model_ext)
 
 ### Hypothesis Matrices
 
-For each informative hypothesis, we obtain an hypothesis matrix that translate equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper ([TODO: add link]). 
+For each informative hypothesis, we obtain a hypothesis matrix that translates equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper ([TODO: add link]). 
 
-Here we present the obtained hypothesis matrices were on the columns we have the parameters of the encompassing model (excluding the intercept) and each row express an equality constraint or an inequality constraint. Matrices row names follow this notation: names without square brackets indicate a constraint directly on the model parameter; names within square brackets indicate a group condition (that could be the resulting composition of more parameters). For example, `"M_Avoidant:F_Anxious"` indicates the actual interaction term of the model, whereas `"[M_Avoidant_F_Anxious]"` indicate the group condition. This is done because when assuming no interaction or no father attachment effect we set constraints directly on the model parameters, instead when constrains involve group comparisons we need to obtain the resulting conditions. Equality and inequality constraints are presented separately.
+Here we present the obtained hypothesis matrices were on the columns we have the parameters of the encompassing model (excluding the intercept) and each row express an equality constraint or an inequality constraint. Matrices row names follow this notation: names without square brackets indicate a constraint directly on the model parameter; names within square brackets indicate a group condition (that could be the resulting composition of more parameters). For example, `"M_Avoidant:F_Anxious"` indicates the actual interaction term of the model, whereas `"[M_Avoidant_F_Anxious]"` indicate the group condition. This is done because when assuming no interaction or no father attachment effect we set constraints directly on the model parameters, instead, when constraints involve group comparisons, we need to obtain the resulting conditions. Equality and inequality constraints are presented separately.
 
 #### Null Hypothesis {-}
 
@@ -274,7 +273,6 @@ get_hypothesis_matrix("integration", encompassing_model_ext)$eq
 get_hypothesis_matrix("integration", encompassing_model_ext)$ineq
 ```
 
-
 ### Centering and Adjusting
 
 So far we have specified the encompassing prior, obtained the model posterior distribution, and defined the hypotheses matrices. Now, we need to transform our parameters of interest and center the distribution on the constraints focal points of interest. We apply the following transformation
@@ -294,7 +292,7 @@ Pr(\beta|Y) \sim \mathcal{N}(\hat{\beta}, \hat{\Sigma}_{\beta}) = \mathcal{N}(R\
 $$
 See the main article for more details [TODO: add link].
 
-This adjustment, however, requires the hypothesis matrix $R$ to be *full-row-rank* (i.e., all constraints are linearly independent). However, this is not the case of the Hierarchy Hypothesis. To overcome this issue, we follow the solution presented in the main article. First define $R^*$ selecting the maximum number of independent rows. In this case 15 contrast are independent
+This adjustment, however, requires the hypothesis matrix $R$ to be *full-row-rank* (i.e., all constraints are linearly independent). However, this is not the case of the Hierarchy Hypothesis. To overcome this issue, we follow the solution presented in the main article. First, define $R^*$ selecting the maximum number of independent rows. In this case, 15 contrast are independent
 
 ```{r cache=TRUE}
 get_hypothesis_matrix("hierarchy", encompassing_model_ext)$hyp[1:15,]
@@ -304,7 +302,7 @@ get_hypothesis_matrix("hierarchy", encompassing_model_ext)$hyp[1:15,]
 R <- get_hypothesis_matrix("hierarchy", encompassing_model_ext)$hyp
 ```
 
-The remaining contrasts, instead, are obtained as linear combination of the other constraints. In particular,
+The remaining contrasts, instead, are obtained as linear combinations of the other constraints. In particular,
 ```{r, echo = TRUE, cache = TRUE}
 # Constraint 16: [M_Anx_F_Sec - M_Sec_F_Anx]
 all(R["[M_Anx_F_Sec - M_Sec_F_Anx]",] == R["[M_Anx_F_Sec]", ] - R["[M_Sec_F_Anx]", ])
@@ -316,11 +314,11 @@ all(R["[M_Av_F_Sec - M_Sec_F_Av]",] == - R["[M_Anx_F_Sec - M_Av_F_Sec]", ] + R["
 all(R["[M_Fear_F_Sec - M_Sec_F_Fear]",] == R["[M_Av_F_Sec - M_Sec_F_Av]", ] + R["[M_Fear_F_Sec - M_Av_F_Sec]", ] - R["[M_Sec_F_Fear - M_Sec_F_Av]", ])
 ```
 
-Before computing the Bayes Factor, note that we have a set of comparable hypotheses as exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply consider all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups differences. See the main article for detailed explanation [TODO: add link article].
+Before computing the Bayes Factor, note that we have a set of comparable hypotheses as exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply consider all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups differences. See the main article for a detailed explanation [TODO: add link article].
 
 ### Results and Sensitivity
 
-To compute the Bayes Factor we evaluate marginal densities and conditional probabilities as described in details in the main article [TODO: add link article]. Bayes Factor and posterior probability of each hypothesis are reported in Table~\@ref(tab:table-bf-results-ext).
+To compute the Bayes Factor we evaluate marginal densities and conditional probabilities as described in detail in the main article [TODO: add link article]. Bayes Factor and posterior probability of each hypothesis are reported in Table~\@ref(tab:table-bf-results-ext).
 
 ```{r table-bf-results-ext, cache = TRUE}
 get_table_bf(bf_result = BF_weights_ext,
@@ -346,13 +344,13 @@ get_table_sens_analysis(summary_sensitivity_ext,
 
 Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the probability of the Null Hypothesis increases with more diffuse prior, whereas the probabilities of the Hierarchy, Independence and Integration Hypothesis increases with tighter priors.
 
-To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (see he main article for more details[TODO: add link article]).
+To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (see the main article for more details[TODO: add link article]).
 
 All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with a higher number of equality constraints (e.g., Null Hypothesis) will be favoured over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
 
 ### Selected Model
 
-One of the limit of the Bayes Factor with the encompassing prior approach is that we only get the selected hypothesis but we do not obtain the actual estimates of the parameters posterior. To overcome this limit we rely on Bayesian inference that allows us to effectively estimate the model parameter posteriors.
+One of the limits of the Bayes Factor with the encompassing prior approach is that we only get the selected hypothesis but we do not obtain the actual estimates of the parameters posterior. To overcome this limit we rely on Bayesian inference that allows us to effectively estimate the model parameter posteriors.
 
 This time in the model we consider only the role of gender and mother attachment as fixed effects of $\mu$. In the R formula syntax, we have
 ```{r, echo=TRUE, eval=FALSE}
@@ -367,7 +365,7 @@ Again, we specify a normal distribution with mean 0 and standard deviation of 3,
 brms::prior_summary(brm_selected_ext)
 ```
 
-The model is estimated using 6 independent chains with 6,000 iterations (warm-up 2,000). Model summary is presented below.
+The model is estimated using 6 independent chains with 6,000 iterations (warm-up 2,000). The model summary is presented below.
 ```{r cache=TRUE}
 summary(brm_selected_ext)
 ```
@@ -383,7 +381,7 @@ plot_post_diff(post_pred_ext, problem = "Externalizing")
 
 Overall, results indicate that Males have more externalizing problems than Females. Regarding mother attachment, Fearful, Avoidant, and Anxious children have more problems than Secure children. Moreover, Fearful children have more problems than Anxious children.
 
-To evaluate the fit of model to the data, we computed the *Bayesian* $R^2$ and using the function `brms::bayes_R2()`, and we present Posterior Predictions in Figure~\@ref(fig:plot-ppcheck-ext).
+To evaluate the fit of the model to the data, we computed the *Bayesian* $R^2$ and using the function `brms::bayes_R2()`, and we present Posterior Predictions in Figure~\@ref(fig:plot-ppcheck-ext).
 
 ```{r, echo=TRUE, message=FALSE, cache=TRUE}
 r2_ext
@@ -401,7 +399,7 @@ Considering attachment theoretical perspectives, results indicate only the role 
 
 ## Conclusions Externalizing Problems 
 
-Overall, we obtained consistent results from the three different approaches. Males have more problems than Females and, regarding attachment, only mother attachment influence children's externalizing problems. In particular, we observed the following pattern: Secure children have the lowest level of problems, Anxious and Avoidant children have a similar, intermediate, level of problems, and Fearful children heave the highest level of problems. Taken together, these results support the Monotropy Theory. 
+Overall, we obtained consistent results from the three different approaches. Males have more problems than Females and, regarding attachment, only mother attachment influence children's externalizing problems. In particular, we observed the following pattern: Secure children have the lowest level of problems, Anxious and Avoidant children have a similar, intermediate, level of problems, and Fearful children have the highest level of problems. Taken together, these results support the Monotropy Theory. 
 
 Although if the different approaches lead to apparently similar results, the rigorous interpretation of the results is very different. 
 
@@ -409,4 +407,4 @@ Although if the different approaches lead to apparently similar results, the rig
 - Only model comparison allow us to quantify the relative evidence of our models. Model comparison results clearly indicated evidence in favour of an effect of mother attachment but not father attachment. However, using information criteria we could not directly evaluate our informative hypotheses regarding the expected effects, but only the presence of any effect.
 - Bayes Factor with encompassing prior approach allowed us to directly test our informative hypotheses regarding the expected effects. Results clearly selected the Monotropy theory as the most likely theory among those considered.
 
-Summarizing, the apparently identical results actually have a completely different meaning and what we learn from the data is very different. Hopefully, now it is clear that statistical inference is a complex process that requires careful thinking. In particular, to answer to the questions we are actually interested in, we need to apply the appropriate statistical techniques. 
+To summarize, the apparently identical results actually have a completely different meaning and what we learn from the data is very different. Hopefully, now it is clear that statistical inference is a complex process that requires careful thinking. In particular, to answer the questions we are actually interested in, we need to apply the appropriate statistical techniques.
