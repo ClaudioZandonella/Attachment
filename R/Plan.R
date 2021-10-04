@@ -135,33 +135,25 @@ get_analysis_plan <- function(){
 
     plot_zinb_ext = get_plot_zinb(model = fit_ext_zinb, attachment = "mother"),
 
-    #----    brms Models ext    ----
-    brm_ext_zero = zinb_brms(data = data_cluster,
-                             y = "externalizing_sum",
-                             formula = list("gender",
-                                            "gender")),
-    brm_ext_mother = zinb_brms(data = data_cluster,
-                               y = "externalizing_sum",
-                               formula = list("gender + mother",
-                                              "gender")),
-    brm_ext_additive = zinb_brms(data = data_cluster,
-                                 y = "externalizing_sum",
-                                 formula = list("gender + mother + father",
-                                                "gender")),
-    brm_ext_inter = zinb_brms(data = data_cluster,
-                              y = "externalizing_sum",
-                              formula = list("gender + mother * father",
-                                             "gender")),
+    #----    Model Comparison extt    ----
+    fit_ext_zero = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                            formula = "gender"),
+    fit_ext_mother = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                              formula = "gender + mother"),
+    fit_ext_additive = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                                formula = "gender + mother + father"),
+    fit_ext_inter = zinb_fit(data = data_cluster, y = "externalizing_sum",
+                             formula = "gender + mother * father"),
 
-    # Weights
-    waic_weights_ext = get_rel_weights(brm_ext_zero,
-                                       brm_ext_mother,
-                                       brm_ext_additive,
-                                       brm_ext_inter, ic = "waic"),
-    loo_weights_ext = get_rel_weights(brm_ext_zero,
-                                      brm_ext_mother,
-                                      brm_ext_additive,
-                                      brm_ext_inter, ic = "loo"),
+    # AIC BIC Weights
+    AIC_weights_ext = get_rel_weights(fit_ext_zero,
+                                      fit_ext_mother,
+                                      fit_ext_additive,
+                                      fit_ext_inter, ic = "AIC"),
+    BIC_weights_ext = get_rel_weights(fit_ext_zero,
+                                      fit_ext_mother,
+                                      fit_ext_additive,
+                                      fit_ext_inter, ic = "BIC"),
 
 
     #----    BF encompassing priors    ----

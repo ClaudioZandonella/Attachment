@@ -48,6 +48,7 @@ Data/*.rda
 
 #---- old project ----
 old/
+Old.R
 
 # Mac auxiliary files
 .DS_Store

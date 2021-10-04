@@ -2,7 +2,7 @@
 #====    Utilities Report     ====#
 #=================================#
 
-#----    load_glob_env    ----
+#----    *load_glob_env    ----
 
 #' Load Drake in Global Environment
 #'
@@ -21,7 +21,7 @@ load_glob_env <- function(...){
   drake::loadd(..., envir = globalenv())
 }
 
-#----    drake_load_all    ----
+#----    *drake_load_all    ----
 
 #' Load All Analyisis Objects
 #'
@@ -171,19 +171,9 @@ drake_load_bookdown <- function(){
   load_glob_env(r2_int)
 }
 
-#----    get_sigma_example    ----
 
-get_sigma_example <- function(){
-  R <- matrix(c( 0, 0, 1,-1, 0,
-                 0, 0, 0, 1,-1,
-                -1, 1, 0, 0, 0,
-                 0,-1, 1, 0, 0), ncol = 5, byrow = TRUE)
-  sigma_theta <- diag(5)*4
 
-  R%*%sigma_theta%*%t(R)
-}
-
-#----    make_my_book    ----
+#----    *make_my_book    ----
 
 make_my_book <- function(subdir = "Documents/Bookdown/") {
 

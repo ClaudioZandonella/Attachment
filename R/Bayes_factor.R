@@ -2,7 +2,7 @@
 #====    Bayes factor    ====#
 #============================#
 
-#----    get_encompassing_model   ----
+#----    *get_encompassing_model   ----
 
 #' Fit Encompassing ZINB Model
 #'
@@ -43,7 +43,7 @@ get_encompassing_model <- function(data, y,  prior_par){
   return(fit)
 }
 
-#----    get_par_names    ----
+#----    *get_par_names    ----
 
 #' Get Model Parameter Names
 #'
@@ -71,7 +71,7 @@ get_par_names<- function(encompassing_model){
   return(par_names)
 }
 
-#----    get_prior_sd    ----
+#----    *get_prior_sd    ----
 
 #' Get Prior SD
 #'
@@ -96,7 +96,7 @@ get_prior_sd <- function(encompassing_model){
 
   return(sd_prior)
 }
-#----    get_model_matrix    ----
+#----    *get_model_matrix    ----
 
 #' Get Model Matrix
 #'
@@ -122,7 +122,7 @@ get_model_matrix <- function(){
   return(mm)
 }
 
-#----    get_hyp_rownames    ----
+#----    *get_hyp_rownames    ----
 
 get_hyp_rownames <- function(hypothesis = c("null", "monotropy", "hierarchy",
                                             "independence", "integration"),
@@ -208,7 +208,7 @@ get_hyp_rownames <- function(hypothesis = c("null", "monotropy", "hierarchy",
   return(res)
 }
 
-#----    get_hypothesis_matrix    ----
+#----    *get_hypothesis_matrix    ----
 
 #' Get Hypothesis Matrix
 #'
@@ -334,7 +334,7 @@ get_hypothesis_matrix <- function(hypothesis = c("null", "monotropy", "hierarchy
               hyp = hyp))
 }
 
-#----    compute_density    ----
+#----    *compute_density    ----
 
 #' Compute Density
 #'
@@ -362,7 +362,7 @@ compute_density <- function(mean, sigma, n_eq){
   return(res)
 }
 
-#----    compute_cond_prob    ----
+#----    *compute_cond_prob    ----
 
 #' Compute Conditional Probability
 #'
@@ -391,7 +391,7 @@ compute_cond_prob <- function(mean, sigma, n_eq, n_ineq){
   return(res)
 }
 
-#----    get_prior_info    ----
+#----    *get_prior_info    ----
 
 #' Get Prior Info
 #'
@@ -419,7 +419,7 @@ get_prior_info <- function(encompassing_model, hyp){
               cov = prior_cov))
 }
 
-#----    get_posterior_info    ----
+#----    *get_posterior_info    ----
 
 #' Get Posterior Info
 #'
@@ -444,7 +444,7 @@ get_posterior_info <- function(encompassing_model){
               cov = posterior_cov))
 }
 
-#----    transform_param    ----
+#----    *transform_param    ----
 
 #' Linear Transformation of the Parameters
 #'
@@ -477,7 +477,7 @@ transform_param <- function(param_info, hyp, prior = FALSE){
               cov = param_cov))
 }
 
-#----    get_BF    ----
+#----    *get_BF    ----
 
 #' Compute the Bayes Factor
 #'
@@ -646,7 +646,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchy",
   return(BF)
 }
 
-#----    find_transform_parameters    ----
+#----    *find_transform_parameters    ----
 
 #' Get Matrix Parameters transformed
 #'
@@ -715,7 +715,7 @@ find_transform_parameters <- function(hyp, independent_rows){
   return(res)
 }
 
-#----    find_composition_betas    ----
+#----    *find_composition_betas    ----
 
 #' Get Matrix Composition Betas
 #'
@@ -757,7 +757,7 @@ find_composition_betas <- function(hyp, independent_rows){
   return(res)
 }
 
-#----    get_table_BF    ----
+#----    *get_table_BF    ----
 
 #' Get Table BF Comparison
 #'
@@ -797,7 +797,7 @@ get_table_BF <- function(...){
   return(res)
 }
 
-#----    get_BF_weights    ----
+#----    *get_BF_weights    ----
 
 #' Get BF Weights
 #'
@@ -837,61 +837,8 @@ get_BF_weights <- function(...){
 
   return(res)
 }
-#----    get_BF_weights_old    ----
 
-#' Get BF Weights OLD
-#'
-#' Given a seet of Bayes Factor, compute the relative weights
-#'
-#' @param ... BF to compare
-#' @param encompassing_model a `brms` fit object of the encompassing model
-#'
-#' @return a dataframe with columns:
-#'  - `names` - name of the model
-#'  - `bf` - bayes factor value
-#'  - `logml` - log marginal likelihood
-#'  - `diff_logml` - difference  with the log morginal likelihood of the worst
-#'  model
-#'  - `rel_lik` - relative likelihood
-#'  - `weights` - relative weights
-#'
-#' @examples
-#' drake::loadd(c(BF_null_int, BF_monotropy_int,
-#'        BF_hierarchy_int, BF_independence_int, BF_integration_int))
-#' drake::loadd(encompassing_model_int)
-#' get_BF_weights_old(BF_null_int,
-#'                BF_monotropy_int,
-#'                BF_hierarchy_int,
-#'                BF_independence_int,
-#'                BF_integration_int,
-#'                encompassing_model = encompassing_model_int)
-#'
-
-get_BF_weights_old <- function(..., encompassing_model){
-
-  names_bf <- as.list(match.call(), )[-1] %>%
-    as.character(.)
-
-  names_bf <- names_bf[!grepl("(^encompassing_model)", names_bf)] %>%
-    gsub("BF_(.+)_.*", "\\1", ., perl = TRUE)
-  bridge_logml <- bridgesampling::bridge_sampler(encompassing_model)
-
-  list_bf <- list(...)
-
-  bf <- lapply(list_bf[], FUN = function(x){x[1]}) %>%
-    unlist()
-
-  res <- data.frame(names = names_bf,
-                    bf = bf) %>%
-    mutate(logml = log(bf) + bridge_logml$logml,
-           diff_logml = logml - min(logml) ,
-           rel_lik = exp(diff_logml),
-           weights= rel_lik /sum(rel_lik))
-
-  return(res)
-}
-
-#----    get_prior_sensitivity    ----
+#----    *get_prior_sensitivity    ----
 
 #' Get Prior Sensitivity
 #'
@@ -927,7 +874,7 @@ get_prior_sensitivity <- function(encompassing_model){
 
 }
 
-#----    get_summary_sensitivity    ----
+#----    *get_summary_sensitivity    ----
 
 #' Get Summary Sensitivity
 #'

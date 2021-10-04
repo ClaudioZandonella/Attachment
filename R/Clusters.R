@@ -1,8 +1,8 @@
 #================================#
-#====    Cluster Analysis    ====#
+#====    *Cluster Analysis    ====#
 #================================#
 
-#-----    get_cluster_fit    ----
+#----    *get_cluster_fit    ----
 
 #' Get Cluster Fit
 #'
@@ -35,7 +35,7 @@ get_cluster_fit <- function(data, parent = c("mother", "father")){
   return(fit_cluster)
 }
 
-#----    get_data_cluster    ----
+#----    *get_data_cluster    ----
 
 #' Get the Data with the Cluster Classification
 #'
@@ -112,44 +112,7 @@ get_data_cluster <- function(data, cluster_mother_fit, cluster_father_fit){
   return(data_cluster)
 }
 
-#-----   plot_scores    ----
-
-#' Plot Cluster Scores for the Mother/Father
-#'
-#' @param data dataframe with cluster classification
-#'
-#' @return NULL
-#'
-#' @examples
-#' drake::loadd(data_cluster)
-#' plot_scores_mother(data_cluster)
-#' plot_scores_father(data_cluster)
-#'
-
-plot_scores_mother <- function(data){
-  fattore=rep(c("Anxiety","Avoidance"),rep(dim(data)[1],2))
-  y <- c(scale(data$Anxm),scale(data$Avm))
-  y1 <- c(data$Anxm,data$Avm)
-  gruppo <- rep(data$mother,2)
-  dprof <- data.frame(y,y1,fattore,gruppo)
-
-
-  dprof$nomi.gruppi <- factor(dprof$gruppo,labels=c("Group 1: Secure (n = 231)","Group 2: Anxious (n = 286)", "Group 3: Avoidant (n = 230)", "Group 4: Fearful (n = 100)"))
-  sciplot::bargraph.CI(fattore, y, group = nomi.gruppi, data=dprof,legend=T,ylim=c(-2.4,1.6),x.leg=1.2, y.leg=-1.2,ylab="Standardized Scores",xlab="",cex.lab=.8,cex.leg=.8, col=c("yellow","green","blue","red"))
-}
-
-plot_scores_father <- function(data){
-  fattore=rep(c("Anxiety","Avoidance"),rep(dim(data)[1],2))
-  y=c(scale(data$Anxp),scale(data$Avp))
-  y1=c(data$Anxp,data$Avp)
-  gruppo=rep(data$father,2)
-  dprof=data.frame(y,y1,fattore,gruppo)
-
-  dprof$nomi.gruppi=factor(dprof$gruppo,labels=c("Group 1: Secure (n = 206)","Group 2: Anxious (n = 230)","Group 3: Avoidant (n = 311)","Group 4: Fearful (n = 100)"))
-  sciplot::bargraph.CI(fattore, y, group = nomi.gruppi, data=dprof,legend=T,ylim=c(-2.4,2.1),x.leg=1.2, y.leg=-1.2,ylab="Standardized Scores",xlab="",cex.lab=.8,cex.leg=.8, col=c("yellow","green","blue","red"))
-}
-
-#----    mclust_BIC ----
+#----    *mclust_BIC ----
 
 #' Get Cluster Analysis BIC with mclust
 #'
