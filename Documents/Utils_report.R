@@ -50,6 +50,7 @@ drake_load_all <- function(){
 
   # ZINB analysis
   load_glob_env(fit_int_nb)
+  load_glob_env(test_zero_inflated_int)
 
   # ANOVA
   load_glob_env(fit_int_zinb)
@@ -61,21 +62,20 @@ drake_load_all <- function(){
   load_glob_env(AIC_weights_int)
   load_glob_env(BIC_weights_int)
 
-  # brms models
-  load_glob_env(brm_int_mother)
-  load_glob_env(waic_weights_int)
-  load_glob_env(loo_weights_int)
-
   # BF encompassing
   load_glob_env(encompassing_model_int)
   load_glob_env(table_BF_int)
   load_glob_env(BF_weights_int)
   load_glob_env(summary_sensitivity_int)
+  load_glob_env(brm_selected_int)
+  load_glob_env(post_pred_int)
+  load_glob_env(r2_int)
 
   #----    Externalizing    ----
 
   # ZINB anslysis
   load_glob_env(fit_ext_nb)
+  load_glob_env(test_zero_inflated_ext)
 
   # ANOVA
   load_glob_env(fit_ext_zinb)
@@ -87,16 +87,14 @@ drake_load_all <- function(){
   load_glob_env(AIC_weights_ext)
   load_glob_env(BIC_weights_ext)
 
-  # brms models
-  load_glob_env(brm_ext_mother)
-  load_glob_env(waic_weights_ext)
-  load_glob_env(loo_weights_ext)
-
   # BF encompassing
   load_glob_env(encompassing_model_ext)
   load_glob_env(table_BF_ext)
   load_glob_env(BF_weights_ext)
   load_glob_env(summary_sensitivity_ext)
+  load_glob_env(brm_selected_ext)
+  load_glob_env(post_pred_ext)
+  load_glob_env(r2_ext)
 
   load_glob_env(data_prior_predict)
 }
