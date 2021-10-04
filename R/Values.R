@@ -76,7 +76,9 @@ var_summary <- function(var){
 
   var_name <- switch(var,
                      "age_year" = "Age",
-                     "externalizing_sum" = "Externalizing problems")
+                     "externalizing_sum" = "Externalizing problems",
+                     "internalizing_sum" = "Internalizing problems")
+
   comment <- sprintf("%s summary statistics", var_name)
   my_comment(comment)
   summary(data_cluster[,var])
