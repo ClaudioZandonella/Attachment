@@ -45,7 +45,9 @@ _bookdown_files
 Data/*.rds
 Data/*.rda
 !Data/data_ECR.rds
-Stan/*.rds
+
+#---- old project ----
+old/
 
 # Mac auxiliary files
 .DS_Store
