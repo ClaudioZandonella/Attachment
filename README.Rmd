@@ -66,7 +66,7 @@ To reproduce the analysis:
     
 1. Open `Analysis/Analysis_Drake.R` and run each line (one by one) to run the analysis using drake. First, the analysis environment is setted together with the analysis plan (available at `R/Plan.R`). Next the analysis targets are computed (have a coffee, it takes a long time). Finally, the analysis results are loaded and briefly presented.
 
-    > Note that you can access the analysis targets with using the functions `drake::loadd(<name_target>)`, or load all the results with `drakee_load_all()`.
+    > Note that you can access the analysis targets with using the functions `drake::loadd(<name_target>)`, or load all the results with `drake_load_all()`.
 
     > It could happen that some times the session session stay idle when fitting `brms` models without throwing errors. In this case, it is necessary to force restarting the R session and rerun the analysis. An error warning message will appear `Error: drake's cache is locked`. Just follow the instructions provided by drake to force unlock of the cache  `drake::drake_cache("...")$unlock()`.
     

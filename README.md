@@ -115,7 +115,7 @@ To reproduce the analysis:
 
     > Note that you can access the analysis targets with using the
     > functions `drake::loadd(<name_target>)`, or load all the results
-    > with `drakee_load_all()`.
+    > with `drake_load_all()`.
 
     > It could happen that some times the session session stay idle when
     > fitting `brms` models without throwing errors. In this case, it is
