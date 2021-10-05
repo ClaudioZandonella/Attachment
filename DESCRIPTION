@@ -1,6 +1,6 @@
 Package: Attachment
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach
 Version: 0.1.0
 Author@R:
   c(person(given = "Claudio",
@@ -12,7 +12,12 @@ Author@R:
            family = "Marci",
            role = "aut",
            email = "tatiana.marci@unipd.it",
-           comment = c(ORCID = "0000-0002-2813-0312"))
+           comment = c(ORCID = "0000-0002-2813-0312")),
+    person(given = "Pietro",
+           family = "De Carli",
+           role = c("aut"),
+           email = "pietro.decarli@unimib.it",
+           comment = c(ORCID = "0000-0001-6538-2175")),
     person(given = "Gianmarco",
            family = "Altoè",
            role = "aut",
@@ -20,7 +25,7 @@ Author@R:
            comment = c(ORCID = "0000-0003-1154-9528"))
            )
 Maintainer: Claudio Zandonella Callegher <claudiozandonella@gmail.com>
-Description: Analysis of atttachemnet theory
+Description: In this repository we collect all the material of the study “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”. The aim of the paper is to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example regarding attachment theory. The pre-print version of the article is available at [TODO: add link]. The Supplemental Material with all the analyses is available at https://claudiozandonella.github.io/Attachment/.
 License: 
 Encoding: UTF-8
 Depends:
@@ -30,13 +35,17 @@ Imports:
     bookdown,
     brms,
     car,
+    condMVNorm,
+    drake,
+    emmeans,
     ggridges,
+    glmmTMB,
+    gridExtra,
     kableExtra,
     mclust,
+    mvtnorm,
     performance,
-    pscl,
     rmarkdown,
-    sciplot,
     visNetwork
 Suggests: 
     knitr,
@@ -46,3 +55,4 @@ Config/testthat/edition: 3
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+URL: https://github.com/claudiozandonella/Attachment/, https://claudiozandonella.github.io/Attachment/
