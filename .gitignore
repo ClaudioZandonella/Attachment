@@ -36,6 +36,8 @@ ball_*.png
 #---- Bookdown Auxiliary ----
 
 _bookdown_files
+!Documents/Bookdown/assets/*.html
+
 !docs/*.html
 !docs/images/ball_*.png
 

@@ -46,6 +46,7 @@ Imports:
     mvtnorm,
     performance,
     rmarkdown,
+    tikzDevice,
     visNetwork
 Suggests: 
     knitr,
