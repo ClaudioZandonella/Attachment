@@ -2,13 +2,17 @@
 #====    Plots    ====#
 #=====================#
 
-#----    *get_plot_zinb    ----
+#----    get_plot_zinb    ----
 
 #' Plot of the ZINB Model
 #'
-#' Plot of the marginal effects of the Zero inflated Negative Binomial model (ZINB)
+#' Plot of the marginal effects of the Zero inflated Negative Binomial model
+#' (ZINB)
 #'
 #' @param model the ZINB modle
+#' @param attachment character value ("interaction" to plot interaction effect
+#'   between mother and father attachment; "mother" to plot only mother effect)
+#' @param gender logical value indicating whether to plot gender effect
 #'
 #' @return a ggplot object
 #'
@@ -81,7 +85,7 @@ get_plot_zinb <- function(model, attachment = c("interaction", "mother"), gender
 
 }
 
-#----    *plot_prior_adj    ----
+#----    plot_prior_adj    ----
 
 plot_prior_adj <- function(k = 1){
 
@@ -101,7 +105,7 @@ plot_prior_adj <- function(k = 1){
           axis.line.y.left = element_blank())
 }
 
-#----    *plot_bounded_par    ----
+#----    plot_bounded_par    ----
 
 plot_bounded_par <- function(){
 
@@ -119,7 +123,7 @@ plot_bounded_par <- function(){
           axis.line.y.left = element_blank())
 }
 
-#----    *plot_externalizing_dist    ----
+#----    plot_externalizing_dist    ----
 
 plot_externalizing_dist <- function(){
 
@@ -131,7 +135,7 @@ plot_externalizing_dist <- function(){
          y = "Frequency") +
     theme_classic()
 }
-#----    *plot_attachment_marginal    ----
+#----    plot_attachment_marginal    ----
 
 plot_attachment_marginal <- function(mother_score = c(0.05, 0.5, 0.5, 1),
                                      father_score = c( 0.05, 0.25, 0.25, .5),
@@ -155,7 +159,7 @@ plot_attachment_marginal <- function(mother_score = c(0.05, 0.5, 0.5, 1),
           panel.border = element_rect(fill = "#FF000000"))
 }
 
-#----    *plot_attachment_tile    ----
+#----    plot_attachment_tile    ----
 
 plot_attachment_tile <- function(problems_score,
                                  lab_legend = "Externalizing Problems"){
@@ -184,7 +188,7 @@ plot_attachment_tile <- function(problems_score,
           legend.background = element_rect(fill = "#FF000000"))
 }
 
-#----    *plot_hypothesis    ----
+#----    plot_hypothesis    ----
 
 plot_hypothesis <- function(hypothesis = c("null", "monotropy",
                                            "hierarchy", "independence",
@@ -227,7 +231,7 @@ plot_hypothesis <- function(hypothesis = c("null", "monotropy",
   }
 }
 
-#----    *get_ggplot_balls    ----
+#----    get_ggplot_balls    ----
 
 get_ggplot_balls <- function(data, filename = "Documents/Paper/figure/Prova.png"){
   plot <- data %>%
@@ -250,7 +254,7 @@ get_ggplot_balls <- function(data, filename = "Documents/Paper/figure/Prova.png"
 }
 
 
-#----    *get_plot_sensitivity    ----
+#----    get_plot_sensitivity    ----
 
 get_plot_sensitivity <- function(encompassing_model = encompassing_model_ext){
   par_post <- brms::fixef(encompassing_model, summary = FALSE) %>%
@@ -295,7 +299,7 @@ get_plot_sensitivity <- function(encompassing_model = encompassing_model_ext){
 
 #====    bookdown    ====
 
-#----    *plot_age_dist    ----
+#----    plot_age_dist    ----
 
 plot_age_dist <- function(){
   data_cluster %>%
@@ -307,7 +311,7 @@ plot_age_dist <- function(){
 }
 
 
-#----    *plot_scores_cluster    ----
+#----    plot_scores_cluster    ----
 
 plot_scores_cluster <- function(parent = c("mother", "father")){
   parent <- match.arg(parent)
@@ -349,7 +353,7 @@ plot_scores_cluster <- function(parent = c("mother", "father")){
     theme(axis.title.x = element_blank())
 }
 
-#----    *plot_problems_dist    ----
+#----    plot_problems_dist    ----
 
 plot_problems_dist <- function(prob = c("ext", "int")){
 
@@ -372,7 +376,7 @@ plot_problems_dist <- function(prob = c("ext", "int")){
     labs(x = label_x,
          y = "Frequency")
 }
-#----    *plot_post_pred    ----
+#----    plot_post_pred    ----
 
 # drake::loadd(post_pred_ext)
 plot_post_pred <-  function(post_pred = post_pred_ext, problem = c("Externalizing", "Internalizing")){
@@ -419,7 +423,7 @@ plot_post_pred <-  function(post_pred = post_pred_ext, problem = c("Externalizin
 
   gridExtra::grid.arrange(p_gender, p_attachemnt, layout_matrix = matrix(c(1,1,2,2), nrow = 1))
 }
-#----    *plot_post_diff    ----
+#----    plot_post_diff    ----
 
 # drake::loadd(post_pred_ext)
 plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizing", "Internalizing")){
@@ -469,7 +473,7 @@ plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizin
     theme(axis.title.y = element_blank())
   }
 
-#----    *my_pp_check    ----
+#----    my_pp_check    ----
 
 # drake::loadd(brm_selected_ext)
 
@@ -488,5 +492,5 @@ my_pp_check <- function(brm_fit = brm_selected_ext,  problem = c("Externalizing"
           axis.ticks.y = element_blank())
 }
 
-#----
+#=============
 

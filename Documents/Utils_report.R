@@ -2,7 +2,7 @@
 #====    Utilities Report     ====#
 #=================================#
 
-#----    *load_glob_env    ----
+#----    load_glob_env    ----
 
 #' Load Drake in Global Environment
 #'
@@ -21,9 +21,9 @@ load_glob_env <- function(...){
   drake::loadd(..., envir = globalenv())
 }
 
-#----    *drake_load_all    ----
+#----    drake_load_all    ----
 
-#' Load All Analyisis Objects
+#' Load All Analysis Objects
 #'
 #' Load all analysis objects
 #'
@@ -173,7 +173,18 @@ drake_load_bookdown <- function(){
 
 
 
-#----    *make_my_book    ----
+#----    make_my_book    ----
+
+#' Make My Bookdown
+#'
+#' Render Bookdown html and pdf. It allows setting the correct working directory
+#' to build the documents.
+#'
+#' @param subdir string indicating the path to the bookdown main file. It is
+#'   used as working directory.
+#'
+#' @return builded bookdown is returned in "docs/" folder
+#'
 
 make_my_book <- function(subdir = "Documents/Bookdown/") {
 

@@ -1,8 +1,8 @@
 #================================#
-#====    *Cluster Analysis    ====#
+#====    Cluster Analysis    ====#
 #================================#
 
-#----    *get_cluster_fit    ----
+#----    get_cluster_fit    ----
 
 #' Get Cluster Fit
 #'
@@ -35,7 +35,7 @@ get_cluster_fit <- function(data, parent = c("mother", "father")){
   return(fit_cluster)
 }
 
-#----    *get_data_cluster    ----
+#----    get_data_cluster    ----
 
 #' Get the Data with the Cluster Classification
 #'
@@ -112,7 +112,7 @@ get_data_cluster <- function(data, cluster_mother_fit, cluster_father_fit){
   return(data_cluster)
 }
 
-#----    *mclust_BIC ----
+#----    mclust_BIC ----
 
 #' Get Cluster Analysis BIC with mclust
 #'
@@ -153,4 +153,4 @@ mclust_BIC <- function(data, parent = c("mother", "father")){
   return(res)
 }
 
-#-----
+#=============

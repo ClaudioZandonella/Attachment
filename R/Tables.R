@@ -2,7 +2,9 @@
 #====    Tables   ====#
 #=====================#
 
-#----    *get_table_cluster    ----
+#----    get_table_cluster    ----
+
+# drake::loadd(data_cluster)
 
 get_table_cluster <- function(perc = TRUE, digits = 2, format = "latex"){
 
@@ -23,7 +25,9 @@ get_table_cluster <- function(perc = TRUE, digits = 2, format = "latex"){
     kable_styling(latex_options = c("hold_position"))
 }
 
-#----    *get_table_cluster_ext    ----
+#----    get_table_cluster_ext    ----
+
+# drake::loadd(data_cluster)
 
 get_table_cluster_ext <- function(){
   data_cluster %>%
@@ -46,7 +50,7 @@ get_table_cluster_ext <- function(){
     kable_styling(latex_options = c("hold_position", "scale_down"))
 }
 
-#----    *get_table_prior_predict    ----
+#----    get_table_prior_predict    ----
 
 # drake::loadd(data_prior_predict)
 
@@ -64,7 +68,9 @@ get_table_prior_predict <- function(data = data_prior_predict, format = c("latex
                   bootstrap_options = c("hover", "striped"),
                   full_width = FALSE)
 }
-#----    *get_table_bf    ----
+#----    get_table_bf    ----
+
+# drake::loadd(BF_weights_ext)
 
 get_table_bf <- function(bf_result = BF_weights_ext,
                          path_img = "Documents/Paper/figure/",
@@ -112,7 +118,10 @@ get_table_bf <- function(bf_result = BF_weights_ext,
 
 
 
-#----    *get_table_sens_analysis    ----
+#----    get_table_sens_analysis    ----
+
+# drake::loadd(summary_sensitivity_int)
+# summary_sensitivity <- summary_sensitivity_int
 
 get_table_sens_analysis <- function(summary_sensitivity, format = c("latex", "html"),
                                     bookdown = FALSE){
@@ -168,7 +177,9 @@ get_table_sens_analysis <- function(summary_sensitivity, format = c("latex", "ht
 
 #====    Bookdown    ====
 
-#----    *table_gender_grade    ----
+#----    table_gender_grade    ----
+
+# drake::loadd(data_raw)
 
 table_gender_grade <- function(format = "latex"){
   data_raw %>%
@@ -192,7 +203,7 @@ table_gender_grade <- function(format = "latex"){
                   bootstrap_options = c("striped", "hover"), full_width = FALSE)
 }
 
-#----    *table_parent_clusters    ----
+#----    table_parent_clusters    ----
 
 table_parent_clusters <- function(parent = c("mother", "father"), format = "latex"){
   parent <- match.arg(parent)
@@ -223,7 +234,7 @@ table_parent_clusters <- function(parent = c("mother", "father"), format = "late
                   bootstrap_options = c("striped", "hover"), full_width = FALSE)
 }
 
-#----    *table_mother_father_clusters    ----
+#----    table_mother_father_clusters    ----
 
 table_mother_father_clusters <- function(format = "html"){
 
@@ -249,7 +260,7 @@ table_mother_father_clusters <- function(format = "html"){
                   bootstrap_options = c("striped", "hover"), full_width = FALSE)
 }
 
-#----    *get_table_cluster_prob    ----
+#----    get_table_cluster_prob    ----
 
 get_table_cluster_prob <- function(prob = c("ext", "int"), format = "html"){
   prob <- match.arg(prob)
@@ -294,9 +305,10 @@ get_table_cluster_prob <- function(prob = c("ext", "int"), format = "html"){
                   full_width = FALSE, font_size = font_size)
 }
 
-#----    *get_table_AIC_BIC    ----
+#----    get_table_AIC_BIC    ----
 
 # drake::loadd(AIC_weights_ext, BIC_weights_ext)
+
 get_table_AIC_BIC <- function(AIC_weights = AIC_weights_ext,
                               BIC_weights = BIC_weights_ext,
                               problem = c("ext", "int"),
@@ -360,19 +372,7 @@ get_table_AIC_BIC <- function(AIC_weights = AIC_weights_ext,
 
 
 
-#----
-
-
-
-
-
-
-
-
-
-
-
-
+#=============
 
 
 

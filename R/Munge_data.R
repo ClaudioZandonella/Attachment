@@ -1,8 +1,8 @@
 #============================#
-#====    *Data Munging    ====#
+#====    Data Munging    ====#
 #============================#
 
-#-----    *munge_data    ----
+#-----    munge_data    ----
 
 #' Munge Raw Data
 #'
@@ -35,4 +35,4 @@ munge_data <- function(data){
   return(data)
 }
 
-#-----
+#=============

@@ -2,7 +2,9 @@
 #====    Values   ====#
 #=====================#
 
-#----    *perc_females    ----
+#----    perc_females    ----
+
+# drake::loadd(data_cluster)
 
 perc_females <- function(perc = TRUE, digits = 2){
   freq <- table(data_cluster$gender)
@@ -15,7 +17,9 @@ perc_females <- function(perc = TRUE, digits = 2){
   return(res)
 }
 
-#----    *perc_rare_condition    ----
+#----    perc_rare_condition    ----
+
+# drake::loadd(data_cluster)
 
 perc_rare_condition <- function(perc = TRUE, digits = 1){
   test <- with(data_cluster,
@@ -30,13 +34,17 @@ perc_rare_condition <- function(perc = TRUE, digits = 1){
   return(res)
 }
 
-#----    *tot_subj    ----
+#----    tot_subj    ----
+
+# drake::loadd(data_raw)
 
 tot_subj <- function(){
   nrow(data_raw)
 }
 
-#----    *tot_subj_older    ----
+#----    tot_subj_older    ----
+
+# drake::loadd(data_raw)
 
 tot_subj_older <- function(){
   data_raw %>%
@@ -44,7 +52,9 @@ tot_subj_older <- function(){
     count()
 }
 
-#----    *tot_subj_NA    ----
+#----    tot_subj_NA    ----
+
+# drake::loadd(data_raw)
 
 tot_subj_NA <- function(){
   data_raw %>%
@@ -52,13 +62,17 @@ tot_subj_NA <- function(){
     count()
 }
 
-#----    *tot_subj_included    ----
+#----    tot_subj_included    ----
+
+# drake::loadd(data_raw)
 
 tot_subj_included <- function(){
   nrow(data_cluster)
 }
 
-#----    *var_info    ----
+#----    var_info    ----
+
+# drake::loadd(data_cluster)
 
 var_info <- function(var){
 
@@ -70,7 +84,9 @@ var_info <- function(var){
   paste0(mean_age, " (SD = ", sd_age, ")")
 }
 
-#----    *var_summary    ----
+#----    var_summary    ----
+
+# drake::loadd(data_cluster)
 
 var_summary <- function(var){
 
@@ -84,7 +100,9 @@ var_summary <- function(var){
   summary(data_cluster[,var])
 }
 
-#----    *parent_mclust    ----
+#----    parent_mclust    ----
+
+# drake::loadd(mclust_mother, mclust_father)
 
 parent_mclust <- function(parent = c("mother", "father")){
   parent <- match.arg(parent)
@@ -101,7 +119,10 @@ parent_mclust <- function(parent = c("mother", "father")){
 
 
 #-
-#----    *perc_model_ext    ----
+#----    perc_model_ext    ----
+
+# drake::loadd(AIC_weights_ext, BIC_weights_ext)
+
 perc_model_ext <- function(model, ic = c("AIC", "BIC")){
   ic <- match.arg(ic)
 
@@ -113,13 +134,18 @@ perc_model_ext <- function(model, ic = c("AIC", "BIC")){
 
   return(my_perc(res, 0))
 }
-#----    *ext_mean    ----
+#----    ext_mean    ----
+
+# drake::loadd(data_cluster)
 
 ext_mean <- function(){
   my_round(mean(data_cluster$externalizing_sum))
 }
 
-#----    *perc_model_int    ----
+#----    perc_model_int    ----
+
+# drake::loadd(AIC_weights_int, BIC_weights_int)
+
 perc_model_int <- function(model, ic = c("AIC", "BIC")){
   ic <- match.arg(ic)
 
@@ -131,7 +157,7 @@ perc_model_int <- function(model, ic = c("AIC", "BIC")){
 
   return(my_perc(res, 0))
 }
-#-------
+#=============
 
 
 
