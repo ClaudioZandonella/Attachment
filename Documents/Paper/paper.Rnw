@@ -63,17 +63,24 @@
 \setcounter{secnumdepth}{3} % Show section number
 %----
 
-\title{Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach}
-\shorttitle{The Bayes Factor Encompassing Prior Approach}
+\title{Evaluating Informative Hypotheses with Equality and Inequality Constraints: The Bayes Factor via the Encompassing Prior Approach}
+\shorttitle{The Bayes Factor via the Encompassing Prior Approach}
 
-\author{Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, Gianmarco Altoè}
-\affiliation{UNIPD}
+\author{Claudio Zandonella Callegher$^1$, Tatiana Marci$^1$, Pietro De Carli$^2$, Gianmarco Altoè$^1$}
+\affiliation{$^1$UNIPD\\$^2$UNIMI}
 
 \leftheader{loook}
 
-\abstract{When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate. Equality and inequality constraints on the model parameters are used to formalize researchers' expectations or theoretical perspectives into the so-called “\textit{informative hypotheses}”. However, traditional statistical approaches, such as the Null Hypothesis Significance Testing (NHST) or the model comparison using information criteria (e.g., AIC and BIC), are unsuitable for testing complex informative hypotheses. An alternative approach is to use the Bayes Factor. In particular, the Bayes Factor based on the “\textit{encompassing prior approach}” allows researchers to easily evaluate complex informative hypotheses. In this paper we provide a clear and detailed introduction to this approach. We describe all the steps and elements involved in the formalization of informative hypotheses and computation of the Bayes Factor following the encompassing prior approach. Subsequently, we provide an application of this method to a real case scenario comparing the different theoretical perspectives regarding the role of mother attachment and father attachment on children's social-emotional development.}
+\abstract{When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate. Equality and inequality constraints on the model parameters are used to formalize researchers' expectations or theoretical perspectives into the so-called “\textit{informative hypotheses}”. However, traditional statistical approaches, such as the Null Hypothesis Significance Testing (NHST) or the model comparison using information criteria (e.g., AIC and BIC), are unsuitable for testing complex informative hypotheses. An alternative approach is to use the Bayes Factor. In particular, the Bayes Factor based on the “\textit{encompassing prior approach}” allows researchers to easily evaluate complex informative hypotheses. In this paper, we provide a clear and detailed introduction to this approach. We describe all the steps and elements involved in the formalization of informative hypotheses and computation of the Bayes Factor following the encompassing prior approach. Subsequently, we provide an application of this method to a real case scenario comparing the different theoretical perspectives regarding the role of mother attachment and father attachment on children's social-emotional development.
+\vspace{2em}
+\begin{center}
+\textbf{Translational Abstract}
+\end{center}
+\vspace{.5em}
+\noindent The evaluation of hypotheses is one of the main goals of empirical research. In fact, when conducting a study, researchers usually want to evaluate the plausibility of specific hypotheses according to the collected data. These hypotheses can be formalized in accordance with researchers' expectations or theoretical perspectives into the so-called “\textit{informative hypotheses}”. However, traditional statistical approaches, such as the Null Hypothesis Significance Testing (NHST) or the model comparison using information criteria (e.g., AIC and BIC), are not suitable for evaluating the plausibility of complex informative hypotheses. The Bayes Factor via the “\textit{encompassing prior approach}”, instead, allows researchers to easily evaluate the plausibility of complex informative hypotheses. In this paper, we provide a clear and detailed introduction to this approach. We describe all the steps and elements involved in the formalization of informative hypotheses and computation of the Bayes Factor. Moreover, we provide an application of this method to a real case scenario comparing the different theoretical perspectives regarding the role of mother attachment and father attachment on children's social-emotional development. This approach is of particular interest in applied research as it allows researchers to formalize hypotheses with great flexibility and to directly evaluate which hypothesis is the most supported by the data.
+}
 
-\keywords{keyword-1, keyword-2}
+\keywords{Bayes Factor, Encompassing Prior, Informative Hypothesis, Equality and Inequality Constraints, Attahcement Theory}
 
 \authornote{
    \addORCIDlink{Claudio Zandonella Callegher}{0000-0001-7721-6318}
@@ -826,7 +833,7 @@ Finally, another limit related to the use of the Bayes Factor with the encompass
 
 In this paper, we presented a detailed description and an applied example of the Bayes Factor with the encompassing prior approach. As discussed in the introduction, this approach has several advantages over traditional Null Hypothesis Significance Testing (NHST): it is possible to evaluate complex hypotheses with equality and inequality constraints; multiple hypotheses can be tested simultaneously; Bayes Factor and Posterior Probabilities allow to quantify the relative evidence form the data in favour of the hypotheses.
 
-This approach is of particular interest to the researchers, because informative hypotheses allow them to formalize expectation with great flexibility. In this paper we considered only the presence/absence of an effect (i.e., $\theta = 0$) or the expected effects order (i.e., $\theta_i > \theta_j$). However, in case of clear indications about the actual effects, researchers can specify the expected range of values for the effects of interest (i.e., $a<\theta_i<b$). This allows even a greater level of precision in the formalization of informative hypotheses.
+This approach is of particular interest to the researchers, because informative hypotheses allow them to formalize their expectations with great flexibility. In this paper we considered only the presence/absence of an effect (i.e., $\theta = 0$) or the expected effects order (i.e., $\theta_i > \theta_j$). However, in case of clear indications about the actual effects, researchers can specify the expected range of values for the effects of interest (i.e., $a<\theta_i<b$). This allows even a greater level of precision in the formalization of informative hypotheses.
 
 As underlined by \textcite[p.229]{guApproximatedAdjustedFractional2018}, “this class of informative hypotheses covers a much broader range of scientific expectations than the class of standard null hypotheses. In addition, by testing competing informative hypotheses directly against each other a researcher obtains a direct answer as to which scientific theory is most supported by the data”.
 

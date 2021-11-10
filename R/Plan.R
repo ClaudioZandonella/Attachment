@@ -135,7 +135,7 @@ get_analysis_plan <- function(){
 
     plot_zinb_ext = get_plot_zinb(model = fit_ext_zinb, attachment = "mother"),
 
-    #----    Model Comparison extt    ----
+    #----    Model Comparison ext    ----
     fit_ext_zero = zinb_fit(data = data_cluster, y = "externalizing_sum",
                             formula = "gender"),
     fit_ext_mother = zinb_fit(data = data_cluster, y = "externalizing_sum",
