@@ -18,7 +18,7 @@ get_table_cluster <- function(perc = TRUE, digits = 2, format = "latex"){
     bind_rows(tibble(mother = "Total",
                      summarise_at(., vars(Secure:Total), sum))) %>%
     kable(., format = format, booktabs = TRUE, align = c("r", rep("c", 5)),
-          col.names = c("Mother Attachemnt", "Secure", "Anxious", "Avoidant", "Fearful", "Total"),
+          col.names = c("Mother Attachment", "Secure", "Anxious", "Avoidant", "Fearful", "Total"),
           caption = "Attachment styles frequencies ($n_{subj} = 847$).") %>%
     add_header_above(c(" ", "Father Attachment" = 4, " "), bold = TRUE) %>%
     row_spec(0, bold = TRUE) %>%
@@ -42,7 +42,7 @@ get_table_cluster_ext <- function(){
     select(mother, dplyr::ends_with("Secure"), dplyr::ends_with("Anxious"),
            dplyr::ends_with("Avoidant"),  dplyr::ends_with("Fearful")) %>%
     kable(.,format = "latex", booktabs = TRUE, align = c("r", rep("c", 8)),
-          col.names = c("Mother Attachemnt", rep(c("Mean (SD)", "Median"), 4)),
+          col.names = c("Mother Attachment", rep(c("Mean (SD)", "Median"), 4)),
           caption = "Externalizing problems according to attachment styles ($n_{subj} = 847$).") %>%
     add_header_above(c(" ", "Secure" = 2, "Anxious" = 2, "Avoidant" = 2, "Fearful" = 2), bold = TRUE) %>%
     add_header_above(c(" ", "Father Attachment" = 8), bold = TRUE) %>%
@@ -106,7 +106,7 @@ get_table_bf <- function(bf_result = BF_weights_ext,
     # mutate_at(c("hypothesis", "bf","weights"), centerText) %>%
     kable(., format = format, booktabs = TRUE, align = c("r", rep("c", 3)), escape = FALSE,
           col.names = c("Hypothesis", "Bayes Factor", "Posterior Probability", " "),
-          caption = "Bayes Factor encompassing model and hypothesis posteriro probabilities  ($n_{subj} = 847$).") %>%
+          caption = "Bayes Factor encompassing model and hypothesis posterior probabilities  ($n_{subj} = 847$).") %>%
     column_spec(4, image = spec_image(images, image_size, image_size),
                 extra_css = "vertical-align:middle;padding-bottom: 0px;",
                 width = col_width, latex_valign = "m") %>%
@@ -294,7 +294,7 @@ get_table_cluster_prob <- function(prob = c("ext", "int"), format = "html"){
     select(mother, dplyr::ends_with("Secure"), dplyr::ends_with("Anxious"),
            dplyr::ends_with("Avoidant"),  dplyr::ends_with("Fearful")) %>%
     kable(.,format = format, booktabs = TRUE, align = c("r", rep("c", 8)),
-          col.names = c("Mother Attachemnt", rep(c("Mean (SD)", "Median"), 4)),
+          col.names = c("Mother Attachment", rep(c("Mean (SD)", "Median"), 4)),
           caption = sprintf("%s problems according to attachment styles ($n_{subj} = 847$).", title)) %>%
     add_header_above(c(" ", "Secure" = 2, "Anxious" = 2, "Avoidant" = 2, "Fearful" = 2), bold = TRUE) %>%
     add_header_above(c(" ", "Father Attachment" = 8), bold = TRUE) %>%

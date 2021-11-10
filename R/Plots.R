@@ -151,7 +151,7 @@ plot_attachment_marginal <- function(mother_score = c(0.05, 0.5, 0.5, 1),
              stat = "identity", show.legend = FALSE, alpha = .8, col = "gray20") +
     ylim(0, 1) +
     facet_grid(Parent ~ .) +
-    labs(x = "Attachemnt Style",
+    labs(x = "Attachment Style",
          y = lab_y) +
     theme_classic() +
     theme(axis.ticks.y = element_blank(),
