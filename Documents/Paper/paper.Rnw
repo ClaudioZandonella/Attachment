@@ -95,7 +95,7 @@ The evaluation of hypotheses is one of the main goals of empirical research. In 
 \addORCIDlink{Pietro De Carli}{0000-0001-6538-2175}\\
 \addORCIDlink{Gianmarco Altoè}{0000-0003-1154-9528}
 
-Data used for the illustrative application are part of a larger project on the social-emotional development of school-age children, which was approved by the Ethics Committee of the School of Psychology at the University of Padova (protocol \#[1838-2016]). All materials and data are available at \url{10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}.
+Data used for the illustrative application are part of a larger project on the social-emotional development of school-age children, which was approved by the Ethics Committee of the School of Psychology at the University of Padova (protocol \#[1838-2016]). All materials and data are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}.
 
 Correspondence concerning this article should be addressed to Claudio Zandonella Callegher, Department of Developmental Psychology and Socialisation, University of Padua, Via Venezia, 8 - 35131 Padova, Italy.  E-mail: claudiozandonella@gmail.com
 \end{flushleft}
@@ -112,7 +112,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       fig.height=3, fig.width=5, fig.pos = "!ht",
 
                       # Code output width
-                      tidy=TRUE, tidy.opts = list(width.cutoff = 80),
+                      # tidy=TRUE, tidy.opts = list(width.cutoff = 80),
                       # comment = NA, prompt = TRUE
 
                       # Cache options
@@ -581,7 +581,7 @@ These issues are relevant only when considering the prior distribution. In the c
 
 In this section, we propose a real case study evaluating different informative hypotheses within attachment theory. This will allow us to face the common issues found in real research applications. First, we provide the required background information regarding attachment theory and the study aims and characteristics. Subsequently, we describe all the steps involved in the evaluation of informative hypotheses using the Bayes factor with the encompassing prior approach. Finally, we briefly discuss the obtained results, considering the prior sensitivity analysis and limitations of this approach.
 
-All analyses were conducted using R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data, and analysis code are available at \url{https://github.com/ClaudioZandonella/Attachment} [TDO add doi]. Supplemental Material with further details is also available online at \url{https://claudiozandonella.github.io/Attachment/}.
+All analyses were conducted using R statistical software \parencite[Version \Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data, and analysis code are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}. Supplemental Material with further details is also available online at \url{https://claudiozandonella.github.io/Attachment/}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Background Information}
@@ -625,7 +625,7 @@ We measured children's social-emotional development using the Strengths and Diff
 plot_externalizing_dist()
 @
 
-Externalizing problems according to attachment style are reported in Table~\ref{tab:table-cluster-ext}. More information about the sample, descriptive statistics, cluster analysis, and analysis of internalizing problems can be found in the Supplemental Material available online \url{https://claudiozandonella.github.io/Attachment/}. All materials and data are available at \url{10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}.
+Externalizing problems according to attachment style are reported in Table~\ref{tab:table-cluster-ext}. More information about the sample, descriptive statistics, cluster analysis, and analysis of internalizing problems can be found in the Supplemental Material available online \url{https://claudiozandonella.github.io/Attachment/}. All materials and data are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}.
 
 \codespacing
 <<table-cluster-ext, cache=TRUE>>=
