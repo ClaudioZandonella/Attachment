@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Evaluating Informative Hypotheses with Equality and Inequality Constraints:\\ A Tutorial Using the Bayes Factor via the Encompassing Prior Approach
+# Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach
 
 In this repository we collect all the materials of the study
 “*Evaluating informative hypotheses with equality and inequality

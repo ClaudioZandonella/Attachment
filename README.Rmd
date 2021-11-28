@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Evaluating Informative Hypotheses with Equality and Inequality Constraints:\\ A Tutorial Using the Bayes Factor via the Encompassing Prior Approach
+# Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach
 
 In this repository we collect all the materials of the study “*Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach*”. The paper aims to provide a clear and detailed description of the Bayes factor with the encompassing prior approach considering an applied example regarding attachment theory.
 
