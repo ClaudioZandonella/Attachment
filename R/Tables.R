@@ -106,7 +106,7 @@ get_table_bf <- function(bf_result = BF_weights_ext,
     # mutate_at(c("hypothesis", "bf","weights"), centerText) %>%
     kable(., format = format, booktabs = TRUE, align = c("r", rep("c", 3)), escape = FALSE,
           col.names = c("Hypothesis", "Bayes Factor", "Posterior Probability", " "),
-          caption = "Bayes Factor encompassing model and hypothesis posterior probabilities  ($n_{subj} = 847$).") %>%
+          caption = "Bayes factor encompassing model and hypothesis posterior probabilities  ($n_{subj} = 847$).") %>%
     column_spec(4, image = spec_image(images, image_size, image_size),
                 extra_css = "vertical-align:middle;padding-bottom: 0px;",
                 width = col_width, latex_valign = "m") %>%
@@ -138,7 +138,7 @@ get_table_sens_analysis <- function(summary_sensitivity, format = c("latex", "ht
                      "Independence", "Integration")) %>%
     kable(., format = format, booktabs = T, align = c("r", rep("c", 3)), escape = FALSE,
           col.names = c("Hypothesis", rep(c("BF", "PP"), 5)),
-          caption = "Bayes Factor encompassing model v and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$).")
+          caption = "Bayes factor encompassing model and hypothesis posterior probabilities (PP) under different prior settings  ($n_{subj} = 847$).")
 
   if(format == "html"){
     table <- table %>%
