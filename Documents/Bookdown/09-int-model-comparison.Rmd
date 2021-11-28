@@ -29,7 +29,7 @@ mu ~ gender + mother * father + (1|ID_class)
 
 ## AIC and BIC Results
 
-AIC and BIC values together with their relative weights are computed are reported in Table~\@ref(tab:table-AIC-BIC-weights-int).
+AIC and BIC values together with their relative weights are computed and reported in Table~\@ref(tab:table-AIC-BIC-weights-int).
 
 ```{r table-AIC-BIC-weights-int, cache=TRUE}
 get_table_AIC_BIC(AIC_weights = AIC_weights_int,
@@ -77,4 +77,3 @@ We can see that the actual variance explained by fixed effects is 3\%, not that 
 #### Conclusions {-}
 
 Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the **Monotropy Theory**. Note, however, that the compared models contain no information regarding the expected direction of the effects but we only include/exclude predictors.
-

@@ -1,8 +1,8 @@
 # Bayes Factor {#BF-ext}
 
-To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes Factor with encompassing prior approach. See the main article for a detailed introduction to this approach [TODO: add link article].
+To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes factor with the encompassing prior approach. See the main article for a detailed introduction to this approach [TODO: add link article].
 
-First, we define the encompassing model. Subsequently, we obtain the hypotheses matrices according to the informative hypotheses. Next, we compute the Bayes Factor and, finally, we describe the selected model.
+First, we define the encompassing model. Subsequently, we obtain the hypotheses matrices according to the informative hypotheses. Next, we compute the Bayes factor and, finally, we describe the selected model.
 
 ## Encompassing Model 
 
@@ -15,16 +15,16 @@ p ~ gender + (1|ID_class)
 mu ~ gender + mother * father + (1|ID_class)
 ```
 
-### Prior Choiche
+### Prior Choice
 
 The prior choice is important for the parameters involved in the equality and inequality constraints. In our case, the parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specify as prior a normal distribution with mean 0 and a given standard deviation. Considering the standard deviation, however, we have to choose a value so that the resulting prior is non-informative but without being excessively diffuse. 
 
-We can evaluate the consequences of different values choice considering the resulting prior predictions. To facilitate this step, we compute prior prediction considering only the intercept and a single parameter of interest. Remembering that the inverse link function (i.e., function that in a GLM transform the model linear prediction into the value on the original response scale) is the exponential function, we consider as intercept the value 1 because $exp(1) \approx 2.7$ that is close to the externalizing problems sample mean  `r ext_mean()`. In Table~\@ref(tab:table-prior-predict), summary information about prior predictions for different standard deviation values is reported.
+We can evaluate the consequences of different values’ choice considering the resulting prior predictions. To facilitate this step, we compute prior prediction considering only the intercept and a single parameter of interest. Remembering that the inverse link function (i.e., function that in a GLM transform the model linear prediction into the value on the original response scale) is the exponential function, we consider as intercept the value 1 because $exp(1) \approx 2.7$ that is close to the externalizing problems sample mean  `r ext_mean()`. In Table~\@ref(tab:table-prior-predict), summary information about prior predictions for different standard deviation values is reported.
 ```{r table-prior-predict}
 get_table_prior_predict(format = params$format)
 ```
 
-Considering that externalizing problems are bounded between 0 and 20, a reasonable prior is  $\mathcal{N}(0,3)$. as prior predicted values cover all possible values without including excessively large values. More diffuse priors would result in values with a higher order of magnitude and tighter priors would exclude plausible values. The influence of prior specification will be subsequently evaluated in a prior sensitivity analysis. 
+Considering that externalizing problems are bounded between 0 and 20, a reasonable prior is  $\mathcal{N}(0,3)$. With these settings, prior predicted values cover all possible values without including excessively large values. More diffuse priors would result in values with a higher order of magnitude and tighter priors would exclude plausible values. The influence of prior specification will be subsequently evaluated in a prior sensitivity analysis. 
 
 Regarding the other nuisance parameters (i.e., intercepts, random effects and shapes parameters) `brms` default priors are maintained. The resulting prior settings are
 ```{r prior-settings-encompassing-ext}
@@ -42,7 +42,7 @@ summary(encompassing_model_ext)
 
 For each informative hypothesis, we obtain a hypothesis matrix that translates equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper ([TODO: add link]). 
 
-Here we present the obtained hypothesis matrices were on the columns we have the parameters of the encompassing model (excluding the intercept) and each row express an equality constraint or an inequality constraint. Matrices row names follow this notation: names without square brackets indicate a constraint directly on the model parameter; names within square brackets indicate a group condition (that could be the resulting composition of more parameters). For example, `"M_Avoidant:F_Anxious"` indicates the actual interaction term of the model, whereas `"[M_Avoidant_F_Anxious]"` indicate the group condition. This is done because when assuming no interaction or no father attachment effect we set constraints directly on the model parameters, instead, when constraints involve group comparisons, we need to obtain the resulting conditions. Equality and inequality constraints are presented separately.
+Here we present the obtained hypothesis matrices where on the columns we have the parameters of the encompassing model (excluding the intercept) and each row expresses an equality constraint or an inequality constraint. Matrices’ row names follow this notation: names without square brackets indicate a constraint directly on the model parameter; names within square brackets indicate a group condition (that could be the resulting composition of more parameters). For example, `"M_Avoidant:F_Anxious"` indicates the actual interaction term of the model, whereas `"[M_Avoidant_F_Anxious]"` indicates the group condition. This is done because when assuming no interaction or no father attachment effect we set constraints directly on the model parameters, instead, when constraints involve group comparisons, we need to obtain the resulting conditions. Equality and inequality constraints are presented separately.
 
 #### Null Hypothesis {-}
 
@@ -51,7 +51,7 @@ Here we present the obtained hypothesis matrices were on the columns we have the
 get_hypothesis_matrix("null", encompassing_model_ext)$eq
 ```
 
-- **Inequality matrix**, $R_{iI} > 0$ (each row is set to grater than zero). There are no inequality constraints.
+- **Inequality matrix**, $R_{iI} > 0$ (each row is set greater than zero). There are no inequality constraints.
 
 #### Monotropy Hypothesis {-}
 
@@ -60,7 +60,7 @@ get_hypothesis_matrix("null", encompassing_model_ext)$eq
 get_hypothesis_matrix("monotropy", encompassing_model_ext)$eq
 ```
 
-- **Inequality matrix**, $R_{iI} > 0$ (each row is set to grater than zero).
+- **Inequality matrix**, $R_{iI} > 0$ (each row is set greater than zero).
 ```{r cache=TRUE}
 get_hypothesis_matrix("monotropy", encompassing_model_ext)$ineq
 ```
@@ -72,7 +72,7 @@ get_hypothesis_matrix("monotropy", encompassing_model_ext)$ineq
 get_hypothesis_matrix("hierarchy", encompassing_model_ext)$eq
 ```
 
-- **Inequality matrix**, $R_{iI} > 0$ (each row is set to grater than zero).
+- **Inequality matrix**, $R_{iI} > 0$ (each row is set greater than zero).
 ```{r cache=TRUE}
 get_hypothesis_matrix("hierarchy", encompassing_model_ext)$ineq
 ```
@@ -84,7 +84,7 @@ get_hypothesis_matrix("hierarchy", encompassing_model_ext)$ineq
 get_hypothesis_matrix("independence", encompassing_model_ext)$eq
 ```
 
-- **Inequality matrix**, $R_{iI} > 0$ (each row is set to grater than zero).
+- **Inequality matrix**, $R_{iI} > 0$ (each row is set greater than zero).
 ```{r cache=TRUE}
 get_hypothesis_matrix("independence", encompassing_model_ext)$ineq
 ```
@@ -96,7 +96,7 @@ get_hypothesis_matrix("independence", encompassing_model_ext)$ineq
 get_hypothesis_matrix("integration", encompassing_model_ext)$eq
 ```
 
-- **Inequality matrix**, $R_{iI} > 0$ (each row is set to grater than zero).
+- **Inequality matrix**, $R_{iI} > 0$ (each row is set greater than zero).
 ```{r cache=TRUE}
 get_hypothesis_matrix("integration", encompassing_model_ext)$ineq
 ```
@@ -120,7 +120,7 @@ Pr(\beta|Y) \sim \mathcal{N}(\hat{\beta}, \hat{\Sigma}_{\beta}) = \mathcal{N}(R\
 $$
 See the main article for more details [TODO: add link].
 
-This adjustment, however, requires the hypothesis matrix $R$ to be *full-row-rank* (i.e., all constraints are linearly independent). However, this is not the case of the Hierarchy Hypothesis. To overcome this issue, we follow the solution presented in the main article. First, define $R^*$ selecting the maximum number of independent rows. In this case, 15 contrast are independent
+This adjustment, however, requires the hypothesis matrix $R$ to be *full-row-rank* (i.e., all constraints are linearly independent). However, this is not the case with the Hierarchy Hypothesis. To overcome this issue, we follow the solution presented in the main article. First, define $R^*$ selecting the maximum number of independent rows. In this case, 15 contrast are independent
 
 ```{r cache=TRUE}
 get_hypothesis_matrix("hierarchy", encompassing_model_ext)$hyp[1:15,]
@@ -142,11 +142,11 @@ all(R["[M_Av_F_Sec - M_Sec_F_Av]",] == - R["[M_Anx_F_Sec - M_Av_F_Sec]", ] + R["
 all(R["[M_Fear_F_Sec - M_Sec_F_Fear]",] == R["[M_Av_F_Sec - M_Sec_F_Av]", ] + R["[M_Fear_F_Sec - M_Av_F_Sec]", ] - R["[M_Sec_F_Fear - M_Sec_F_Av]", ])
 ```
 
-Before computing the Bayes Factor, note that we have a set of comparable hypotheses as exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply consider all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups differences. See the main article for a detailed explanation [TODO: add link article].
+Before computing the Bayes factor, note that we have a set of comparable hypotheses as it exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply considering all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups’ differences. See the main article for a detailed explanation [TODO: add link article].
 
 ## Results and Sensitivity
 
-To compute the Bayes Factor we evaluate marginal densities and conditional probabilities as described in detail in the main article [TODO: add link article]. Bayes Factor and posterior probability of each hypothesis are reported in Table~\@ref(tab:table-bf-results-ext).
+To compute the Bayes factor we evaluate marginal densities and conditional probabilities as described in detail in the main article [TODO: add link article]. Bayes factor and posterior probability of each hypothesis are reported in Table~\@ref(tab:table-bf-results-ext).
 
 ```{r table-bf-results-ext, cache = TRUE}
 get_table_bf(bf_result = BF_weights_ext,
@@ -154,7 +154,7 @@ get_table_bf(bf_result = BF_weights_ext,
              format = params$format)
 ```
 
-Remember, however, that prior specification affects the Bayes Factor results. Therefore, we also evaluate the results considering different prior settings. In particular, we consider as possible priors for the parameters of interest:
+Remember, however, that prior specification affects the Bayes factor results. Therefore, we also evaluate the results considering different prior settings. In particular, we consider as possible priors for the parameters of interest:
 
 - $\mathcal{N}(0,.5)$ - unreasonable tight prior
 - $\mathcal{N}(0,1)$ - tighter prior
@@ -170,15 +170,15 @@ get_table_sens_analysis(summary_sensitivity_ext,
                         bookdown = TRUE)
 ```
 
-Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the probability of the Null Hypothesis increases with more diffuse prior, whereas the probabilities of the Hierarchy, Independence and Integration Hypothesis increases with tighter priors.
+Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes factor comparing each hypothesis with the encompassing model increases. Moreover, the probability of the Null Hypothesis increases with more diffuse prior, whereas the probabilities of the Hierarchy, Independence and Integration Hypothesis increases with tighter priors.
 
-To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (see the main article for more details[TODO: add link article]).
+To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (see the main article for more details [TODO: add link article]).
 
-All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes Factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with a higher number of equality constraints (e.g., Null Hypothesis) will be favoured over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
+All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with a higher number of equality constraints (e.g., Null Hypothesis) will be favoured over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
 
 ## Selected Model
 
-One of the limits of the Bayes Factor with the encompassing prior approach is that we only get the selected hypothesis but we do not obtain the actual estimates of the parameters posterior. To overcome this limit we rely on Bayesian inference that allows us to effectively estimate the model parameter posteriors.
+One of the limits of the Bayes factor with the encompassing prior approach is that we only get the selected hypothesis but we do not obtain the actual estimates of the parameters posterior. To overcome this limit we rely on Bayesian inference that allows us to effectively estimate the model parameter posteriors.
 
 This time in the model we consider only the role of gender and mother attachment as fixed effects of $\mu$. In the R formula syntax, we have
 ```{r, echo=TRUE, eval=FALSE}
@@ -209,7 +209,7 @@ plot_post_diff(post_pred_ext, problem = "Externalizing")
 
 Overall, results indicate that Males have more externalizing problems than Females. Regarding mother attachment, Fearful, Avoidant, and Anxious children have more problems than Secure children. Moreover, Fearful children have more problems than Anxious children.
 
-To evaluate the fit of the model to the data, we computed the *Bayesian* $R^2$ and using the function `brms::bayes_R2()`, and we present Posterior Predictions in Figure~\@ref(fig:plot-ppcheck-ext).
+To evaluate the fit of the model to the data, we computed the *Bayesian* $R^2$, using the function `brms::bayes_R2()`, and we present Posterior Predictions in Figure~\@ref(fig:plot-ppcheck-ext).
 
 ```{r, echo=TRUE, message=FALSE, cache=TRUE}
 r2_ext
@@ -219,9 +219,8 @@ r2_ext
 my_pp_check(brm_selected_ext, problem = "Externalizing")
 ```
 
-We can see that the actual variance explained by fixed effects and random effect is around 15\%. Moreover, posterior predictive check indicates a good fit to the data.
+We can see that the actual variance explained by fixed effects and random effects is around 15\%. Moreover, the posterior predictive check indicates a good fit to the data.
 
 #### Conclusions{-}
 
 Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the Monotropy Theory.
-

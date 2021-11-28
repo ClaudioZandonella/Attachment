@@ -5,6 +5,4 @@ editor_options:
 ---
 # Conclusions {#conclusion-int}
 
-Overall, we obtained consistent results from the three different approaches: only mother attachment influence children's externalizing problems. In particular, we observed the following pattern: Secure children have the lowest level of problems, Anxious and Avoidant children have a similar, intermediate, level of problems, and Fearful children have the highest level of problems. Compared to externalizing problems, however, difference between attachment groups are less pronounced. Taken together, these results support the Monotropy Theory. 
-
-
+Overall, we obtained consistent results from the three different approaches: only mother attachment influences children's externalizing problems. In particular, we observed the following pattern: Secure children have the lowest level of problems, Anxious and Avoidant children have a similar, intermediate, level of problems, and Fearful children have the highest level of problems. Compared to externalizing problems, however, differences between attachment groups are less pronounced. Taken together, these results support the Monotropy Theory.

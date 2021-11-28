@@ -7,13 +7,13 @@ editor_options:
 
 # Models Family Choice  {#model-choice-int}
 
-In this chapter, we discuss the appropriate models family to to take into account data characteristics. 
+In this chapter, we discuss the appropriate models’ family to take into account data characteristics. 
 
 Internalizing problems are computed as the sum of 10 items of the SDQ, obtaining discrete scores that range from 0 to 20. Considering data distribution (see Figure~\@ref(fig:plot-internalizing-dist)), we choose a **Negative Binomial** distribution to model the data.
 
 ## Zero Inflated Negative Binomial
 
-As in the case of externalizing problems, we evaluate whether a *Zero-Inflated* model may be appropriate. We compare the number of observed zeros and expected zeros in a Negative Binomial mixed effects model considering the same predictors as in the case of externalizing problems. Using R formula syntax, we have
+As in the case of externalizing problems, we evaluate whether a *Zero-Inflated* model may be appropriate. We compare the number of observed zeros and expected zeros in a Negative Binomial mixed-effects model considering the same predictors as in the case of externalizing problems. Using R formula syntax, we have
 ```{r echo = TRUE, eval=FALSE}
 # model formula
 internalizing_sum ~ gender + mother * father + (1|ID_class)
@@ -37,6 +37,4 @@ Below we report results of the analysis of deviance.
 anova(fit_int_nb, fit_int_zinb)
 ```
 
-Overall, results indicate that the ZINB model performs better than the Negative Binomial model. Note, however, that BIC actually prefers the model without zero inflation. Nevertheless, in the following analyses we decide to use ZINB models to be consistent with the externalizing problems analysis.
-
-
+Overall, results indicate that the ZINB model performs better than the Negative Binomial model. Note, however, that BIC actually prefers the model without zero inflation. Nevertheless, in the following analyses, we decide to use ZINB models to be consistent with the analysis of the externalizing problems.

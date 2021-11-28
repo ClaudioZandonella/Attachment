@@ -32,4 +32,3 @@ We can see that the actual variance explained by fixed effects is almost 10\%, n
 #### Conclusions {-}
 
 Considering attachment theoretical perspectives, results indicate only the role of mother attachment. Note, however, that traditional NHST does not allow us to evaluate evidence in favour of a hypothesis. Moreover, we actually have not tested our hypotheses but only the catch-all null hypothesis that *“nothing is going on”*.
-

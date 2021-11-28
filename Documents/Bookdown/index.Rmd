@@ -9,7 +9,7 @@ bibliography: ["../Biblio-attachment.bib"]
 csl: "../apa.csl"
 link-citations: yes
 github-repo: ClaudioZandonella/Attachment
-description: "This the Supplemental Material of the article “Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach”"
+description: "This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”"
 cover-image: "images/logo_psicostat.png"
 header-includes: 
   - \usepackage{titlepic}
@@ -61,18 +61,17 @@ source("../Utils_report.R")
 drake_load_bookdown()
 ```
 
-
 # Introduction {-}
 
-This is the Supplemental Material of the article “*Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach*” [TODO: add cit]. The aim of the paper is to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example.
+This is the Supplemental Material of the article “*Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach*” [TODO: add cit]. The paper aims to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example.
 
 ## Study Summary {-}
 
-When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate. Equality and inequality constraints on the model parameters are used to formalize researchers' expectations or theoretical perspectives into the so-called “*informative hypotheses*”. However, traditional statistical approaches, such as the Null Hypothesis Significance Testing (NHST) or the model comparison using information criteria (e.g., AIC and BIC), are unsuitable for testing complex informative hypotheses. An alternative approach is to use the Bayes Factor. In particular, the Bayes Factor based on the “*encompassing prior approach*” allows researchers to easily evaluate complex informative hypotheses. In this paper we provide a clear and detailed introduction to this approach. We describe all the steps and elements involved in the formalization of informative hypotheses and computation of the Bayes Factor following the encompassing prior approach. Subsequently, we provide an application of this method to a real case scenario comparing the different theoretical perspectives regarding the role of mother attachment and father attachment on children's socio-emotional development.
+When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate. Equality and inequality constraints on the model parameters are used to formalize researchers' expectations or theoretical perspectives into the so-called informative hypotheses. However, traditional statistical approaches, such as the Null Hypothesis Significance Testing (NHST) or the model comparison using information criteria (e.g., AIC and BIC), are unsuitable for testing complex informative hypotheses. An alternative approach is to use the Bayes factor. In particular, the Bayes factor based on the encompassing prior approach allows researchers to easily evaluate complex informative hypotheses in a wide range of statistical models (e.g., generalized linear). This paper provides a detailed introduction to the Bayes factor with encompassing prior. First, all steps and elements involved in the formalization of informative hypotheses and the computation of the Bayes factor with encompassing prior are described. Next, we apply this method to a real case scenario, considering the attachment theory. Specifically, we analyzed the relative influence of maternal and paternal attachment on children's social-emotional development by comparing the various theoretical perspectives debated in the literature.
 
 ## Supplemental Material Structure {-}
 
-In the supplemental material we provide the complete statistical analyses of the case study regarding attachment. For more information regarding the Bayes Factor with encompassing prior approach or the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article]. The supplemental material is structure in three parts:
+In the supplemental material, we provide the complete statistical analyses of the case study regarding attachment. For more information regarding the Bayes factor with encompassing prior approach or the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article]. The supplemental material is structured into three parts:
 
 #### 1) Presentation {-}
 
@@ -80,26 +79,25 @@ In this section, we describe the aim of the study and the sample included in the
 
 - **Chapter \@ref(case-study) - Case Study.** We describe the sample included in the study and present the results of the cluster analysis to classify the different attachment patterns.
 
-#### 2) Exteranlizing Problems {-}
+#### 2) Externalizing Problems {-}
 
-In this section, we present the analyses evaluating the different role of mother attachment and father attachment on children's externalizing problems. We follow three different approaches.
+In this section, we present the analyses evaluating the different roles of mother attachment and father attachment on children's externalizing problems. We follow three different approaches.
 
-- **Chapter \@ref(model-choice-ext) - Models Family Choice.**  We discuss the appropriate models family to to take into account data characteristics.
-- **Chapter \@ref(nhst-ext) - NHST.**  Analysis are conducted following the traditional Null Hypothesis Significance Testing (NHST).
-- **Chapter \@ref(model-comparison-ext) - Model Comparison.**  Analysis are conducted according to the  Model Comparison approach using the AIC and BIC criteria.
-- **Chapter \@ref(BF-ext) - Bayes Factor.**  Analysis are conducted following the Bayes Factor with encompassing prior approach.
-- **Chapter \@ref(conclusion-ext) - Conclusion.**  Results of the three approaches are discussed.
+- **Chapter \@ref(model-choice-ext) - Models Family Choice.**  We discuss the appropriate models’ family to take into account data characteristics.
+- **Chapter \@ref(nhst-ext) - NHST.**  Analysis is conducted following the traditional Null Hypothesis Significance Testing (NHST).
+- **Chapter \@ref(model-comparison-ext) - Model Comparison.**  Analysis is conducted according to the  Model Comparison approach using the AIC and BIC criteria.
+- **Chapter \@ref(BF-ext) - Bayes Factor.**  Analysis is conducted following the Bayes Factor with the encompassing prior approach.
+- **Chapter \@ref(conclusion-ext) - Conclusions.**  Results of the three approaches are discussed.
 
+#### 3) Internalizing Problems {-}
 
-#### 3) Interanlizing Problems {-}
+In this section, we present the analyses evaluating the different roles of mother attachment and father attachment on children's internalizing problems. We follow the three different approaches like in the analysis of the externalizing problems. This section is shorter than the previous one as we focus only on the results without repeating all the descriptions of the methods.
 
-In this section, we present the analyses evaluating the different role of mother attachment and father attachment on children's internalizing problems. We follow the three different approaches as for the externalizing problems analysis. This section is shorter than previous as we focus only on the results without repeating all the descriptions of the methods.
-
-- **Chapter \@ref(model-choice-int) - Models Family Choice.**  We discuss the appropriate models family to to take into account data characteristics.
-- **Chapter \@ref(nhst-int) - NHST.**  Analysis are conducted following the traditional Null Hypothesis Significance Testing (NHST).
-- **Chapter \@ref(model-comparison-int) - Model Comparison.**  Analysis are conducted according to the  Model Comparison approach using the AIC and BIC criteria.
-- **Chapter \@ref(BF-int) - Bayes Factor.**  Analysis are conducted following the Bayes Factor with encompassing prior approach.
-- **Chapter \@ref(conclusion-int) - Conclusion.**  Results of the three approaches are discussed.
+- **Chapter \@ref(model-choice-int) - Models Family Choice.**  We discuss the appropriate models’ family to take into account data characteristics.
+- **Chapter \@ref(nhst-int) - NHST.**  Analysis is conducted following the traditional Null Hypothesis Significance Testing (NHST).
+- **Chapter \@ref(model-comparison-int) - Model Comparison.**  Analysis is conducted according to the  Model Comparison approach using the AIC and BIC criteria.
+- **Chapter \@ref(BF-int) - Bayes Factor.**  Analysis is conducted following the Bayes Factor with the encompassing prior approach.
+- **Chapter \@ref(conclusion-int) - Conclusions.**  Results of the three approaches are discussed.
 
 
 
@@ -108,5 +106,3 @@ In this section, we present the analyses evaluating the different role of mother
 All the materials are available at the GitHub repository https://github.com/ClaudioZandonella/Attachment.
 
 Refer to the `README` file for further information.
-
-

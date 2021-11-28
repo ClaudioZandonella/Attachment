@@ -2,17 +2,17 @@
 
 # Models Family Choice {#model-choice-ext}
 
-In this chapter, we discuss the appropriate models family to to take into account data characteristics.
+In this chapter, we discuss the appropriate models’ family to take into account data characteristics.
 
 ## Negative Binomial
 
-Externalizing problems are computed as the sum of 10 items of the SDQ, obtaining discrete scores that range from 0 to 20. Thus, we should use appropriate discrete distribution such as the *Poisson* distribution or the *Negative Binomial*. In the Poisson distribution mean and variance are defined according to the same parameter $\lambda$. On the contrary, Negative Binomial has an extra parameter to adjust the variance allowing more flexibility. Considering data distribution (see Figure~\@ref(fig:plot-externalizing-dist)), we can observe that data have high dispersion with a long right tail. In this case, Poisson distribution would be a poor choice and we prefer Negative Binomial instead.
+Externalizing problems are computed as the sum of 10 items of the SDQ, obtaining discrete scores that range from 0 to 20. Thus, we should use appropriate discrete distribution such as the *Poisson* distribution or the *Negative Binomial*. In the Poisson distribution mean and variance are defined according to the same parameter $\lambda$. On the contrary, Negative Binomial has an extra parameter to adjust the variance allowing more flexibility. Considering data distribution (see Figure~\@ref(fig:plot-externalizing-dist)), we can observe that data have high dispersion with a long right tail. In this case, the Poisson distribution would be a poor choice and we prefer Negative Binomial instead.
 
-Again, considering data distribution (see Figure~\@ref(fig:plot-externalizing-dist)), we can observe an high peak of values at zero. Remember that this is not a clinical sample, thus it is expected that children majority has no problems or really few problem. We could question ourselves, however, whether a *Zero-Inflated* model may be appropriate
+Again, considering data distribution (see Figure~\@ref(fig:plot-externalizing-dist)), we can observe a high peak of values at zero. Remember that this is not a clinical sample, thus it is expected that the majority of children have no problems or really few problems. We could question ourselves, however, whether a *Zero-Inflated* model may be appropriate
 
 ## Zero Inflated Negative Binomial
 
-To evaluate the presence of zero inflation in our data, we compare the number of observed zeros and expected zeros in a Negative Binomial mixed effects model. We consider in the model the role of gender and the interaction between mother attachment and father attachment. Moreover, we consider the children's classroom ID as a random effect to account for teachers' different ability to evaluate children's problems. Using R formula syntax, we have
+To evaluate the presence of zero inflation in our data, we compare the number of observed zeros and expected zeros in a Negative Binomial mixed-effects model. We consider in the model the role of gender and the interaction between mother attachment and father attachment. Moreover, we consider the children's classroom ID as a random effect to account for teachers' different ability to evaluate children's problems. Using R formula syntax, we have
 ```{r echo = TRUE, eval=FALSE}
 # model formula
 externalizing_sum ~ gender + mother * father + (1|ID_class)
@@ -32,7 +32,7 @@ $$
 p_{ij} = \text{logit}^{-1}(X_i^T\beta_p+ Z_j^Tu_p),\\
 \mu_{ij} = \text{exp}(X_i^T\beta_{\mu}+ Z_j^Tu_{\mu}).
 $$
-That is, both $p$ and $\mu$ are modelled separately according to (possibly) different variables. In our case, we consider only the role of gender for $p$ (i.e., the probability of having externalizing problems depends on gender), whereas for $\mu$ the consider also the interaction between mother attachment and father attachment. In both cases, we consider the children's classroom ID as a random effect (teachers may differ in the ability to detect children's problems and quantify them). Using R formula syntax, we have
+That is, both $p$ and $\mu$ are modelled separately according to (possibly) different variables. In our case, we consider only the role of gender for $p$ (i.e., the probability of having externalizing problems depends on gender), whereas for $\mu$ we also consider the interaction between mother attachment and father attachment. In both cases, we consider the children's classroom ID as a random effect (teachers may differ in the ability to detect children's problems and quantify them). Using R formula syntax, we have
 ```{r echo = TRUE, eval=FALSE}
 # formula for p
 p ~ gender + (1|ID_class)
@@ -41,11 +41,9 @@ p ~ gender + (1|ID_class)
 mu ~ gender + mother * father + (1|ID_class)
 ```
 
-The ZINB model is fitted using the function `zeroinfl()` from the `pscl` R-package [@zeileisRegressionModelsCount2008]. To compare the ZINB model and the Negative Binomial model we conduct an analysis of *Deviance*. Note that, in the case of generalized linear models (GLM), the deviance is the corresponding of the residual variance used in the traditional ANOVA in the case of linear models.
+The ZINB model is fitted using the function `glmmTMB()`. To compare the ZINB model and the Negative Binomial model we conduct an analysis of *Deviance*. Note that, in the case of generalized linear models (GLM), the deviance is the corresponding of the residual variance used in the traditional ANOVA in the case of linear models.
 ```{r echo=TRUE, cache=TRUE}
 anova(fit_ext_nb, fit_ext_zinb)
 ```
 
 Overall, results indicate that the ZINB model performs better than the Negative Binomial model. Thus, in the following analyses, we decide to use ZINB models.
-
-

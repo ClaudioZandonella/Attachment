@@ -45,11 +45,11 @@ get_table_AIC_BIC(AIC_weights = AIC_weights_ext,
 
 According to AIC, the most likely model is `fit_ext_mother` (`r perc_model_ext("fit_ext_mother", "AIC")`\%) and the second most likely model is `fit_ext_additive` (`r perc_model_ext("fit_ext_additive", "AIC")`\%) given the data and the set of models considered. According to BIC, instead,  the most likely model is `fit_ext_zero` (`r perc_model_ext("fit_ext_zero", "BIC")`\%) and the second most likely model is `fit_ext_mother` (`r perc_model_ext("fit_ext_mother", "BIC")`\%) given the data and the set of models considered.
 
-To interpret these results, note that, AIC tends to select more complex models that can better explain the data, on the contrary, BIC penalizes complex models to a greater extent.  As pointed by @kuhaAICBICComparisons2004, using the two criteria together is always advocated as agreement provides reassurance on the robustness of the results and disagreement still provides useful information for the discussion. We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.
+To interpret these results, note that, AIC tends to select more complex models that can better explain the data, on the contrary, BIC penalizes complex models to a greater extent.  As pointed out by @kuhaAICBICComparisons2004, using the two criteria together is always advocated as agreement provides reassurance on the robustness of the results and disagreement still provides useful information for the discussion. We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.
 
 ## Selected Model
 
-Considering model `fit_ext_mother`, we can run an analysis of deviance to evaluate the significance of the predictors.
+Considering the model `fit_ext_mother`, we can run an analysis of deviance to evaluate the significance of the predictors.
 ```{r, echo =TRUE, cache=TRUE}
 car::Anova(fit_ext_mother)
 ```
@@ -81,4 +81,3 @@ We can see that the actual variance explained by fixed effects is around 7\%, no
 #### Conclusions {-}
 
 Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the **Monotropy Theory**. Note, however, that the compared models contain no information regarding the expected direction of the effects but we only include/exclude predictors.
-
