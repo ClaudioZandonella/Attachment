@@ -1,14 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach
+# Evaluating Informative Hypotheses with Equality and Inequality Constraints:\\ A Tutorial Using the Bayes Factor via the Encompassing Prior Approach
 
 In this repository we collect all the materials of the study
-“*Evaluating Informative Hypotheses With Equality and Inequality
-Constraint: The Bayes Factor Encompassing Prior Approach*”. The aim of
-the paper is to provide a clear and detailed description of the Bayes
-Factor with the encompassing prior approach considering an applied
-example regarding attachment theory.
+“*Evaluating informative hypotheses with equality and inequality
+constraints: A tutorial using the Bayes factor via the encompassing
+prior approach*”. The paper aims to provide a clear and detailed
+description of the Bayes factor with the encompassing prior approach
+considering an applied example regarding attachment theory.
 
 The pre-print version of the article is available at \[TODO: add link\].
 The Supplemental Material with all the analyses is available at
@@ -57,21 +57,21 @@ transparency of the analysis. To know more about `drake` consider the
 [official Git-hub page](https://github.com/ropensci/drake) or the [user
 manual](https://books.ropensci.org/drake/). Summarizing, using `drake`
 the user defines the plan of the analysis where each step in the
-analysis is defined trough functions. Functions can be appropriately
+analysis is defined through functions. Functions can be appropriately
 defined to obtain desired targets (i.e., R-output with results of
 interests) and they are declared in another script. Subsequently,
 `drake` manages the whole analysis recognizing the dependency structure
 of the different targets. When any change is made to the code `drake`
 evaluates the analysis and updates the results. Following the
 *functional programming paradigm* (i.e., defining functions for each
-step of the analysis), it allows us to avoid “*coping and paste*” in the
+step of the analysis) allows us to avoid “*coping and paste*” in the
 code, it makes debugging easier, and it facilitates the reading of the
 code.
 
 Moreover, the R-package `renv` is used to manage the dependencies of the
-R-packages used in the analysis. The `renv` package allows to create an
-isolated, portable, and reproducible environment where the analyses are
-run. To know more about `renv` consider the [official
+R-packages used in the analysis. The `renv` package allows the creation
+of an isolated, portable, and reproducible environment where the
+analyses are run. To know more about `renv` consider the [official
 documentation](https://rstudio.github.io/renv/articles/renv.html).
 However, `renv` is limited as it can not handle different R versions.
 
@@ -84,7 +84,7 @@ tutorial](https://jsta.github.io/r-docker-tutorial/).
 
 To reproduce the analysis:
 
-1.  Download the the repository on your local machine
+1.  Download the repository on your local machine
 
     ``` bash
     git clone https://github.com/ClaudioZandonella/Attachment
@@ -94,7 +94,7 @@ To reproduce the analysis:
     you can find in the project main directory. A new R-studio session
     will open.
 
-3.  Run `renv::restore()` to install project’s dependencies (have a
+3.  Run `renv::restore()` to install the project’s dependencies (have a
     coffee, it takes some time).
 
 4.  Now the required package will be loaded. Restart the R session
@@ -103,24 +103,23 @@ To reproduce the analysis:
     used in the analysis defined in the `R/` folder.
 
     > Note that also `source("Documents/Utils_report.R")` is
-    > automatically run to load report utilities functions (functions to
+    > automatically run to load report utility functions (functions to
     > load analysis results and to compile the bookdown).
 
 5.  Open `Analysis/Analysis_Drake.R` and run each line (one by one) to
-    run the analysis using drake. First, the analysis environment is
-    setted together with the analysis plan (available at `R/Plan.R`).
-    Next the analysis targets are computed (have a coffee, it takes a
-    long time). Finally, the analysis results are loaded and briefly
-    presented.
+    run the analysis using drake. First, the analysis environment is set
+    together with the analysis plan (available at `R/Plan.R`). Next, the
+    analysis targets are computed (have a coffee, it takes a long time).
+    Finally, the analysis results are loaded and briefly presented.
 
-    > Note that you can access the analysis targets with using the
-    > functions `drake::loadd(<name_target>)`, or load all the results
-    > with `drake_load_all()`.
+    > Note that you can access the analysis targets using the functions
+    > `drake::loadd(<name_target>)`, or load all the results with
+    > `drake_load_all()`.
 
-    > It could happen that some times the session session stay idle when
-    > fitting `brms` models without throwing errors. In this case, it is
+    > It could happen that sometimes the session stays idle when fitting
+    > `brms` models without throwing errors. In this case, it is
     > necessary to force restarting the R session and rerun the
-    > analysis. An error warning message will appear
+    > analysis. An error warning message will appear:
     > `Error: drake's cache is locked`. Just follow the instructions
     > provided by drake to force unlock of the cache
     > `drake::drake_cache("...")$unlock()`.
@@ -137,14 +136,15 @@ To reproduce the analysis:
 
 #### Docker
 
-To run the analysis in a Docker container, build the image according to
-the `Dockerfile` present in the project main directory, using
+To run the analysis in a Docker container, first, download the
+repository on your local machine. Next, build the image according to the
+`Dockerfile` present in the project main directory, using
 
 ``` bash
 docker build -t attachment .
 ```
 
-> It is important too build the image before to run the analysis
+> It is important to build the image before running the analysis
 
 Next, you can run the container using
 
