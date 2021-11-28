@@ -67,7 +67,8 @@
 \shorttitle{The Bayes Factor via the Encompassing Prior Approach}
 
 \author{Claudio Zandonella Callegher$^1$, Tatiana Marci$^1$, Pietro De Carli$^2$, Gianmarco Altoè$^1$}
-\affiliation{$^1$UNIPD\\$^2$UNIMI}
+\affiliation{$^1$Department of Developmental Psychology and Socialization, University of Padova\\
+$^2$UNIMI TODO }
 
 \leftheader{loook}
 
@@ -580,7 +581,7 @@ These issues are relevant only when considering the prior distribution. In the c
 
 In this section, we propose a real case study evaluating different informative hypotheses within attachment theory. This will allow us to face the common issues found in real research applications. First, we provide the required background information regarding attachment theory and the study aims and characteristics. Subsequently, we describe all the steps involved in the evaluation of informative hypotheses using the Bayes factor with the encompassing prior approach. Finally, we briefly discuss the obtained results, considering the prior sensitivity analysis and limitations of this approach.
 
-All analyses were conducted using R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data, and analysis code are available at \url{https://github.com/ClaudioZandonella/Attachment}. Supplemental Material with further details is also available online at \url{https://claudiozandonella.github.io/Attachment/}.
+All analyses were conducted using R statistical software \parencite[v\Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data, and analysis code are available at \url{https://github.com/ClaudioZandonella/Attachment} [TDO add doi]. Supplemental Material with further details is also available online at \url{https://claudiozandonella.github.io/Attachment/}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Background Information}
