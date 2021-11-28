@@ -1,5 +1,5 @@
 --- 
-title: "Evaluating Informative Hypotheses With Equality and Inequality Constraint: The Bayes Factor Encompassing Prior Approach"
+title: "Evaluating Informative Hypotheses with Equality and Inequality Constraints:\\ A Tutorial Using the Bayes Factor via the Encompassing Prior Approach"
 subtitle: "Supplemental Material"
 author: "[Claudio Zandonella Callegher](https://claudiozandonella.netlify.app/), Tatiana Marci, Pietro De Carli, and Gianmarco Altoè"
 date: "`r Sys.Date()`"
