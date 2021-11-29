@@ -67,8 +67,8 @@
 \shorttitle{The Bayes Factor via the Encompassing Prior Approach}
 
 \author{Claudio Zandonella Callegher$^1$, Tatiana Marci$^1$, Pietro De Carli$^2$, Gianmarco Altoè$^1$}
-\affiliation{$^1$Department of Developmental Psychology and Socialization, University of Padova\\
-$^2$UNIMI TODO }
+\affiliation{$^1$Department of Developmental Psychology and Socialization - University of Padova\\
+$^2$Department of Psychology - University of Milano-Bicocca}
 
 \leftheader{loook}
 
