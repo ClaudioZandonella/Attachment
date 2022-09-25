@@ -83,6 +83,7 @@ get_table_cluster_prob|function|f6601a559967389d|||||||||||||||
 get_table_prior_predict|function|a054182b2a2b9f29|||||||||||||||
 get_table_sens_analysis|function|10dc22f587a06fec|||||||||||||||
 load_glob_env|function|e3f7187e15c9d3d6|||||||||||||||
+make_my_book|function|a63a838eab928d0f|||||||||||||||
 mclust_BIC|function|dc7a7ea22506ad58|||||||||||||||
 mclust_father|stem|e66d0fe6e54df983|b465b8aafb52e7dc|2664c1da3a915432|1395469130||t19260.3775982488s|1eef707e2644b664|75201|rds|local|vector|||2.282||
 mclust_mother|stem|13df3e7a14b9163d|00f510d3f81fee13|2664c1da3a915432|306647921||t19260.3775697023s|14d8acb896022b34|76203|rds|local|vector|||3.002||
@@ -90,7 +91,7 @@ munge_data|function|ac39f2999e1b60fc|||||||||||||||
 my_check_zeroinflation|function|1548a154439585f1|||||||||||||||
 my_comment|function|a40f2a97a1eb507f|||||||||||||||
 my_perc|function|e048f652e640e563|||||||||||||||
-my_pp_check|function|755cb3cb83e8bd92|||||||||||||||
+my_pp_check|function|895fbd98954aa3b7|||||||||||||||
 my_round|function|9640549152504c31|||||||||||||||
 parent_mclust|function|5e7b23b4a2dd74d4|||||||||||||||
 perc_females|function|281ffad8127faf3e|||||||||||||||
@@ -140,7 +141,7 @@ tar_int_sems_res|object|80095569cb56dada|||||||||||||||
 tar_int_sens|object|83d45d1fba0e1f6a|||||||||||||||
 tar_load_all|function|b5651d0ef8c35574|||||||||||||||
 tar_load_bookdown|function|594cd0e1d9974946|||||||||||||||
-tar_load_paper|function|8dddf53eab6f9972|||||||||||||||
+tar_load_paper|function|318d48d1ee79e278|||||||||||||||
 tar_load_report|function|8dddf53eab6f9972|||||||||||||||
 test_zero_inflated_ext|stem|c5155bc72e790f2b|3fed37d1d7a85245|6491c34748c8bfe4|861827144||t19260.4613011223s|711075fab977c90c|168|rds|local|vector|||1.261||
 test_zero_inflated_int|stem|2cfb5e1f0e533ee1|168f037b1eebf692|51de317dd524887c|1631559235||t19260.3875705789s|274be9fab5df2fde|169|rds|local|vector|||0.479||

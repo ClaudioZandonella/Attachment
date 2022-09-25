@@ -480,7 +480,7 @@ plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizin
 my_pp_check <- function(brm_fit = brm_selected_ext,  problem = c("Externalizing", "Internalizing")){
   problem <- match.arg(problem)
 
-  plot <- brms::pp_check(brm_fit, nsamples = 30)
+  plot <- brms::pp_check(brm_fit, ndraws = 30)
 
   plot +
     theme_bw() +
