@@ -29,15 +29,16 @@ advantage of some functionalities:
     to run the analysis (note that we followed the *functional
     programming paradigm*, see Section below)
 
-Moreover, the analysis workflow is managed using `drake` (see Section
+Moreover, the analysis workflow is managed using `targets` (see Section
 below) and include other (*non-standard*) folders to organize the
 scripts for the analysis and for the produced outputs (i.e., paper and
 supplemental material).
 
 The actual repository folder structure is:
 
--   `Analysis/` - includes the file `Analysis_Drake.R` used to run the
-    analysis workflow using `drake`
+-   `Analysis/`that includes the files
+    -   `Targets-workflow.R` the workflow of the analysis
+    -   `Targets-analysis.R` script to run the analysis with `targets`
 -   `Data/` - includes the data used in the analyses
 -   `Documents/` - includes all the scripts and utility files for the
     creation of the outputs. In particular,
@@ -45,33 +46,34 @@ The actual repository folder structure is:
     -   `Paper/` - the pre-print version of the article
 -   `R/` - includes all the `.R` scripts with the functions used in the
     analyses
+    -   `Targets-utils.R` functions used to load results of the analysis
 -   `docs/` - includes `bookdown` outputs used to build the GitHub Pages
     site
 -   `renv/` - utility folder used by `renv`
 
 ## Reproducibility
 
-To guarantee the reproducibility of the results, the R-package`drake` is
-used to manage the analysis workflow and to enhance the readability and
-transparency of the analysis. To know more about `drake` consider the
-[official Git-hub page](https://github.com/ropensci/drake) or the [user
-manual](https://books.ropensci.org/drake/). Summarizing, using `drake`
-the user defines the plan of the analysis where each step in the
-analysis is defined through functions. Functions can be appropriately
-defined to obtain desired targets (i.e., R-output with results of
-interests) and they are declared in another script. Subsequently,
-`drake` manages the whole analysis recognizing the dependency structure
-of the different targets. When any change is made to the code `drake`
-evaluates the analysis and updates the results. Following the
-*functional programming paradigm* (i.e., defining functions for each
-step of the analysis) allows us to avoid “*coping and paste*” in the
-code, it makes debugging easier, and it facilitates the reading of the
-code.
+To guarantee the reproducibility of the results, the R-package`targets`
+is used to manage the analysis workflow and to enhance the readability
+and transparency of the analysis. To know more about `targets` consider
+the [official Git-hub page](https://github.com/ropensci/targets) or the
+[user manual](https://books.ropensci.org/targets/). Summarizing, using
+`targets` the user defines the plan of the analysis where each step in
+the analysis is defined through functions. Functions can be
+appropriately defined to obtain desired targets (i.e., R-output with
+results of interests) and they are declared in the file
+`Targets-workflow.R`. Subsequently, `targets` manages the whole analysis
+recognizing the dependency structure of the different targets. When any
+change is made to the code `targets` evaluates the analysis and updates
+the results. Following the *functional programming paradigm* (i.e.,
+defining functions for each step of the analysis) allows us to avoid
+“*coping and paste*” in the code, makes debugging easier, and
+facilitates the reading of the code.
 
 Moreover, the R-package `renv` is used to manage the dependencies of the
-R-packages used in the analysis. The `renv` package allows the creation
-of an isolated, portable, and reproducible environment where the
-analyses are run. To know more about `renv` consider the [official
+R-packages used in the analysis. The `renv` package allows to create an
+isolated, portable, and reproducible environment where the analyses are
+run. To know more about `renv` consider the [official
 documentation](https://rstudio.github.io/renv/articles/renv.html).
 However, `renv` is limited as it can not handle different R versions.
 
@@ -97,32 +99,26 @@ To reproduce the analysis:
 3.  Run `renv::restore()` to install the project’s dependencies (have a
     coffee, it takes some time).
 
-4.  Now the required package will be loaded. Restart the R session
+4.  Now the required packages are installed. Restart the R session
     (`command`/`ctrl` + `shift` + `f10`) so `devtools::load_all()` is
-    automatically run (according to `.Rprofile`) to load all functions
-    used in the analysis defined in the `R/` folder.
+    automatically run to load all functions used in the analysis defined
+    in the `R/` folder and required packages are loaded (according to
+    `.Rprofile`).
 
-    > Note that also `source("Documents/Utils_report.R")` is
-    > automatically run to load report utility functions (functions to
-    > load analysis results and to compile the bookdown).
+    > Note that also `source("Analysis/Utils_targets.R")` is
+    > automatically run to load `targets` utilities functions (functions
+    > to load analysis results). You can also use the shortcut
+    > `Ctrl/Cmd + Shift + L` to run `devtools::load_all()`
 
-5.  Open `Analysis/Analysis_Drake.R` and run each line (one by one) to
-    run the analysis using drake. First, the analysis environment is set
-    together with the analysis plan (available at `R/Plan.R`). Next, the
-    analysis targets are computed (have a coffee, it takes a long time).
-    Finally, the analysis results are loaded and briefly presented.
+5.  Open `Analysis/Analysis_targets.R` and run each line (one by one) to
+    run the analysis using `targets`. First, the analysis plan is
+    checked (available at `Analysis/Targets-workflow.R`). Next, the
+    analysis targets are computed. Finally, the analysis results are
+    loaded and briefly presented.
 
     > Note that you can access the analysis targets using the functions
-    > `drake::loadd(<name_target>)`, or load all the results with
-    > `drake_load_all()`.
-
-    > It could happen that sometimes the session stays idle when fitting
-    > `brms` models without throwing errors. In this case, it is
-    > necessary to force restarting the R session and rerun the
-    > analysis. An error warning message will appear:
-    > `Error: drake's cache is locked`. Just follow the instructions
-    > provided by drake to force unlock of the cache
-    > `drake::drake_cache("...")$unlock()`.
+    > `targets::tar_load(<name_target>)`, or load all the results with
+    > `tar_load_all()`.
 
 6.  To compile the pre-print version of the article (possible after the
     analysis), open `Documents/Paper/Paper.Rnw` and compile the file
