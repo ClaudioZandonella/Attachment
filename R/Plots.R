@@ -429,7 +429,7 @@ plot_post_pred <-  function(post_pred = post_pred_ext, problem = c("Externalizin
 plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizing", "Internalizing")){
   problem <- match.arg(problem)
 
-  if (problem == "Extrnalizing"){
+  if (problem == "Externalizing"){
     labs_diff <- c("Avoidance - Anxious", "Anxious - Secure",
                    "Fearful - Avoidant", "Avoidant - Secure",
                    "Fearful - Anxious", "Fearful - Secure")

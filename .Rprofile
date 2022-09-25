@@ -1,8 +1,17 @@
 source("renv/activate.R")
 
-devtools::load_all()
-source("Documents/Utils_report.R")
+if(interactive()){
 
-# library(rstan)
-# options(mc.cores = 4)
-# rstan_options(auto_write = TRUE)
+  # Libraries
+  library("tidyverse")
+  library("kableExtra")
+
+  # Load custom function
+  devtools::load_all()
+
+  # Load targets
+  tar_load_all()
+
+  # Options
+  theme_set(theme_bw())
+}

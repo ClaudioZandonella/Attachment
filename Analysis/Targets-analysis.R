@@ -2,42 +2,25 @@
 ####    Analysis    ####
 ########################
 
-#----    load env    ----
-env <- devtools::load_all()$env
+#----    Analysis    ----
 
-#----    Plan   -----
+# Targets plan
+targets::tar_config_set(script = "Analysis/Targets-workflow.R",
+                        store = "Analysis/_targets/")
 
-# load plan
-plan <- get_analysis_plan()
+# Check plan
+kk <- targets::tar_manifest(fields = "command")
+targets::tar_visnetwork()
 
-# Configure the analysis plan
-config <- drake::drake_config(plan,
-                              prework = "devtools::load_all()",
-                              envir = env)
+# Run analysis
+targets::tar_make()
+tar_load_all()
 
-# Plot the analysis plan
-drake::vis_drake_graph(config, font_size = 16, targets_only = FALSE)
+# End
+targets::tar_visnetwork()
 
-#----    Make    ----
-
-# Delate the analysis results
-# drake::clean('brm_ext_mother', destroy = TRUE)
-
-# Run the analysis
-drake::make(prework = "devtools::load_all()",
-            envir = env,
-            plan = plan,
-            seed = 2021)
-
-# Plot the analysis plan
-drake::vis_drake_graph(config, font_size = 16, targets_only = FALSE)
-
-#================================
-#====    Analysis Results    ====
-#================================
-
-#----    load all objects    ----
-drake_load_all()
+#----    Results    ----
+tar_load_all()
 
 # data
 data_munged
@@ -186,7 +169,5 @@ my_pp_check(brm_selected_ext, problem = "Externalizing")
 
 
 
-#===========================
 
-
-
+#----

@@ -61,7 +61,7 @@ get_encompassing_model <- function(data, y,  prior_par){
 
 get_par_names<- function(encompassing_model){
   # Keep only fixed effect "b_*" excluding gender, Intercepts and "zi" related parameters
-  par_names <- brms::parnames(encompassing_model) %>%
+  par_names <- brms::variables(encompassing_model) %>%
     .[grep("^b_(?!.*(Intercept|zi|gender))", ., perl = TRUE)] %>%
     gsub("^b_", replacement = "", .) %>%  # remove initial "b_"
     gsub("mother", replacement = "M_", .) %>%
