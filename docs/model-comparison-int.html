@@ -4,19 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Model Comparison | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
+  <title>Chapter 9 Model Comparison | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
   <meta name="description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Model Comparison | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta property="og:title" content="Chapter 9 Model Comparison | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://ClaudioZandonella.github.io/Attachment/" />
   <meta property="og:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
   <meta property="og:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="github-repo" content="ClaudioZandonella/Attachment" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Model Comparison | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta name="twitter:title" content="Chapter 9 Model Comparison | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   
   <meta name="twitter:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="twitter:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè" />
 
 
-<meta name="date" content="2021-11-28" />
+<meta name="date" content="2022-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="nhst-int.html"/>
 <link rel="next" href="BF-int.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -250,7 +249,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
           </h1>
         </div>
 
@@ -270,30 +269,30 @@ div.csl-indent {
 <div class="hero-image-container">
   <img class= "hero-image" src="images/banner.png">
 </div>
-<div id="model-comparison-int" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Model Comparison</h1>
-<div id="formalize-models-1" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Formalize Models</h2>
+<div id="model-comparison-int" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Model Comparison<a href="model-comparison-int.html#model-comparison-int" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="formalize-models-1" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Formalize Models<a href="model-comparison-int.html#formalize-models-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We consider Zero Inflated Negative Binomial Mixed-Effects models with only the role of gender as a fixed effect and children’s classroom ID as a random effect for <span class="math inline">\(p\)</span>. Whereas, considering <span class="math inline">\(\mu\)</span>, we define the same models as in the analysis of externalizing problems. Using R formula syntax, we have</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="model-comparison-int.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p (same for all models)</span></span>
-<span id="cb47-2"><a href="model-comparison-int.html#cb47-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
-<span id="cb47-3"><a href="model-comparison-int.html#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-4"><a href="model-comparison-int.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
-<span id="cb47-5"><a href="model-comparison-int.html#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-6"><a href="model-comparison-int.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_zero</span></span>
-<span id="cb47-7"><a href="model-comparison-int.html#cb47-7" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
-<span id="cb47-8"><a href="model-comparison-int.html#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-9"><a href="model-comparison-int.html#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_mother</span></span>
-<span id="cb47-10"><a href="model-comparison-int.html#cb47-10" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
-<span id="cb47-11"><a href="model-comparison-int.html#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-12"><a href="model-comparison-int.html#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_additive</span></span>
-<span id="cb47-13"><a href="model-comparison-int.html#cb47-13" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">+</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
-<span id="cb47-14"><a href="model-comparison-int.html#cb47-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-15"><a href="model-comparison-int.html#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_inter</span></span>
-<span id="cb47-16"><a href="model-comparison-int.html#cb47-16" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="model-comparison-int.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p (same for all models)</span></span>
+<span id="cb49-2"><a href="model-comparison-int.html#cb49-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
+<span id="cb49-3"><a href="model-comparison-int.html#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="model-comparison-int.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
+<span id="cb49-5"><a href="model-comparison-int.html#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="model-comparison-int.html#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_zero</span></span>
+<span id="cb49-7"><a href="model-comparison-int.html#cb49-7" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
+<span id="cb49-8"><a href="model-comparison-int.html#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-9"><a href="model-comparison-int.html#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_mother</span></span>
+<span id="cb49-10"><a href="model-comparison-int.html#cb49-10" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
+<span id="cb49-11"><a href="model-comparison-int.html#cb49-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-12"><a href="model-comparison-int.html#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_additive</span></span>
+<span id="cb49-13"><a href="model-comparison-int.html#cb49-13" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">+</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
+<span id="cb49-14"><a href="model-comparison-int.html#cb49-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-15"><a href="model-comparison-int.html#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_int_inter</span></span>
+<span id="cb49-16"><a href="model-comparison-int.html#cb49-16" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
 </div>
-<div id="aic-and-bic-results-1" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> AIC and BIC Results</h2>
+<div id="aic-and-bic-results-1" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> AIC and BIC Results<a href="model-comparison-int.html#aic-and-bic-results-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>AIC and BIC values together with their relative weights are computed and reported in Table~<a href="model-comparison-int.html#tab:table-AIC-BIC-weights-int">9.1</a>.</p>
 <table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
@@ -435,90 +434,90 @@ fit_int_inter
 <p>According to AIC, the most likely model is <code>fit_int_mother</code> (83%) and the second most likely model is <code>fit_int_additive</code> (16%) given the data and the set of models considered. According to BIC, instead, <code>fit_int_zero</code> and <code>fit_int_mother</code> models have almost the same probability, 52% and 48% respectively.</p>
 <p>We can say that there is evidence in favour of the role of mother attachment but probably this effect is small.</p>
 </div>
-<div id="selected-model-2" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Selected Model</h2>
+<div id="selected-model-2" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Selected Model<a href="model-comparison-int.html#selected-model-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Results of analysis of deviance for model <code>fit_int_mother</code> are reported below.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="model-comparison-int.html#cb48-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(fit_int_mother)</span>
-<span id="cb48-2"><a href="model-comparison-int.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Deviance Table (Type II Wald chisquare tests)</span></span>
-<span id="cb48-3"><a href="model-comparison-int.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb48-4"><a href="model-comparison-int.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: internalizing_sum</span></span>
-<span id="cb48-5"><a href="model-comparison-int.html#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="do">##         Chisq Df Pr(&gt;Chisq)    </span></span>
-<span id="cb48-6"><a href="model-comparison-int.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="do">## gender  0.754  1  0.3852261    </span></span>
-<span id="cb48-7"><a href="model-comparison-int.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="do">## mother 19.894  3  0.0001786 ***</span></span>
-<span id="cb48-8"><a href="model-comparison-int.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb48-9"><a href="model-comparison-int.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="model-comparison-int.html#cb50-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(fit_int_mother)</span>
+<span id="cb50-2"><a href="model-comparison-int.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Deviance Table (Type II Wald chisquare tests)</span></span>
+<span id="cb50-3"><a href="model-comparison-int.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb50-4"><a href="model-comparison-int.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: internalizing_sum</span></span>
+<span id="cb50-5"><a href="model-comparison-int.html#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="do">##         Chisq Df Pr(&gt;Chisq)    </span></span>
+<span id="cb50-6"><a href="model-comparison-int.html#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="do">## gender  0.754  1  0.3852261    </span></span>
+<span id="cb50-7"><a href="model-comparison-int.html#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="do">## mother 19.894  3  0.0001786 ***</span></span>
+<span id="cb50-8"><a href="model-comparison-int.html#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb50-9"><a href="model-comparison-int.html#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 <p>Results confirm a statistically significant effect of mother attachment. The model summary is reported below.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="model-comparison-int.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_int_mother)</span>
-<span id="cb49-2"><a href="model-comparison-int.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  Family: nbinom2  ( log )</span></span>
-<span id="cb49-3"><a href="model-comparison-int.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula:          internalizing_sum ~ gender + mother + (1 | ID_class)</span></span>
-<span id="cb49-4"><a href="model-comparison-int.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero inflation:                     ~gender + (1 | ID_class)</span></span>
-<span id="cb49-5"><a href="model-comparison-int.html#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Data: data_cluster</span></span>
-<span id="cb49-6"><a href="model-comparison-int.html#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-7"><a href="model-comparison-int.html#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      AIC      BIC   logLik deviance df.resid </span></span>
-<span id="cb49-8"><a href="model-comparison-int.html#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   3657.4   3704.8  -1818.7   3637.4      837 </span></span>
-<span id="cb49-9"><a href="model-comparison-int.html#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-10"><a href="model-comparison-int.html#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Random effects:</span></span>
-<span id="cb49-11"><a href="model-comparison-int.html#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-12"><a href="model-comparison-int.html#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
-<span id="cb49-13"><a href="model-comparison-int.html#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
-<span id="cb49-14"><a href="model-comparison-int.html#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 0.1423   0.3772  </span></span>
-<span id="cb49-15"><a href="model-comparison-int.html#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
-<span id="cb49-16"><a href="model-comparison-int.html#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-17"><a href="model-comparison-int.html#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
-<span id="cb49-18"><a href="model-comparison-int.html#cb49-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
-<span id="cb49-19"><a href="model-comparison-int.html#cb49-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 2.966    1.722   </span></span>
-<span id="cb49-20"><a href="model-comparison-int.html#cb49-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
-<span id="cb49-21"><a href="model-comparison-int.html#cb49-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-22"><a href="model-comparison-int.html#cb49-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Dispersion parameter for nbinom2 family (): 2.56 </span></span>
-<span id="cb49-23"><a href="model-comparison-int.html#cb49-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-24"><a href="model-comparison-int.html#cb49-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
-<span id="cb49-25"><a href="model-comparison-int.html#cb49-25" aria-hidden="true" tabindex="-1"></a><span class="do">##                Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
-<span id="cb49-26"><a href="model-comparison-int.html#cb49-26" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)     0.91263    0.10407   8.770  &lt; 2e-16 ***</span></span>
-<span id="cb49-27"><a href="model-comparison-int.html#cb49-27" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM         0.06096    0.07021   0.868  0.38523    </span></span>
-<span id="cb49-28"><a href="model-comparison-int.html#cb49-28" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious   0.28519    0.08921   3.197  0.00139 ** </span></span>
-<span id="cb49-29"><a href="model-comparison-int.html#cb49-29" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant  0.11979    0.09462   1.266  0.20550    </span></span>
-<span id="cb49-30"><a href="model-comparison-int.html#cb49-30" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful   0.46860    0.11682   4.011 6.04e-05 ***</span></span>
-<span id="cb49-31"><a href="model-comparison-int.html#cb49-31" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb49-32"><a href="model-comparison-int.html#cb49-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb49-33"><a href="model-comparison-int.html#cb49-33" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb49-34"><a href="model-comparison-int.html#cb49-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
-<span id="cb49-35"><a href="model-comparison-int.html#cb49-35" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
-<span id="cb49-36"><a href="model-comparison-int.html#cb49-36" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  -2.5021     0.5425  -4.612 3.99e-06 ***</span></span>
-<span id="cb49-37"><a href="model-comparison-int.html#cb49-37" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM      -0.2774     0.3493  -0.794    0.427    </span></span>
-<span id="cb49-38"><a href="model-comparison-int.html#cb49-38" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb49-39"><a href="model-comparison-int.html#cb49-39" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="model-comparison-int.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_int_mother)</span>
+<span id="cb51-2"><a href="model-comparison-int.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  Family: nbinom2  ( log )</span></span>
+<span id="cb51-3"><a href="model-comparison-int.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula:          internalizing_sum ~ gender + mother + (1 | ID_class)</span></span>
+<span id="cb51-4"><a href="model-comparison-int.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero inflation:                     ~gender + (1 | ID_class)</span></span>
+<span id="cb51-5"><a href="model-comparison-int.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Data: data_cluster</span></span>
+<span id="cb51-6"><a href="model-comparison-int.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-7"><a href="model-comparison-int.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      AIC      BIC   logLik deviance df.resid </span></span>
+<span id="cb51-8"><a href="model-comparison-int.html#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   3657.4   3704.8  -1818.7   3637.4      837 </span></span>
+<span id="cb51-9"><a href="model-comparison-int.html#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-10"><a href="model-comparison-int.html#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Random effects:</span></span>
+<span id="cb51-11"><a href="model-comparison-int.html#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-12"><a href="model-comparison-int.html#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
+<span id="cb51-13"><a href="model-comparison-int.html#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
+<span id="cb51-14"><a href="model-comparison-int.html#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 0.1423   0.3772  </span></span>
+<span id="cb51-15"><a href="model-comparison-int.html#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
+<span id="cb51-16"><a href="model-comparison-int.html#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-17"><a href="model-comparison-int.html#cb51-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
+<span id="cb51-18"><a href="model-comparison-int.html#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
+<span id="cb51-19"><a href="model-comparison-int.html#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 2.966    1.722   </span></span>
+<span id="cb51-20"><a href="model-comparison-int.html#cb51-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
+<span id="cb51-21"><a href="model-comparison-int.html#cb51-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-22"><a href="model-comparison-int.html#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Dispersion parameter for nbinom2 family (): 2.56 </span></span>
+<span id="cb51-23"><a href="model-comparison-int.html#cb51-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-24"><a href="model-comparison-int.html#cb51-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
+<span id="cb51-25"><a href="model-comparison-int.html#cb51-25" aria-hidden="true" tabindex="-1"></a><span class="do">##                Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb51-26"><a href="model-comparison-int.html#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)     0.91263    0.10407   8.770  &lt; 2e-16 ***</span></span>
+<span id="cb51-27"><a href="model-comparison-int.html#cb51-27" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM         0.06096    0.07021   0.868  0.38523    </span></span>
+<span id="cb51-28"><a href="model-comparison-int.html#cb51-28" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious   0.28519    0.08921   3.197  0.00139 ** </span></span>
+<span id="cb51-29"><a href="model-comparison-int.html#cb51-29" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant  0.11979    0.09462   1.266  0.20550    </span></span>
+<span id="cb51-30"><a href="model-comparison-int.html#cb51-30" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful   0.46860    0.11682   4.011 6.04e-05 ***</span></span>
+<span id="cb51-31"><a href="model-comparison-int.html#cb51-31" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb51-32"><a href="model-comparison-int.html#cb51-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb51-33"><a href="model-comparison-int.html#cb51-33" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb51-34"><a href="model-comparison-int.html#cb51-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
+<span id="cb51-35"><a href="model-comparison-int.html#cb51-35" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb51-36"><a href="model-comparison-int.html#cb51-36" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  -2.5021     0.5425  -4.612 3.99e-06 ***</span></span>
+<span id="cb51-37"><a href="model-comparison-int.html#cb51-37" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM      -0.2774     0.3493  -0.794    0.427    </span></span>
+<span id="cb51-38"><a href="model-comparison-int.html#cb51-38" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb51-39"><a href="model-comparison-int.html#cb51-39" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 To evaluate the effect of mother attachment, the marginal predicted values are presented in Figure~<a href="model-comparison-int.html#fig:plot-comparison-effects-int">9.1</a>. Not that the marginal predicted values for gender are averaged over mother attachment. Whereas, the marginal predicted values for mother attachment are averaged over gender.
-<div class="figure" style="text-align: center"><span id="fig:plot-comparison-effects-int"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-comparison-effects-int"></span>
 <img src="attachment-bayes-factor_files/figure-html/plot-comparison-effects-int-1.png" alt="Marginal predicted values according to gender and mother attachment ($n_{subj} = 847$)." width="672" />
 <p class="caption">
 Figure 9.1: Marginal predicted values according to gender and mother attachment (<span class="math inline">\(n_{subj} = 847\)</span>).
 </p>
 </div>
 <p>Post-hoc tests are run, considering pairwise comparisons and adjusting <em>p</em>-values according to multivariate <em>t</em>-distribution. Results are reported below,</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="model-comparison-int.html#cb50-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fit_int_mother, <span class="at">specs =</span> <span class="sc">~</span> mother ),</span>
-<span id="cb50-2"><a href="model-comparison-int.html#cb50-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;mvt&quot;</span>)</span>
-<span id="cb50-3"><a href="model-comparison-int.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  contrast           estimate     SE  df t.ratio p.value</span></span>
-<span id="cb50-4"><a href="model-comparison-int.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Anxious     -0.285 0.0892 837  -3.197  0.0077</span></span>
-<span id="cb50-5"><a href="model-comparison-int.html#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Avoidant    -0.120 0.0946 837  -1.266  0.5809</span></span>
-<span id="cb50-6"><a href="model-comparison-int.html#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Fearful     -0.469 0.1168 837  -4.011  0.0003</span></span>
-<span id="cb50-7"><a href="model-comparison-int.html#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Avoidant    0.165 0.0869 837   1.903  0.2242</span></span>
-<span id="cb50-8"><a href="model-comparison-int.html#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Fearful    -0.183 0.1096 837  -1.673  0.3346</span></span>
-<span id="cb50-9"><a href="model-comparison-int.html#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Avoidant - Fearful   -0.349 0.1167 837  -2.989  0.0149</span></span>
-<span id="cb50-10"><a href="model-comparison-int.html#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb50-11"><a href="model-comparison-int.html#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are averaged over the levels of: gender </span></span>
-<span id="cb50-12"><a href="model-comparison-int.html#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are given on the log (not the response) scale. </span></span>
-<span id="cb50-13"><a href="model-comparison-int.html#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment: mvt method for 6 tests</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="model-comparison-int.html#cb52-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fit_int_mother, <span class="at">specs =</span> <span class="sc">~</span> mother ),</span>
+<span id="cb52-2"><a href="model-comparison-int.html#cb52-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;mvt&quot;</span>)</span>
+<span id="cb52-3"><a href="model-comparison-int.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  contrast           estimate     SE  df t.ratio p.value</span></span>
+<span id="cb52-4"><a href="model-comparison-int.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Anxious     -0.285 0.0892 837  -3.197  0.0078</span></span>
+<span id="cb52-5"><a href="model-comparison-int.html#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Avoidant    -0.120 0.0946 837  -1.266  0.5809</span></span>
+<span id="cb52-6"><a href="model-comparison-int.html#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Fearful     -0.469 0.1168 837  -4.011  0.0003</span></span>
+<span id="cb52-7"><a href="model-comparison-int.html#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Avoidant    0.165 0.0869 837   1.903  0.2243</span></span>
+<span id="cb52-8"><a href="model-comparison-int.html#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Fearful    -0.183 0.1096 837  -1.673  0.3347</span></span>
+<span id="cb52-9"><a href="model-comparison-int.html#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Avoidant - Fearful   -0.349 0.1167 837  -2.989  0.0149</span></span>
+<span id="cb52-10"><a href="model-comparison-int.html#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb52-11"><a href="model-comparison-int.html#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are averaged over the levels of: gender </span></span>
+<span id="cb52-12"><a href="model-comparison-int.html#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are given on the log (not the response) scale. </span></span>
+<span id="cb52-13"><a href="model-comparison-int.html#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment: mvt method for 6 tests</span></span></code></pre></div>
 <p>Results indicate that Fearful and Anxious children have more problems than Secure children. Moreover, also the difference between Avoidant and Fearful children is significant.</p>
 <p>To evaluate the fit of the model to the data, we computed the <em>Marginal</em> <span class="math inline">\(R^2\)</span> and the <em>Conditional</em> <span class="math inline">\(R^2\)</span>.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="model-comparison-int.html#cb51-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_int_mother)</span>
-<span id="cb51-2"><a href="model-comparison-int.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: mu of 3.2 is too close to zero, estimate of random effect variances may be unreliable.</span></span>
-<span id="cb51-3"><a href="model-comparison-int.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # R2 for Mixed Models</span></span>
-<span id="cb51-4"><a href="model-comparison-int.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb51-5"><a href="model-comparison-int.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Conditional R2: 0.209</span></span>
-<span id="cb51-6"><a href="model-comparison-int.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      Marginal R2: 0.031</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="model-comparison-int.html#cb53-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_int_mother)</span>
+<span id="cb53-2"><a href="model-comparison-int.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: mu of 3.2 is too close to zero, estimate of random effect variances may be unreliable.</span></span>
+<span id="cb53-3"><a href="model-comparison-int.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # R2 for Mixed Models</span></span>
+<span id="cb53-4"><a href="model-comparison-int.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb53-5"><a href="model-comparison-int.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Conditional R2: 0.209</span></span>
+<span id="cb53-6"><a href="model-comparison-int.html#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      Marginal R2: 0.031</span></span></code></pre></div>
 <p>We can see that the actual variance explained by fixed effects is 3%, not that much.</p>
-<div id="conclusions-4" class="section level4 unnumbered">
-<h4>Conclusions</h4>
+<div id="conclusions-4" class="section level4 unnumbered hasAnchor">
+<h4>Conclusions<a href="model-comparison-int.html#conclusions-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the <strong>Monotropy Theory</strong>. Note, however, that the compared models contain no information regarding the expected direction of the effects but we only include/exclude predictors.</p>
 
 </div>
@@ -542,7 +541,6 @@ Figure 9.1: Marginal predicted values according to gender and mother attachment 
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -582,6 +580,10 @@ gitbook.start({
 "text": null
 },
 "download": ["attachment-bayes-factor.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true,
@@ -597,7 +599,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

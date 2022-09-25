@@ -4,19 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Bayes Factor | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
+  <title>Chapter 5 Bayes Factor | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
   <meta name="description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Bayes Factor | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta property="og:title" content="Chapter 5 Bayes Factor | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://ClaudioZandonella.github.io/Attachment/" />
   <meta property="og:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
   <meta property="og:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="github-repo" content="ClaudioZandonella/Attachment" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Bayes Factor | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta name="twitter:title" content="Chapter 5 Bayes Factor | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   
   <meta name="twitter:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="twitter:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè" />
 
 
-<meta name="date" content="2021-11-28" />
+<meta name="date" content="2022-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="model-comparison-ext.html"/>
 <link rel="next" href="conclusion-ext.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -250,7 +249,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
           </h1>
         </div>
 
@@ -270,20 +269,20 @@ div.csl-indent {
 <div class="hero-image-container">
   <img class= "hero-image" src="images/banner.png">
 </div>
-<div id="BF-ext" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Bayes Factor</h1>
+<div id="BF-ext" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Bayes Factor<a href="BF-ext.html#BF-ext" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes factor with the encompassing prior approach. See the main article for a detailed introduction to this approach [TODO: add link article].</p>
 <p>First, we define the encompassing model. Subsequently, we obtain the hypotheses matrices according to the informative hypotheses. Next, we compute the Bayes factor and, finally, we describe the selected model.</p>
-<div id="encompassing-model" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Encompassing Model</h2>
+<div id="encompassing-model" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Encompassing Model<a href="BF-ext.html#encompassing-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We define a Zero-Inflated Negative Binomial (ZINB) mixed-effects model to take into account the characteristics of the dependent variable and its distribution (see Section~<a href="model-choice-ext.html#model-choice-ext">2</a>). Again, we consider only the role of gender as a fixed effect and children’s classroom ID as a random effect for <span class="math inline">\(p\)</span>. Whereas, regarding <span class="math inline">\(\mu\)</span>, we consider the interaction between mother and father attachment together with gender as fixed effects and children’s classroom ID as a random effect. In the R formula syntax, we have</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="BF-ext.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p</span></span>
-<span id="cb20-2"><a href="BF-ext.html#cb20-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
-<span id="cb20-3"><a href="BF-ext.html#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="BF-ext.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
-<span id="cb20-5"><a href="BF-ext.html#cb20-5" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
-<div id="prior-choice" class="section level3" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> Prior Choice</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="BF-ext.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p</span></span>
+<span id="cb21-2"><a href="BF-ext.html#cb21-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
+<span id="cb21-3"><a href="BF-ext.html#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="BF-ext.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
+<span id="cb21-5"><a href="BF-ext.html#cb21-5" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
+<div id="prior-choice" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Prior Choice<a href="BF-ext.html#prior-choice" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The prior choice is important for the parameters involved in the equality and inequality constraints. In our case, the parameters of interest (i.e., those related to mother and father attachment interaction) are unbounded. Thus, we can simply specify as prior a normal distribution with mean 0 and a given standard deviation. Considering the standard deviation, however, we have to choose a value so that the resulting prior is non-informative but without being excessively diffuse.</p>
 We can evaluate the consequences of different values’ choice considering the resulting prior predictions. To facilitate this step, we compute prior prediction considering only the intercept and a single parameter of interest. Remembering that the inverse link function (i.e., function that in a GLM transform the model linear prediction into the value on the original response scale) is the exponential function, we consider as intercept the value 1 because <span class="math inline">\(exp(1) \approx 2.7\)</span> that is close to the externalizing problems sample mean 3.35. In Table~<a href="BF-ext.html#tab:table-prior-predict">5.1</a>, summary information about prior predictions for different standard deviation values is reported.
 <table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -426,7 +425,7 @@ Prior
 </table>
 <p>Considering that externalizing problems are bounded between 0 and 20, a reasonable prior is <span class="math inline">\(\mathcal{N}(0,3)\)</span>. With these settings, prior predicted values cover all possible values without including excessively large values. More diffuse priors would result in values with a higher order of magnitude and tighter priors would exclude plausible values. The influence of prior specification will be subsequently evaluated in a prior sensitivity analysis.</p>
 <p>Regarding the other nuisance parameters (i.e., intercepts, random effects and shapes parameters) <code>brms</code> default priors are maintained. The resulting prior settings are</p>
-<pre><code>##                   prior     class                          coef    group resp dpar nlpar bound       source
+<pre><code>##                   prior     class                          coef    group resp dpar nlpar lb ub       source
 ##            normal(0, 3)         b                                                                      user
 ##            normal(0, 3)         b                 fatherAnxious                                (vectorized)
 ##            normal(0, 3)         b                fatherAvoidant                                (vectorized)
@@ -444,72 +443,72 @@ Prior
 ##            normal(0, 3)         b   motherFearful:fatherAnxious                                (vectorized)
 ##            normal(0, 3)         b  motherFearful:fatherAvoidant                                (vectorized)
 ##            normal(0, 3)         b   motherFearful:fatherFearful                                (vectorized)
-##            normal(0, 3)         b                                               zi             (vectorized)
-##            normal(0, 3)         b                       genderM                 zi             (vectorized)
+##                  (flat)         b                                               zi                  default
+##                  (flat)         b                       genderM                 zi             (vectorized)
 ##  student_t(3, 0.7, 2.5) Intercept                                                                   default
 ##          logistic(0, 1) Intercept                                               zi                  default
-##    student_t(3, 0, 2.5)        sd                                                                   default
-##    student_t(3, 0, 2.5)        sd                                               zi                  default
-##    student_t(3, 0, 2.5)        sd                               ID_class                       (vectorized)
-##    student_t(3, 0, 2.5)        sd                     Intercept ID_class                       (vectorized)
-##    student_t(3, 0, 2.5)        sd                               ID_class        zi             (vectorized)
-##    student_t(3, 0, 2.5)        sd                     Intercept ID_class        zi             (vectorized)
-##       gamma(0.01, 0.01)     shape                                                                   default</code></pre>
+##    student_t(3, 0, 2.5)        sd                                                         0         default
+##    student_t(3, 0, 2.5)        sd                                               zi        0         default
+##    student_t(3, 0, 2.5)        sd                               ID_class                  0    (vectorized)
+##    student_t(3, 0, 2.5)        sd                     Intercept ID_class                  0    (vectorized)
+##    student_t(3, 0, 2.5)        sd                               ID_class        zi        0    (vectorized)
+##    student_t(3, 0, 2.5)        sd                     Intercept ID_class        zi        0    (vectorized)
+##       gamma(0.01, 0.01)     shape                                                         0         default</code></pre>
 </div>
-<div id="posterior" class="section level3" number="5.1.2">
-<h3><span class="header-section-number">5.1.2</span> Posterior</h3>
+<div id="posterior" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Posterior<a href="BF-ext.html#posterior" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The encompassing model is estimated using 6 independent chains with 10,000 iterations (warm-up 2,000). To do that we use the <code>brm()</code> function from the <code>brms</code> R-package <span class="citation">(<a href="#ref-burknerBrmsPackageBayesian2017" role="doc-biblioref">Bürkner, 2017</a>, <a href="#ref-burknerAdvancedBayesianMultilevel2018a" role="doc-biblioref">2018</a>)</span>, which is based on STAN <span class="citation">(<a href="#ref-standevelopmentteamRStanInterfaceStan2020" role="doc-biblioref">Stan Development Team, 2020</a>)</span>. Summary of the encompassing model is presented below.</p>
 <pre><code>##  Family: zero_inflated_negbinomial 
 ##   Links: mu = log; shape = identity; zi = logit 
 ## Formula: externalizing_sum ~ gender + mother * father + (1 | ID_class) 
 ##          zi ~ gender + (1 | ID_class)
 ##    Data: data (Number of observations: 847) 
-## Samples: 6 chains, each with iter = 10000; warmup = 2000; thin = 1;
-##          total post-warmup samples = 48000
+##   Draws: 6 chains, each with iter = 10000; warmup = 2000; thin = 1;
+##          total post-warmup draws = 48000
 ## 
 ## Group-Level Effects: 
 ## ~ID_class (Number of levels: 50) 
 ##                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)        0.30      0.07     0.17     0.45 1.00    14161    20827
-## sd(zi_Intercept)     1.14      0.29     0.68     1.82 1.00    22361    31673
+## sd(Intercept)        0.30      0.07     0.17     0.45 1.00    14452    20584
+## sd(zi_Intercept)     1.14      0.29     0.68     1.82 1.00    21599    30432
 ## 
 ## Population-Level Effects: 
 ##                               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept                         0.98      0.13     0.72     1.24 1.00    35521    38291
-## zi_Intercept                     -1.33      0.33    -2.09    -0.78 1.00    36797    30278
-## genderM                           0.32      0.08     0.16     0.49 1.00    81905    36734
-## motherAnxious                     0.32      0.19    -0.05     0.70 1.00    39619    37732
-## motherAvoidant                    0.17      0.26    -0.33     0.69 1.00    37098    36353
-## motherFearful                     0.69      0.41    -0.07     1.54 1.00    34182    30539
-## fatherAnxious                     0.22      0.20    -0.16     0.60 1.00    40404    38489
-## fatherAvoidant                   -0.45      0.22    -0.87    -0.02 1.00    40412    38016
-## fatherFearful                     0.11      0.42    -0.69     0.96 1.00    35432    34390
-## motherAnxious:fatherAnxious      -0.39      0.28    -0.94     0.15 1.00    36701    36495
-## motherAvoidant:fatherAnxious     -0.12      0.34    -0.80     0.53 1.00    36329    36398
-## motherFearful:fatherAnxious      -0.43      0.51    -1.46     0.55 1.00    35084    32876
-## motherAnxious:fatherAvoidant      0.33      0.29    -0.25     0.89 1.00    36157    37830
-## motherAvoidant:fatherAvoidant     0.61      0.34    -0.06     1.26 1.00    34169    35603
-## motherFearful:fatherAvoidant      0.30      0.48    -0.68     1.20 1.00    32533    31702
-## motherAnxious:fatherFearful      -0.06      0.48    -1.02     0.86 1.00    34008    34560
-## motherAvoidant:fatherFearful      0.09      0.57    -1.04     1.19 1.00    34795    33933
-## motherFearful:fatherFearful      -0.26      0.60    -1.48     0.86 1.00    30725    30729
-## zi_genderM                       -0.78      0.29    -1.38    -0.23 1.00    70555    35796
+## Intercept                         0.98      0.13     0.72     1.24 1.00    36946    39083
+## zi_Intercept                     -1.33      0.33    -2.08    -0.79 1.00    37409    31478
+## genderM                           0.32      0.08     0.16     0.49 1.00    83483    38460
+## motherAnxious                     0.32      0.19    -0.06     0.69 1.00    40607    39458
+## motherAvoidant                    0.17      0.26    -0.33     0.69 1.00    39406    36276
+## motherFearful                     0.69      0.41    -0.07     1.53 1.00    35752    33258
+## fatherAnxious                     0.22      0.19    -0.16     0.60 1.00    41153    37645
+## fatherAvoidant                   -0.45      0.21    -0.87    -0.03 1.00    43962    38015
+## fatherFearful                     0.11      0.42    -0.68     0.97 1.00    33620    33965
+## motherAnxious:fatherAnxious      -0.39      0.28    -0.93     0.15 1.00    37290    38104
+## motherAvoidant:fatherAnxious     -0.12      0.34    -0.79     0.53 1.00    37877    36168
+## motherFearful:fatherAnxious      -0.43      0.51    -1.45     0.55 1.00    36742    34591
+## motherAnxious:fatherAvoidant      0.33      0.29    -0.24     0.89 1.00    38934    38185
+## motherAvoidant:fatherAvoidant     0.60      0.33    -0.05     1.25 1.00    37462    34839
+## motherFearful:fatherAvoidant      0.30      0.48    -0.67     1.20 1.00    34490    33126
+## motherAnxious:fatherFearful      -0.06      0.48    -1.03     0.87 1.00    33089    34838
+## motherAvoidant:fatherFearful      0.09      0.57    -1.04     1.19 1.00    35141    36840
+## motherFearful:fatherFearful      -0.27      0.59    -1.46     0.86 1.00    29919    31952
+## zi_genderM                       -0.78      0.29    -1.38    -0.24 1.00    68477    37227
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## shape     1.63      0.24     1.22     2.14 1.00    34643    32767
+## shape     1.64      0.24     1.22     2.14 1.00    34980    35143
 ## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
-<div id="hypothesis-matrices" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Hypothesis Matrices</h2>
+<div id="hypothesis-matrices" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Hypothesis Matrices<a href="BF-ext.html#hypothesis-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For each informative hypothesis, we obtain a hypothesis matrix that translates equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper ([TODO: add link]).</p>
 <p>Here we present the obtained hypothesis matrices where on the columns we have the parameters of the encompassing model (excluding the intercept) and each row expresses an equality constraint or an inequality constraint. Matrices’ row names follow this notation: names without square brackets indicate a constraint directly on the model parameter; names within square brackets indicate a group condition (that could be the resulting composition of more parameters). For example, <code>"M_Avoidant:F_Anxious"</code> indicates the actual interaction term of the model, whereas <code>"[M_Avoidant_F_Anxious]"</code> indicates the group condition. This is done because when assuming no interaction or no father attachment effect we set constraints directly on the model parameters, instead, when constraints involve group comparisons, we need to obtain the resulting conditions. Equality and inequality constraints are presented separately.</p>
-<div id="null-hypothesis" class="section level4 unnumbered">
-<h4>Null Hypothesis</h4>
+<div id="null-hypothesis" class="section level4 unnumbered hasAnchor">
+<h4>Null Hypothesis<a href="BF-ext.html#null-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ul>
 <li><strong>Equality matrix</strong>, <span class="math inline">\(R_{iE} = 0\)</span> (each row is set to zero).</li>
 </ul>
@@ -533,8 +532,8 @@ Prior
 <li><strong>Inequality matrix</strong>, <span class="math inline">\(R_{iI} &gt; 0\)</span> (each row is set greater than zero). There are no inequality constraints.</li>
 </ul>
 </div>
-<div id="monotropy-hypothesis" class="section level4 unnumbered">
-<h4>Monotropy Hypothesis</h4>
+<div id="monotropy-hypothesis" class="section level4 unnumbered hasAnchor">
+<h4>Monotropy Hypothesis<a href="BF-ext.html#monotropy-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ul>
 <li><strong>Equality matrix</strong>, <span class="math inline">\(R_{iE} = 0\)</span> (each row is set to zero).</li>
 </ul>
@@ -559,8 +558,8 @@ Prior
 ## [M_Anx_F_Sec]                       1          0         0         0          0         0                   0                    0                   0                    0                     0                    0                   0                    0                   0
 ## [M_Fear_F_Sec - M_Av_F_Sec]         0         -1         1         0          0         0                   0                    0                   0                    0                     0                    0                   0                    0                   0</code></pre>
 </div>
-<div id="hierarchy-hypothesis" class="section level4 unnumbered">
-<h4>Hierarchy Hypothesis</h4>
+<div id="hierarchy-hypothesis" class="section level4 unnumbered hasAnchor">
+<h4>Hierarchy Hypothesis<a href="BF-ext.html#hierarchy-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ul>
 <li><strong>Equality matrix</strong>, <span class="math inline">\(R_{iE} = 0\)</span> (each row is set to zero).</li>
 </ul>
@@ -588,8 +587,8 @@ Prior
 ## [M_Av_F_Sec - M_Sec_F_Av]             0          1         0         0         -1         0                   0                    0                   0                    0                     0                    0                   0                    0                   0
 ## [M_Fear_F_Sec - M_Sec_F_Fear]         0          0         1         0          0        -1                   0                    0                   0                    0                     0                    0                   0                    0                   0</code></pre>
 </div>
-<div id="independence-hypothesis" class="section level4 unnumbered">
-<h4>Independence Hypothesis</h4>
+<div id="independence-hypothesis" class="section level4 unnumbered hasAnchor">
+<h4>Independence Hypothesis<a href="BF-ext.html#independence-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ul>
 <li><strong>Equality matrix</strong>, <span class="math inline">\(R_{iE} = 0\)</span> (each row is set to zero).</li>
 </ul>
@@ -614,8 +613,8 @@ Prior
 ## [M_Sec_F_Av - M_Sec_F_Anx]          0          0         0        -1          1         0                   0                    0                   0                    0                     0                    0                   0                    0                   0
 ## [M_Sec_F_Fear - M_Sec_F_Av]         0          0         0         0         -1         1                   0                    0                   0                    0                     0                    0                   0                    0                   0</code></pre>
 </div>
-<div id="integration-hypothesis" class="section level4 unnumbered">
-<h4>Integration Hypothesis</h4>
+<div id="integration-hypothesis" class="section level4 unnumbered hasAnchor">
+<h4>Integration Hypothesis<a href="BF-ext.html#integration-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ul>
 <li><strong>Equality matrix</strong>, <span class="math inline">\(R_{iE} = 0\)</span> (each row is set to zero).</li>
 </ul>
@@ -639,8 +638,8 @@ Prior
 ## [M_Fear_F_Fear - M_Fear_F_Anx]         0          0         0        -1          0         1                   0                    0                  -1                    0                     0                    0                   0                    0                   1</code></pre>
 </div>
 </div>
-<div id="centering-and-adjusting" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Centering and Adjusting</h2>
+<div id="centering-and-adjusting" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Centering and Adjusting<a href="BF-ext.html#centering-and-adjusting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>So far we have specified the encompassing prior, obtained the model posterior distribution, and defined the hypotheses matrices. Now, we need to transform our parameters of interest and center the distribution on the constraints focal points of interest. We apply the following transformation
 <span class="math display">\[
 \beta = R\theta - r
@@ -673,21 +672,21 @@ See the main article for more details [TODO: add link].</p>
 ## [M_Sec_F_Anx]                       0          0         0         1          0         0                   0                    0                   0                    0                     0                    0                   0                    0                   0
 ## [M_Sec_F_Fear - M_Sec_F_Av]         0          0         0         0         -1         1                   0                    0                   0                    0                     0                    0                   0                    0                   0</code></pre>
 <p>The remaining contrasts, instead, are obtained as linear combinations of the other constraints. In particular,</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="BF-ext.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Constraint 16: [M_Anx_F_Sec - M_Sec_F_Anx]</span></span>
-<span id="cb33-2"><a href="BF-ext.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(R[<span class="st">&quot;[M_Anx_F_Sec - M_Sec_F_Anx]&quot;</span>,] <span class="sc">==</span> R[<span class="st">&quot;[M_Anx_F_Sec]&quot;</span>, ] <span class="sc">-</span> R[<span class="st">&quot;[M_Sec_F_Anx]&quot;</span>, ])</span>
-<span id="cb33-3"><a href="BF-ext.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb33-4"><a href="BF-ext.html#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="BF-ext.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Constraint 17: [M_Av_F_Sec - M_Sec_F_Av]</span></span>
-<span id="cb33-6"><a href="BF-ext.html#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(R[<span class="st">&quot;[M_Av_F_Sec - M_Sec_F_Av]&quot;</span>,] <span class="sc">==</span> <span class="sc">-</span> R[<span class="st">&quot;[M_Anx_F_Sec - M_Av_F_Sec]&quot;</span>, ] <span class="sc">+</span> R[<span class="st">&quot;[M_Sec_F_Anx - M_Sec_F_Av]&quot;</span>, ] <span class="sc">+</span>  R[<span class="st">&quot;[M_Anx_F_Sec - M_Sec_F_Anx]&quot;</span>, ])</span>
-<span id="cb33-7"><a href="BF-ext.html#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb33-8"><a href="BF-ext.html#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-9"><a href="BF-ext.html#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Constraint 18: [M_Fear_F_Sec - M_Sec_F_Fear] </span></span>
-<span id="cb33-10"><a href="BF-ext.html#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(R[<span class="st">&quot;[M_Fear_F_Sec - M_Sec_F_Fear]&quot;</span>,] <span class="sc">==</span> R[<span class="st">&quot;[M_Av_F_Sec - M_Sec_F_Av]&quot;</span>, ] <span class="sc">+</span> R[<span class="st">&quot;[M_Fear_F_Sec - M_Av_F_Sec]&quot;</span>, ] <span class="sc">-</span> R[<span class="st">&quot;[M_Sec_F_Fear - M_Sec_F_Av]&quot;</span>, ])</span>
-<span id="cb33-11"><a href="BF-ext.html#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="BF-ext.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Constraint 16: [M_Anx_F_Sec - M_Sec_F_Anx]</span></span>
+<span id="cb34-2"><a href="BF-ext.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(R[<span class="st">&quot;[M_Anx_F_Sec - M_Sec_F_Anx]&quot;</span>,] <span class="sc">==</span> R[<span class="st">&quot;[M_Anx_F_Sec]&quot;</span>, ] <span class="sc">-</span> R[<span class="st">&quot;[M_Sec_F_Anx]&quot;</span>, ])</span>
+<span id="cb34-3"><a href="BF-ext.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb34-4"><a href="BF-ext.html#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="BF-ext.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Constraint 17: [M_Av_F_Sec - M_Sec_F_Av]</span></span>
+<span id="cb34-6"><a href="BF-ext.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(R[<span class="st">&quot;[M_Av_F_Sec - M_Sec_F_Av]&quot;</span>,] <span class="sc">==</span> <span class="sc">-</span> R[<span class="st">&quot;[M_Anx_F_Sec - M_Av_F_Sec]&quot;</span>, ] <span class="sc">+</span> R[<span class="st">&quot;[M_Sec_F_Anx - M_Sec_F_Av]&quot;</span>, ] <span class="sc">+</span>  R[<span class="st">&quot;[M_Anx_F_Sec - M_Sec_F_Anx]&quot;</span>, ])</span>
+<span id="cb34-7"><a href="BF-ext.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb34-8"><a href="BF-ext.html#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="BF-ext.html#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Constraint 18: [M_Fear_F_Sec - M_Sec_F_Fear] </span></span>
+<span id="cb34-10"><a href="BF-ext.html#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(R[<span class="st">&quot;[M_Fear_F_Sec - M_Sec_F_Fear]&quot;</span>,] <span class="sc">==</span> R[<span class="st">&quot;[M_Av_F_Sec - M_Sec_F_Av]&quot;</span>, ] <span class="sc">+</span> R[<span class="st">&quot;[M_Fear_F_Sec - M_Av_F_Sec]&quot;</span>, ] <span class="sc">-</span> R[<span class="st">&quot;[M_Sec_F_Fear - M_Sec_F_Av]&quot;</span>, ])</span>
+<span id="cb34-11"><a href="BF-ext.html#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
 <p>Before computing the Bayes factor, note that we have a set of comparable hypotheses as it exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply considering all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups’ differences. See the main article for a detailed explanation [TODO: add link article].</p>
 </div>
-<div id="results-and-sensitivity" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Results and Sensitivity</h2>
+<div id="results-and-sensitivity" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Results and Sensitivity<a href="BF-ext.html#results-and-sensitivity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To compute the Bayes factor we evaluate marginal densities and conditional probabilities as described in detail in the main article [TODO: add link article]. Bayes factor and posterior probability of each hypothesis are reported in Table~<a href="BF-ext.html#tab:table-bf-results-ext">5.2</a>.</p>
 <table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
@@ -714,7 +713,7 @@ Posterior Probability
 Null
 </td>
 <td style="text-align:center;">
-2.9e+11
+2.4e+11
 </td>
 <td style="text-align:center;">
 0.01
@@ -728,7 +727,7 @@ Null
 Monotropy
 </td>
 <td style="text-align:center;">
-2.6e+13
+2.5e+13
 </td>
 <td style="text-align:center;">
 0.98
@@ -742,7 +741,7 @@ Monotropy
 Hierarchy
 </td>
 <td style="text-align:center;">
-2.7e+11
+2.9e+11
 </td>
 <td style="text-align:center;">
 0.01
@@ -756,7 +755,7 @@ Hierarchy
 Independence
 </td>
 <td style="text-align:center;">
-3.9e+09
+4.0e+09
 </td>
 <td style="text-align:center;">
 0.00
@@ -770,7 +769,7 @@ Independence
 Integration
 </td>
 <td style="text-align:center;">
-3.2e+09
+3.3e+09
 </td>
 <td style="text-align:center;">
 0.00
@@ -866,16 +865,86 @@ PP
 Null
 </td>
 <td style="text-align:center;">
-8.2e+01
+8.9e+01
 </td>
 <td style="text-align:center;">
 0.00
 </td>
 <td style="text-align:center;">
-9.4e+04
+9.0e+04
 </td>
 <td style="text-align:right;">
 0.00
+</td>
+<td style="text-align:center;">
+2.4e+11
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+5.2e+14
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:center;">
+1.4e+19
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Monotropy
+</td>
+<td style="text-align:center;">
+1.1e+05
+</td>
+<td style="text-align:center;">
+0.67
+</td>
+<td style="text-align:center;">
+6.6e+07
+</td>
+<td style="text-align:right;">
+0.90
+</td>
+<td style="text-align:center;">
+2.5e+13
+</td>
+<td style="text-align:center;">
+0.98
+</td>
+<td style="text-align:center;">
+1.7e+16
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:center;">
+1.3e+20
+</td>
+<td style="text-align:center;">
+0.90
+</td>
+</tr>
+<tr>
+<td style="text-align:right;font-weight: bold;">
+Hierarchy
+</td>
+<td style="text-align:center;">
+4.5e+04
+</td>
+<td style="text-align:center;">
+0.28
+</td>
+<td style="text-align:center;">
+6.5e+06
+</td>
+<td style="text-align:right;">
+0.09
 </td>
 <td style="text-align:center;">
 2.9e+11
@@ -884,83 +953,13 @@ Null
 0.01
 </td>
 <td style="text-align:center;">
-4.7e+14
-</td>
-<td style="text-align:right;">
-0.03
-</td>
-<td style="text-align:center;">
-1.5e+19
-</td>
-<td style="text-align:center;">
-0.11
-</td>
-</tr>
-<tr>
-<td style="text-align:right;font-weight: bold;">
-Monotropy
-</td>
-<td style="text-align:center;">
-1.2e+05
-</td>
-<td style="text-align:center;">
-0.67
-</td>
-<td style="text-align:center;">
-6.3e+07
-</td>
-<td style="text-align:right;">
-0.90
-</td>
-<td style="text-align:center;">
-2.6e+13
-</td>
-<td style="text-align:center;">
-0.98
-</td>
-<td style="text-align:center;">
-1.6e+16
-</td>
-<td style="text-align:right;">
-0.97
-</td>
-<td style="text-align:center;">
-1.2e+20
-</td>
-<td style="text-align:center;">
-0.89
-</td>
-</tr>
-<tr>
-<td style="text-align:right;font-weight: bold;">
-Hierarchy
-</td>
-<td style="text-align:center;">
-4.9e+04
-</td>
-<td style="text-align:center;">
-0.28
-</td>
-<td style="text-align:center;">
-6.1e+06
-</td>
-<td style="text-align:right;">
-0.09
-</td>
-<td style="text-align:center;">
-2.7e+11
-</td>
-<td style="text-align:center;">
-0.01
-</td>
-<td style="text-align:center;">
-6.7e+13
+6.8e+13
 </td>
 <td style="text-align:right;">
 0.00
 </td>
 <td style="text-align:center;">
-1.2e+17
+1.3e+17
 </td>
 <td style="text-align:center;">
 0.00
@@ -971,19 +970,19 @@ Hierarchy
 Independence
 </td>
 <td style="text-align:center;">
-4.4e+03
+4.0e+03
 </td>
 <td style="text-align:center;">
 0.02
 </td>
 <td style="text-align:center;">
-2.6e+05
+2.8e+05
 </td>
 <td style="text-align:right;">
 0.00
 </td>
 <td style="text-align:center;">
-3.9e+09
+4.0e+09
 </td>
 <td style="text-align:center;">
 0.00
@@ -995,7 +994,7 @@ Independence
 0.00
 </td>
 <td style="text-align:center;">
-5.1e+14
+5.6e+14
 </td>
 <td style="text-align:center;">
 0.00
@@ -1006,19 +1005,19 @@ Independence
 Integration
 </td>
 <td style="text-align:center;">
-4.6e+03
+4.1e+03
 </td>
 <td style="text-align:center;">
 0.03
 </td>
 <td style="text-align:center;">
-3.3e+05
+3.5e+05
 </td>
 <td style="text-align:right;">
 0.00
 </td>
 <td style="text-align:center;">
-3.2e+09
+3.3e+09
 </td>
 <td style="text-align:center;">
 0.00
@@ -1030,7 +1029,7 @@ Integration
 0.00
 </td>
 <td style="text-align:center;">
-1.5e+14
+1.6e+14
 </td>
 <td style="text-align:center;">
 0.00
@@ -1042,73 +1041,73 @@ Integration
 <p>To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (see the main article for more details [TODO: add link article]).</p>
 <p>All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with a higher number of equality constraints (e.g., Null Hypothesis) will be favoured over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).</p>
 </div>
-<div id="selected-model-1" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Selected Model</h2>
+<div id="selected-model-1" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Selected Model<a href="BF-ext.html#selected-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One of the limits of the Bayes factor with the encompassing prior approach is that we only get the selected hypothesis but we do not obtain the actual estimates of the parameters posterior. To overcome this limit we rely on Bayesian inference that allows us to effectively estimate the model parameter posteriors.</p>
 <p>This time in the model we consider only the role of gender and mother attachment as fixed effects of <span class="math inline">\(\mu\)</span>. In the R formula syntax, we have</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="BF-ext.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p</span></span>
-<span id="cb34-2"><a href="BF-ext.html#cb34-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
-<span id="cb34-3"><a href="BF-ext.html#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="BF-ext.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
-<span id="cb34-5"><a href="BF-ext.html#cb34-5" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="BF-ext.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p</span></span>
+<span id="cb35-2"><a href="BF-ext.html#cb35-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
+<span id="cb35-3"><a href="BF-ext.html#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="BF-ext.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
+<span id="cb35-5"><a href="BF-ext.html#cb35-5" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
 <p>Again, we specify a normal distribution with mean 0 and standard deviation of 3, <span class="math inline">\(\mathcal{N}(0,3)\)</span>, as prior for the beta parameters (i.e., those related to gender and mother attachment). Whereas, for the other nuisance parameters (i.e., intercepts, random effects and shapes parameters) <code>brms</code> default priors are maintained. The resulting prior settings are</p>
-<pre><code>##                   prior     class           coef    group resp dpar nlpar bound       source
+<pre><code>##                   prior     class           coef    group resp dpar nlpar lb ub       source
 ##            normal(0, 3)         b                                                       user
 ##            normal(0, 3)         b        genderM                                (vectorized)
 ##            normal(0, 3)         b  motherAnxious                                (vectorized)
 ##            normal(0, 3)         b motherAvoidant                                (vectorized)
 ##            normal(0, 3)         b  motherFearful                                (vectorized)
-##            normal(0, 3)         b                                zi             (vectorized)
-##            normal(0, 3)         b        genderM                 zi             (vectorized)
+##                  (flat)         b                                zi                  default
+##                  (flat)         b        genderM                 zi             (vectorized)
 ##  student_t(3, 0.7, 2.5) Intercept                                                    default
 ##          logistic(0, 1) Intercept                                zi                  default
-##    student_t(3, 0, 2.5)        sd                                                    default
-##    student_t(3, 0, 2.5)        sd                                zi                  default
-##    student_t(3, 0, 2.5)        sd                ID_class                       (vectorized)
-##    student_t(3, 0, 2.5)        sd      Intercept ID_class                       (vectorized)
-##    student_t(3, 0, 2.5)        sd                ID_class        zi             (vectorized)
-##    student_t(3, 0, 2.5)        sd      Intercept ID_class        zi             (vectorized)
-##       gamma(0.01, 0.01)     shape                                                    default</code></pre>
+##    student_t(3, 0, 2.5)        sd                                          0         default
+##    student_t(3, 0, 2.5)        sd                                zi        0         default
+##    student_t(3, 0, 2.5)        sd                ID_class                  0    (vectorized)
+##    student_t(3, 0, 2.5)        sd      Intercept ID_class                  0    (vectorized)
+##    student_t(3, 0, 2.5)        sd                ID_class        zi        0    (vectorized)
+##    student_t(3, 0, 2.5)        sd      Intercept ID_class        zi        0    (vectorized)
+##       gamma(0.01, 0.01)     shape                                          0         default</code></pre>
 <p>The model is estimated using 6 independent chains with 6,000 iterations (warm-up 2,000). The model summary is presented below.</p>
 <pre><code>##  Family: zero_inflated_negbinomial 
 ##   Links: mu = log; shape = identity; zi = logit 
 ## Formula: externalizing_sum ~ gender + mother + (1 | ID_class) 
 ##          zi ~ gender + (1 | ID_class)
 ##    Data: data (Number of observations: 847) 
-## Samples: 6 chains, each with iter = 6000; warmup = 2000; thin = 1;
-##          total post-warmup samples = 24000
+##   Draws: 6 chains, each with iter = 6000; warmup = 2000; thin = 1;
+##          total post-warmup draws = 24000
 ## 
 ## Group-Level Effects: 
 ## ~ID_class (Number of levels: 50) 
 ##                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)        0.29      0.07     0.17     0.43 1.00     7372    10149
-## sd(zi_Intercept)     1.10      0.27     0.65     1.74 1.00     9371    12428
+## sd(Intercept)        0.29      0.07     0.17     0.43 1.00     7364     9731
+## sd(zi_Intercept)     1.10      0.27     0.66     1.72 1.00     9796    13166
 ## 
 ## Population-Level Effects: 
 ##                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept          0.96      0.11     0.74     1.18 1.00    14818    16592
-## zi_Intercept      -1.27      0.31    -1.97    -0.75 1.00    14384    12961
-## genderM            0.34      0.08     0.18     0.50 1.00    30197    18984
-## motherAnxious      0.25      0.10     0.05     0.46 1.00    21564    18963
-## motherAvoidant     0.32      0.11     0.10     0.53 1.00    21623    19168
-## motherFearful      0.54      0.14     0.28     0.81 1.00    22199    18755
-## zi_genderM        -0.74      0.27    -1.30    -0.22 1.00    27915    17381
+## Intercept          0.96      0.11     0.74     1.17 1.00    13837    15737
+## zi_Intercept      -1.27      0.31    -1.95    -0.74 1.00    14172    13282
+## genderM            0.34      0.08     0.18     0.50 1.00    31044    18453
+## motherAnxious      0.25      0.10     0.05     0.46 1.00    21756    19681
+## motherAvoidant     0.32      0.11     0.10     0.53 1.00    22846    19205
+## motherFearful      0.54      0.13     0.29     0.81 1.00    22427    19423
+## zi_genderM        -0.74      0.27    -1.29    -0.22 1.00    28744    17354
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## shape     1.70      0.25     1.27     2.23 1.00    15644    16568
+## shape     1.71      0.25     1.27     2.24 1.00    15020    16007
 ## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 Marginal effects are presented in Figure~<a href="BF-ext.html#fig:plot-marginal-ext">5.1</a> and differences between mother attachment patterns are reported in Figure~<a href="BF-ext.html#fig:plot-diff-ext">5.2</a>.
-<div class="figure" style="text-align: center"><span id="fig:plot-marginal-ext"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-marginal-ext"></span>
 <img src="attachment-bayes-factor_files/figure-html/plot-marginal-ext-1.png" alt="Marginal predicted values according to gender and mother attachment ($n_{subj} = 847$)." width="95%" />
 <p class="caption">
 Figure 5.1: Marginal predicted values according to gender and mother attachment (<span class="math inline">\(n_{subj} = 847\)</span>).
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:plot-diff-ext"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-diff-ext"></span>
 <img src="attachment-bayes-factor_files/figure-html/plot-diff-ext-1.png" alt="Predicted differences between mother attachment patterns ($n_{subj} = 847$)." width="672" />
 <p class="caption">
 Figure 5.2: Predicted differences between mother attachment patterns (<span class="math inline">\(n_{subj} = 847\)</span>).
@@ -1116,27 +1115,28 @@ Figure 5.2: Predicted differences between mother attachment patterns (<span clas
 </div>
 <p>Overall, results indicate that Males have more externalizing problems than Females. Regarding mother attachment, Fearful, Avoidant, and Anxious children have more problems than Secure children. Moreover, Fearful children have more problems than Anxious children.</p>
 <p>To evaluate the fit of the model to the data, we computed the <em>Bayesian</em> <span class="math inline">\(R^2\)</span>, using the function <code>brms::bayes_R2()</code>, and we present Posterior Predictions in Figure~<a href="BF-ext.html#fig:plot-ppcheck-ext">5.3</a>.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="BF-ext.html#cb37-1" aria-hidden="true" tabindex="-1"></a>r2_ext</span>
-<span id="cb37-2"><a href="BF-ext.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##     Estimate  Est.Error       Q2.5     Q97.5</span></span>
-<span id="cb37-3"><a href="BF-ext.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">## R2 0.1482686 0.02972484 0.09435914 0.2106949</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:plot-ppcheck-ext"></span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="BF-ext.html#cb38-1" aria-hidden="true" tabindex="-1"></a>r2_ext</span>
+<span id="cb38-2"><a href="BF-ext.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">##     Estimate  Est.Error       Q2.5     Q97.5</span></span>
+<span id="cb38-3"><a href="BF-ext.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">## R2 0.1484309 0.02931432 0.09501877 0.2107168</span></span></code></pre></div>
+<pre><code>## Warning: Argument &#39;nsamples&#39; is deprecated. Please use argument &#39;ndraws&#39; instead.</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-ppcheck-ext"></span>
 <img src="attachment-bayes-factor_files/figure-html/plot-ppcheck-ext-1.png" alt="Posterior predictive check ($n_{subj} = 847$)." width="672" />
 <p class="caption">
 Figure 5.3: Posterior predictive check (<span class="math inline">\(n_{subj} = 847\)</span>).
 </p>
 </div>
 <p>We can see that the actual variance explained by fixed effects and random effects is around 15%. Moreover, the posterior predictive check indicates a good fit to the data.</p>
-<div id="conclusions-2" class="section level4 unnumbered">
-<h4>Conclusions</h4>
+<div id="conclusions-2" class="section level4 unnumbered hasAnchor">
+<h4>Conclusions<a href="BF-ext.html#conclusions-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Considering attachment theoretical perspectives, results indicate only the role of mother attachment so we can support the Monotropy Theory.</p>
 
 </div>
 </div>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-burknerBrmsPackageBayesian2017" class="csl-entry">
-Bürkner, P.-C. (2017). Brms: An <span>R</span> package for <span>Bayesian</span> multilevel models using <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>(1), 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>
+Bürkner, P.-C. (2017). Brms: <span>An R</span> package for <span>Bayesian</span> multilevel models using <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>(1), 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>
 </div>
 <div id="ref-burknerAdvancedBayesianMultilevel2018a" class="csl-entry">
 Bürkner, P.-C. (2018). Advanced <span>Bayesian</span> multilevel modeling with the <span>R</span> package brms. <em>The R Journal</em>, <em>10</em>(1), 395. <a href="https://doi.org/10.32614/RJ-2018-017">https://doi.org/10.32614/RJ-2018-017</a>
@@ -1163,7 +1163,6 @@ Stan Development Team. (2020). <em><span>RStan</span>: The <span>R</span> interf
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1203,6 +1202,10 @@ gitbook.start({
 "text": null
 },
 "download": ["attachment-bayes-factor.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true,
@@ -1218,7 +1221,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

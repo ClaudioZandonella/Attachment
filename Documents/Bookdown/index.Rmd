@@ -1,5 +1,5 @@
 --- 
-title: "Evaluating Informative Hypotheses with Equality and Inequality Constraints:\\ A Tutorial Using the Bayes Factor via the Encompassing Prior Approach"
+title: "Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach"
 subtitle: "Supplemental Material"
 author: "[Claudio Zandonella Callegher](https://claudiozandonella.netlify.app/), Tatiana Marci, Pietro De Carli, and Gianmarco Altoè"
 date: "`r Sys.Date()`"
@@ -54,11 +54,10 @@ theme_set(theme_bw()+
             theme(text = element_text(size=12)))
 
 devtools::load_all("../../")
-source("../Utils_report.R")
 
-#----    load drake    ----
+#----    load targets    ----
 
-drake_load_bookdown()
+tar_load_bookdown(store = "../../Analysis/_targets/")
 ```
 
 # Introduction {-}

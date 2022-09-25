@@ -4,19 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 NHST | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
+  <title>Chapter 8 NHST | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
   <meta name="description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 NHST | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta property="og:title" content="Chapter 8 NHST | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://ClaudioZandonella.github.io/Attachment/" />
   <meta property="og:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
   <meta property="og:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="github-repo" content="ClaudioZandonella/Attachment" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 NHST | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta name="twitter:title" content="Chapter 8 NHST | Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   
   <meta name="twitter:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="twitter:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè" />
 
 
-<meta name="date" content="2021-11-28" />
+<meta name="date" content="2022-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="model-choice-int.html"/>
 <link rel="next" href="model-comparison-int.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -250,7 +249,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
           </h1>
         </div>
 
@@ -270,118 +269,118 @@ div.csl-indent {
 <div class="hero-image-container">
   <img class= "hero-image" src="images/banner.png">
 </div>
-<div id="nhst-int" class="section level1" number="8">
-<h1><span class="header-section-number">Chapter 8</span> NHST</h1>
+<div id="nhst-int" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> NHST<a href="nhst-int.html#nhst-int" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Following the traditional NHST approach, we consider the model previously defined that includes all effects of interest (gender effect and the interaction between mother attachment and father attachment). Results of the analysis of deviance are reported below.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="nhst-int.html#cb42-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(fit_int_zinb)</span>
-<span id="cb42-2"><a href="nhst-int.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Deviance Table (Type II Wald chisquare tests)</span></span>
-<span id="cb42-3"><a href="nhst-int.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb42-4"><a href="nhst-int.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: internalizing_sum</span></span>
-<span id="cb42-5"><a href="nhst-int.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Chisq Df Pr(&gt;Chisq)   </span></span>
-<span id="cb42-6"><a href="nhst-int.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="do">## gender         0.9449  1   0.331015   </span></span>
-<span id="cb42-7"><a href="nhst-int.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="do">## mother        12.4302  3   0.006046 **</span></span>
-<span id="cb42-8"><a href="nhst-int.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="do">## father         2.6855  3   0.442698   </span></span>
-<span id="cb42-9"><a href="nhst-int.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="do">## mother:father  9.6213  9   0.382006   </span></span>
-<span id="cb42-10"><a href="nhst-int.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb42-11"><a href="nhst-int.html#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="nhst-int.html#cb44-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(fit_int_zinb)</span>
+<span id="cb44-2"><a href="nhst-int.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Deviance Table (Type II Wald chisquare tests)</span></span>
+<span id="cb44-3"><a href="nhst-int.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb44-4"><a href="nhst-int.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: internalizing_sum</span></span>
+<span id="cb44-5"><a href="nhst-int.html#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Chisq Df Pr(&gt;Chisq)   </span></span>
+<span id="cb44-6"><a href="nhst-int.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## gender         0.9449  1   0.331015   </span></span>
+<span id="cb44-7"><a href="nhst-int.html#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="do">## mother        12.4302  3   0.006046 **</span></span>
+<span id="cb44-8"><a href="nhst-int.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## father         2.6855  3   0.442698   </span></span>
+<span id="cb44-9"><a href="nhst-int.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="do">## mother:father  9.6213  9   0.382006   </span></span>
+<span id="cb44-10"><a href="nhst-int.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb44-11"><a href="nhst-int.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 <p>Results indicate only a statistically significant effect of mother attachment. On the contrary, the interaction and father attachment are not significant. The model summary is reported below.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="nhst-int.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_int_zinb)</span>
-<span id="cb43-2"><a href="nhst-int.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  Family: nbinom2  ( log )</span></span>
-<span id="cb43-3"><a href="nhst-int.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula:          internalizing_sum ~ gender + mother * father + (1 | ID_class)</span></span>
-<span id="cb43-4"><a href="nhst-int.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero inflation:                     ~gender + (1 | ID_class)</span></span>
-<span id="cb43-5"><a href="nhst-int.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Data: data_cluster</span></span>
-<span id="cb43-6"><a href="nhst-int.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-7"><a href="nhst-int.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      AIC      BIC   logLik deviance df.resid </span></span>
-<span id="cb43-8"><a href="nhst-int.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   3669.0   3773.3  -1812.5   3625.0      825 </span></span>
-<span id="cb43-9"><a href="nhst-int.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-10"><a href="nhst-int.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Random effects:</span></span>
-<span id="cb43-11"><a href="nhst-int.html#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-12"><a href="nhst-int.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
-<span id="cb43-13"><a href="nhst-int.html#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
-<span id="cb43-14"><a href="nhst-int.html#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 0.1364   0.3693  </span></span>
-<span id="cb43-15"><a href="nhst-int.html#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
-<span id="cb43-16"><a href="nhst-int.html#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-17"><a href="nhst-int.html#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
-<span id="cb43-18"><a href="nhst-int.html#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
-<span id="cb43-19"><a href="nhst-int.html#cb43-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 3.225    1.796   </span></span>
-<span id="cb43-20"><a href="nhst-int.html#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
-<span id="cb43-21"><a href="nhst-int.html#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-22"><a href="nhst-int.html#cb43-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Dispersion parameter for nbinom2 family ():  2.6 </span></span>
-<span id="cb43-23"><a href="nhst-int.html#cb43-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-24"><a href="nhst-int.html#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
-<span id="cb43-25"><a href="nhst-int.html#cb43-25" aria-hidden="true" tabindex="-1"></a><span class="do">##                               Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
-<span id="cb43-26"><a href="nhst-int.html#cb43-26" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)                    0.85592    0.12115   7.065 1.61e-12 ***</span></span>
-<span id="cb43-27"><a href="nhst-int.html#cb43-27" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM                        0.06854    0.07051   0.972  0.33101    </span></span>
-<span id="cb43-28"><a href="nhst-int.html#cb43-28" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious                  0.47960    0.16672   2.877  0.00402 ** </span></span>
-<span id="cb43-29"><a href="nhst-int.html#cb43-29" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant                -0.08057    0.24671  -0.327  0.74398    </span></span>
-<span id="cb43-30"><a href="nhst-int.html#cb43-30" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful                  0.66801    0.41101   1.625  0.10410    </span></span>
-<span id="cb43-31"><a href="nhst-int.html#cb43-31" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherAnxious                  0.07410    0.16668   0.445  0.65661    </span></span>
-<span id="cb43-32"><a href="nhst-int.html#cb43-32" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherAvoidant                 0.09901    0.17349   0.571  0.56822    </span></span>
-<span id="cb43-33"><a href="nhst-int.html#cb43-33" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherFearful                  0.38182    0.33578   1.137  0.25550    </span></span>
-<span id="cb43-34"><a href="nhst-int.html#cb43-34" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherAnxious   -0.26373    0.23441  -1.125  0.26055    </span></span>
-<span id="cb43-35"><a href="nhst-int.html#cb43-35" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherAnxious   0.25023    0.30643   0.817  0.41416    </span></span>
-<span id="cb43-36"><a href="nhst-int.html#cb43-36" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherAnxious   -0.80565    0.50634  -1.591  0.11158    </span></span>
-<span id="cb43-37"><a href="nhst-int.html#cb43-37" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherAvoidant  -0.25807    0.23926  -1.079  0.28076    </span></span>
-<span id="cb43-38"><a href="nhst-int.html#cb43-38" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherAvoidant  0.10204    0.30109   0.339  0.73467    </span></span>
-<span id="cb43-39"><a href="nhst-int.html#cb43-39" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherAvoidant  -0.25422    0.46295  -0.549  0.58292    </span></span>
-<span id="cb43-40"><a href="nhst-int.html#cb43-40" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherFearful   -0.53674    0.39927  -1.344  0.17885    </span></span>
-<span id="cb43-41"><a href="nhst-int.html#cb43-41" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherFearful   0.23131    0.47623   0.486  0.62718    </span></span>
-<span id="cb43-42"><a href="nhst-int.html#cb43-42" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherFearful   -0.41834    0.54125  -0.773  0.43958    </span></span>
-<span id="cb43-43"><a href="nhst-int.html#cb43-43" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb43-44"><a href="nhst-int.html#cb43-44" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb43-45"><a href="nhst-int.html#cb43-45" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb43-46"><a href="nhst-int.html#cb43-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
-<span id="cb43-47"><a href="nhst-int.html#cb43-47" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
-<span id="cb43-48"><a href="nhst-int.html#cb43-48" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  -2.6112     0.6183  -4.223 2.41e-05 ***</span></span>
-<span id="cb43-49"><a href="nhst-int.html#cb43-49" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM      -0.2890     0.3531  -0.818    0.413    </span></span>
-<span id="cb43-50"><a href="nhst-int.html#cb43-50" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb43-51"><a href="nhst-int.html#cb43-51" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="nhst-int.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_int_zinb)</span>
+<span id="cb45-2"><a href="nhst-int.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  Family: nbinom2  ( log )</span></span>
+<span id="cb45-3"><a href="nhst-int.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula:          internalizing_sum ~ gender + mother * father + (1 | ID_class)</span></span>
+<span id="cb45-4"><a href="nhst-int.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero inflation:                     ~gender + (1 | ID_class)</span></span>
+<span id="cb45-5"><a href="nhst-int.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Data: data_cluster</span></span>
+<span id="cb45-6"><a href="nhst-int.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb45-7"><a href="nhst-int.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      AIC      BIC   logLik deviance df.resid </span></span>
+<span id="cb45-8"><a href="nhst-int.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   3669.0   3773.3  -1812.5   3625.0      825 </span></span>
+<span id="cb45-9"><a href="nhst-int.html#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb45-10"><a href="nhst-int.html#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Random effects:</span></span>
+<span id="cb45-11"><a href="nhst-int.html#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb45-12"><a href="nhst-int.html#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
+<span id="cb45-13"><a href="nhst-int.html#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
+<span id="cb45-14"><a href="nhst-int.html#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 0.1364   0.3693  </span></span>
+<span id="cb45-15"><a href="nhst-int.html#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
+<span id="cb45-16"><a href="nhst-int.html#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb45-17"><a href="nhst-int.html#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
+<span id="cb45-18"><a href="nhst-int.html#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Groups   Name        Variance Std.Dev.</span></span>
+<span id="cb45-19"><a href="nhst-int.html#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  ID_class (Intercept) 3.225    1.796   </span></span>
+<span id="cb45-20"><a href="nhst-int.html#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of obs: 847, groups:  ID_class, 50</span></span>
+<span id="cb45-21"><a href="nhst-int.html#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb45-22"><a href="nhst-int.html#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Dispersion parameter for nbinom2 family ():  2.6 </span></span>
+<span id="cb45-23"><a href="nhst-int.html#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb45-24"><a href="nhst-int.html#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Conditional model:</span></span>
+<span id="cb45-25"><a href="nhst-int.html#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="do">##                               Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb45-26"><a href="nhst-int.html#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)                    0.85592    0.12115   7.065 1.61e-12 ***</span></span>
+<span id="cb45-27"><a href="nhst-int.html#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM                        0.06854    0.07051   0.972  0.33101    </span></span>
+<span id="cb45-28"><a href="nhst-int.html#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious                  0.47960    0.16672   2.877  0.00402 ** </span></span>
+<span id="cb45-29"><a href="nhst-int.html#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant                -0.08057    0.24671  -0.327  0.74398    </span></span>
+<span id="cb45-30"><a href="nhst-int.html#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful                  0.66801    0.41101   1.625  0.10410    </span></span>
+<span id="cb45-31"><a href="nhst-int.html#cb45-31" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherAnxious                  0.07410    0.16668   0.445  0.65661    </span></span>
+<span id="cb45-32"><a href="nhst-int.html#cb45-32" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherAvoidant                 0.09901    0.17349   0.571  0.56822    </span></span>
+<span id="cb45-33"><a href="nhst-int.html#cb45-33" aria-hidden="true" tabindex="-1"></a><span class="do">## fatherFearful                  0.38182    0.33578   1.137  0.25550    </span></span>
+<span id="cb45-34"><a href="nhst-int.html#cb45-34" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherAnxious   -0.26373    0.23441  -1.125  0.26055    </span></span>
+<span id="cb45-35"><a href="nhst-int.html#cb45-35" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherAnxious   0.25023    0.30643   0.817  0.41416    </span></span>
+<span id="cb45-36"><a href="nhst-int.html#cb45-36" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherAnxious   -0.80565    0.50634  -1.591  0.11158    </span></span>
+<span id="cb45-37"><a href="nhst-int.html#cb45-37" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherAvoidant  -0.25807    0.23926  -1.079  0.28076    </span></span>
+<span id="cb45-38"><a href="nhst-int.html#cb45-38" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherAvoidant  0.10204    0.30109   0.339  0.73467    </span></span>
+<span id="cb45-39"><a href="nhst-int.html#cb45-39" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherAvoidant  -0.25422    0.46295  -0.549  0.58292    </span></span>
+<span id="cb45-40"><a href="nhst-int.html#cb45-40" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAnxious:fatherFearful   -0.53674    0.39927  -1.344  0.17885    </span></span>
+<span id="cb45-41"><a href="nhst-int.html#cb45-41" aria-hidden="true" tabindex="-1"></a><span class="do">## motherAvoidant:fatherFearful   0.23131    0.47623   0.486  0.62718    </span></span>
+<span id="cb45-42"><a href="nhst-int.html#cb45-42" aria-hidden="true" tabindex="-1"></a><span class="do">## motherFearful:fatherFearful   -0.41834    0.54125  -0.773  0.43958    </span></span>
+<span id="cb45-43"><a href="nhst-int.html#cb45-43" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb45-44"><a href="nhst-int.html#cb45-44" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb45-45"><a href="nhst-int.html#cb45-45" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb45-46"><a href="nhst-int.html#cb45-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Zero-inflation model:</span></span>
+<span id="cb45-47"><a href="nhst-int.html#cb45-47" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb45-48"><a href="nhst-int.html#cb45-48" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  -2.6112     0.6183  -4.223 2.41e-05 ***</span></span>
+<span id="cb45-49"><a href="nhst-int.html#cb45-49" aria-hidden="true" tabindex="-1"></a><span class="do">## genderM      -0.2890     0.3531  -0.818    0.413    </span></span>
+<span id="cb45-50"><a href="nhst-int.html#cb45-50" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb45-51"><a href="nhst-int.html#cb45-51" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 To evaluate the effect of mother attachment, the marginal predicted values are presented in Figure~<a href="nhst-int.html#fig:plot-nhst-effects-int">8.1</a>. Note that the marginal predicted values are averaged over father attachment and gender effect.
-<div class="figure" style="text-align: center"><span id="fig:plot-nhst-effects-int"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-nhst-effects-int"></span>
 <img src="attachment-bayes-factor_files/figure-html/plot-nhst-effects-int-1.png" alt="Marginal predicted values according to mother attachment. Values are averaged over the other effects ($n_{subj} = 847$)." width="672" />
 <p class="caption">
 Figure 8.1: Marginal predicted values according to mother attachment. Values are averaged over the other effects (<span class="math inline">\(n_{subj} = 847\)</span>).
 </p>
 </div>
 <p>Post-hoc tests are run to evaluate differences between mother attachment styles, considering pairwise comparisons and adjusting <em>p</em>-values according to multivariate <em>t</em>-distribution. Results are reported below,</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="nhst-int.html#cb44-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fit_int_zinb, <span class="at">specs =</span> <span class="sc">~</span> mother ),</span>
-<span id="cb44-2"><a href="nhst-int.html#cb44-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;mvt&quot;</span>)</span>
-<span id="cb44-3"><a href="nhst-int.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Results may be misleading due to involvement in interactions</span></span>
-<span id="cb44-4"><a href="nhst-int.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  contrast           estimate    SE  df t.ratio p.value</span></span>
-<span id="cb44-5"><a href="nhst-int.html#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Anxious    -0.2150 0.117 825  -1.836  0.2508</span></span>
-<span id="cb44-6"><a href="nhst-int.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Avoidant   -0.0653 0.136 825  -0.481  0.9622</span></span>
-<span id="cb44-7"><a href="nhst-int.html#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Fearful    -0.2985 0.166 825  -1.793  0.2707</span></span>
-<span id="cb44-8"><a href="nhst-int.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Avoidant   0.1496 0.112 825   1.336  0.5322</span></span>
-<span id="cb44-9"><a href="nhst-int.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Fearful   -0.0835 0.147 825  -0.566  0.9403</span></span>
-<span id="cb44-10"><a href="nhst-int.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Avoidant - Fearful  -0.2331 0.164 825  -1.423  0.4774</span></span>
-<span id="cb44-11"><a href="nhst-int.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb44-12"><a href="nhst-int.html#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are averaged over the levels of: gender, father </span></span>
-<span id="cb44-13"><a href="nhst-int.html#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are given on the log (not the response) scale. </span></span>
-<span id="cb44-14"><a href="nhst-int.html#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment: mvt method for 6 tests</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="nhst-int.html#cb46-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fit_int_zinb, <span class="at">specs =</span> <span class="sc">~</span> mother ),</span>
+<span id="cb46-2"><a href="nhst-int.html#cb46-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="st">&quot;mvt&quot;</span>)</span>
+<span id="cb46-3"><a href="nhst-int.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Results may be misleading due to involvement in interactions</span></span>
+<span id="cb46-4"><a href="nhst-int.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  contrast           estimate    SE  df t.ratio p.value</span></span>
+<span id="cb46-5"><a href="nhst-int.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Anxious    -0.2150 0.117 825  -1.836  0.2508</span></span>
+<span id="cb46-6"><a href="nhst-int.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Avoidant   -0.0653 0.136 825  -0.481  0.9622</span></span>
+<span id="cb46-7"><a href="nhst-int.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Fearful    -0.2985 0.166 825  -1.793  0.2708</span></span>
+<span id="cb46-8"><a href="nhst-int.html#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Avoidant   0.1496 0.112 825   1.336  0.5321</span></span>
+<span id="cb46-9"><a href="nhst-int.html#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Fearful   -0.0835 0.147 825  -0.566  0.9403</span></span>
+<span id="cb46-10"><a href="nhst-int.html#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Avoidant - Fearful  -0.2331 0.164 825  -1.423  0.4774</span></span>
+<span id="cb46-11"><a href="nhst-int.html#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb46-12"><a href="nhst-int.html#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are averaged over the levels of: gender, father </span></span>
+<span id="cb46-13"><a href="nhst-int.html#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are given on the log (not the response) scale. </span></span>
+<span id="cb46-14"><a href="nhst-int.html#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment: mvt method for 6 tests</span></span></code></pre></div>
 <p>After adjusting p-values we actually get that there are no statistically significant differences. Without adjusting, the difference between Anxious and Secure children and the difference between Fearful and Secure children have a low (but not statistically significant) <em>p</em>-value.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="nhst-int.html#cb45-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fit_int_zinb, <span class="at">specs =</span> <span class="sc">~</span> mother ),</span>
-<span id="cb45-2"><a href="nhst-int.html#cb45-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="cn">NULL</span>)</span>
-<span id="cb45-3"><a href="nhst-int.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Results may be misleading due to involvement in interactions</span></span>
-<span id="cb45-4"><a href="nhst-int.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  contrast           estimate    SE  df t.ratio p.value</span></span>
-<span id="cb45-5"><a href="nhst-int.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Anxious    -0.2150 0.117 825  -1.836  0.0668</span></span>
-<span id="cb45-6"><a href="nhst-int.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Avoidant   -0.0653 0.136 825  -0.481  0.6307</span></span>
-<span id="cb45-7"><a href="nhst-int.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Fearful    -0.2985 0.166 825  -1.793  0.0734</span></span>
-<span id="cb45-8"><a href="nhst-int.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Avoidant   0.1496 0.112 825   1.336  0.1818</span></span>
-<span id="cb45-9"><a href="nhst-int.html#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Fearful   -0.0835 0.147 825  -0.566  0.5713</span></span>
-<span id="cb45-10"><a href="nhst-int.html#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Avoidant - Fearful  -0.2331 0.164 825  -1.423  0.1551</span></span>
-<span id="cb45-11"><a href="nhst-int.html#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb45-12"><a href="nhst-int.html#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are averaged over the levels of: gender, father </span></span>
-<span id="cb45-13"><a href="nhst-int.html#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are given on the log (not the response) scale.</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="nhst-int.html#cb47-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">contrast</span>(emmeans<span class="sc">::</span><span class="fu">emmeans</span>(fit_int_zinb, <span class="at">specs =</span> <span class="sc">~</span> mother ),</span>
+<span id="cb47-2"><a href="nhst-int.html#cb47-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;pairwise&quot;</span>, <span class="at">adjust =</span> <span class="cn">NULL</span>)</span>
+<span id="cb47-3"><a href="nhst-int.html#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span><span class="al">NOTE</span><span class="do">: Results may be misleading due to involvement in interactions</span></span>
+<span id="cb47-4"><a href="nhst-int.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  contrast           estimate    SE  df t.ratio p.value</span></span>
+<span id="cb47-5"><a href="nhst-int.html#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Anxious    -0.2150 0.117 825  -1.836  0.0668</span></span>
+<span id="cb47-6"><a href="nhst-int.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Avoidant   -0.0653 0.136 825  -0.481  0.6307</span></span>
+<span id="cb47-7"><a href="nhst-int.html#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Secure - Fearful    -0.2985 0.166 825  -1.793  0.0734</span></span>
+<span id="cb47-8"><a href="nhst-int.html#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Avoidant   0.1496 0.112 825   1.336  0.1818</span></span>
+<span id="cb47-9"><a href="nhst-int.html#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Anxious - Fearful   -0.0835 0.147 825  -0.566  0.5713</span></span>
+<span id="cb47-10"><a href="nhst-int.html#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Avoidant - Fearful  -0.2331 0.164 825  -1.423  0.1551</span></span>
+<span id="cb47-11"><a href="nhst-int.html#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb47-12"><a href="nhst-int.html#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are averaged over the levels of: gender, father </span></span>
+<span id="cb47-13"><a href="nhst-int.html#cb47-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Results are given on the log (not the response) scale.</span></span></code></pre></div>
 <p>To evaluate the fit of the model to the data, we computed the <em>Marginal</em> <span class="math inline">\(R^2\)</span> and the <em>Conditional</em> <span class="math inline">\(R^2\)</span>.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="nhst-int.html#cb46-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_int_zinb)</span>
-<span id="cb46-2"><a href="nhst-int.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: mu of 3.2 is too close to zero, estimate of random effect variances may be unreliable.</span></span>
-<span id="cb46-3"><a href="nhst-int.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # R2 for Mixed Models</span></span>
-<span id="cb46-4"><a href="nhst-int.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb46-5"><a href="nhst-int.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Conditional R2: 0.217</span></span>
-<span id="cb46-6"><a href="nhst-int.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      Marginal R2: 0.047</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="nhst-int.html#cb48-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_int_zinb)</span>
+<span id="cb48-2"><a href="nhst-int.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: mu of 3.2 is too close to zero, estimate of random effect variances may be unreliable.</span></span>
+<span id="cb48-3"><a href="nhst-int.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # R2 for Mixed Models</span></span>
+<span id="cb48-4"><a href="nhst-int.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb48-5"><a href="nhst-int.html#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Conditional R2: 0.217</span></span>
+<span id="cb48-6"><a href="nhst-int.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      Marginal R2: 0.047</span></span></code></pre></div>
 <p>We can see that the actual variance explained by fixed effects is less than 5%, not that much.</p>
-<div id="conclusions-3" class="section level4 unnumbered">
-<h4>Conclusions</h4>
+<div id="conclusions-3" class="section level4 unnumbered hasAnchor">
+<h4>Conclusions<a href="nhst-int.html#conclusions-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Results are difficult to interpret because we have a statistically significant effect of mother attachment, but, considering pot-hoc tests, we get no statistically significant difference.
 Overall, we could say that, in some way, results indicate a role of mother attachment but this probably is small.</p>
 
@@ -405,7 +404,6 @@ Overall, we could say that, in some way, results indicate a role of mother attac
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -445,6 +443,10 @@ gitbook.start({
 "text": null
 },
 "download": ["attachment-bayes-factor.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true,
@@ -460,7 +462,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

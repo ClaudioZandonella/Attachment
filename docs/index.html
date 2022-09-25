@@ -4,19 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
+  <title>Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</title>
   <meta name="description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta property="og:title" content="Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://ClaudioZandonella.github.io/Attachment/" />
   <meta property="og:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
   <meta property="og:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="github-repo" content="ClaudioZandonella/Attachment" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
+  <meta name="twitter:title" content="Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach" />
   
   <meta name="twitter:description" content="This the Supplemental Material of the article “Evaluating informative hypotheses with equality and inequality constraint: A tutorial using the Bayes factor via the encompassing prior approach”" />
   <meta name="twitter:image" content="https://ClaudioZandonella.github.io/Attachment//images/logo_psicostat.png" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè" />
 
 
-<meta name="date" content="2021-11-28" />
+<meta name="date" content="2022-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 
 <link rel="next" href="case-study.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -250,7 +249,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</a>
           </h1>
         </div>
 
@@ -271,30 +270,30 @@ div.csl-indent {
   <img class= "hero-image" src="images/banner.png">
 </div>
 <div id="header">
-<h1 class="title">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</h1>
+<h1 class="title">Evaluating Informative Hypotheses with Equality and Inequality Constraints: A Tutorial Using the Bayes Factor via the Encompassing Prior Approach</h1>
 <h2 class="subtitle"><em>Supplemental Material</em></h2>
 <p class="author"><em><a href="https://claudiozandonella.netlify.app/">Claudio Zandonella Callegher</a>, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-11-28</em></p>
+<p class="date"><em>2022-09-25</em></p>
 </div>
-<div id="introduction" class="section level1 unnumbered">
-<h1>Introduction</h1>
+<div id="introduction" class="section level1 unnumbered hasAnchor">
+<h1>Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This is the Supplemental Material of the article “<em>Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach</em>” [TODO: add cit]. The paper aims to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example.</p>
-<div id="study-summary" class="section level2 unnumbered">
-<h2>Study Summary</h2>
+<div id="study-summary" class="section level2 unnumbered hasAnchor">
+<h2>Study Summary<a href="index.html#study-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When conducting a study, researchers usually have expectations based on hypotheses or theoretical perspectives they want to evaluate. Equality and inequality constraints on the model parameters are used to formalize researchers’ expectations or theoretical perspectives into the so-called informative hypotheses. However, traditional statistical approaches, such as the Null Hypothesis Significance Testing (NHST) or the model comparison using information criteria (e.g., AIC and BIC), are unsuitable for testing complex informative hypotheses. An alternative approach is to use the Bayes factor. In particular, the Bayes factor based on the encompassing prior approach allows researchers to easily evaluate complex informative hypotheses in a wide range of statistical models (e.g., generalized linear). This paper provides a detailed introduction to the Bayes factor with encompassing prior. First, all steps and elements involved in the formalization of informative hypotheses and the computation of the Bayes factor with encompassing prior are described. Next, we apply this method to a real case scenario, considering the attachment theory. Specifically, we analyzed the relative influence of maternal and paternal attachment on children’s social-emotional development by comparing the various theoretical perspectives debated in the literature.</p>
 </div>
-<div id="supplemental-material-structure" class="section level2 unnumbered">
-<h2>Supplemental Material Structure</h2>
+<div id="supplemental-material-structure" class="section level2 unnumbered hasAnchor">
+<h2>Supplemental Material Structure<a href="index.html#supplemental-material-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the supplemental material, we provide the complete statistical analyses of the case study regarding attachment. For more information regarding the Bayes factor with encompassing prior approach or the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article]. The supplemental material is structured into three parts:</p>
-<div id="presentation" class="section level4 unnumbered">
-<h4>1) Presentation</h4>
+<div id="presentation" class="section level4 unnumbered hasAnchor">
+<h4>1) Presentation<a href="index.html#presentation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>In this section, we describe the aim of the study and the sample included in the study.</p>
 <ul>
 <li><strong>Chapter <a href="case-study.html#case-study">1</a> - Case Study.</strong> We describe the sample included in the study and present the results of the cluster analysis to classify the different attachment patterns.</li>
 </ul>
 </div>
-<div id="externalizing-problems" class="section level4 unnumbered">
-<h4>2) Externalizing Problems</h4>
+<div id="externalizing-problems" class="section level4 unnumbered hasAnchor">
+<h4>2) Externalizing Problems<a href="index.html#externalizing-problems" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>In this section, we present the analyses evaluating the different roles of mother attachment and father attachment on children’s externalizing problems. We follow three different approaches.</p>
 <ul>
 <li><strong>Chapter <a href="model-choice-ext.html#model-choice-ext">2</a> - Models Family Choice.</strong> We discuss the appropriate models’ family to take into account data characteristics.</li>
@@ -304,8 +303,8 @@ div.csl-indent {
 <li><strong>Chapter <a href="conclusion-ext.html#conclusion-ext">6</a> - Conclusions.</strong> Results of the three approaches are discussed.</li>
 </ul>
 </div>
-<div id="internalizing-problems" class="section level4 unnumbered">
-<h4>3) Internalizing Problems</h4>
+<div id="internalizing-problems" class="section level4 unnumbered hasAnchor">
+<h4>3) Internalizing Problems<a href="index.html#internalizing-problems" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>In this section, we present the analyses evaluating the different roles of mother attachment and father attachment on children’s internalizing problems. We follow the three different approaches like in the analysis of the externalizing problems. This section is shorter than the previous one as we focus only on the results without repeating all the descriptions of the methods.</p>
 <ul>
 <li><strong>Chapter <a href="model-choice-int.html#model-choice-int">7</a> - Models Family Choice.</strong> We discuss the appropriate models’ family to take into account data characteristics.</li>
@@ -316,8 +315,8 @@ div.csl-indent {
 </ul>
 </div>
 </div>
-<div id="github" class="section level2 unnumbered">
-<h2>GitHub</h2>
+<div id="github" class="section level2 unnumbered hasAnchor">
+<h2>GitHub<a href="index.html#github" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>All the materials are available at the GitHub repository <a href="https://github.com/ClaudioZandonella/Attachment" class="uri">https://github.com/ClaudioZandonella/Attachment</a>.</p>
 <p>Refer to the <code>README</code> file for further information.</p>
 
@@ -344,7 +343,6 @@ div.csl-indent {
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -384,6 +382,10 @@ gitbook.start({
 "text": null
 },
 "download": ["attachment-bayes-factor.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true,
@@ -399,7 +401,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

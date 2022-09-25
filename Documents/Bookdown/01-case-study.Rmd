@@ -42,7 +42,7 @@ plot_age_dist()
 
 ## Attachment Styles
 
-Attachment towards the mother and the father was measured separately using the brief Experiences in Close Relationships Scale - Revised Child Version [ECR-RC, @Brenning2014ThePQ; marciBriefExperiencesClose2019] completed by the children. Four main attachment styles have been recognized in the literature according to thee levels of *anxiety* and *avoidance*:
+Attachment towards the mother and the father was measured separately using the brief Experiences in Close Relationships Scale - Revised Child Version [ECR-RC, @Brenning2014ThePQ; @marciBriefExperiencesClose2019] completed by the children. Four main attachment styles have been recognized in the literature according to thee levels of *anxiety* and *avoidance*:
 
 - **Secure Attachment -** children with low levels of anxiety and avoidance.
 - **Anxious Attachment -** children characterized by high levels of anxiety.
@@ -60,7 +60,7 @@ plot(cluster_mother_fit, main = NULL,  xlab="ECR Mother")
 rect.hclust(cluster_mother_fit, k=4, border="red")
 ```
 
-In Figure~\@ref(fig:plot-scores-mother), Anxiety (“*Anx*”) and Avoidance (“*Av*”) scores are presented according to mother attachment styles. The frequencies of mother attachment styles according to gender are reported in Table~\ref{tab:table-cluster-mother}.
+In Figure~\@ref(fig:plot-scores-mother), Anxiety (“*Anx*”) and Avoidance (“*Av*”) scores are presented according to mother attachment styles. The frequencies of mother attachment styles according to gender are reported in Table~\@ref(tab:table-cluster-mother).
 
 ```{r plot-scores-mother, cache=TRUE, fig.asp=.55, fig.cap="Anxiety (“Anx”) and Avoidance (“Av”) scores according to mother attachment styles. Dashed lines represents overall average values ($n_{subj} = 847$)."}
 plot_scores_cluster(parent = "mother")
@@ -102,7 +102,7 @@ plot(cluster_father_fit, main = NULL,  xlab="ECR Father")
 rect.hclust(cluster_father_fit, k=4, border="red")
 ```
 
-In Figure~\@ref(fig:plot-scores-father), Anxiety (“*Anx*”) and Avoidance (“*Av*”) scores are presented according to father attachment styles. The frequencies of father attachment styles according to gender are reported in Table~\ref{tab:table-cluster-father}.
+In Figure~\@ref(fig:plot-scores-father), Anxiety (“*Anx*”) and Avoidance (“*Av*”) scores are presented according to father attachment styles. The frequencies of father attachment styles according to gender are reported in Table~\@ref(tab:table-cluster-father).
 
 ```{r plot-scores-father, cache=TRUE, fig.asp=.55, fig.cap="Anxiety (“Anx”) and Avoidance (“Av”) scores according to father attachment styles. Dashed lines represents overall average values ($n_{subj} = 847$)."}
 plot_scores_cluster(parent = "father")
@@ -179,7 +179,7 @@ var_summary("internalizing_sum")
 plot_problems_dist("int")
 ```
 
-Overall, internalizing problems are low. Again, this is expected as the sample is not clinical. Internalizing problems according to attachment styles are reported in Table~\ref(tab:table-cluster-ext).
+Overall, internalizing problems are low. Again, this is expected as the sample is not clinical. Internalizing problems according to attachment styles are reported in Table~\@ref(tab:table-cluster-int).
 
 ```{r table-cluster-int, cache=TRUE}
 get_table_cluster_prob("int", format = params$format)
