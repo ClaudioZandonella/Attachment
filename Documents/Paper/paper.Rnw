@@ -101,7 +101,7 @@ Correspondence concerning this article should be addressed to Claudio Zandonella
 \end{flushleft}
 }
 
-<<settings, echo=FALSE, message=FALSE>>=
+<<settings, echo=FALSE, message=FALSE, include=FALSE>>=
 library(kableExtra)
 library(ggplot2)
 
@@ -121,10 +121,10 @@ knitr::opts_chunk$set(echo = FALSE,
 # Console output width
 options(width = 80)
 
-# Chunk theme
-thm=knit_theme$get("bclear")
+# # Chunk theme
+thm=knitr::knit_theme$get("bclear")
 knitr::knit_theme$set(thm)
-knitr::opts_chunk$set(background = c(.98, .98, 1))
+knitr::opts_chunk$set(background = "#FAFAFF")
 
 # Option KableExtra
 # options(knitr.kable.NA = '')
@@ -134,11 +134,10 @@ theme_set(theme_classic()+
             theme(text = element_text(size=12)))
 
 devtools::load_all("../../")
-source("../Utils_report.R")
 
 #----    load drake    ----
 
-drake_load_paper()
+tar_load_paper(store = "../../Analysis/_targets/")
 @
 
 \begin{document}
