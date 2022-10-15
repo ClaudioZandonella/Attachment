@@ -95,7 +95,7 @@ $^2$Department of Psychology - University of Milano-Bicocca}
 \addORCIDlink{Pietro De Carli}{0000-0001-6538-2175}\\
 \addORCIDlink{Gianmarco Altoè}{0000-0003-1154-9528}
 
-Data used for the illustrative application are part of a larger project on the social-emotional development of school-age children, which was approved by the Ethics Committee of the School of Psychology at the University of Padova (protocol \#[1838-2016]). All materials and data are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}.
+All materials and data are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}. Online supplemental material available via GitHub Pages at \url{https://claudiozandonella.github.io/Attachment/}.
 
 Correspondence concerning this article should be addressed to Claudio Zandonella Callegher, Department of Developmental Psychology and Socialisation, University of Padua, Via Venezia, 8 - 35131 Padova, Italy.  E-mail: claudiozandonella@gmail.com
 \end{flushleft}
@@ -135,7 +135,7 @@ theme_set(theme_classic()+
 
 devtools::load_all("../../")
 
-#----    load drake    ----
+#----    load targets    ----
 
 tar_load_paper(store = "../../Analysis/_targets/")
 @
@@ -584,7 +584,9 @@ These issues are relevant only when considering the prior distribution. In the c
 
 In this section, we propose a real case study evaluating different informative hypotheses within attachment theory. This will allow us to face the common issues found in real research applications. First, we provide the required background information regarding attachment theory and the study aims and characteristics. Subsequently, we describe all the steps involved in the evaluation of informative hypotheses using the Bayes factor with the encompassing prior approach. Finally, we briefly discuss the obtained results, considering the prior sensitivity analysis and limitations of this approach.
 
-All analyses were conducted using R statistical software \parencite[Version \Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data, and analysis code are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}. Supplemental Material with further details is also available online at \url{https://claudiozandonella.github.io/Attachment/}.
+All analyses were conducted using R statistical software \parencite[Version \Sexpr{paste(version$major,version$minor, sep = ".")};][]{rcoreteamLanguageEnvironmentStatistical2021}. All materials, data, and analysis code are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}. Supplemental Material with further details is also available online via GitHub Pages at \url{https://claudiozandonella.github.io/Attachment/}.
+
+Note that data used for the illustrative application are part of a larger project on the social-emotional development of school-age children, which was approved by the Ethics Committee of the School of Psychology at the University of Padova (protocol \#[1838-2016]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Background Information}
@@ -862,6 +864,34 @@ The available literature, however, is often technical and difficult to follow fo
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section*{Author Contributions}
+
+Conceptualization: C. Zandonella Callegher, T. Marci, P. De Carli, and G. Altoè;
+Methodology: C. Zandonella Callegher, T. Marci, P. De Carli, and G. Altoè;
+Software: C. Zandonella Callegher and G. Altoè;
+Formal Analysis: C. Zandonella Callegher and G. Altoè;
+Investigation: T. Marci and  P. De Carli;
+Data Curation: T. Marci and C. Zandonella Callegher;
+Writing – Original Draft: C. Zandonella Callegher;
+Writing – Review \& Editing: T. Marci, P. De Carli, and G. Altoè;
+Visualization: C. Zandonella Callegher;
+Supervision: G. Altoè;
+Project Administration: G. Altoè;
+
+\section*{Conflicts of Interest}
+
+The authors declare that there were no conflicts of interest with respect to the authorship or the publication of this article.
+
+\section*{Supplemental Material}
+
+All materials and data are available at \url{https://doi.org/10.17605/OSF.IO/JKMDF}, GitHub repository \url{https://github.com/ClaudioZandonella/Attachment}. Online supplemental material available via GitHub Pages at \url{https://claudiozandonella.github.io/Attachment/}.
+
+Note that data used for the illustrative application are part of a larger project on the social-emotional development of school-age children, which was approved by the Ethics Committee of the School of Psychology at the University of Padova (protocol \#[1838-2016]).
+
+% \section*{Prior versions}
+%
+% Preprint version of the submitted manuscript is available at [TODO].
 
 \printbibliography
 \end{document}
