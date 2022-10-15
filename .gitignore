@@ -26,7 +26,9 @@ Documents/Paper/cache/
 
 # paper output
 paper.tex
-paper.pdf
+paper-old*
+paper-rev*
+
 
 # htlm output
 *.html

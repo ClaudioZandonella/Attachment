@@ -15,3 +15,6 @@ Dataset used in the analysis is saved in `data_CR.rds`. The dataset is composed 
 - `Avp` - numeric variable indicating children *Avoidance* score regarding father attachment (“*padre*” in Italian)
 - `Anxm` - numeric variable indicating children *Anxiety* score regarding mother attachment (“*madre*” in Italian)
 - `Anxp` - numeric variable indicating children *Anxiety* score regarding father attachment (“*padre*” in Italian)
+
+
+Note that data used for the illustrative application are part of a larger project on the social-emotional development of school-age children, which was approved by the Ethics Committee of the School of Psychology at the University of Padova (protocol #[1838-2016]).
