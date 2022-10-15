@@ -62,7 +62,7 @@ tar_load_bookdown(store = "../../Analysis/_targets/")
 
 # Introduction {-}
 
-This is the Supplemental Material of the article “*Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach*” [TODO: add cit]. The paper aims to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example.
+This is the Supplemental Material of the article “*Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach*” available at https://psyarxiv.com/6kc5u. The paper aims to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example.
 
 ## Study Summary {-}
 
@@ -70,7 +70,7 @@ When conducting a study, researchers usually have expectations based on hypothes
 
 ## Supplemental Material Structure {-}
 
-In the supplemental material, we provide the complete statistical analyses of the case study regarding attachment. For more information regarding the Bayes factor with encompassing prior approach or the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article [TODO: add link article]. The supplemental material is structured into three parts:
+In the supplemental material, we provide the complete statistical analyses of the case study regarding attachment. For more information regarding the Bayes factor with encompassing prior approach or the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article available at https://psyarxiv.com/6kc5u. The supplemental material is structured into three parts:
 
 #### 1) Presentation {-}
 

@@ -109,6 +109,21 @@
 }
 \makeatother
 
+%----    layout    ----%
+
+% change margins
+\usepackage[outer = 105pt, inner = 85pt]{geometry}
+\usepackage{afterpage}
+\voffset 5pt
+\headsep 29pt
+\footskip 35pt
+\textheight 590pt
+\usepackage{layout}% http://ctan.org/pkg/layouts
+
+% caption
+\usepackage[labelfont=bf]{caption}
+
+
 
 %----    define infoboxes    ----%
 \usepackage{tcolorbox}
@@ -220,7 +235,7 @@
 \makeatother
 \subtitle{Supplemental Material}
 \author{\href{https://claudiozandonella.netlify.app/}{Claudio Zandonella Callegher}, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè}
-\date{2022-09-25}
+\date{2022-10-15}
 
 \begin{document}
 \maketitle
@@ -241,7 +256,7 @@
 \chapter*{Introduction}\label{introduction}}
 \addcontentsline{toc}{chapter}{Introduction}
 
-This is the Supplemental Material of the article ``\emph{Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach}'' {[}TODO: add cit{]}. The paper aims to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example.
+This is the Supplemental Material of the article ``\emph{Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach}'' available at \url{https://psyarxiv.com/6kc5u}. The paper aims to provide a clear and detailed description of the Bayes Factor with the encompassing prior approach considering an applied example.
 
 \hypertarget{study-summary}{%
 \section*{Study Summary}\label{study-summary}}
@@ -253,7 +268,7 @@ When conducting a study, researchers usually have expectations based on hypothes
 \section*{Supplemental Material Structure}\label{supplemental-material-structure}}
 \addcontentsline{toc}{section}{Supplemental Material Structure}
 
-In the supplemental material, we provide the complete statistical analyses of the case study regarding attachment. For more information regarding the Bayes factor with encompassing prior approach or the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article {[}TODO: add link article{]}. The supplemental material is structured into three parts:
+In the supplemental material, we provide the complete statistical analyses of the case study regarding attachment. For more information regarding the Bayes factor with encompassing prior approach or the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children socio-emotional development, see the main article available at \url{https://psyarxiv.com/6kc5u}. The supplemental material is structured into three parts:
 
 \hypertarget{presentation}{%
 \subsubsection*{1) Presentation}\label{presentation}}
@@ -343,7 +358,7 @@ The study aims to compare the different theoretical perspectives regarding the r
 
 Contrasting results have been reported by studies investigating which is the ``correct'' theory. No study, however, has tried to properly evaluate the different theoretical perspectives by directly comparing the different hypotheses.
 
-For more information regarding Attachment theory and the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children's socio-emotional development, see the main article {[}TODO: add link article{]}.
+For more information regarding Attachment theory and the formalization of theoretical perspectives regarding the role of mother attachment and father attachment on children's socio-emotional development, see the main article available at \url{https://psyarxiv.com/6kc5u}.
 
 \hypertarget{the-study-sample}{%
 \section{The Study Sample}\label{the-study-sample}}
@@ -867,12 +882,12 @@ Post-hoc tests are run to evaluate differences between mother attachment styles.
                   \StringTok{"pairwise"}\NormalTok{, }\AttributeTok{adjust =} \StringTok{"mvt"}\NormalTok{)}
 \DocumentationTok{\#\# }\AlertTok{NOTE}\DocumentationTok{: Results may be misleading due to involvement in interactions}
 \DocumentationTok{\#\#  contrast           estimate    SE  df t.ratio p.value}
-\DocumentationTok{\#\#  Secure {-} Anxious    {-}0.2856 0.140 825  {-}2.034  0.1719}
+\DocumentationTok{\#\#  Secure {-} Anxious    {-}0.2856 0.140 825  {-}2.034  0.1720}
 \DocumentationTok{\#\#  Secure {-} Avoidant   {-}0.3080 0.162 825  {-}1.902  0.2228}
 \DocumentationTok{\#\#  Secure {-} Fearful    {-}0.5617 0.178 825  {-}3.149  0.0089}
 \DocumentationTok{\#\#  Anxious {-} Avoidant  {-}0.0224 0.124 825  {-}0.181  0.9978}
-\DocumentationTok{\#\#  Anxious {-} Fearful   {-}0.2761 0.146 825  {-}1.885  0.2300}
-\DocumentationTok{\#\#  Avoidant {-} Fearful  {-}0.2537 0.167 825  {-}1.522  0.4179}
+\DocumentationTok{\#\#  Anxious {-} Fearful   {-}0.2761 0.146 825  {-}1.885  0.2299}
+\DocumentationTok{\#\#  Avoidant {-} Fearful  {-}0.2537 0.167 825  {-}1.522  0.4180}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Results are averaged over the levels of: gender, father }
 \DocumentationTok{\#\# Results are given on the log (not the response) scale. }
@@ -1058,11 +1073,11 @@ Post-hoc tests are run to evaluate differences between mother attachment styles,
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(fit\_ext\_mother, }\AttributeTok{specs =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ mother ),}
                   \StringTok{"pairwise"}\NormalTok{, }\AttributeTok{adjust =} \StringTok{"mvt"}\NormalTok{)}
 \DocumentationTok{\#\#  contrast           estimate     SE  df t.ratio p.value}
-\DocumentationTok{\#\#  Secure {-} Anxious    {-}0.2432 0.1034 837  {-}2.353  0.0859}
-\DocumentationTok{\#\#  Secure {-} Avoidant   {-}0.3080 0.1091 837  {-}2.823  0.0243}
-\DocumentationTok{\#\#  Secure {-} Fearful    {-}0.5268 0.1313 837  {-}4.011  0.0004}
+\DocumentationTok{\#\#  Secure {-} Anxious    {-}0.2432 0.1034 837  {-}2.353  0.0858}
+\DocumentationTok{\#\#  Secure {-} Avoidant   {-}0.3080 0.1091 837  {-}2.823  0.0248}
+\DocumentationTok{\#\#  Secure {-} Fearful    {-}0.5268 0.1313 837  {-}4.011  0.0003}
 \DocumentationTok{\#\#  Anxious {-} Avoidant  {-}0.0648 0.0981 837  {-}0.661  0.9107}
-\DocumentationTok{\#\#  Anxious {-} Fearful   {-}0.2836 0.1216 837  {-}2.333  0.0903}
+\DocumentationTok{\#\#  Anxious {-} Fearful   {-}0.2836 0.1216 837  {-}2.333  0.0900}
 \DocumentationTok{\#\#  Avoidant {-} Fearful  {-}0.2188 0.1276 837  {-}1.714  0.3135}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Results are averaged over the levels of: gender }
@@ -1098,7 +1113,7 @@ Considering attachment theoretical perspectives, results indicate only the role 
 \hypertarget{BF-ext}{%
 \chapter{Bayes Factor}\label{BF-ext}}
 
-To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes factor with the encompassing prior approach. See the main article for a detailed introduction to this approach {[}TODO: add link article{]}.
+To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes factor with the encompassing prior approach. See the main article for a detailed introduction to this approach (\url{https://psyarxiv.com/6kc5u}).
 
 First, we define the encompassing model. Subsequently, we obtain the hypotheses matrices according to the informative hypotheses. Next, we compute the Bayes factor and, finally, we describe the selected model.
 
@@ -1233,7 +1248,7 @@ The encompassing model is estimated using 6 independent chains with 10,000 itera
 \hypertarget{hypothesis-matrices}{%
 \section{Hypothesis Matrices}\label{hypothesis-matrices}}
 
-For each informative hypothesis, we obtain a hypothesis matrix that translates equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper ({[}TODO: add link{]}).
+For each informative hypothesis, we obtain a hypothesis matrix that translates equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper (\url{https://psyarxiv.com/6kc5u}).
 
 Here we present the obtained hypothesis matrices where on the columns we have the parameters of the encompassing model (excluding the intercept) and each row expresses an equality constraint or an inequality constraint. Matrices' row names follow this notation: names without square brackets indicate a constraint directly on the model parameter; names within square brackets indicate a group condition (that could be the resulting composition of more parameters). For example, \texttt{"M\_Avoidant:F\_Anxious"} indicates the actual interaction term of the model, whereas \texttt{"{[}M\_Avoidant\_F\_Anxious{]}"} indicates the group condition. This is done because when assuming no interaction or no father attachment effect we set constraints directly on the model parameters, instead, when constraints involve group comparisons, we need to obtain the resulting conditions. Equality and inequality constraints are presented separately.
 
@@ -1447,7 +1462,7 @@ Note that we set the mean vector to zero. The posterior is given by the same tra
 \[
 Pr(\beta|Y) \sim \mathcal{N}(\hat{\beta}, \hat{\Sigma}_{\beta}) = \mathcal{N}(R\hat{\theta}-r, R\hat{\Sigma}_{\theta}R^T).
 \]
-See the main article for more details {[}TODO: add link{]}.
+For more details, see the main article available at \url{https://psyarxiv.com/6kc5u}.
 
 This adjustment, however, requires the hypothesis matrix \(R\) to be \emph{full-row-rank} (i.e., all constraints are linearly independent). However, this is not the case with the Hierarchy Hypothesis. To overcome this issue, we follow the solution presented in the main article. First, define \(R^*\) selecting the maximum number of independent rows. In this case, 15 contrast are independent
 
@@ -1488,12 +1503,12 @@ The remaining contrasts, instead, are obtained as linear combinations of the oth
 \end{Highlighting}
 \end{Shaded}
 
-Before computing the Bayes factor, note that we have a set of comparable hypotheses as it exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply considering all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups' differences. See the main article for a detailed explanation {[}TODO: add link article{]}.
+Before computing the Bayes factor, note that we have a set of comparable hypotheses as it exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply considering all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups' differences. For a detailed explanation, see the main article available at \url{https://psyarxiv.com/6kc5u}.
 
 \hypertarget{results-and-sensitivity}{%
 \section{Results and Sensitivity}\label{results-and-sensitivity}}
 
-To compute the Bayes factor we evaluate marginal densities and conditional probabilities as described in detail in the main article {[}TODO: add link article{]}. Bayes factor and posterior probability of each hypothesis are reported in Table\textasciitilde\ref{tab:table-bf-results-ext}.
+To compute the Bayes factor we evaluate marginal densities and conditional probabilities as described in detail in the main article (\url{https://psyarxiv.com/6kc5u}). Bayes factor and posterior probability of each hypothesis are reported in Table\textasciitilde\ref{tab:table-bf-results-ext}.
 
 \begin{table}[!h]
 
@@ -1552,7 +1567,7 @@ The results of the prior sensitivity analysis are reported in Table\textasciitil
 
 Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes factor comparing each hypothesis with the encompassing model increases. Moreover, the probability of the Null Hypothesis increases with more diffuse prior, whereas the probabilities of the Hierarchy, Independence and Integration Hypothesis increases with tighter priors.
 
-To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (see the main article for more details {[}TODO: add link article{]}).
+To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (for more details, see the main article available at \url{https://psyarxiv.com/6kc5u}).
 
 All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with a higher number of equality constraints (e.g., Null Hypothesis) will be favoured over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
 
@@ -1662,10 +1677,6 @@ To evaluate the fit of the model to the data, we computed the \emph{Bayesian} \(
 \DocumentationTok{\#\# R2 0.1484309 0.02931432 0.09501877 0.2107168}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning: Argument 'nsamples' is deprecated. Please use argument 'ndraws' instead.
-\end{verbatim}
 
 \begin{figure}
 
@@ -2062,12 +2073,12 @@ Post-hoc tests are run, considering pairwise comparisons and adjusting \emph{p}-
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(fit\_int\_mother, }\AttributeTok{specs =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ mother ),}
                   \StringTok{"pairwise"}\NormalTok{, }\AttributeTok{adjust =} \StringTok{"mvt"}\NormalTok{)}
 \DocumentationTok{\#\#  contrast           estimate     SE  df t.ratio p.value}
-\DocumentationTok{\#\#  Secure {-} Anxious     {-}0.285 0.0892 837  {-}3.197  0.0079}
+\DocumentationTok{\#\#  Secure {-} Anxious     {-}0.285 0.0892 837  {-}3.197  0.0075}
 \DocumentationTok{\#\#  Secure {-} Avoidant    {-}0.120 0.0946 837  {-}1.266  0.5809}
-\DocumentationTok{\#\#  Secure {-} Fearful     {-}0.469 0.1168 837  {-}4.011  0.0003}
+\DocumentationTok{\#\#  Secure {-} Fearful     {-}0.469 0.1168 837  {-}4.011  0.0004}
 \DocumentationTok{\#\#  Anxious {-} Avoidant    0.165 0.0869 837   1.903  0.2243}
 \DocumentationTok{\#\#  Anxious {-} Fearful    {-}0.183 0.1096 837  {-}1.673  0.3346}
-\DocumentationTok{\#\#  Avoidant {-} Fearful   {-}0.349 0.1167 837  {-}2.989  0.0149}
+\DocumentationTok{\#\#  Avoidant {-} Fearful   {-}0.349 0.1167 837  {-}2.989  0.0152}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Results are averaged over the levels of: gender }
 \DocumentationTok{\#\# Results are given on the log (not the response) scale. }
@@ -2364,10 +2375,6 @@ To evaluate the fit of the model to the data, we computed the \emph{Bayesian} \(
 \DocumentationTok{\#\# R2 0.2224078 0.02975503 0.1660707 0.2825445}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning: Argument 'nsamples' is deprecated. Please use argument 'ndraws' instead.
-\end{verbatim}
 
 \begin{figure}
 

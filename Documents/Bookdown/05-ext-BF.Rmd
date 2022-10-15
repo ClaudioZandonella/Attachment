@@ -1,6 +1,6 @@
 # Bayes Factor {#BF-ext}
 
-To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes factor with the encompassing prior approach. See the main article for a detailed introduction to this approach [TODO: add link article].
+To properly evaluate hypotheses with information regarding the expected direction of the effects, we use the Bayes factor with the encompassing prior approach. See the main article for a detailed introduction to this approach (https://psyarxiv.com/6kc5u).
 
 First, we define the encompassing model. Subsequently, we obtain the hypotheses matrices according to the informative hypotheses. Next, we compute the Bayes factor and, finally, we describe the selected model.
 
@@ -40,7 +40,7 @@ summary(encompassing_model_ext)
 
 ## Hypothesis Matrices
 
-For each informative hypothesis, we obtain a hypothesis matrix that translates equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper ([TODO: add link]). 
+For each informative hypothesis, we obtain a hypothesis matrix that translates equality and inequality constraints according to the encompassing model parametrization. Formalization of informative hypotheses and the procedure to derive hypothesis matrices are described in the main paper (https://psyarxiv.com/6kc5u). 
 
 Here we present the obtained hypothesis matrices where on the columns we have the parameters of the encompassing model (excluding the intercept) and each row expresses an equality constraint or an inequality constraint. Matrices’ row names follow this notation: names without square brackets indicate a constraint directly on the model parameter; names within square brackets indicate a group condition (that could be the resulting composition of more parameters). For example, `"M_Avoidant:F_Anxious"` indicates the actual interaction term of the model, whereas `"[M_Avoidant_F_Anxious]"` indicates the group condition. This is done because when assuming no interaction or no father attachment effect we set constraints directly on the model parameters, instead, when constraints involve group comparisons, we need to obtain the resulting conditions. Equality and inequality constraints are presented separately.
 
@@ -118,7 +118,7 @@ Note that we set the mean vector to zero. The posterior is given by the same tra
 $$
 Pr(\beta|Y) \sim \mathcal{N}(\hat{\beta}, \hat{\Sigma}_{\beta}) = \mathcal{N}(R\hat{\theta}-r, R\hat{\Sigma}_{\theta}R^T).
 $$
-See the main article for more details [TODO: add link].
+For more details, see the main article available at https://psyarxiv.com/6kc5u.
 
 This adjustment, however, requires the hypothesis matrix $R$ to be *full-row-rank* (i.e., all constraints are linearly independent). However, this is not the case with the Hierarchy Hypothesis. To overcome this issue, we follow the solution presented in the main article. First, define $R^*$ selecting the maximum number of independent rows. In this case, 15 contrast are independent
 
@@ -142,11 +142,11 @@ all(R["[M_Av_F_Sec - M_Sec_F_Av]",] == - R["[M_Anx_F_Sec - M_Av_F_Sec]", ] + R["
 all(R["[M_Fear_F_Sec - M_Sec_F_Fear]",] == R["[M_Av_F_Sec - M_Sec_F_Av]", ] + R["[M_Fear_F_Sec - M_Av_F_Sec]", ] - R["[M_Sec_F_Fear - M_Sec_F_Av]", ])
 ```
 
-Before computing the Bayes factor, note that we have a set of comparable hypotheses as it exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply considering all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups’ differences. See the main article for a detailed explanation [TODO: add link article].
+Before computing the Bayes factor, note that we have a set of comparable hypotheses as it exists a common solution to the set of linear equations obtained by setting all hypothesis constraints equal to zero. The solution is the trivial solution of simply considering all parameters equal to zero. Finally, we do not need to standardize our parameters as they represent mean groups’ differences. For a detailed explanation, see the main article available at https://psyarxiv.com/6kc5u.
 
 ## Results and Sensitivity
 
-To compute the Bayes factor we evaluate marginal densities and conditional probabilities as described in detail in the main article [TODO: add link article]. Bayes factor and posterior probability of each hypothesis are reported in Table~\@ref(tab:table-bf-results-ext).
+To compute the Bayes factor we evaluate marginal densities and conditional probabilities as described in detail in the main article (https://psyarxiv.com/6kc5u). Bayes factor and posterior probability of each hypothesis are reported in Table~\@ref(tab:table-bf-results-ext).
 
 ```{r table-bf-results-ext, cache = TRUE}
 get_table_bf(bf_result = BF_weights_ext,
@@ -172,7 +172,7 @@ get_table_sens_analysis(summary_sensitivity_ext,
 
 Overall results consistently indicate the Monotropy Hypothesis as the most supported by the data. However, we can observe two distinct patterns. As the prior gets more diffuse, the order of magnitude of the Bayes factor comparing each hypothesis with the encompassing model increases. Moreover, the probability of the Null Hypothesis increases with more diffuse prior, whereas the probabilities of the Hierarchy, Independence and Integration Hypothesis increases with tighter priors.
 
-To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (see the main article for more details [TODO: add link article]).
+To interpret these patterns, remember that order constraints are insensitive to the distribution specification as long as the distribution is symmetric and centred on the constraint focal point. On the contrary, equality constraints are highly affected by the prior definition (for more details, see the main article available at https://psyarxiv.com/6kc5u).
 
 All the defined hypotheses include equality constraints. Thus, for more diffuse prior we observe that the order of magnitude of the Bayes factor comparing each hypothesis with the encompassing model increases. Moreover, the hypothesis with a higher number of equality constraints (e.g., Null Hypothesis) will be favoured over hypotheses with a smaller number of equality constraints (e.g., Hierarchy, Independence and Integration Hypothesis).
 

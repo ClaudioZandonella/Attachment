@@ -23,7 +23,7 @@
 <meta name="author" content="Claudio Zandonella Callegher, Tatiana Marci, Pietro De Carli, and Gianmarco Altoè" />
 
 
-<meta name="date" content="2022-09-25" />
+<meta name="date" content="2022-10-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -94,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -276,33 +276,33 @@ div.csl-indent {
 <div id="zero-inflated-negative-binomial-1" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Zero Inflated Negative Binomial<a href="model-choice-int.html#zero-inflated-negative-binomial-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As in the case of externalizing problems, we evaluate whether a <em>Zero-Inflated</em> model may be appropriate. We compare the number of observed zeros and expected zeros in a Negative Binomial mixed-effects model considering the same predictors as in the case of externalizing problems. Using R formula syntax, we have</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="model-choice-int.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model formula</span></span>
-<span id="cb40-2"><a href="model-choice-int.html#cb40-2" aria-hidden="true" tabindex="-1"></a>internalizing_sum <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="model-choice-int.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model formula</span></span>
+<span id="cb39-2"><a href="model-choice-int.html#cb39-2" aria-hidden="true" tabindex="-1"></a>internalizing_sum <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
 <p>Comparing the number of observed zero and expected zeros, we get</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="model-choice-int.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_check_zeroinflation</span>(fit_int_nb)</span>
-<span id="cb41-2"><a href="model-choice-int.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # Check for zero-inflation</span></span>
-<span id="cb41-3"><a href="model-choice-int.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb41-4"><a href="model-choice-int.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Observed zeros: 226</span></span>
-<span id="cb41-5"><a href="model-choice-int.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Predicted zeros: 195</span></span>
-<span id="cb41-6"><a href="model-choice-int.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="do">##             Ratio: 0.86</span></span>
-<span id="cb41-7"><a href="model-choice-int.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Model is underfitting zeros (probable zero-inflation).</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="model-choice-int.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_check_zeroinflation</span>(fit_int_nb)</span>
+<span id="cb40-2"><a href="model-choice-int.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # Check for zero-inflation</span></span>
+<span id="cb40-3"><a href="model-choice-int.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb40-4"><a href="model-choice-int.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Observed zeros: 226</span></span>
+<span id="cb40-5"><a href="model-choice-int.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   Predicted zeros: 195</span></span>
+<span id="cb40-6"><a href="model-choice-int.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="do">##             Ratio: 0.86</span></span>
+<span id="cb40-7"><a href="model-choice-int.html#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Model is underfitting zeros (probable zero-inflation).</span></span></code></pre></div>
 <p>Results indicate that the model is slightly under-fitting the number of zeros. Thus, we can fit a <em>Zero Inflated Negative Binomial</em> (ZINB) model and compare the performance of the two models. Using R formula syntax, we have</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="model-choice-int.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p</span></span>
-<span id="cb42-2"><a href="model-choice-int.html#cb42-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
-<span id="cb42-3"><a href="model-choice-int.html#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="model-choice-int.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
-<span id="cb42-5"><a href="model-choice-int.html#cb42-5" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="model-choice-int.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for p</span></span>
+<span id="cb41-2"><a href="model-choice-int.html#cb41-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">~</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span>
+<span id="cb41-3"><a href="model-choice-int.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="model-choice-int.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formula for mu</span></span>
+<span id="cb41-5"><a href="model-choice-int.html#cb41-5" aria-hidden="true" tabindex="-1"></a>mu <span class="sc">~</span> gender <span class="sc">+</span> mother <span class="sc">*</span> father <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID_class)</span></code></pre></div>
 <p>Below we report results of the analysis of deviance.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="model-choice-int.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_int_nb, fit_int_zinb)</span>
-<span id="cb43-2"><a href="model-choice-int.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Data: data_cluster</span></span>
-<span id="cb43-3"><a href="model-choice-int.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Models:</span></span>
-<span id="cb43-4"><a href="model-choice-int.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_nb: internalizing_sum ~ gender + mother * father + (1 | ID_class), zi=~0, disp=~1</span></span>
-<span id="cb43-5"><a href="model-choice-int.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_zinb: internalizing_sum ~ gender + mother * father + (1 | ID_class), zi=~gender + (1 | ID_class), disp=~1</span></span>
-<span id="cb43-6"><a href="model-choice-int.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="do">##              Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(&gt;Chisq)    </span></span>
-<span id="cb43-7"><a href="model-choice-int.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_nb   19 3680.7 3770.8 -1821.3   3642.7                             </span></span>
-<span id="cb43-8"><a href="model-choice-int.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_zinb 22 3669.0 3773.3 -1812.5   3625.0 17.677      3  0.0005127 ***</span></span>
-<span id="cb43-9"><a href="model-choice-int.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb43-10"><a href="model-choice-int.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="model-choice-int.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_int_nb, fit_int_zinb)</span>
+<span id="cb42-2"><a href="model-choice-int.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Data: data_cluster</span></span>
+<span id="cb42-3"><a href="model-choice-int.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Models:</span></span>
+<span id="cb42-4"><a href="model-choice-int.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_nb: internalizing_sum ~ gender + mother * father + (1 | ID_class), zi=~0, disp=~1</span></span>
+<span id="cb42-5"><a href="model-choice-int.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_zinb: internalizing_sum ~ gender + mother * father + (1 | ID_class), zi=~gender + (1 | ID_class), disp=~1</span></span>
+<span id="cb42-6"><a href="model-choice-int.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="do">##              Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(&gt;Chisq)    </span></span>
+<span id="cb42-7"><a href="model-choice-int.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_nb   19 3680.7 3770.8 -1821.3   3642.7                             </span></span>
+<span id="cb42-8"><a href="model-choice-int.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="do">## fit_int_zinb 22 3669.0 3773.3 -1812.5   3625.0 17.677      3  0.0005127 ***</span></span>
+<span id="cb42-9"><a href="model-choice-int.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb42-10"><a href="model-choice-int.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 <p>Overall, results indicate that the ZINB model performs better than the Negative Binomial model. Note, however, that BIC actually prefers the model without zero inflation. Nevertheless, in the following analyses, we decide to use ZINB models to be consistent with the analysis of the externalizing problems.</p>
 
 </div>

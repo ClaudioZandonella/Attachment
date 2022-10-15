@@ -10,8 +10,9 @@ prior approach*”. The paper aims to provide a clear and detailed
 description of the Bayes factor with the encompassing prior approach
 considering an applied example regarding attachment theory.
 
-The pre-print version of the article is available at \[TODO: add link\].
-The Supplemental Material with all the analyses is available at
+The pre-print version of the article is available at
+<https://psyarxiv.com/6kc5u>. The Supplemental Material with all the
+analyses is available at
 <https://claudiozandonella.github.io/Attachment/>.
 
 ## Project Structure
@@ -22,12 +23,12 @@ structure, but the repository is not meant to be installed as a package
 analyses). R-package project structure, however, allows us to get
 advantage of some functionalities:
 
--   `DESCRIPTION` file is used to track project metadata and manage
-    project dependencies (note that we also used `renv` for package
-    dependencies, see Section below)
--   `devtools::load_all()` allows to easily load all functions defined
-    to run the analysis (note that we followed the *functional
-    programming paradigm*, see Section below)
+- `DESCRIPTION` file is used to track project metadata and manage
+  project dependencies (note that we also used `renv` for package
+  dependencies, see Section below)
+- `devtools::load_all()` allows to easily load all functions defined to
+  run the analysis (note that we followed the *functional programming
+  paradigm*, see Section below)
 
 Moreover, the analysis workflow is managed using `targets` (see Section
 below) and include other (*non-standard*) folders to organize the
@@ -36,20 +37,20 @@ supplemental material).
 
 The actual repository folder structure is:
 
--   `Analysis/`that includes the files
-    -   `Targets-workflow.R` the workflow of the analysis
-    -   `Targets-analysis.R` script to run the analysis with `targets`
--   `Data/` - includes the data used in the analyses
--   `Documents/` - includes all the scripts and utility files for the
-    creation of the outputs. In particular,
-    -   `Bookdown/` - the Supplemental Material available online
-    -   `Paper/` - the pre-print version of the article
--   `R/` - includes all the `.R` scripts with the functions used in the
-    analyses
-    -   `Targets-utils.R` functions used to load results of the analysis
--   `docs/` - includes `bookdown` outputs used to build the GitHub Pages
-    site
--   `renv/` - utility folder used by `renv`
+- `Analysis/`that includes the files
+  - `Targets-workflow.R` the workflow of the analysis
+  - `Targets-analysis.R` script to run the analysis with `targets`
+- `Data/` - includes the data used in the analyses
+- `Documents/` - includes all the scripts and utility files for the
+  creation of the outputs. In particular,
+  - `Bookdown/` - the Supplemental Material available online
+  - `Paper/` - the pre-print version of the article
+- `R/` - includes all the `.R` scripts with the functions used in the
+  analyses
+  - `Targets-utils.R` functions used to load results of the analysis
+- `docs/` - includes `bookdown` outputs used to build the GitHub Pages
+  site
+- `renv/` - utility folder used by `renv`
 
 ## Reproducibility
 

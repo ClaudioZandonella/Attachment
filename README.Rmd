@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 In this repository we collect all the materials of the study “*Evaluating informative hypotheses with equality and inequality constraints: A tutorial using the Bayes factor via the encompassing prior approach*”. The paper aims to provide a clear and detailed description of the Bayes factor with the encompassing prior approach considering an applied example regarding attachment theory.
 
-The pre-print version of the article is available at [TODO: add link]. The Supplemental Material with all the analyses is available at https://claudiozandonella.github.io/Attachment/.
+The pre-print version of the article is available at https://psyarxiv.com/6kc5u. The Supplemental Material with all the analyses is available at https://claudiozandonella.github.io/Attachment/.
 
 ## Project Structure
 
