@@ -4,7 +4,7 @@
 
 #----    get_table_cluster    ----
 
-# drake::loadd(data_cluster)
+# targets::tar_load(data_cluster)
 
 get_table_cluster <- function(perc = TRUE, digits = 2, format = "latex"){
 
@@ -27,7 +27,7 @@ get_table_cluster <- function(perc = TRUE, digits = 2, format = "latex"){
 
 #----    get_table_cluster_ext    ----
 
-# drake::loadd(data_cluster)
+# targets::tar_load(data_cluster)
 
 get_table_cluster_ext <- function(){
   data_cluster %>%
@@ -52,7 +52,7 @@ get_table_cluster_ext <- function(){
 
 #----    get_table_prior_predict    ----
 
-# drake::loadd(data_prior_predict)
+# targets::tar_load(data_prior_predict)
 
 get_table_prior_predict <- function(data = data_prior_predict, format = c("latex", "html")){
   format <- match.arg(format)
@@ -70,7 +70,7 @@ get_table_prior_predict <- function(data = data_prior_predict, format = c("latex
 }
 #----    get_table_bf    ----
 
-# drake::loadd(BF_weights_ext)
+# targets::tar_load(BF_weights_ext)
 
 get_table_bf <- function(bf_result = BF_weights_ext,
                          path_img = "Documents/Paper/figure/",
@@ -120,7 +120,7 @@ get_table_bf <- function(bf_result = BF_weights_ext,
 
 #----    get_table_sens_analysis    ----
 
-# drake::loadd(summary_sensitivity_int)
+# targets::tar_load(summary_sensitivity_int)
 # summary_sensitivity <- summary_sensitivity_int
 
 get_table_sens_analysis <- function(summary_sensitivity, format = c("latex", "html"),
@@ -179,7 +179,7 @@ get_table_sens_analysis <- function(summary_sensitivity, format = c("latex", "ht
 
 #----    table_gender_grade    ----
 
-# drake::loadd(data_raw)
+# targets::tar_load(data_raw)
 
 table_gender_grade <- function(format = "latex"){
   data_raw %>%
@@ -307,7 +307,7 @@ get_table_cluster_prob <- function(prob = c("ext", "int"), format = "html"){
 
 #----    get_table_AIC_BIC    ----
 
-# drake::loadd(AIC_weights_ext, BIC_weights_ext)
+# targets::tar_load(AIC_weights_ext, BIC_weights_ext)
 
 get_table_AIC_BIC <- function(AIC_weights = AIC_weights_ext,
                               BIC_weights = BIC_weights_ext,

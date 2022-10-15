@@ -17,7 +17,7 @@
 #' @return data used in the analysis
 #'
 #' @examples
-#' drake::loadd(data_raw)
+#' targets::tar_load(data_raw)
 #' data <- data_raw
 #' munge_data(data)
 #'

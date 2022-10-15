@@ -17,7 +17,7 @@
 #' @return an "hclust" class object with the resulting clusters
 #'
 #' @examples
-#' drake::loadd(data_munged)
+#' targets::tar_load(data_munged)
 #' data <- data_munged
 #' kk <- get_cluster_fit(data, parent = "mother")#'
 
@@ -58,9 +58,9 @@ get_cluster_fit <- function(data, parent = c("mother", "father")){
 #'   items are removed.
 #'
 #' @examples
-#' drake::loadd(data_munged)
-#' drake::loadd(cluster_mother_fit)
-#' drake::loadd(cluster_father_fit)
+#' targets::tar_load(data_munged)
+#' targets::tar_load(cluster_mother_fit)
+#' targets::tar_load(cluster_father_fit)
 #'
 #' get_data_cluster(data = data_munged, cluster_mother_fit, cluster_father_fit)
 #'
@@ -124,7 +124,7 @@ get_data_cluster <- function(data, cluster_mother_fit, cluster_father_fit){
 #' @return an object of class "mclustBIC"
 #'
 #' @examples
-#' drake::loadd(data_munged)
+#' targets::tar_load(data_munged)
 #' mclust_BIC(data = data_munged, parent = "mother")
 #' mclust_BIC(data = data_munged, parent = "father")
 #'

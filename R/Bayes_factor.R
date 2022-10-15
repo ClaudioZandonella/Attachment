@@ -21,7 +21,7 @@
 #' @return An object of class "brmsfit" with added WAIC and LOO values
 #'
 #' @examples
-#' drake::loadd(data_cluster)
+#' targets::tar_load(data_cluster)
 #' get_encompassing_model(data = data_cluster,
 #'                        y = "internalizing_sum",
 #'                        prior_par = "normal(0, 3)")
@@ -55,7 +55,7 @@ get_encompassing_model <- function(data, y,  prior_par){
 #' @return character sting
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' get_par_names(encompassing_model = encompassing_model_int)
 #'
 
@@ -83,7 +83,7 @@ get_par_names<- function(encompassing_model){
 #' @return numeric value
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' get_prior_sd(encompassing_model = encompassing_model_int)
 #'
 
@@ -141,7 +141,7 @@ get_model_matrix <- function(){
 #'   M_Av_F_Sec]").
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' par_names <- get_par_names(encompassing_model = encompassing_model_int)
 #' get_hyp_rownames(hypothesis = "monotropy", par_names = par_names)
 #'
@@ -248,7 +248,7 @@ get_hyp_rownames <- function(hypothesis = c("null", "monotropy", "hierarchy",
 #'   - `hyp` - the resulting matrix
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' get_hypothesis_matrix(hypothesis = "null", encompassing_model = encompassing_model_int)
 #'
 
@@ -426,7 +426,7 @@ compute_cond_prob <- function(mean, sigma, n_eq, n_ineq){
 #' @return list with the prior mean and covariance matrix
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' hyp <- get_hypothesis_matrix(hypothesis = "hierarchy", encompassing_model_int)$hyp
 #' get_prior_info(encompassing_model = encompassing_model_int, hyp = hyp)
 #'
@@ -452,7 +452,7 @@ get_prior_info <- function(encompassing_model, hyp){
 #' @return list with the posterior mean and covariance matrix
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' get_posterior_info(encompassing_model = encompassing_model_int)
 #'
 
@@ -481,7 +481,7 @@ get_posterior_info <- function(encompassing_model){
 #' @return list with the transformed mean and covariance matrix
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' param_info <- get_posterior_info(encompassing_model_int)
 #' hyp <- get_hypothesis_matrix("hierarchy", encompassing_model_int)$hyp[1:15, ]
 #' transform_param(param_info, hyp)
@@ -512,7 +512,7 @@ transform_param <- function(param_info, hyp, prior = FALSE){
 #' @return numeric value
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' get_BF(hypothesis = "monotropy", encompassing_model = encompassing_model_int)
 #'
 
@@ -681,7 +681,7 @@ get_BF <- function(hypothesis = c("null", "monotropy", "hierarchy",
 #' @return a matrix
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' independent_rows <- 1:15
 #' hyp <- get_hypothesis_matrix(hypothesis = "hierarchy", encompassing_model_int)$hyp
 #' find_transform_parameters(hyp = hyp, independent_rows)
@@ -750,7 +750,7 @@ find_transform_parameters <- function(hyp, independent_rows){
 #' @return a matrix
 #'
 #' @examples
-#' drake::loadd(encompassing_model_int)
+#' targets::tar_load(encompassing_model_int)
 #' independent_rows <- 1:15
 #' hyp <- get_hypothesis_matrix(hypothesis = "hierarchy", encompassing_model_int)$hyp
 #' find_composition_betas(hyp = hyp, independent_rows)
@@ -791,7 +791,7 @@ find_composition_betas <- function(hyp, independent_rows){
 #' @return a matrix
 #'
 #' @examples
-#' drake::loadd(c(BF_null_int, BF_monotropy_int,
+#' targets::tar_load(c(BF_null_int, BF_monotropy_int,
 #'        BF_hierarchy_int, BF_independence_int))
 #' get_table_BF(BF_null_int,
 #'              BF_monotropy_int,
@@ -833,7 +833,7 @@ get_table_BF <- function(...){
 #'  - `weights` - relative weights
 #'
 #' @examples
-#' drake::loadd(c(BF_null_int, BF_monotropy_int,
+#' targets::tar_load(c(BF_null_int, BF_monotropy_int,
 #'        BF_hierarchy_int, BF_independence_int, BF_integration_int))
 #' get_BF_weights(BF_null_int,
 #'                BF_monotropy_int,
@@ -872,7 +872,7 @@ get_BF_weights <- function(...){
 #' @return a dataframe result of `get_BF_weights()` function
 #'
 #' @examples
-#' drake::loadd(data_cluster)
+#' targets::tar_load(data_cluster)
 #' get_prior_sensitivity(data = data_cluster,
 #'                       y = "internalizing_sum",
 #'                       list_prior = list("normal(0,.5)"))
@@ -906,7 +906,7 @@ get_prior_sensitivity <- function(encompassing_model){
 #' @return a data frame with all the prior sensitivity information
 #'
 #' @examples
-#' drake::loadd(prior_sensitivity_int_.5, prior_sensitivity_int_01,
+#' targets::tar_load(prior_sensitivity_int_.5, prior_sensitivity_int_01,
 #'              prior_sensitivity_int_05, prior_sensitivity_int_10,
 #'              BF_weights_int)
 #' get_summary_sensitivity(reference = BF_weights_int,

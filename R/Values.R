@@ -4,7 +4,7 @@
 
 #----    perc_females    ----
 
-# drake::loadd(data_cluster)
+# targets::tar_load(data_cluster)
 
 perc_females <- function(perc = TRUE, digits = 2){
   freq <- table(data_cluster$gender)
@@ -19,7 +19,7 @@ perc_females <- function(perc = TRUE, digits = 2){
 
 #----    perc_rare_condition    ----
 
-# drake::loadd(data_cluster)
+# targets::tar_load(data_cluster)
 
 perc_rare_condition <- function(perc = TRUE, digits = 1){
   test <- with(data_cluster,
@@ -36,7 +36,7 @@ perc_rare_condition <- function(perc = TRUE, digits = 1){
 
 #----    tot_subj    ----
 
-# drake::loadd(data_raw)
+# targets::tar_load(data_raw)
 
 tot_subj <- function(){
   nrow(data_raw)
@@ -44,7 +44,7 @@ tot_subj <- function(){
 
 #----    tot_subj_older    ----
 
-# drake::loadd(data_raw)
+# targets::tar_load(data_raw)
 
 tot_subj_older <- function(){
   data_raw %>%
@@ -54,7 +54,7 @@ tot_subj_older <- function(){
 
 #----    tot_subj_NA    ----
 
-# drake::loadd(data_raw)
+# targets::tar_load(data_raw)
 
 tot_subj_NA <- function(){
   data_raw %>%
@@ -64,7 +64,7 @@ tot_subj_NA <- function(){
 
 #----    tot_subj_included    ----
 
-# drake::loadd(data_raw)
+# targets::tar_load(data_raw)
 
 tot_subj_included <- function(){
   nrow(data_cluster)
@@ -72,7 +72,7 @@ tot_subj_included <- function(){
 
 #----    var_info    ----
 
-# drake::loadd(data_cluster)
+# targets::tar_load(data_cluster)
 
 var_info <- function(var){
 
@@ -86,7 +86,7 @@ var_info <- function(var){
 
 #----    var_summary    ----
 
-# drake::loadd(data_cluster)
+# targets::tar_load(data_cluster)
 
 var_summary <- function(var){
 
@@ -102,7 +102,7 @@ var_summary <- function(var){
 
 #----    parent_mclust    ----
 
-# drake::loadd(mclust_mother, mclust_father)
+# targets::tar_load(mclust_mother, mclust_father)
 
 parent_mclust <- function(parent = c("mother", "father")){
   parent <- match.arg(parent)
@@ -121,7 +121,7 @@ parent_mclust <- function(parent = c("mother", "father")){
 #-
 #----    perc_model_ext    ----
 
-# drake::loadd(AIC_weights_ext, BIC_weights_ext)
+# targets::tar_load(AIC_weights_ext, BIC_weights_ext)
 
 perc_model_ext <- function(model, ic = c("AIC", "BIC")){
   ic <- match.arg(ic)
@@ -136,7 +136,7 @@ perc_model_ext <- function(model, ic = c("AIC", "BIC")){
 }
 #----    ext_mean    ----
 
-# drake::loadd(data_cluster)
+# targets::tar_load(data_cluster)
 
 ext_mean <- function(){
   my_round(mean(data_cluster$externalizing_sum))
@@ -144,7 +144,7 @@ ext_mean <- function(){
 
 #----    perc_model_int    ----
 
-# drake::loadd(AIC_weights_int, BIC_weights_int)
+# targets::tar_load(AIC_weights_int, BIC_weights_int)
 
 perc_model_int <- function(model, ic = c("AIC", "BIC")){
   ic <- match.arg(ic)

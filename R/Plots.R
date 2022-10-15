@@ -17,7 +17,7 @@
 #' @return a ggplot object
 #'
 #' @examples
-#' drake::loadd(fit_ext_zinb)
+#' targets::tar_load(fit_ext_zinb)
 #' get_plot_zinb(model = fit_ext_zinb, attachment = "mother")
 #'
 
@@ -378,7 +378,7 @@ plot_problems_dist <- function(prob = c("ext", "int")){
 }
 #----    plot_post_pred    ----
 
-# drake::loadd(post_pred_ext)
+# targets::tar_load(post_pred_ext)
 plot_post_pred <-  function(post_pred = post_pred_ext, problem = c("Externalizing", "Internalizing")){
   problem <- match.arg(problem)
 
@@ -425,7 +425,7 @@ plot_post_pred <-  function(post_pred = post_pred_ext, problem = c("Externalizin
 }
 #----    plot_post_diff    ----
 
-# drake::loadd(post_pred_ext)
+# targets::tar_load(post_pred_ext)
 plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizing", "Internalizing")){
   problem <- match.arg(problem)
 
@@ -475,7 +475,7 @@ plot_post_diff <-  function(post_pred = post_pred_ext, problem = c("Externalizin
 
 #----    my_pp_check    ----
 
-# drake::loadd(brm_selected_ext)
+# targets::tar_load(brm_selected_ext)
 
 my_pp_check <- function(brm_fit = brm_selected_ext,  problem = c("Externalizing", "Internalizing")){
   problem <- match.arg(problem)

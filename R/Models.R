@@ -17,7 +17,7 @@
 #' @return object of class check_zi
 #'
 #' @examples
-#' drake::loadd(fit_int_nb)
+#' targets::tar_load(fit_int_nb)
 #' my_check_zeroinflation(fit_int_nb)
 #'
 
@@ -72,7 +72,7 @@ my_check_zeroinflation <- function(x, tolerance = 0.05){
 #' @return a glmmTMB fit object
 #'
 #' @examples
-#' drake::loadd(data_cluster)
+#' targets::tar_load(data_cluster)
 #' zinb_fit(data = data_cluster, y = "internalizing_sum",
 #'          formula = "gender + mother + father")
 #'
@@ -107,7 +107,7 @@ zinb_fit<- function(data_cluster, y, formula){
 #' @return a brms fit object
 #'
 #' @examples
-#' drake::loadd(data_cluster)
+#' targets::tar_load(data_cluster)
 #' zinb_brms_selected(data = data_cluster, y = "internalizing_sum",
 #'                    prior_par = "normal(0, 3)")
 #'
@@ -139,7 +139,7 @@ zinb_brms_selected <- function(data, y, prior_par){
 #' @return an integer value
 #'
 #' @examples
-#' drake::loadd(fit_int_inter)
+#' targets::tar_load(fit_int_inter)
 #' get_model_df(fit = fit_int_inter)
 #'
 
@@ -177,7 +177,7 @@ get_model_df<- function(fit){
 #'   - `weights` - fit criteria weights
 #'
 #' @examples
-#' drake::loadd(c(fit_int_zero, fit_int_mother,
+#' targets::tar_load(c(fit_int_zero, fit_int_mother,
 #'        fit_int_additive, fit_int_inter))
 #' get_rel_weights(fit_int_zero,
 #'                 fit_int_mother,
@@ -258,7 +258,7 @@ get_data_prior_predict <- function(){
 #'   `gender` and `mother`on different columns.
 #'
 #' @examples
-#' drake::loadd(brm_selected_int)
+#' targets::tar_load(brm_selected_int)
 #' model <- brm_selected_int
 #' get_post_pred(model = model)
 #'
