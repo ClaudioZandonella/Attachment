@@ -9,7 +9,7 @@ targets::tar_config_set(script = "Analysis/Targets-workflow.R",
                         store = "Analysis/_targets/")
 
 # Check plan
-kk <- targets::tar_manifest(fields = "command")
+targets::tar_manifest(fields = "command")
 targets::tar_visnetwork()
 
 # Run analysis
